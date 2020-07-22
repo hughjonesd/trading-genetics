@@ -5,6 +5,7 @@ library(readr)
 library(magrittr)
 library(purrr)
 library(forcats)
+library(matrixStats)
 library(santoku)
 
 data_dir       <- "../negative-selection-data"
@@ -77,29 +78,31 @@ clean_famhist <- function (famhist, score_names) {
   # we get very few extra cases from adding f.2946.1.0 etc, and it makes calculating
   # father's year of birth more complex
   
-  names(famhist) <- sub("age_at_reqruitment", "age_at_recruitment", 
-                        names(famhist))
-  
 # TODO: temporary fix
   famhist$age_fulltime_edu <- NA_real_
   # remove negatives
   famhist %<>% mutate(across(
-    c(age_fulltime_edu, starts_with(c(
-      "f.2946", "f.1845", "f.2754", "f.738",  "f.2764", "f.2405", "f.2734",
-      "f.2149", "f.1873", "f.1883", "f.2784", "f.2794", "f.709",  "f.3872",
-      "f.5057", "f.6138"
-    ))), 
-    negative_to_na
+      c(age_fulltime_edu, starts_with(c(
+        "f.2946", "f.1845", "f.2754", "f.738",  "f.2764", "f.2405", "f.2734",
+        "f.2149", "f.1873", "f.1883", "f.2784", "f.2794", "f.709",  "f.3872",
+        "f.5057"
+      ))), 
+      negative_to_na
+    )
   )
-  )
+  # -7 means "never went to school"
+  famhist$f.6138.0.0[famhist$f.6138.0.0 == -3] <- NA
   
+  famhist$age_at_recruitment <- famhist$f.21022.0.0
+  # questionnaire sex:
+  famhist$female <- famhist$f.31.0.0 == 0 
   # "Field 845 was collected from all participants except those who indicated 
   # they have a College or University degree, as defined by their answers to 
   # Field 6138". So, we impute this to be 21.
   famhist$age_fulltime_edu[is.na(famhist$age_fulltime_edu) & famhist$edu_qual == 1] <- 21
   
+  famhist$university <- famhist$f.6138.0.0 == 1
   famhist$income_cat <- famhist$f.738.0.0
-  
   
   famhist$n_children <- pmax(famhist$f.2405.0.0, famhist$f.2405.1.0,
                              famhist$f.2405.2.0, famhist$f.2734.0.0, famhist$f.2734.1.0, 
@@ -134,6 +137,23 @@ clean_famhist <- function (famhist, score_names) {
   famhist$age_flb_cat <- santoku::chop_equally(famhist$age_flb, 3, 
                                                labels = lbl_discrete("-"))
   
+  # full brothers and sisters
+  famhist$nbro <- pmax(famhist$f.1873.0.0, famhist$f.1873.1.0, 
+                       famhist$f.1873.2.0, na.rm = TRUE)
+  famhist$nsis <- pmax(famhist$f.1883.0.0, famhist$f.1883.1.0, 
+                       famhist$f.1883.2.0, na.rm = TRUE)
+  famhist$n_sibs <- famhist$nbro + famhist$nsis + 1
+  # a few people give varying answers, we assume median is fine.
+  # including later answers picks up c. 10K extra people.
+  # some people have a non-integer median; we round down.
+  famhist$n_older_sibs <- floor(matrixStats::rowMedians(
+    as.matrix(famhist[, c("f.5057.0.0", "f.5057.1.0", "f.5057.2.0")]),
+    na.rm = TRUE
+  ))
+  # TODO: how does this come about??? Stupid answers?
+  famhist$n_older_sibs[famhist$n_older_sibs >= famhist$n_sibs] <- NA
+  # TODO: why is n_older_sibs often NaN?
+  
   famhist[score_names] <- scale(famhist[score_names])
   
   return(famhist)
@@ -142,9 +162,9 @@ clean_famhist <- function (famhist, score_names) {
 
 make_mf_pairs <- function (mf_pairs_file, famhist) {
   mf_pairs <- read_csv(mf_pairs_file, col_types = "dddccccc")
-  famhist_tmp <- famhist %>% dplyr::select(! (starts_with("f.") | 
-                                                starts_with("PC") | starts_with("home") |
-                                                starts_with("assessment") | starts_with("birth_")), f.eid)
+  famhist_tmp <- famhist %>% dplyr::select(
+                               f.eid, f.6138.0.0, EA3_excl_23andMe_UK, f.52.0.0,
+                               n_sibs, n_older_sibs, university, age_at_recruitment)
   mf_pairs %<>% 
     left_join(famhist_tmp, by = c("ID.m" = "f.eid")) %>% 
     left_join(famhist_tmp, by = c("ID.f" = "f.eid"), suffix = c(".m", ".f"))
@@ -183,7 +203,7 @@ plan <- drake_plan(
     format = "fst"
   ),
   
-  pairs = target(
+  mf_pairs = target(
     make_mf_pairs(file_in(!! mf_pairs_file), famhist),
     format = "fst"
   )
