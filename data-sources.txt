@@ -1,0 +1,6 @@
+# DATA SOURCES
+
+Sunshine data: 
+HADUK-Grid gridded and regional average climate observations for the UK
+http://data.ceda.ac.uk/badc/ukmo-hadobs/data/insitu/MOHC/HadOBS/HadUK-Grid/v1.0.1.0/1km/sun/mon/v20190808
+http://data.ceda.ac.uk/badc/ukmo-hadobs/data/insitu/MOHC/HadOBS/HadUK-Grid/v1.0.1.0/1km/sun/mon-30y/v20190808

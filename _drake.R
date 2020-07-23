@@ -7,9 +7,13 @@ library(purrr)
 library(forcats)
 library(matrixStats)
 library(santoku)
+library(tidync)
+library(abind)
 
 data_dir       <- "../negative-selection-data"
 pgs_dir        <- file.path(data_dir, "polygenic_scores")
+sun_dir        <- file.path(data_dir, "sunshine-records")
+
 pcs_file       <- file.path(data_dir, "UKB.HM3.100PCs.40310.txt")
 famhist_file   <- file.path(data_dir, "david.family_history.traits.out.csv")
 famhist2_file  <- file.path(data_dir, "david.family_history.traits.20042020.out.csv")
@@ -71,6 +75,19 @@ make_famhist <- function (
   }
   
   return(famhist)
+}
+
+
+import_sun <- function(sun_dir) {
+  sun_files <- sort(list.files(sun_dir, pattern = ".nc$", full.names = TRUE))
+  sun_arrays <- sun_files %>% 
+                  map(tidync) %>% 
+                  map(hyper_filter) %>% 
+                  map(hyper_array) %>% 
+                  map("sun")
+  names(sun_arrays) <- as.character(1940:1970)
+  
+  return(sun_arrays)
 }
 
 
@@ -197,6 +214,11 @@ plan <- drake_plan(
     ), 
     format = "fst"
   ), 
+  
+  sun_arrays = target(
+    import_sun(file_in(!! sun_dir)), 
+    format = "fst"
+  ),
   
   famhist = target(
     clean_famhist(famhist_raw, score_names),
