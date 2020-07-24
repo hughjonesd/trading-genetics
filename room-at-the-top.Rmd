@@ -1,0 +1,169 @@
+---
+title: 'Room at the top: biological lock-in of social advantage'
+author: David Hugh-Jones & Abdel Abdellaoui
+date: "`r Sys.Date()`"
+output: 
+  bookdown::pdf_document2:
+    toc: false
+    latex_engine: xelatex
+editor_options: 
+  chunk_output_type: console
+header-includes:
+  - \usepackage{subfig}
+---
+
+```{r setup, include=FALSE}
+library(drake)
+library(dplyr)
+library(AER)
+library(ggplot2)
+library(Hmisc)
+library(huxtable)
+library(broom)
+knitr::opts_chunk$set(echo = FALSE)
+
+drake::loadd(mf_pairs)
+drake::loadd(famhist)
+drake::loadd(resid_scores)
+
+famhist$EA3 <- resid_scores$EA3_excl_23andMe_UK_resid
+rm(resid_scores)
+```
+
+## Introduction
+
+Charles Murray (1995) warned of "a merging of the cognitive elite with the affluent".
+On the opposite side of the political spectrum, Karl Marx (1844) wrote "I am ugly, but I can buy the most beautiful woman. Which means to say that I am not ugly, for the effect of ugliness, its repelling power, is destroyed by money." These quotations suggest that social advantages, such as wealth, caste or status, may be 
+transformed into biological advantages in the next generation, via assortative
+mating between socially and genetically advantaged people. We call this process
+*biological lock-in*.
+
+Figure \@ref(fig:pic-basic-corr) illustrates the idea using data for spouse pairs from UK Biobank. 
+It plots one partner's mean polygenic score for educational attainment (EA3)
+against the other partner's university attendance. Members of the sample who 
+attended university had spouses with higher EA3.^[To minimize stratification concerns,
+EA3 is residualized by the first 100 principal components of UK Biobank array data.]
+
+```{r pic-basic-corr, fig.subcap = c("Male EA3 by female university attendance", "Female EA3 by male university attendance"), fig.cap = "Social and genetic advantage among spouse pairs in UK Biobank", fig.width = 3}
+
+yl <- coord_cartesian(ylim = c(-0.05, 0.15))
+
+mf_pairs %>% 
+      filter(! is.na(university.m)) %>% 
+      ggplot(aes(university.m, EA3.f)) + 
+        stat_summary(
+          fun.data = mean_cl_normal
+        ) + yl
+
+mf_pairs %>% 
+      filter(! is.na(university.f)) %>% 
+      ggplot(aes(university.f, EA3.m)) + 
+        stat_summary(
+          fun.data = mean_cl_normal
+        ) + yl
+```
+
+However, Figure \@ref(fig:pic-basic-corr) is not enough to prove biological
+lock-in. It could be that one spouse's university attendance reflects their own
+genetic endowment, and that assortative mating takes place on the basis of
+genetics alone, without any role for social advantage. For example, this might
+happen if potential marriage partners are good at predicting each other's
+genetics (via their phenotype) and are only motivated to
+select partners on the basis of their genetic characteristics. 
+
+To demonstrate biological lock-in, we therefore need a source of social
+advantage which is exogenous to genetics. One possibility is *birth order*.
+It is well known that earlier-born children receive more parental care and
+have better life outcomes. (XXX is it? Go check.) On the other hand, early-
+and late-born full siblings have the same *ex ante* expected genetic endowment.
+^[This might not be the case, if parents' choice of whether to
+have more children is endogenous to the genetic endowment of their earlier 
+children. We will check for this below.] We can therefore use birth order
+as an instrument for social advantage.
+
+We run regressions instrumenting one spouse's educational attainment with their
+birth order. We control for overall family (i.e. sibling group)
+size. Without this, then birth order would correlate with family size,
+which itself may correlate with genetics, since parents of different family sizes
+might have different genetic endowments. Indeed, respondents with more siblings
+overall have substantially lower EA3. We also control for subject's own EA3. Lastly,
+we allow the effect of birth order to vary depending on total family size.
+
+Table \@ref(tab:tbl-instruments) shows instrumental variables regressions
+using 2 stage least squares. We use only subjects with between 2 and 8 siblings,
+and run separate regressions by sex. The effect is positive for both male
+and female subjects, but twice as strong, and significant, for males. 
+
+
+```{r tbl-instruments}
+
+mod_ea3f_iv <- AER::ivreg(
+                 EA3.f ~ university.m + factor(n_sibs.m) 
+                 + EA3.m | 
+                 factor(f.52.0.0.m) + factor(n_sibs.m) + 
+                 n_older_sibs.m:factor(n_sibs.m) + EA3.m, 
+                 data = mf_pairs, 
+                 subset = n_sibs.m >= 2 & n_sibs.m <= 8
+               )
+
+
+mod_ea3m_iv <- AER::ivreg(
+                 EA3.m ~ university.f + factor(n_sibs.f) 
+                 + EA3.f | 
+                 factor(f.52.0.0.f) + factor(n_sibs.f) + 
+                 n_older_sibs.f:factor(n_sibs.f) + EA3.f, 
+                 data = mf_pairs, 
+                 subset = n_sibs.f >= 2 & n_sibs.f <= 8
+               )
+
+mod_ea3f_iv <- huxtable::tidy_override(mod_ea3f_iv, extend = TRUE,
+                 glance = as.list(glance(mod_ea3f_iv, 
+                 diagnostics = TRUE)))
+mod_ea3m_iv <- huxtable::tidy_override(mod_ea3m_iv,  extend = TRUE,
+                 glance = as.list(glance(mod_ea3m_iv, 
+                 diagnostics = TRUE)))
+                                 
+huxreg(
+        "Female spouse's EA3" = mod_ea3f_iv, 
+        "Male spouse's EA3"   = mod_ea3m_iv,
+        coefs = c(
+          "University" = "university.mTRUE", 
+          "University" = "university.fTRUE",
+          "EA3"        = "EA3.m",
+          "EA3"        = "EA3.f"
+        ),
+        statistics = c(
+          "R2"              = "r.squared", 
+          "N"               = "nobs",
+          "Sargan test (p)" = "p.value.Sargan"
+        ),
+        note = "{stars}. University instrumented by birth order."
+      ) %>% 
+      insert_row(c("Family size dummies", "Y", "Y"), after = 5) %>% 
+      set_caption("Effects of university attendance on spouse's EA3")
+```
+
+
+```{r}
+mod_ea3_check <- lm(EA3 ~ 0 + factor(n_sibs) + n_older_sibs:factor(n_sibs), 
+                    famhist, n_sibs >= 2 & n_sibs <= 8)
+av <- tidy(car::Anova(mod_ea3_check)) 
+av_pval <- av %>% 
+              filter(term == "factor(n_sibs):n_older_sibs") %>% 
+              pull(p.value)
+```
+
+
+Although all children of the same parents have identical expected values of
+polygenic scores, it is conceivable that parents might select family size
+on the basis of genetics. For example, if the first child had a phenotype
+reflecting a high (or low) polygenic score, then that might
+affect the parents' decision to have a second child. To check this we 
+regress birth order directly on EA3. As before, we control for family size
+and allow the effect of birth order to vary depending on family size.
+Birth order variables are not jointly significant (anova p 
+`r round(av_pval, 3)`) and their effect sizes are of the order of 0.01 of a 
+standard deviation of EA3.
+
+
+

@@ -1,14 +1,16 @@
 
-library(drake)
-library(dplyr)
-library(readr)
-library(magrittr)
-library(purrr)
-library(forcats)
-library(matrixStats)
-library(santoku)
-library(tidync)
-library(abind)
+suppressPackageStartupMessages({
+  library(drake)
+  library(matrixStats)
+  library(dplyr)
+  library(readr)
+  library(magrittr)
+  library(purrr)
+  library(forcats)
+  library(santoku)
+  library(tidync)
+  library(abind)
+})
 
 data_dir       <- "../negative-selection-data"
 pgs_dir        <- file.path(data_dir, "polygenic_scores")
@@ -65,6 +67,8 @@ make_famhist <- function (
   # only "genetic" whites
   # TODO: uncomment
   # famhist %<>% filter(! is.na(genetic_ethnic_grouping))
+  # TODO: self-identified whites - do this?
+  famhist %<>% filter(f.21000.0.0 == 1001)
   
   for (pgs_file in list.files(pgs_dir, pattern = "csv$", full.names = TRUE)) {
     score_name <- sub(".*UKB\\.AMC\\.(.*?)\\..*", "\\1", pgs_file, perl = TRUE)
@@ -78,6 +82,14 @@ make_famhist <- function (
 }
 
 
+import_pcs <- function (pcs_file) {
+  pcs <- read_table2(pcs_file)
+  pc_names <- grep("PC", names(pcs), value = TRUE)
+  pcs[pc_names] <- scale(pcs[pc_names])
+  pcs
+}
+
+
 import_sun <- function(sun_dir) {
   sun_files <- sort(list.files(sun_dir, pattern = ".nc$", full.names = TRUE))
   sun_arrays <- sun_files %>% 
@@ -88,6 +100,22 @@ import_sun <- function(sun_dir) {
   names(sun_arrays) <- as.character(1940:1970)
   
   return(sun_arrays)
+}
+
+
+compute_resid_scores <- function (famhist, pcs, score_names) {
+  famhist <- left_join(famhist, pcs, by = c("f.eid" = "IID"))
+  resid_scores <- data.frame(dummy = numeric(nrow(famhist))) 
+  
+  for (score_name in score_names) {
+    resid_fml <- paste(score_name, "~", paste0("PC", 1:100, collapse = " + "))
+    resid_score <- resid(lm(as.formula(resid_fml), famhist, 
+                            na.action = na.exclude))
+    resid_scores[[paste0(score_name, "_resid")]] <- resid_score
+  }
+  
+  resid_scores$dummy <- NULL
+  resid_scores
 }
 
 
@@ -172,15 +200,18 @@ clean_famhist <- function (famhist, score_names) {
   # TODO: why is n_older_sibs often NaN?
   
   famhist[score_names] <- scale(famhist[score_names])
+
   
   return(famhist)
 }
 
 
-make_mf_pairs <- function (mf_pairs_file, famhist) {
+make_mf_pairs <- function (mf_pairs_file, famhist, resid_scores) {
   mf_pairs <- read_csv(mf_pairs_file, col_types = "dddccccc")
+  
+  famhist$EA3 <- resid_scores$EA3_excl_23andMe_UK_resid
   famhist_tmp <- famhist %>% dplyr::select(
-                               f.eid, f.6138.0.0, EA3_excl_23andMe_UK, f.52.0.0,
+                               f.eid, f.6138.0.0, EA3, f.52.0.0,
                                n_sibs, n_older_sibs, university, age_at_recruitment)
   mf_pairs %<>% 
     left_join(famhist_tmp, by = c("ID.m" = "f.eid")) %>% 
@@ -220,13 +251,20 @@ plan <- drake_plan(
     format = "fst"
   ),
   
+  pcs = target(import_pcs(file_in(!! pcs_file)), format = "fst"),
+  
   famhist = target(
     clean_famhist(famhist_raw, score_names),
     format = "fst"
   ),
   
+  resid_scores = target(
+    compute_resid_scores(famhist, pcs, score_names),
+    format = "fst"
+  ),
+  
   mf_pairs = target(
-    make_mf_pairs(file_in(!! mf_pairs_file), famhist),
+    make_mf_pairs(file_in(!! mf_pairs_file), famhist, resid_scores),
     format = "fst"
   )
 )
