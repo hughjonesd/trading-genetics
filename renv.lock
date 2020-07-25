@@ -296,6 +296,13 @@
       "Repository": "CRAN",
       "Hash": "6b1cd4be3f35fa6fcb018b24d3bc02a9"
     },
+    "dreamerr": {
+      "Package": "dreamerr",
+      "Version": "1.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "5acfaaf6c7e55a99cf97ed9122029a03"
+    },
     "ellipsis": {
       "Package": "ellipsis",
       "Version": "0.3.1",
@@ -330,6 +337,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "38ec653c2613bed60052ba3787bd8a2c"
+    },
+    "fixest": {
+      "Package": "fixest",
+      "Version": "0.6.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "855288ba72046fed5a11c3fb1f1dc186"
     },
     "forcats": {
       "Package": "forcats",
@@ -604,6 +618,13 @@
       "Repository": "CRAN",
       "Hash": "0d87e50e11394a7151a28873637d799a"
     },
+    "numDeriv": {
+      "Package": "numDeriv",
+      "Version": "2016.8-1.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "df58958f293b166e4ab885ebcad90e02"
+    },
     "openxlsx": {
       "Package": "openxlsx",
       "Version": "4.1.5",
@@ -701,6 +722,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "0d5ecb71ac9a614f260c668564118a93"
+    },
+    "raster": {
+      "Package": "raster",
+      "Version": "3.3-13",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "51cfecf7b9518d46b119f92d581616b6"
     },
     "readr": {
       "Package": "readr",
