@@ -1,0 +1,961 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing double
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+The population is size 1.
+ There is a single binary genetic trait and a single social trait.
+ Individuals 
+\begin_inset Formula $i$
+\end_inset
+
+ thus have 
+\begin_inset Formula $G_{i}\in\{0,1\}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{i}\in\{0,1\}$
+\end_inset
+
+; write 
+\begin_inset Formula $\tau_{i}=(G_{i},S_{i})$
+\end_inset
+
+ to fully describe 
+\begin_inset Formula $i$
+\end_inset
+
+'s type.
+ We will call individuals with 
+\begin_inset Formula $\tau_{i}=(1,1),(1,0),(0,1)$
+\end_inset
+
+ and 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+, b-types, g-types, s-types and n-types respectively.
+ The proportion of the population with 
+\begin_inset Formula $G_{i}=1$
+\end_inset
+
+ is denoted by 
+\begin_inset Formula $\gamma$
+\end_inset
+
+, and the population proportion with 
+\begin_inset Formula $S_{i}=1$
+\end_inset
+
+ is denoted by 
+\begin_inset Formula $\sigma$
+\end_inset
+
+.
+ Write 
+\begin_inset Formula $b_{t},g_{t},s_{t},n_{t}$
+\end_inset
+
+ for the population proportion of each type in generation 
+\begin_inset Formula $t=1,2,....$
+\end_inset
+
+ Sometimes we drop the subscript.
+ Initially, 
+\begin_inset Formula $G_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ are independent, so
+\begin_inset Formula 
+\begin{align*}
+b_{1} & =\gamma\sigma;\\
+g_{1} & =\gamma(1-\sigma);\\
+s_{1} & =(1-\gamma)\sigma;\\
+n_{1} & =(1-\gamma)(1-\sigma).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Higher values are assumed to be more attractive in the marriage market.
+ Indeed, individuals are divided into two classes, 
+\begin_inset Formula $H$
+\end_inset
+
+ and 
+\begin_inset Formula $L$
+\end_inset
+
+, for the purpose of marital matching.
+ Within 
+\begin_inset Formula $H$
+\end_inset
+
+ and 
+\begin_inset Formula $L$
+\end_inset
+
+, all individuals form spouse pairs at random.
+ Class 
+\begin_inset Formula $H$
+\end_inset
+
+ is of size 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+ Married pairs have two children and each randomly inherits one parent's
+ genetic trait and one parent's social trait.
+ As a result, 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ stay constant over generations.
+\end_layout
+
+\begin_layout Standard
+Individuals with 
+\begin_inset Formula $\tau_{i}=(1,1)$
+\end_inset
+
+ are always in 
+\begin_inset Formula $H$
+\end_inset
+
+.
+ Those with 
+\begin_inset Formula $\tau_{i}=(0,0)$
+\end_inset
+
+ are always in 
+\begin_inset Formula $L$
+\end_inset
+
+.
+ Where the other groups fit depends on the nature of the society.
+ A proportion 
+\begin_inset Formula $\pi_{g}$
+\end_inset
+
+ of (1,0)-types and 
+\begin_inset Formula $\pi_{s}$
+\end_inset
+
+ of (0,1)-types are in 
+\begin_inset Formula $H$
+\end_inset
+
+.
+ As a result: 
+\begin_inset Formula 
+\[
+\theta=\gamma\sigma+\pi_{g}\gamma(1-\sigma)+\pi_{s}(1-\gamma)\sigma
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Suppose first that 
+\begin_inset Formula $\pi_{s}=1$
+\end_inset
+
+, 
+\begin_inset Formula $\pi_{g}=0$
+\end_inset
+
+.
+ This is a 
+\emph on
+caste society
+\emph default
+ where marital matching is entirely driven by social status.
+ All individuals in 
+\begin_inset Formula $H$
+\end_inset
+
+ (
+\begin_inset Formula $L)$
+\end_inset
+
+ have 
+\begin_inset Formula $S_{i}=1$
+\end_inset
+
+ (
+\begin_inset Formula $S_{i}=0$
+\end_inset
+
+), and so do their children.
+ On the other hand, the proportion of individuals with 
+\begin_inset Formula $G_{i}=1$
+\end_inset
+
+ stays at 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ within both groups.
+ Thus, over generations, the distributions of 
+\begin_inset Formula $G_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ remain independent in the populatoin.
+\end_layout
+
+\begin_layout Standard
+Suppose next that 
+\begin_inset Formula $\pi_{s}=0,\pi_{g}=1$
+\end_inset
+
+.
+ This society is 
+\emph on
+socially egalitarian
+\emph default
+: only genetics matter for marital matching.
+ All individuals in 
+\begin_inset Formula $H$
+\end_inset
+
+ (
+\begin_inset Formula $L)$
+\end_inset
+
+ have 
+\begin_inset Formula $G_{i}=1$
+\end_inset
+
+ (
+\begin_inset Formula $G_{i}=0$
+\end_inset
+
+), and so do their children.
+ The proportion of individuals with 
+\begin_inset Formula $S_{i}=1$
+\end_inset
+
+ stays at 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ within both groups; hence, again, 
+\begin_inset Formula $G_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ remain independent over generations.
+\end_layout
+
+\begin_layout Standard
+In between these cases, 
+\begin_inset Formula $G_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ will become positively correlated.
+ Within either group 
+\begin_inset Formula $J\in\{H,L\}$
+\end_inset
+
+, write the proportion of types in the parents generation as 
+\begin_inset Formula $b_{J},g_{J},s_{J},n_{J}$
+\end_inset
+
+ for the respective types.
+ 
+\end_layout
+
+\begin_layout Standard
+Dividing children up by their parents' types, we can calculate the proportion
+ with each of the four types:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{J}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $g_{J}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s_{J}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n_{J}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $b_{J}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $1;0;0;0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2};\frac{1}{2};0;0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2};0;\frac{1}{2};0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{4};\frac{1}{4};\frac{1}{4};\frac{1}{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $g_{J}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2};\frac{1}{2};0;0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0;1;0;0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{4};\frac{1}{4};\frac{1}{4};\frac{1}{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0;\frac{1}{2};0;\frac{1}{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $s_{J}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{2};0;\frac{1}{2};0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{4};\frac{1}{4};\frac{1}{4};\frac{1}{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0;0;1;0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0;0;\frac{1}{2};\frac{1}{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $n_{J}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\frac{1}{4};\frac{1}{4};\frac{1}{4};\frac{1}{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0;\frac{1}{2};0;\frac{1}{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0;0;\frac{1}{2};\frac{1}{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $0;0;0;0$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Summing these in each group, and using that 
+\begin_inset Formula $n_{H}=0$
+\end_inset
+
+ and 
+\begin_inset Formula $b_{L}=0$
+\end_inset
+
+, gives the proportion of children of each type (
+\begin_inset Formula $b_{H}^{c}$
+\end_inset
+
+ etc.)
+\begin_inset Formula 
+\begin{align*}
+b_{J}^{c} & =b_{J}+\rho_{J}\\
+g_{J}^{c} & =g_{J}-\rho_{J}\\
+s_{J}^{c} & =s_{J}-\rho_{J}\\
+n_{J}^{c} & =n_{J}+\rho_{J}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\rho_{J}=\frac{1}{2}g_{J}s_{J}$
+\end_inset
+
+.
+ In other words, when a group contains both g-types and s-types, some of
+ them marry each other and produce some b- and n-types.
+ This increases the correlation between 
+\begin_inset Formula $G_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Summing over the groups we can write the new generation's proportion of
+ types in the whole population as
+\begin_inset Formula 
+\begin{align*}
+b^{c} & =b+\rho\\
+g^{c} & =g-\rho\\
+s^{c} & =s-\rho\\
+n^{c} & =n+\rho
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $ $
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\rho\equiv\theta\rho_{H}+(1-\theta)\rho_{L}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the first generation, we can calculate:
+\begin_inset Formula 
+\begin{align*}
+b_{H} & =\gamma\sigma/\theta;\\
+g_{H} & =\pi_{g}\gamma(1-\sigma)/\theta;\\
+s_{H} & =\pi_{s}(1-\gamma)\sigma/\theta;\\
+n_{H} & =0;
+\end{align*}
+
+\end_inset
+
+and
+\begin_inset Formula 
+\begin{align*}
+b_{L} & =0;\\
+g_{L} & =(1-\pi_{g})\gamma(1-\sigma)/(1-\theta);\\
+s_{L} & =(1-\pi_{s})(1-\gamma)\sigma/(1-\theta);\\
+n_{L} & =(1-\gamma)(1-\sigma)/(1-\theta);
+\end{align*}
+
+\end_inset
+
+and from these
+\begin_inset Formula 
+\begin{align*}
+\rho_{H} & =\frac{1}{2}\frac{\pi_{g}\pi_{s}\phi}{\theta^{2}};\\
+\rho_{L} & =\frac{1}{2}\frac{(1-\pi_{g})(1-\pi_{s})\phi}{(1-\theta)^{2}}.
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+\phi\equiv\gamma(1-\gamma)\sigma(1-\sigma)
+\]
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+hence
+\begin_inset Formula 
+\[
+\rho=\frac{1}{2}\phi\left(\frac{\pi_{g}\pi_{s}}{\theta}+\frac{(1-\pi_{g})(1-\pi_{s})}{1-\theta}\right).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can now calculate the covariance between 
+\begin_inset Formula $G$
+\end_inset
+
+ and 
+\begin_inset Formula $S$
+\end_inset
+
+ in the second generation.
+ The covariance is just 
+\begin_inset Formula $E(G_{i}S_{i})-E(G_{i})E(S_{i})$
+\end_inset
+
+; in general, at generation 
+\begin_inset Formula $t$
+\end_inset
+
+, this is 
+\begin_inset Formula $b_{t}-\gamma\sigma$
+\end_inset
+
+.
+ For 
+\begin_inset Formula $t=2$
+\end_inset
+
+ this is just equal to 
+\begin_inset Formula $\rho$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+To examine how the covariance changes with social structure, we fix the
+ size 
+\begin_inset Formula $\theta$
+\end_inset
+
+ of group 
+\begin_inset Formula $H$
+\end_inset
+
+, and write 
+\begin_inset Formula $\pi_{s}$
+\end_inset
+
+ as a function of 
+\begin_inset Formula $\pi_{g}$
+\end_inset
+
+: 
+\begin_inset Formula 
+\begin{align*}
+\pi_{s} & =\frac{\theta-\gamma\sigma-\gamma(1-\sigma)\pi_{g}}{(1-\gamma)\sigma}\\
+ & =Y-X\pi_{g}
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+X=\frac{\gamma}{1-\gamma}\frac{1-\sigma}{\sigma};Y=\frac{\theta-\gamma\sigma}{(1-\gamma)\sigma}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We assume that 
+\end_layout
+
+\begin_layout Standard
+Then 
+\begin_inset Formula 
+\begin{align*}
+\rho & =\frac{1}{2}\phi\left(\frac{\pi_{g}(Y-X\pi_{g})}{\theta}+\frac{(1-\pi_{g})(1-Y+X\pi_{g})}{1-\theta}\right)\\
+ & =\frac{1}{2}\phi\left(\frac{Y\pi_{g}-X\pi_{g}^{2}}{\theta}+\frac{1-Y+(X+Y-1)\pi_{g}-X\pi_{g}^{2}}{1-\theta}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Differentiating with respect to 
+\begin_inset Formula $\pi_{g}$
+\end_inset
+
+ now gives
+\begin_inset Formula 
+\[
+\frac{\mathrm{d}\rho}{\mathrm{d}\pi_{g}}=\frac{1}{2}\phi\left(\frac{Y-2X\pi_{g}}{\theta}+\frac{(X+Y-1)-2X\pi_{g}}{1-\theta}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which simplifies to
+\begin_inset Formula 
+\[
+\frac{\mathrm{d}\rho}{\mathrm{d}\pi_{g}}=\frac{1}{2}\frac{\phi}{1-\theta}\left(X-1+\frac{Y}{\theta}-\frac{2X\pi_{g}}{\theta}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At 
+\begin_inset Formula $\pi_{g}=0$
+\end_inset
+
+ this simplifies to 
+\begin_inset Formula 
+\[
+\left.\frac{\mathrm{d}\rho}{\mathrm{d}\pi_{g}}\right|_{\pi_{g}=0}=\frac{1}{2}\frac{\phi}{1-\theta}\left(X-1+\frac{Y}{\theta}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
