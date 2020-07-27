@@ -186,6 +186,10 @@ Higher values are assumed to be more attractive in the marriage market.
 \begin_inset Formula $\theta$
 \end_inset
 
+: we assume 
+\begin_inset Formula $\gamma\sigma<\theta<\min\{\gamma,\sigma\}$
+\end_inset
+
 .
  Married pairs have two children and each randomly inherits one parent's
  genetic trait and one parent's social trait.
@@ -201,7 +205,7 @@ Higher values are assumed to be more attractive in the marriage market.
 \end_layout
 
 \begin_layout Standard
-Individuals with 
+B-types with 
 \begin_inset Formula $\tau_{i}=(1,1)$
 \end_inset
 
@@ -210,7 +214,7 @@ Individuals with
 \end_inset
 
 .
- Those with 
+ N-types with 
 \begin_inset Formula $\tau_{i}=(0,0)$
 \end_inset
 
@@ -220,37 +224,33 @@ Individuals with
 
 .
  Where the other groups fit depends on the nature of the society.
- A proportion 
-\begin_inset Formula $\pi_{g}$
+ Of the 
+\begin_inset Formula $\phi\equiv\theta-\gamma\sigma$
 \end_inset
 
- of (1,0)-types and 
-\begin_inset Formula $\pi_{s}$
-\end_inset
-
- of (0,1)-types are in 
+ non-b-types in 
 \begin_inset Formula $H$
 \end_inset
 
-.
- As a result: 
-\begin_inset Formula 
-\[
-\theta=\gamma\sigma+\pi_{g}\gamma(1-\sigma)+\pi_{s}(1-\gamma)\sigma
-\]
-
+, a proportion 
+\begin_inset Formula $k$
 \end_inset
 
+ are s-types and the remaining 
+\begin_inset Formula $1-k$
+\end_inset
 
+ are g-types.
 \end_layout
 
 \begin_layout Standard
-Suppose first that 
-\begin_inset Formula $\pi_{s}=1$
+To build intuition, we start with two extreme examples.
+ Suppose first that 
+\begin_inset Formula $k=1$
 \end_inset
 
-, 
-\begin_inset Formula $\pi_{g}=0$
+ and that 
+\begin_inset Formula $\theta=\sigma$
 \end_inset
 
 .
@@ -298,7 +298,11 @@ caste society
 
 \begin_layout Standard
 Suppose next that 
-\begin_inset Formula $\pi_{s}=0,\pi_{g}=1$
+\begin_inset Formula $k=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta=\gamma$
 \end_inset
 
 .
@@ -722,7 +726,7 @@ n_{J}^{c} & =n_{J}+\rho_{J}
 
 \begin_layout Standard
 where 
-\begin_inset Formula $\rho_{J}=\frac{1}{2}g_{J}s_{J}$
+\begin_inset Formula $\rho_{J}\equiv\frac{1}{2}g_{J}s_{J}$
 \end_inset
 
 .
@@ -772,8 +776,8 @@ In the first generation, we can calculate:
 \begin_inset Formula 
 \begin{align*}
 b_{H} & =\gamma\sigma/\theta;\\
-g_{H} & =\pi_{g}\gamma(1-\sigma)/\theta;\\
-s_{H} & =\pi_{s}(1-\gamma)\sigma/\theta;\\
+g_{H} & =(1-k)\phi/\theta\\
+s_{H} & =k\phi/\theta;\\
 n_{H} & =0;
 \end{align*}
 
@@ -783,9 +787,9 @@ and
 \begin_inset Formula 
 \begin{align*}
 b_{L} & =0;\\
-g_{L} & =(1-\pi_{g})\gamma(1-\sigma)/(1-\theta);\\
-s_{L} & =(1-\pi_{s})(1-\gamma)\sigma/(1-\theta);\\
-n_{L} & =(1-\gamma)(1-\sigma)/(1-\theta);
+g_{L} & =\frac{\gamma(1-\sigma)-\phi(1-k)}{1-\theta}\\
+s_{L} & =\frac{(1-\gamma)\sigma-\phi k}{1-\theta}\\
+n_{L} & =\frac{(1-\gamma)(1-\sigma)}{1-\theta};
 \end{align*}
 
 \end_inset
@@ -793,17 +797,9 @@ n_{L} & =(1-\gamma)(1-\sigma)/(1-\theta);
 and from these
 \begin_inset Formula 
 \begin{align*}
-\rho_{H} & =\frac{1}{2}\frac{\pi_{g}\pi_{s}\phi}{\theta^{2}};\\
-\rho_{L} & =\frac{1}{2}\frac{(1-\pi_{g})(1-\pi_{s})\phi}{(1-\theta)^{2}}.
+\rho_{H} & =\frac{1}{2}\frac{\phi^{2}k(1-k)}{\theta^{2}};\\
+\rho_{L} & =\frac{1}{2}\frac{[\gamma(1-\sigma)-\phi(1-k)][(1-\gamma)\sigma-\phi k]}{(1-\theta)^{2}}.
 \end{align*}
-
-\end_inset
-
-where 
-\begin_inset Formula 
-\[
-\phi\equiv\gamma(1-\gamma)\sigma(1-\sigma)
-\]
 
 \end_inset
 
@@ -814,9 +810,10 @@ where
 \begin_layout Standard
 hence
 \begin_inset Formula 
-\[
-\rho=\frac{1}{2}\phi\left(\frac{\pi_{g}\pi_{s}}{\theta}+\frac{(1-\pi_{g})(1-\pi_{s})}{1-\theta}\right).
-\]
+\begin{align*}
+\rho= & \frac{1}{2}\frac{\phi^{2}k(1-k)}{\theta}+\\
+ & \frac{1}{2}\frac{[\gamma(1-\sigma)-\phi(1-k)][(1-\gamma)\sigma-\phi k]}{(1-\theta)}.
+\end{align*}
 
 \end_inset
 
@@ -859,98 +856,225 @@ We can now calculate the covariance between
 \end_layout
 
 \begin_layout Standard
-To examine how the covariance changes with social structure, we fix the
- size 
+Note that when 
+\begin_inset Formula $k=1$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta=\sigma$
+\end_inset
+
+, 
+\begin_inset Formula $\rho$
+\end_inset
+
+ evaluates to 0.
+ Similarly, when 
+\begin_inset Formula $k=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\theta=\gamma$
+\end_inset
+
+, 
+\begin_inset Formula $\rho$
+\end_inset
+
+ evaluates to 0.
+ This confirms the claims we made above.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\rho$
+\end_inset
+
+ is a quadratic in 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ Differentiating 
+\begin_inset Formula $\rho$
+\end_inset
+
+ by 
+\begin_inset Formula $k$
+\end_inset
+
+ gives
+\begin_inset Formula 
+\begin{align*}
+\frac{d\rho}{dk} & =\frac{1}{2\theta}\phi^{2}(1-2k)+\frac{1}{2(1-\theta)}[\phi^{2}(1-2k)+\phi(\sigma-\gamma)]\\
+ & =\frac{1}{2\theta(1-\theta)}\phi^{2}(1-2k)+\frac{1}{2(1-\theta)}\phi(\sigma-\gamma)\\
+ & =\frac{1}{2(1-\theta)}\left[\frac{\phi^{2}}{\theta}(1-2k)+\phi(\sigma-\gamma)\right].
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is decreasing in 
+\begin_inset Formula $k$
+\end_inset
+
+, i.e.
+ 
+\begin_inset Formula $\rho$
+\end_inset
+
+ is concave.
+ We find the maximum by setting the term in square brackets to 0, giving:
+\begin_inset Formula 
+\[
+k=\frac{1}{2}+\frac{1}{2}\frac{\theta}{\theta-\gamma\sigma}(\sigma-\gamma).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This will be interior if 
 \begin_inset Formula $\theta$
 \end_inset
 
- of group 
-\begin_inset Formula $H$
+ is close enough to either 
+\begin_inset Formula $\sigma$
 \end_inset
 
-, and write 
-\begin_inset Formula $\pi_{s}$
+ or 
+\begin_inset Formula $\gamma$
 \end_inset
 
- as a function of 
-\begin_inset Formula $\pi_{g}$
+, and if 
+\begin_inset Formula $\gamma$
 \end_inset
 
-: 
-\begin_inset Formula 
-\begin{align*}
-\pi_{s} & =\frac{\theta-\gamma\sigma-\gamma(1-\sigma)\pi_{g}}{(1-\gamma)\sigma}\\
- & =Y-X\pi_{g}
-\end{align*}
-
+ and 
+\begin_inset Formula $\sigma$
 \end_inset
 
-where 
+ are not too different.
+\end_layout
+
+\begin_layout Standard
+Lemma: The second-generation correlation 
+\begin_inset Formula $\rho$
+\end_inset
+
+ between 
+\begin_inset Formula $G_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ is concave in 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is close enough to 
+\begin_inset Formula $\min\{\sigma,\gamma\}$
+\end_inset
+
+, and 
 \begin_inset Formula 
 \[
-X=\frac{\gamma}{1-\gamma}\frac{1-\sigma}{\sigma};Y=\frac{\theta-\gamma\sigma}{(1-\gamma)\sigma}.
+\sigma<\gamma<\frac{1}{2}+\frac{\sigma}{2}\textrm{ or }\gamma<\sigma<\frac{1}{2}+\frac{\gamma}{2}
 \]
 
 \end_inset
 
+then the correlation has a maximum in the interior of 
+\begin_inset Formula $k\in(0,1)$
+\end_inset
 
+.
 \end_layout
 
 \begin_layout Standard
-We assume that 
+Proof: First assume 
+\begin_inset Formula $\sigma<\gamma$
+\end_inset
+
+.
+ As 
+\begin_inset Formula $\theta\rightarrow\sigma$
+\end_inset
+
+, the expression above approaches 
+\begin_inset Formula $k=\frac{1}{2}+\frac{1}{2}\frac{(\sigma-\gamma)}{(1-\gamma)}$
+\end_inset
+
+.
+ The requirement for this to be interior is that 
+\begin_inset Formula $\left|\sigma-\gamma\right|<\left|1-\gamma\right|$
+\end_inset
+
+.
+ For 
+\begin_inset Formula $\sigma<\gamma$
+\end_inset
+
+ this is equivalent to 
+\begin_inset Formula $\gamma<(1+\sigma)/2$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-Then 
-\begin_inset Formula 
-\begin{align*}
-\rho & =\frac{1}{2}\phi\left(\frac{\pi_{g}(Y-X\pi_{g})}{\theta}+\frac{(1-\pi_{g})(1-Y+X\pi_{g})}{1-\theta}\right)\\
- & =\frac{1}{2}\phi\left(\frac{Y\pi_{g}-X\pi_{g}^{2}}{\theta}+\frac{1-Y+(X+Y-1)\pi_{g}-X\pi_{g}^{2}}{1-\theta}\right)
-\end{align*}
-
+Next assume 
+\begin_inset Formula $\gamma<\sigma$
 \end_inset
 
+.
+ As 
+\begin_inset Formula $\theta\rightarrow\gamma$
+\end_inset
 
+, the expression approaches 
+\begin_inset Formula $k=\frac{1}{2}+\frac{1}{2}\frac{(\sigma-\gamma)}{(1-\sigma)}$
+\end_inset
+
+.
+ This is interior when 
+\begin_inset Formula $\left|\sigma-\gamma\right|<\left|1-\sigma\right|$
+\end_inset
+
+, equivalently when 
+\begin_inset Formula $\sigma<(1+\gamma)/2$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-Differentiating with respect to 
-\begin_inset Formula $\pi_{g}$
-\end_inset
+\begin_inset Note Note
+status open
 
- now gives
-\begin_inset Formula 
-\[
-\frac{\mathrm{d}\rho}{\mathrm{d}\pi_{g}}=\frac{1}{2}\phi\left(\frac{Y-2X\pi_{g}}{\theta}+\frac{(X+Y-1)-2X\pi_{g}}{1-\theta}\right)
-\]
-
-\end_inset
-
-
+\begin_layout Plain Layout
+Experiments in R suggest there's an interior in only about 55% of the parameter
+ space; the remainder is equally likely to be below or above 0.
 \end_layout
 
-\begin_layout Standard
-which simplifies to
-\begin_inset Formula 
-\[
-\frac{\mathrm{d}\rho}{\mathrm{d}\pi_{g}}=\frac{1}{2}\frac{\phi}{1-\theta}\left(X-1+\frac{Y}{\theta}-\frac{2X\pi_{g}}{\theta}\right)
-\]
-
+\begin_layout Plain Layout
+The reason is that if 
+\begin_inset Formula $\theta$
 \end_inset
 
-
+ is small, 
 \end_layout
-
-\begin_layout Standard
-At 
-\begin_inset Formula $\pi_{g}=0$
-\end_inset
-
- this simplifies to 
-\begin_inset Formula 
-\[
-\left.\frac{\mathrm{d}\rho}{\mathrm{d}\pi_{g}}\right|_{\pi_{g}=0}=\frac{1}{2}\frac{\phi}{1-\theta}\left(X-1+\frac{Y}{\theta}\right)
-\]
 
 \end_inset
 
