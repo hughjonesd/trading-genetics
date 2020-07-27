@@ -6,6 +6,9 @@
 \origin unavailable
 \textclass article
 \use_default_options true
+\begin_modules
+theorems-ams-bytype
+\end_modules
 \maintain_unincluded_children false
 \language english
 \language_package default
@@ -191,7 +194,27 @@ Higher values are assumed to be more attractive in the marriage market.
 \end_inset
 
 .
- Married pairs have two children and each randomly inherits one parent's
+ We also assume 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ are not too different:
+\begin_inset Formula 
+\begin{equation}
+\textrm{Either }\sigma<\gamma<(1+\sigma)/2\textrm{ or }\gamma<\sigma<(1+\gamma)/2.\label{eq:sigma-gamma-close}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Married pairs have two children and each randomly inherits one parent's
  genetic trait and one parent's social trait.
  As a result, 
 \begin_inset Formula $\sigma$
@@ -293,7 +316,7 @@ caste society
 \begin_inset Formula $S_{i}$
 \end_inset
 
- remain independent in the populatoin.
+ remain independent in the population.
 \end_layout
 
 \begin_layout Standard
@@ -357,11 +380,60 @@ In between these cases,
 \end_inset
 
  will become positively correlated.
- Within either group 
+ We examine the correlation in the second generation.
+\end_layout
+
+\begin_layout Proposition
+The second-generation correlation 
+\begin_inset Formula $\rho$
+\end_inset
+
+ between 
+\begin_inset Formula $G_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ is concave in 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ If 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is close enough to 
+\begin_inset Formula $\min\{\sigma,\gamma\}$
+\end_inset
+
+, and 
+\begin_inset Formula 
+\[
+\sigma<\gamma<\frac{1}{2}+\frac{\sigma}{2}\textrm{ or }\gamma<\sigma<\frac{1}{2}+\frac{\gamma}{2}
+\]
+
+\end_inset
+
+then the correlation has a maximum in the interior of 
+\begin_inset Formula $k\in(0,1)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Within either group 
 \begin_inset Formula $J\in\{H,L\}$
 \end_inset
 
-, write the proportion of types in the parents generation as 
+, write the proportion of types in generation 
+\begin_inset Formula $t$
+\end_inset
+
+ as 
 \begin_inset Formula $b_{J},g_{J},s_{J},n_{J}$
 \end_inset
 
@@ -375,6 +447,16 @@ Dividing children up by their parents' types, we can calculate the proportion
 \end_layout
 
 \begin_layout Standard
+\noindent
+\align center
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="5" columns="5">
 <features tabularvalignment="middle">
@@ -697,6 +779,24 @@ Dividing children up by their parents' types, we can calculate the proportion
 
 \end_layout
 
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Proportions of children born from different types of parents (b-type; g-type;
+ s-type; n-type)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 Summing these in each group, and using that 
 \begin_inset Formula $n_{H}=0$
@@ -706,17 +806,13 @@ Summing these in each group, and using that
 \begin_inset Formula $b_{L}=0$
 \end_inset
 
-, gives the proportion of children of each type (
-\begin_inset Formula $b_{H}^{c}$
-\end_inset
-
- etc.)
+, gives the proportion of children of each type in each group:
 \begin_inset Formula 
 \begin{align*}
-b_{J}^{c} & =b_{J}+\rho_{J}\\
-g_{J}^{c} & =g_{J}-\rho_{J}\\
-s_{J}^{c} & =s_{J}-\rho_{J}\\
-n_{J}^{c} & =n_{J}+\rho_{J}
+b_{J,t+1} & =b_{J}+\rho_{J}\\
+g_{J,t+1} & =g_{J}-\rho_{J}\\
+s_{J,t+1} & =s_{J}-\rho_{J}\\
+n_{J,t+1} & =n_{J}+\rho_{J}
 \end{align*}
 
 \end_inset
@@ -726,13 +822,16 @@ n_{J}^{c} & =n_{J}+\rho_{J}
 
 \begin_layout Standard
 where 
-\begin_inset Formula $\rho_{J}\equiv\frac{1}{2}g_{J}s_{J}$
+\begin_inset Formula 
+\[
+\rho_{J}\equiv\frac{1}{2}g_{J}s_{J}.
+\]
+
 \end_inset
 
-.
- In other words, when a group contains both g-types and s-types, some of
- them marry each other and produce some b- and n-types.
- This increases the correlation between 
+In words, when a group contains both g-types and s-types, some of them marry
+ each other and produce some b- and n-type offspring: this increases the
+ correlation between 
 \begin_inset Formula $G_{i}$
 \end_inset
 
@@ -744,14 +843,14 @@ where
 \end_layout
 
 \begin_layout Standard
-Summing over the groups we can write the new generation's proportion of
+Summing over the groups, we can write the new generation's proportion of
  types in the whole population as
 \begin_inset Formula 
 \begin{align*}
-b^{c} & =b+\rho\\
-g^{c} & =g-\rho\\
-s^{c} & =s-\rho\\
-n^{c} & =n+\rho
+b_{t+1} & =b_{t}+\rho\\
+g_{t+1} & =g_{t}-\rho\\
+s_{t+1} & =s_{t}-\rho\\
+n_{t+1} & =n_{t}+\rho
 \end{align*}
 
 \end_inset
@@ -765,55 +864,6 @@ where
 \[
 \rho\equiv\theta\rho_{H}+(1-\theta)\rho_{L}.
 \]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In the first generation, we can calculate:
-\begin_inset Formula 
-\begin{align*}
-b_{H} & =\gamma\sigma/\theta;\\
-g_{H} & =(1-k)\phi/\theta\\
-s_{H} & =k\phi/\theta;\\
-n_{H} & =0;
-\end{align*}
-
-\end_inset
-
-and
-\begin_inset Formula 
-\begin{align*}
-b_{L} & =0;\\
-g_{L} & =\frac{\gamma(1-\sigma)-\phi(1-k)}{1-\theta}\\
-s_{L} & =\frac{(1-\gamma)\sigma-\phi k}{1-\theta}\\
-n_{L} & =\frac{(1-\gamma)(1-\sigma)}{1-\theta};
-\end{align*}
-
-\end_inset
-
-and from these
-\begin_inset Formula 
-\begin{align*}
-\rho_{H} & =\frac{1}{2}\frac{\phi^{2}k(1-k)}{\theta^{2}};\\
-\rho_{L} & =\frac{1}{2}\frac{[\gamma(1-\sigma)-\phi(1-k)][(1-\gamma)\sigma-\phi k]}{(1-\theta)^{2}}.
-\end{align*}
-
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Standard
-hence
-\begin_inset Formula 
-\begin{align*}
-\rho= & \frac{1}{2}\frac{\phi^{2}k(1-k)}{\theta}+\\
- & \frac{1}{2}\frac{[\gamma(1-\sigma)-\phi(1-k)][(1-\gamma)\sigma-\phi k]}{(1-\theta)}.
-\end{align*}
 
 \end_inset
 
@@ -856,6 +906,54 @@ We can now calculate the covariance between
 \end_layout
 
 \begin_layout Standard
+In the first generation, we can calculate:
+\begin_inset Formula 
+\begin{align*}
+b_{H,2} & =\gamma\sigma/\theta;\\
+g_{H,2} & =(1-k)\phi/\theta\\
+s_{H,2} & =k\phi/\theta;\\
+n_{H,2} & =0;
+\end{align*}
+
+\end_inset
+
+and
+\begin_inset Formula 
+\begin{align*}
+b_{L,2} & =0;\\
+g_{L,2} & =\frac{\gamma(1-\sigma)-\phi(1-k)}{1-\theta}\\
+s_{L,2} & =\frac{(1-\gamma)\sigma-\phi k}{1-\theta}\\
+n_{L,2} & =\frac{(1-\gamma)(1-\sigma)}{1-\theta};
+\end{align*}
+
+\end_inset
+
+and from these
+\begin_inset Formula 
+\begin{align*}
+\rho_{H} & =\frac{1}{2}\frac{\phi^{2}k(1-k)}{\theta^{2}};\\
+\rho_{L} & =\frac{1}{2}\frac{[\gamma(1-\sigma)-\phi(1-k)][(1-\gamma)\sigma-\phi k]}{(1-\theta)^{2}}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hence:
+\begin_inset Formula 
+\begin{align*}
+\rho= & \frac{1}{2}\frac{\phi^{2}k(1-k)}{\theta}+\\
+ & \frac{1}{2}\frac{[\gamma(1-\sigma)-\phi(1-k)][(1-\gamma)\sigma-\phi k]}{(1-\theta)}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 Note that when 
 \begin_inset Formula $k=1$
 \end_inset
@@ -882,7 +980,8 @@ Note that when
 \end_inset
 
  evaluates to 0.
- This confirms the claims we made above.
+ This confirms the claims in the main text about the two extreme example
+ societies.
 \end_layout
 
 \begin_layout Standard
@@ -904,11 +1003,11 @@ Note that when
 
  gives
 \begin_inset Formula 
-\begin{align*}
-\frac{d\rho}{dk} & =\frac{1}{2\theta}\phi^{2}(1-2k)+\frac{1}{2(1-\theta)}[\phi^{2}(1-2k)+\phi(\sigma-\gamma)]\\
- & =\frac{1}{2\theta(1-\theta)}\phi^{2}(1-2k)+\frac{1}{2(1-\theta)}\phi(\sigma-\gamma)\\
- & =\frac{1}{2(1-\theta)}\left[\frac{\phi^{2}}{\theta}(1-2k)+\phi(\sigma-\gamma)\right].
-\end{align*}
+\begin{align}
+\frac{d\rho}{dk} & =\frac{1}{2\theta}\phi^{2}(1-2k)+\frac{1}{2(1-\theta)}[\phi^{2}(1-2k)+\phi(\sigma-\gamma)]\nonumber \\
+ & =\frac{1}{2\theta(1-\theta)}\phi^{2}(1-2k)+\frac{1}{2(1-\theta)}\phi(\sigma-\gamma)\nonumber \\
+ & =\frac{1}{2(1-\theta)}\left[\frac{\phi^{2}}{\theta}(1-2k)+\phi(\sigma-\gamma)\right].\label{eq:d_rho_d_k}
+\end{align}
 
 \end_inset
 
@@ -920,17 +1019,31 @@ This is decreasing in
 \begin_inset Formula $k$
 \end_inset
 
-, i.e.
- 
+, proving that 
 \begin_inset Formula $\rho$
 \end_inset
 
  is concave.
- We find the maximum by setting the term in square brackets to 0, giving:
+\end_layout
+
+\begin_layout Standard
+We find the maximum for 
+\begin_inset Formula $\rho$
+\end_inset
+
+ by solving the first order condition.
+ In (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:d_rho_d_k"
+
+\end_inset
+
+), setting the term in square brackets to 0 gives:
 \begin_inset Formula 
-\[
-k=\frac{1}{2}+\frac{1}{2}\frac{\theta}{\theta-\gamma\sigma}(\sigma-\gamma).
-\]
+\begin{equation}
+k=\frac{1}{2}+\frac{1}{2}\frac{\theta}{\theta-\gamma\sigma}(\sigma-\gamma).\label{eq:k_FOC}
+\end{equation}
 
 \end_inset
 
@@ -938,11 +1051,11 @@ k=\frac{1}{2}+\frac{1}{2}\frac{\theta}{\theta-\gamma\sigma}(\sigma-\gamma).
 \end_layout
 
 \begin_layout Standard
-This will be interior if 
+We need to show this is strictly between 0 and 1 as 
 \begin_inset Formula $\theta$
 \end_inset
 
- is close enough to either 
+ approaches 
 \begin_inset Formula $\sigma$
 \end_inset
 
@@ -950,60 +1063,11 @@ This will be interior if
 \begin_inset Formula $\gamma$
 \end_inset
 
-, and if 
-\begin_inset Formula $\gamma$
-\end_inset
-
- and 
-\begin_inset Formula $\sigma$
-\end_inset
-
- are not too different.
-\end_layout
-
-\begin_layout Standard
-Lemma: The second-generation correlation 
-\begin_inset Formula $\rho$
-\end_inset
-
- between 
-\begin_inset Formula $G_{i}$
-\end_inset
-
- and 
-\begin_inset Formula $S_{i}$
-\end_inset
-
- is concave in 
-\begin_inset Formula $k$
-\end_inset
-
-.
- If 
-\begin_inset Formula $\theta$
-\end_inset
-
- is close enough to 
-\begin_inset Formula $\min\{\sigma,\gamma\}$
-\end_inset
-
-, and 
-\begin_inset Formula 
-\[
-\sigma<\gamma<\frac{1}{2}+\frac{\sigma}{2}\textrm{ or }\gamma<\sigma<\frac{1}{2}+\frac{\gamma}{2}
-\]
-
-\end_inset
-
-then the correlation has a maximum in the interior of 
-\begin_inset Formula $k\in(0,1)$
-\end_inset
-
 .
 \end_layout
 
 \begin_layout Standard
-Proof: First assume 
+First assume 
 \begin_inset Formula $\sigma<\gamma$
 \end_inset
 
@@ -1012,7 +1076,14 @@ Proof: First assume
 \begin_inset Formula $\theta\rightarrow\sigma$
 \end_inset
 
-, the expression above approaches 
+, the expression (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:k_FOC"
+
+\end_inset
+
+) approaches 
 \begin_inset Formula $k=\frac{1}{2}+\frac{1}{2}\frac{(\sigma-\gamma)}{(1-\gamma)}$
 \end_inset
 
@@ -1030,7 +1101,14 @@ Proof: First assume
 \begin_inset Formula $\gamma<(1+\sigma)/2$
 \end_inset
 
-.
+, which holds by condition (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:sigma-gamma-close"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard
@@ -1043,7 +1121,14 @@ Next assume
 \begin_inset Formula $\theta\rightarrow\gamma$
 \end_inset
 
-, the expression approaches 
+, (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:k_FOC"
+
+\end_inset
+
+) approaches 
 \begin_inset Formula $k=\frac{1}{2}+\frac{1}{2}\frac{(\sigma-\gamma)}{(1-\sigma)}$
 \end_inset
 
@@ -1056,7 +1141,14 @@ Next assume
 \begin_inset Formula $\sigma<(1+\gamma)/2$
 \end_inset
 
-.
+, which again holds by (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:sigma-gamma-close"
+
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard

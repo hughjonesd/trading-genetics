@@ -254,7 +254,29 @@ make_mf_pairs <- function (mf_pairs_file, famhist, resid_scores) {
     left_join(famhist_tmp, by = c("ID.m" = "f.eid")) %>% 
     left_join(famhist_tmp, by = c("ID.f" = "f.eid"), suffix = c(".m", ".f"))
   
+  mf_pairs$couple_id <- paste(mf_pairs$ID.m, mf_pairs$ID.f, sep = "_")
+  mf_pairs$EA3.m <- mf_pairs$EA3_excl_23andMe_UK_resid.m
+  mf_pairs$EA3.f <- mf_pairs$EA3_excl_23andMe_UK_resid.f
+
   mf_pairs
+}
+
+
+make_mf_pairs_twice <- function (mf_pairs) {
+  mf_pairs$x <- "Male"
+  
+  mf_pairs_rebadged <- mf_pairs
+  mf_pairs_rebadged$x <- "Female"
+  
+  names(mf_pairs_rebadged) <- sub("\\.f$", ".mxxx", names(mf_pairs_rebadged))
+  names(mf_pairs_rebadged) <- sub("\\.m$", ".f", names(mf_pairs_rebadged))
+  names(mf_pairs_rebadged) <- sub("\\.mxxx$", ".m", names(mf_pairs_rebadged))
+  
+  mf_pairs_twice <- bind_rows(mf_pairs, mf_pairs_rebadged)
+  names(mf_pairs_twice) <- sub("\\.m", ".x", names(mf_pairs_twice))
+  names(mf_pairs_twice) <- sub("\\.f", ".y", names(mf_pairs_twice))
+  
+  mf_pairs_twice
 }
 
 
@@ -296,6 +318,11 @@ plan <- drake_plan(
   
   mf_pairs = target(
     make_mf_pairs(file_in(!! mf_pairs_file), famhist, resid_scores),
+    format = "fst"
+  ),
+  
+  mf_pairs_twice = target(
+    make_mf_pairs_twice(mf_pairs),
     format = "fst"
   )
 )
