@@ -129,12 +129,12 @@ $G_{i}=1$ is denoted by $\gamma$, and the population proportion with $S_{i}=1$
 is denoted by $\sigma$. In generation 1, $G_i$ and $S_i$ are assumed independent,
 so e.g. the proportion of b-types is $\gamma\sigma$.
 
-Higher values are assumed to be more attractive in the marriage market.
-Indeed, individuals are divided into two classes, $H$ and $L$, for
-the purpose of marital matching. Within $H$ and $L$, all individuals
-form spouse pairs at random. Class $H$ is of size $\theta$: we assume
-$\gamma\sigma < \theta < \min\{\gamma,\sigma\}$. We also assume $\gamma$
-and $\sigma$ are not too different:
+Higher values of $G_i$ and $S_i$ are assumed to be attractive in the
+marriage market. Indeed, individuals are divided into two classes, $H$ and $L$,
+for the purpose of marital matching. Within $H$ and $L$, all individuals form
+spouse pairs at random. Class $H$ is of size $\theta$: we assume 
+$\gamma\sigma < \theta \le \min\{\gamma,\sigma\}$. We also assume 
+$\gamma$ and $\sigma$ are not too different:
 
 \begin{equation}
 \textrm{Either }\sigma < \gamma < (1+\sigma)/2
@@ -150,11 +150,17 @@ and $\gamma$ stay constant over generations.
 B-types with $\tau_{i} = (1,1)$ are always in $H$. N-types with $\tau_{i} = (0,0)$
 are always in $L$. Where the other groups fit depends on the nature
 of the society. Of the $\theta - \gamma\sigma$ non-b-types
-in $H$, a proportion $k$ are s-types and the remaining $1-k$ are
+in $H$, a proportion $k$ are s-types and the remaining $1 - k$ are
 g-types. 
 
 The value of $k$ gives the level of social stratification in the
-society. To build intuition, we start with two extreme examples. Suppose first
+society's marriage market. When $k$ is close to 1, individuals' place in the
+marriage market is largely determined by social status, and genetics alone rarely
+gives access to the high matching group. When $k$ is close to 0, "good genes"
+play a larger role in the marriage market, and social status alone rarely gives access 
+to the high group.
+
+To build intuition, we start with two extreme examples. Suppose first
 that $k=1$ and that $\theta = \sigma$. This is a \emph{caste society}
 where marital matching is entirely driven by social status. All individuals
 in $H$ ($L$) have $S_{i} = 1$ ($S_{i} = 0$), and so do their children.
@@ -190,7 +196,6 @@ and this increases the correlation between genetics and social status.
 Figure \@ref(fig:pic-theory) plots the second generation correlation coefficient
 of $S_i$ and $G_i$ against $k$, for $\gamma = \sigma = \theta = 0.5$.
 
-
 ```{r pic-theory, fig.cap = "Social stratification and biological lock-in: theory", fig.width = 4, fig.height = 3.5}
 rho <- function (g, s, theta, k) {
   phi <- theta - g * s
@@ -206,9 +211,71 @@ s <- 0.5
 theta <- 0.5
 op <- par(mar = c(4, 4, 1, 1), mgp = c(2, 1, 0))
 curve(rho(g, s, theta, k)/sqrt(s*(1-s)*g*(1-g)), xname = "k", ylab = expression(Corr(G[i],S[i])), lwd = 2, 
-      las = 1, xaxp = c(0, 1, 1), yaxp = c(0, 0.15, 1))
+      las = 1, xaxp = c(0, 1, 1), yaxp = c(0, 0.1, 1))
 par(mar = op)
 ```
+
+
+Some points are in order. First, the "marriage market" here is a reduced form
+mechanism, encompassing that makes a difference to partner choice. For example,
+if earned income affects attractiveness in the marriage market, then society's
+level of meritocracy in the labour market will correlate with the value of $k$:
+a more meritocratic labour market will allow people with low social status but
+high human capital (partly genetically determined) to earn more, and therefore
+to enter the high group.
+
+Second, the contents of $G$ -- what counts as "good genes" in the marriage
+market -- are themselves likely to vary across societies. For instance,
+standards of physical attractiveness vary historically. Similarly, it is
+plausible that what counted as a "good match", in terms of personality, physical
+and intellectual characteristics, differed between medieval European nobility
+and contemporary society. 
+
+The model predicts variation in the strength of biological lock-in. In
+particular, in "caste societies" where there is complete endogamy within 
+social status groups, there is no scope for biological lock-in, because
+marriage partners do not trade off genetics for social status. The model also 
+assumes that social status is inherited randomly from one parent, in 
+the same way a genetic allele is inherited. This assumption can be weakened. 
+For example, if social status is inherited deterministically from the father, then the
+results remain unchanged (for each pair of parents, just assume that one randomly
+chosen parent is the father). 
+
+Another possibility is that cultural rules may assign
+status more or less strictly. Suppose that if both parents have $S_i = 1$, then
+the children always inherit $S_i = 1$. However, if only one parent has
+$S_i = 1$, then children inherit $S_i = 1$ with probability $\alpha$. A higher
+value of $\alpha$ corresponds to a more "expansive" inheritance rule for social
+status. For example, while British noble titles descend only to the first born
+son, on Europe the status of nobility were granted to all children, creating a 
+separate quasi-caste. (TODO: check details!) The original model corresponds to
+$\alpha = \frac{1}{2}$.^[If $\alpha \ne \frac{1}{2}$, the size of the
+high-status group increases or decreases over time. Population shares could be 
+stabilized by adding noise to the inheritance process, however.] Our second
+result shows that a more expansive inheritance rule strengthens the correlation
+between genetics and status. 
+
+\begin{prop}
+The second-generation correlation between $G_{i}$ and $S_{i}$
+increases in $\alpha$. 
+\label{prop:cor-alpha}
+\end{prop}
+
+This is because when the inheritance rule is generous, children of b-types and
+other types are relatively more likely to end up as b-types, inheriting both
+genetics and social status.
+
+TODO: Points about the theory
+- Contents of G itself will vary across societies DONE
+- Marriage market is "reduced form" for everything that affects partner matching. DONE
+- No correlation if $k=0$ and $\theta = \sigma$, i.e. if there is complete endogamy 
+  within social statuses. DONE
+- Model assumes that social status descends randomly. (We can investigate varying this.)
+- Differences with meritocracy. Meritocracy models of this phenomenon have that G
+  causes S. Here G may not play any causal role in determining status.
+- A more complex model with continuous S and G would still have the same results
+  (maybe discuss in appendix)?
+
 
 
 # Data
@@ -224,18 +291,42 @@ and late-born full siblings have the same *ex ante* expected genetic endowment.
 ^[This might not be the case, if parents' choice of whether to
 have more children is endogenous to the genetic endowment of their earlier 
 children. We will check for this below.] We can therefore use birth order
-as an instrument for social advantage.
+as an exogenous shock to social status.
 
 We use data from UK Biobank, a study of about 500,000 individuals. 
 
 TODO: describe N for birth order, describe PSEA calculation.
+TODO: look at mechanisms by which birth order might affect university
+TODO: get IQ data, control for it
+TODO: subset to spouses with children
+TODO: overall index of social status?
 
 
 # Results 
 
+Ideally we would instrument social status with birth order. However, our measures of
+social status are noisy and incomplete. For example, we know whether subjects went
+to university, but not which university they went to, and we only have rough
+categorical data on household income. Birth order likely affects both these and 
+other measures of social advantage. So, an instrumental variables approach
+would probably fall foul of the exclusion restriction. 
+
+Instead, we conduct a mediation analysis, following the strategy of Heckman and
+Pinto (2013). We first regress our measures of own social status (i.e. income
+and education) on birth order. Then, we regress spouse's PSEA on birth order,
+with and without controlling for social status. Under the assumption that birth
+order is exogenous to own genetics, these regressions identify the effect of
+birth order, plus other environmental variables that correlate with it, on own
+social status and spouse's genetics. Also, if the estimated effect of birth
+order on spouse's PSEA changes when social status is included, that is evidence
+that social status mediates the effect of birth order.
+
+TODO: clarify the empirical model, you may need help....
 
 TODO: reduced form
+TODO: estimate individual income from job SIC codes? ASHE gives data
 
+# 
 
 ```{r pic-bo-university}
 famhist %>% 
@@ -270,7 +361,8 @@ famhist %>%
       ggplot(aes(`Birth order`, fill = `Income category`)) + 
       geom_bar(position = "fill") +
       facet_grid(cols = vars(`Family size`), labeller = label_both) + 
-      scale_fill_brewer() + labs(y = "Proportion")
+      scale_fill_brewer(palette = 2) + 
+      labs(y = "Proportion")
 ```
 
 
@@ -537,12 +629,13 @@ $g_{J}$ & $\frac{1}{2};\frac{1}{2};0;0$ & $0;1;0;0$ & $\frac{1}{4};\frac{1}{4};\
 
 $s_{J}$ & $\frac{1}{2};0;\frac{1}{2};0$ & $\frac{1}{4};\frac{1}{4};\frac{1}{4};\frac{1}{4}$ & $0;0;1;0$ & $0;0;\frac{1}{2};\frac{1}{2}$\tabularnewline
 
-$n_{J}$ & $\frac{1}{4};\frac{1}{4};\frac{1}{4};\frac{1}{4}$ & $0;\frac{1}{2};0;\frac{1}{2}$ & $0;0;\frac{1}{2};\frac{1}{2}$ & $0;0;0;0$\tabularnewline
+$n_{J}$ & $\frac{1}{4};\frac{1}{4};\frac{1}{4};\frac{1}{4}$ & $0;\frac{1}{2};0;\frac{1}{2}$ & $0;0;\frac{1}{2};\frac{1}{2}$ & $0;0;0;1$\tabularnewline
 \hline 
 \end{tabular}
 \par\end{centering}
 \caption{Proportions of children born from different types of parents (b-type;
 g-type; s-type; n-type)}
+\label{tab:child-shares}
 \end{table}
 \par\end{center}
 
@@ -587,10 +680,10 @@ $t = 2$ this is just equal to $\rho$.
 In the first generation, we can calculate:
 
 \begin{align*}
-b_{H,2} & =\gamma\sigma/\theta;\\
-g_{H,2} & =(1-k)\phi/\theta\\
-s_{H,2} & =k\phi/\theta;\\
-n_{H,2} & =0;
+b_{H,1} & =\gamma\sigma/\theta;\\
+g_{H,1} & =(1-k)\phi/\theta\\
+s_{H,1} & =k\phi/\theta;\\
+n_{H,1} & =0;
 \end{align*}
 
 where 
@@ -602,10 +695,10 @@ where
 Similarly:
 
 \begin{align*}
-b_{L,2} & =0;\\
-g_{L,2} & =\frac{\gamma(1-\sigma)-\phi(1-k)}{1-\theta}\\
-s_{L,2} & =\frac{(1-\gamma)\sigma-\phi k}{1-\theta}\\
-n_{L,2} & =\frac{(1-\gamma)(1-\sigma)}{1-\theta};
+b_{L,1} & =0;\\
+g_{L,1} & =\frac{\gamma(1-\sigma)-\phi(1-k)}{1-\theta}\\
+s_{L,1} & =\frac{(1-\gamma)\sigma-\phi k}{1-\theta}\\
+n_{L,1} & =\frac{(1-\gamma)(1-\sigma)}{1-\theta};
 \end{align*}
 
 and from these
@@ -640,24 +733,87 @@ This is decreasing in $k$, proving that $\rho$ is concave.
 We find the maximum for $\rho$ by solving the first order condition.
 In (\ref{eq:d_rho_d_k}), setting the term in square brackets to 0
 gives:
+
 \begin{equation}
-k=\frac{1}{2}+\frac{1}{2}\frac{\theta}{\theta-\gamma\sigma}(\sigma-\gamma).\label{eq:k_FOC}
+k=\frac{1}{2} + \frac{1}{2}\frac{\theta}{\theta - \gamma\sigma}(\sigma - \gamma).\label{eq:k_FOC}
 \end{equation}
 
 We need to show this is strictly between 0 and 1 as $\theta$ approaches
 $\sigma$ or $\gamma$.
 
-First assume $\sigma<\gamma$. As $\theta\rightarrow\sigma$, the
-expression (\ref{eq:k_FOC}) approaches $k=\frac{1}{2}+\frac{1}{2}\frac{(\sigma-\gamma)}{(1-\gamma)}$.
-The requirement for this to be interior is that $\left|\sigma-\gamma\right|<\left|1-\gamma\right|$.
-For $\sigma<\gamma$ this is equivalent to $\gamma<(1+\sigma)/2$,
+First assume $\sigma < \gamma$. As $\theta \rightarrow \sigma$, the
+expression (\ref{eq:k_FOC}) approaches $k=\frac{1}{2} + \frac{1}{2}\frac{(\sigma-\gamma)}{(1-\gamma)}$.
+The requirement for this to be interior is that $|\sigma-\gamma| < |1-\gamma|$.
+For $\sigma<\gamma$ this is equivalent to $\gamma < (1+\sigma)/2$,
 which holds by condition (\ref{eq:sigma-gamma-close}).
 
-Next assume $\gamma<\sigma$. As $\theta\rightarrow\gamma$, (\ref{eq:k_FOC})
-approaches $k=\frac{1}{2}+\frac{1}{2}\frac{(\sigma-\gamma)}{(1-\sigma)}$.
-This is interior when $\left|\sigma-\gamma\right|<\left|1-\sigma\right|$,
-equivalently when $\sigma<(1+\gamma)/2$, which again holds by (\ref{eq:sigma-gamma-close}).
+Next assume $\gamma < \sigma$. As $\theta \rightarrow \gamma$, (\ref{eq:k_FOC})
+approaches $k = \frac{1}{2} + \frac{1}{2}\frac{(\sigma-\gamma)}{(1-\sigma)}$.
+This is interior when $|\sigma-\gamma| < |1-\sigma|$,
+equivalently when $\sigma < (1+\gamma)/2$, which again holds by (\ref{eq:sigma-gamma-close}).
 
 
+## Proof of Proposition \@ref(prop:cor-alpha)
 
+We can rewrite table \@ref(tab:child-shares) as:
 
+\begin{center}
+\begin{table}[h]
+\begin{centering}
+\begin{tabular}{ccccc}
+\hline 
+ & $b_{J}$ & $g_{J}$ & $s_{J}$ & $n_{J}$\tabularnewline
+
+$b_{J}$ & $1;0;0;0$ & $\alpha;1-\alpha;0;0$ & $\frac{1}{2};0;\frac{1}{2};0$ & $\frac{\alpha}{2};\frac{1-\alpha}{2};\frac{\alpha}{2};\frac{1-\alpha}{2}$\tabularnewline
+
+$g_{J}$ & $\alpha;1-\alpha;0;0$ & $0;1;0;0$ & $\frac{\alpha}{2};\frac{1-\alpha}{2};\frac{\alpha}{2};\frac{1-\alpha}{2}$ & $0;\frac{1}{2};0;\frac{1}{2}$\tabularnewline
+
+$s_{J}$ & $\frac{1}{2};0;\frac{1}{2};0$ & $\frac{\alpha}{2};\frac{1-\alpha}{2};\frac{\alpha}{2};\frac{1-\alpha}{2}$ & $0;0;1;0$ & $0;0;\frac{1}{2};\frac{1}{2}$\tabularnewline
+
+$n_{J}$ & $\frac{\alpha}{2};\frac{1-\alpha}{2};\frac{\alpha}{2};\frac{1-\alpha}{2}$ & $0;\frac{1}{2};0;\frac{1}{2}$ & $0;0;\frac{1}{2};\frac{1}{2}$ & $0;0;0;1$\tabularnewline
+\hline 
+\end{tabular}
+\par\end{centering}
+\caption{Proportions of children born, $\alpha$-rule for social inheritance}
+\end{table}
+\par\end{center}
+
+Again, summing over types within groups and then over groups, we get
+
+\begin{align*}
+b_{t+1} & =b_{t}-\theta(1-2\alpha)b_{t}g_{t}+\alpha g_{t}s_{t}\\
+g_{t+1} & =g_{t}+\theta(1-2\alpha)b_{t}g_{t}-\alpha g_{t}s_{t}\\
+s_{t+1} & =s_{t}-(1-\alpha)g_{t}s_{t}\\
+n_{t+1} & =n_{t}+(1-\alpha)g_{t}s_{t}
+\end{align*}
+
+as the intergenerational difference equation in type shares. As before,
+plug in first generation type-shares to get:
+
+\begin{align*}
+b_{2} & =b_{1}-\theta(1-2\alpha)b_{H,1}g_{H,1}+\alpha\rho_{\alpha}\\
+g_{2} & =g_{1}+\theta(1-2\alpha)b_{H,1}g_{H,1}-\alpha\rho_{\alpha}\\
+s_{2} & =s_{1}-(1-\alpha)\rho_{\alpha}\\
+n_{2} & =n_{1}+(1-\alpha)\rho_{\alpha}
+\end{align*}
+where 
+\[
+\rho_{\alpha}=\theta(g_{H}s_{H})+(1-\theta)(g_{L}s_{L}).
+\]
+
+Calculating the second-generation covariance as $b_{2}-\gamma\sigma=b_{2}-b_{1}$
+gives:
+\[
+\alpha[\theta(g_{H}s_{H})+(1-\theta)(g_{L}s_{L})]-\theta(1-2\alpha)b_{H,1}g_{H,1}
+\]
+
+and plugging in values for the first generation as before gives
+
+\begin{align*}
+\alpha\frac{k(1-k)\phi^{2}}{\theta}+\alpha\frac{[\gamma(1-\sigma)-\phi(1-k)][(1-\gamma)\sigma-\phi k]}{1-\theta}\\
+-(1-2\alpha)\frac{\gamma\sigma(1-k)\phi}{\theta}.
+\end{align*}
+
+This expression equals the old value of $\rho$ when $\alpha=\frac{1}{2}$.
+It is also increasing in $\alpha$, since all the fractions in it
+are positive. 
