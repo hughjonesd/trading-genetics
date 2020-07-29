@@ -2,7 +2,7 @@
 suppressPackageStartupMessages({
   library(drake)
   library(matrixStats)
-  loadNamespace("raster")
+  library(raster)
   library(dplyr)
   library(readr)
   library(readxl)
@@ -65,7 +65,7 @@ import_pcs <- function (pcs_file) {
 import_ashe_income <- function (ashe_income_file) {
   ashe_income <- readxl::read_xls(ashe_income_file, range = "A5:F475")
   ashe_income %<>% 
-        select(Description, Code, Median, Mean) %>% 
+        dplyr::select(Description, Code, Median, Mean) %>% 
         mutate(across(c(Median, Mean), as.numeric)) %>% 
         rename(median_pay = Median, mean_pay = Mean)
   
