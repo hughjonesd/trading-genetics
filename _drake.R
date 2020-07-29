@@ -2,35 +2,17 @@
 suppressPackageStartupMessages({
   library(drake)
   library(matrixStats)
+  loadNamespace("raster")
   library(dplyr)
   library(readr)
+  library(readxl)
   library(magrittr)
   library(purrr)
   library(forcats)
   library(santoku)
   library(tidync)
   library(abind)
-  library(raster)
 })
-
-data_dir       <- "../negative-selection-data"
-pgs_dir        <- file.path(data_dir, "polygenic_scores")
-sun_dir        <- file.path(data_dir, "sunshine-records")
-
-pcs_file       <- file.path(data_dir, "UKB.HM3.100PCs.40310.txt")
-famhist_files <- file.path(data_dir, c(
-                    "UKB.EA_pheno.coordinates.QC.csv",
-                    "david.family_history.traits.out.csv",
-                    "david.family_history.traits.20042020.out.csv",
-                    "david.family_history.traits.05052020.out.csv",
-                    "david.family_history.traits.16052020.out.csv",
-                    "david.family_history.traits.18052020.out.csv",
-                    "david.family_history.traits.17062020.out.csv",
-                    "david.birthinfo.traits.14072020.out.csv"
-                  ))
-rgs_file       <- file.path(data_dir, "EA3_rgs.10052019.rgs.csv")
-mf_pairs_file  <- file.path(data_dir, "spouse_pair_info", 
-                            "UKB_out.mf_pairs_rebadged.csv")
 
 
 # utility function:
@@ -80,6 +62,17 @@ import_pcs <- function (pcs_file) {
 }
 
 
+import_ashe_income <- function (ashe_income_file) {
+  ashe_income <- readxl::read_xls(ashe_income_file, range = "A5:F475")
+  ashe_income %<>% 
+        select(Description, Code, Median, Mean) %>% 
+        mutate(across(c(Median, Mean), as.numeric)) %>% 
+        rename(median_pay = Median, mean_pay = Mean)
+  
+  ashe_income
+} 
+
+
 compute_resid_scores <- function (famhist, pcs, score_names) {
   famhist <- left_join(famhist, pcs, by = c("f.eid" = "IID"))
   resid_scores <- data.frame(f.eid = famhist$f.eid)
@@ -95,7 +88,7 @@ compute_resid_scores <- function (famhist, pcs, score_names) {
 }
 
 
-clean_famhist <- function (famhist, score_names) {
+clean_famhist <- function (famhist, score_names, ashe_income) {
   # we get very few extra cases from adding f.2946.1.0 etc, and it makes calculating
   # father's year of birth more complex
   
@@ -133,7 +126,6 @@ clean_famhist <- function (famhist, score_names) {
                              famhist$f.2734.2.0, 
                              na.rm = TRUE
   )
-  
   
   famhist$n_in_household <- famhist$f.709.0.0
   
@@ -182,6 +174,8 @@ clean_famhist <- function (famhist, score_names) {
   
   famhist[score_names] <- scale(famhist[score_names])
 
+  # TODO: ask Abdel for job code f.20277
+  # famhist %<>% left_join(ashe_income, by = c("f.20277" = "Code"))
   
   return(famhist)
 }
@@ -280,6 +274,28 @@ make_mf_pairs_twice <- function (mf_pairs) {
 }
 
 
+data_dir       <- "../negative-selection-data"
+pgs_dir        <- file.path(data_dir, "polygenic_scores")
+sun_dir        <- file.path(data_dir, "sunshine-records")
+
+pcs_file       <- file.path(data_dir, "UKB.HM3.100PCs.40310.txt")
+famhist_files <- file.path(data_dir, c(
+                    "UKB.EA_pheno.coordinates.QC.csv",
+                    "david.family_history.traits.out.csv",
+                    "david.family_history.traits.20042020.out.csv",
+                    "david.family_history.traits.05052020.out.csv",
+                    "david.family_history.traits.16052020.out.csv",
+                    "david.family_history.traits.18052020.out.csv",
+                    "david.family_history.traits.17062020.out.csv",
+                    "david.birthinfo.traits.14072020.out.csv"
+                  ))
+rgs_file       <- file.path(data_dir, "EA3_rgs.10052019.rgs.csv")
+mf_pairs_file  <- file.path(data_dir, "spouse_pair_info", 
+                            "UKB_out.mf_pairs_rebadged.csv")
+ashe_income_file <- file.path(data_dir, 
+                      "SOC-income", "Occupation (4) Table 14.7b   Annual pay - Gross 2007 CV.xls") 
+
+
 plan <- drake_plan(
   score_names  = {
     score_names <- sub(
@@ -298,8 +314,10 @@ plan <- drake_plan(
   
   pcs = target(import_pcs(file_in(!! pcs_file)), format = "fst"),
   
+  ashe_income = target(import_ashe_income(file_in(!! ashe_income_file))),
+  
   famhist = target({
-    famhist <- clean_famhist(famhist_raw, score_names)
+    famhist <- clean_famhist(famhist_raw, score_names, ashe_income)
     famhist <- compute_sunshine(famhist, file_in(!! sun_dir))
     famhist
     },
