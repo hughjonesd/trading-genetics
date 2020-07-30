@@ -1,5 +1,5 @@
 ---
-title: 'Room at the top: biological lock-in of social advantage'
+title: 'Genetic lock-in of social advantage: evidence from UK Biobank'
 author: David Hugh-Jones & Abdel Abdellaoui
 date: "`r Sys.Date()`"
 output: 
@@ -29,6 +29,7 @@ library(huxtable)
 library(broom)
 library(fixest)
 library(santoku)
+library(purrr)
 
 knitr::opts_chunk$set(echo = FALSE)
 
@@ -55,7 +56,7 @@ ugliness, its repelling power, is destroyed by money." These quotations suggest
 that social advantages, such as wealth, caste or status, may be transformed into
 biological advantages in the next generation, via assortative mating between
 socially and genetically advantaged people. We call this process 
-*biological lock-in*.
+*genetic lock-in*.
 
 Figures \@ref(fig:pic-basic-corr-uni) and \@ref(fig:pic-basic-corr-income) 
 illustrate the idea using data for spouse
@@ -69,12 +70,12 @@ is residualized by the first 100 principal components of UK Biobank array data.]
 Figure \@ref(fig:pic-basic-corr-income) plots one partner's PSEA against another
 measure of social status: income. 
 
-These figures do not prove that biological lock-in is taking place: since an
+These figures do not prove that genetic lock-in is taking place: since an
 individual's own PSEA correlates with both their educational attainment, and
 their income, both figures could be a result of partner selection on a purely
 genetic basis. In this paper, we test the theory more rigorously, using
 environmental shocks to social status that are unlikely to be correlated with
-own genetics. First, we develop a simple theory of biological lock-in, to
+own genetics. First, we develop a simple theory of genetic lock-in, to
 illustrate how its effects vary with social structure.
 
 
@@ -196,7 +197,7 @@ and this increases the correlation between genetics and social status.
 Figure \@ref(fig:pic-theory) plots the second generation correlation coefficient
 of $S_i$ and $G_i$ against $k$, for $\gamma = \sigma = \theta = 0.5$.
 
-```{r pic-theory, fig.cap = "Social stratification and biological lock-in: theory", fig.width = 4, fig.height = 3.5}
+```{r pic-theory, fig.cap = "Social stratification and genetic lock-in: theory", fig.width = 4, fig.height = 3.5}
 rho <- function (g, s, theta, k) {
   phi <- theta - g * s
   
@@ -231,9 +232,9 @@ plausible that what counted as a "good match", in terms of personality, physical
 and intellectual characteristics, differed between medieval European nobility
 and contemporary society. 
 
-The model predicts variation in the strength of biological lock-in. In
+The model predicts variation in the strength of genetic lock-in. In
 particular, in "caste societies" where there is complete endogamy within 
-social status groups, there is no scope for biological lock-in, because
+social status groups, there is no scope for genetic lock-in, because
 marriage partners do not trade off genetics for social status. The model also 
 assumes that social status is inherited randomly from one parent, in 
 the same way a genetic allele is inherited. This assumption can be weakened. 
@@ -268,14 +269,28 @@ TODO: Points about the theory.
 - A more complex model with continuous S and G would still have the same results
   (maybe discuss in appendix)?
 
+Behaviour geneticists often make the point that in meritocratic societies,
+successful people may transmit relevant genes to their offspring. (TODO: cite relevant papers.) 
+Like genetic
+genetic lock-in, meritocracy may therefore lead to a correlation between social status and genetics.
+However, genetic lock-in is broader. Under meritocracy, certain
+genetic variants *cause* higher social status and are then transmitted along
+with it. The logic does not apply to non-meritocratic societies where social status
+is ascribed rather than earned. By contrast, genetic lock-in applies to genetic
+variants that are *associated* with higher social status in the spouse matching process.
+They do not need to exert any influence whatsoever on an individual's own social status. 
+The logic of genetic lock-in therefore applies to a historically much wider 
+range of societies, including societies where social status is wholly ascribed or
+inherited, such as aristocracies.
+
 
 
 # Data
 
 As mentioned above, simple correlations between one partner's social status
-and the other partner's genetics do not prove that biological lock-in is
+and the other partner's genetics do not prove that genetic lock-in is
 taking place, because one's social status correlates with one's own genetics.
-To demonstrate biological lock-in, we therefore need a source of social
+To demonstrate genetic lock-in, we therefore need a source of social
 advantage which is exogenous to genetics. One possibility is *birth order*.
 It is well known that earlier-born children receive more parental care and
 have better life outcomes. (XXX is it? Go check.) On the other hand, early-
@@ -318,6 +333,28 @@ that social status mediates the effect of birth order.
 * TODO: estimate individual income from job SIC codes? ASHE gives data
 
 
+```{r calc-bo-first-stage}
+mod_bo_1st <- list()
+mod_bo_1st$uni    <- lm(university ~ n_older_sibs + factor(n_sibs), famhist, 
+                    subset = n_sibs >= 2 & n_sibs <= 8)
+mod_bo_1st$income <- lm(income_cat ~ n_older_sibs + factor(n_sibs), famhist, 
+                    subset = n_sibs >= 2 & n_sibs <= 8)
+
+pval_bo_1st <- map(mod_bo_1st, 
+                 ~tidy(.x) %>% filter(term == "n_older_sibs") %>% pull(p.value)
+               )
+pval_bo_1st %<>% map(format, digits = 3)
+```
+
+Figures \@ref(fig:pic-bo-university) and \@ref(fig:pic-bo-income) show the
+relationship between birth order, university education and income, separately for
+respondents with 1-3 siblings. We test this formally in a linear regression
+controlling for family size, which may be correlated with parents'
+characteristics including genetics. Birth order is negatively correlated with
+both measures (among respondents with 1-7 siblings: university $p$ = 
+`r pval_bo_1st$uni`, income $p$ = `r pval_bo_1st$income`).
+
+
 ```{r pic-bo-uni}
 famhist %>% 
       filter(n_sibs <= 4, n_sibs >= 2, ! is.na(n_older_sibs)) %>% 
@@ -356,111 +393,107 @@ famhist %>%
 ```
 
 
+Next we run regressions of spouse PSEA on birth order, university attendance
+and income.
 
-Figures \@ref(fig:pic-bo-university) and \@ref(fig:pic-bo-income) show the
-relationship between birth order, university education and income. 
+TODO: try to explain this better!
 
+Table \@ref(tab:tbl-bo-sea) shows the results. Column 1 shows the effect of 
+birth order controlling only for own PSEA and family size. It establishes
+that earlier-born children have spouses with higher PSEA. The effect size
+is small. This is to be expected, because (a) the effects of birth order on
+university, income and (presumably) other variables are small, and (b) PSEA is
+measured with a lot of error. We aim to test theory rather than estimating 
+an effect size, so we focus more on statistical significance.
 
-## Regressions
+Column 2 removes birth order and includes university attendance. Column 3
+includes birth order and university attendance. The coefficient on university 
+attendance barely shifts, but the coefficient on birth order decreases by about
+20%. Columns 4 and 5 repeat this exercise with income category. Again,
+the coefficient on income is unchanged by including birth order but birth
+order's effect decreases when income is included.
 
-We run regressions instrumenting one spouse's educational attainment with their
-birth order. We control for overall family (i.e. sibling group)
-size. Without this, then birth order would correlate with family size,
-which itself may correlate with genetics, since parents of different family sizes
-might have different genetic endowments. Indeed, respondents with more siblings
-overall have substantially lower PSEA. We also control for subject's own PSEA. Lastly,
-we allow the effect of birth order to vary depending on total family size.
+```{r tbl-bo-psea}
 
-Table \@ref(tab:tbl-instruments) shows instrumental variables regressions
-using 2 stage least squares. We use only subjects with between 2 and 8 siblings. 
-Column 1 pools men and women. Columns 2 and 3 run separate regressions by sex.
-The effect is positive for both male and female subjects, but twice as strong, 
-and significant, for males. 
+mod_bo_psea <- list()
 
+mod_bo_psea[[1]] <- lm(EA3.y ~ n_older_sibs.x + EA3.x + factor(n_sibs.x), 
+                       data   = mf_pairs_twice, 
+                       subset = n_sibs.x >= 2 & n_sibs.x <= 8 & ! is.na(n_older_sibs.x))
+mod_bo_psea[[2]] <- update(mod_bo_psea[[1]], . ~ . + university.x - n_older_sibs.x)
+mod_bo_psea[[3]] <- update(mod_bo_psea[[1]], . ~ . + university.x)
+mod_bo_psea[[4]] <- update(mod_bo_psea[[1]], . ~ . + income_cat.x - n_older_sibs.x)
+mod_bo_psea[[5]] <- update(mod_bo_psea[[1]], . ~ . + income_cat.x)
 
-```{r tbl-instruments}
-
-mod_ea3_iv <- AER::ivreg(
-                 EA3.y ~ university.x + factor(n_sibs.x) + EA3.x | 
-                 n_older_sibs.x:factor(n_sibs.x) + factor(n_sibs.x) + EA3.x, 
-                 data = mf_pairs_twice, 
-                 subset = n_sibs.x >= 2 & n_sibs.x <= 8
+glances <- lapply(mod_bo_psea, broom::glance)
+mod_bo_psea_cl <- lapply(mod_bo_psea, lmtest::coeftest, 
+                      vcov. = function (x) vcovCL(x, ~ couple_id))
+mod_bo_psea_cl <- purrr::map2(mod_bo_psea_cl, glances, 
+                 ~ huxtable::tidy_override(.x, glance = as.list(.y), extend = TRUE)
                )
 
-mod_ea3f_iv <- AER::ivreg(
-                 EA3.f ~ university.m + factor(n_sibs.m) + EA3.m | 
-                 n_older_sibs.m:factor(n_sibs.m) +factor(n_sibs.m) + EA3.m, 
-                 data = mf_pairs, 
-                 subset = n_sibs.m >= 2 & n_sibs.m <= 8
-               )
-
-
-mod_ea3m_iv <- AER::ivreg(
-                 EA3.m ~ university.f + factor(n_sibs.f) + EA3.f | 
-                 n_older_sibs.f:factor(n_sibs.f) + factor(n_sibs.f)  + EA3.f, 
-                 data = mf_pairs, 
-                 subset = n_sibs.f >= 2 & n_sibs.f <= 8
-               )
-
-# TODO: work out how to use coeftest and clustered vcov with ivreg
-# 
-mod_ea3_iv_or <- huxtable::tidy_override(mod_ea3_iv, extend = TRUE,
-                 glance = as.list(glance(mod_ea3_iv, 
-                 diagnostics = TRUE)))
-mod_ea3f_iv_or <- huxtable::tidy_override(mod_ea3f_iv, extend = TRUE,
-                 glance = as.list(glance(mod_ea3f_iv, 
-                 diagnostics = TRUE)))
-mod_ea3m_iv_or <- huxtable::tidy_override(mod_ea3m_iv,  extend = TRUE,
-                 glance = as.list(glance(mod_ea3m_iv, 
-                 diagnostics = TRUE)))
-                                 
-huxreg(
-        "All spouses' EA3"    = mod_ea3_iv_or,
-        "Female spouses' EA3" = mod_ea3f_iv_or, 
-        "Male spouses' EA3"   = mod_ea3m_iv_or,
+huxreg(mod_bo_psea_cl, 
         coefs = c(
-          "University" = "university.mTRUE", 
-          "University" = "university.fTRUE",
-          "University" = "university.xTRUE",
-          "EA3"        = "EA3.m",
-          "EA3"        = "EA3.f",
-          "EA3"        = "EA3.x"
+          "Birth order" = "n_older_sibs.x", 
+          "University"  = "university.xTRUE", 
+          "Income"      = "income_cat.x",
+          "Own EA3"     = "EA3.x"
         ),
-        statistics = c(
-          "R2"              = "r.squared", 
-          "N"               = "nobs",
-          "Sargan test (p)" = "p.value.Sargan"
-        ),
-        note = "{stars}. Educational attainment instrumented by birth order."
-      ) %>% 
-      insert_row(c("Family size dummies", "Y", "Y", "Y"), after = 5) %>% 
-      set_caption("Effects of educational attainment on spouse's EA3") %>% 
-      set_latex_float("ht")
+         note = "{stars}. Standard errors clustered by spouse pair."
+       ) %>% 
+       insert_row(after = 9, "Family size dummies", rep("Yes", 5)) %>% 
+       set_number_format(2:9, -1, 4)
 ```
 
 
-```{r}
-mod_ea3_check <- lm(EA3 ~ 0 + factor(n_sibs) + n_older_sibs:factor(n_sibs), 
-                    famhist, n_sibs >= 2 & n_sibs <= 8)
-av <- tidy(car::Anova(mod_ea3_check)) 
-av_pval <- av %>% 
-              filter(term == "factor(n_sibs):n_older_sibs") %>% 
-              pull(p.value)
-stopifnot(av_pval > 0.05) # claim in text would be false
+## Robustness
+
+
+```{r tbl-pgs-check}
+
+check_cor <- function (score_name) {
+  fml_check <- as.formula(paste(score_name, "~ factor(n_sibs) + n_older_sibs"))
+  mod_check <- lm(fml_check, famhist, n_sibs >= 2 & n_sibs <= 8)
+  mod_check %>% 
+        tidy() %>% 
+        filter(term == "n_older_sibs") %>% 
+        mutate(score = score_name)
+}
+
+drake::loadd(score_names)
+score_names <- paste0(score_names, "_resid")
+check_result <- purrr::map_dfr(score_names, check_cor)
+
+table(check_result$p.value < 0.1/33) %>% 
+      addmargins(FUN = list(Total = sum)) %>% 
+      as_huxtable() %>% 
+      set_caption("Count of polygenic scores associated with birth order (p < 0.10/33)")
+
+n_10 <- sum(check_result$p.value < 0.1)
+max_coef <- max(abs(check_result$estimate))
 ```
 
 
-Although all children of the same parents have identical expected values of
-polygenic scores, it is conceivable that parents might select family size
-on the basis of genetics. For example, if the first child had a phenotype
-reflecting a high (or low) polygenic score, then that might
-affect the parents' decision to have a second child. To check this we 
-regress birth order directly on PSEA. As before, we control for family size
-and allow the effect of birth order to vary depending on family size.
-Birth order variables are not jointly significant (anova p 
-`r round(av_pval, 3)`) and their effect sizes are of the order of 0.01 of a 
-standard deviation of PSEA.
+Although all children of the same parents have the same
+polygenic scores in expectation, it could still be possible that genetics 
+correlates with birth order within the sample. This could happen if parents 
+select family size on the basis of genetics. For example, if the first child had
+a phenotype reflecting a high (or low) polygenic score, then that might
+affect the parents' decision to have a second child. Alternatively, respondents
+might select into the sample on the basis of a combination of birth order and
+genetics. We check this by regressing 33 different polygenic scores on birth
+order, controlling for family size.^[Polygenic scores were residualized on the first
+principal components of the genetic data.] Table \@ref(tab:tbl-pgs-check) shows the
+results. No scores were significant at $p < 0.10/33$. `n_10` scores were significant
+at $p < 0.10$ (body mass index, conscientousness, and neuroticism). 
+Coefficients were never greater than 0.01 of a standard deviation. 
+Table \@ref(tab:tbl-bo-psea-robust) in the appendix reruns regressions 
+controlling for these scores. Results are almost unchanged.
 
+
+# Conclusion
+
+TODO: Write!
 
 \FloatBarrier
 
@@ -653,3 +686,36 @@ $n_{J}$ & $\frac{\alpha}{2};\frac{1-\alpha}{2};\frac{\alpha}{2};\frac{1-\alpha}{
 \par\end{center}
 
 TODO: complete!
+
+\FloatBarrier
+
+## Regressions controlling for polygenic scores
+
+```{r tbl-bo-psea-robust}
+
+mod_bo_psea_robust <- lapply(mod_bo_psea, update, 
+       . ~ . + bmi_combined_resid.x + conscientiousness_resid.x + neuroticism_resid.x)
+
+glances <- lapply(mod_bo_psea_robust, broom::glance)
+mod_bo_psea_r_cl <- lapply(mod_bo_psea_robust, lmtest::coeftest, 
+                      vcov. = function (x) vcovCL(x, ~ couple_id))
+mod_bo_psea_r_cl <- purrr::map2(mod_bo_psea_r_cl, glances, 
+                 ~ huxtable::tidy_override(.x, glance = as.list(.y), extend = TRUE)
+               )
+
+huxreg(mod_bo_psea_r_cl, 
+        coefs = c(
+          "Birth order" = "n_older_sibs.x", 
+          "University"  = "university.xTRUE", 
+          "Income"      = "income_cat.x",
+          "Own EA3"     = "EA3.x"
+        ),
+         note = "{stars}. Standard errors clustered by spouse pair."
+       ) %>% 
+       insert_row(after = 9, "Family size dummies", rep("Yes", 5)) %>% 
+       insert_row(after = 9, "Polygenic score controls", rep("Yes", 5)) %>% 
+       set_number_format(2:9, -1, 4) %>% 
+       set_caption("Regressions on spouse's PSEA with controls for polygenic scores")
+```
+
+
