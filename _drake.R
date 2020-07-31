@@ -192,7 +192,7 @@ subset_resid_scores <- function (resid_scores_raw, famhist, score_names) {
 compute_sunshine <- function (famhist, sun_dir) {
   years <- 1941:1970
   sun_files <- list.files(sun_dir, pattern = ".nc$", full.names = TRUE)
-  famhist$birth_sun <- NA_real_
+  famhist$birth_sun <- famhist$trim_2_sun <- famhist$trim_3_sun <- NA_real_
   
   for (year in years) {
     prev_ras <- if (exists("sun_ras")) {
@@ -217,7 +217,7 @@ compute_sunshine <- function (famhist, sun_dir) {
     fh_yr$col <- raster::colFromX(sun_ras, fh_yr$birth_lon.0.0)
     fh_yr$row <- raster::rowFromY(sun_ras, fh_yr$birth_lat.0.0)
     fh_yr %<>% filter(! is.na(row), ! is.na(col), ! is.na(birth_mon))
-    fh_yr$birth_sun <- 0 
+    fh_yr$trim_2_sun <- fh_yr$trim_3_sun <- 0 
     for (mon in 1:6) {
       # index into data. Current year starts at 13.
       fh_yr$month <- fh_yr$birth_mon - mon + 12
@@ -225,9 +225,14 @@ compute_sunshine <- function (famhist, sun_dir) {
                     dplyr::select(row, col, month) %>% 
                     as.matrix()  
       month_sun <- sun_array[indices]
-      fh_yr$birth_sun <- fh_yr$birth_sun + month_sun
+      var_name <- if (mon <= 3) "trim_2_sun" else "trim_3_sun"
+      fh_yr[[var_name]] <- fh_yr[[var_name]] + month_sun
     }
-    famhist %<>% rows_update(fh_yr %>% dplyr::select(f.eid, birth_sun), by = "f.eid")
+    fh_yr$birth_sun <- fh_yr$trim_2_sun + fh_yr$trim_3_sun
+    famhist %<>% rows_update(fh_yr %>% 
+                               dplyr::select(f.eid, birth_sun, trim_2_sun, trim_3_sun), 
+                               by = "f.eid"
+                             )
   }
   
   return(famhist)

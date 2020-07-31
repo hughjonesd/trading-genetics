@@ -11,15 +11,18 @@ library(dplyr)
 library(huxtable)
 
 drake::loadd(famhist)
-famhist$birth_sun_s <- c(scale(famhist$birth_sun))
+famhist[c("birth_sun_s", "trim_2_sun_s", "trim_3_sun_s")] <- 
+  scale(famhist[c("birth_sun", "trim_2_sun", "trim_3_sun")])
+
 
 famhist$birth_lat_10k <- santoku::chop_width(famhist$birth_lat.0.0, 10000)
 famhist$birth_lon_10k <- santoku::chop_width(famhist$birth_lon.0.0, 10000)
 famhist$birth_lat_50k <- santoku::chop_width(famhist$birth_lat.0.0, 50000)
 famhist$birth_lon_50k <- santoku::chop_width(famhist$birth_lon.0.0, 50000)
 
- 
-
+# alternative measures: trim_2_sun seems most promising
+# famhist$birth_sun_s <- famhist$trim_2_sun_s
+famhist$EA3 <- famhist$EA3_excl_23andMe_UK
 mod_uni_sun <- mod_income_sun <- mod_ea3_sun <- list()
 
 # subset arg to lm doesn't work for poly(), which can't deal with NA values:
@@ -27,7 +30,7 @@ mod_uni_sun$poly <- famhist %>%
                       filter(! is.na(birth_lat.0.0), ! is.na(birth_lon.0.0)) %>% 
                       {fixest::feglm(university ~ 
                                     birth_sun_s + 
-                                    poly(birth_lat.0.0, birth_lon.0.0, degree = 5) |
+                                    poly(birth_lat.0.0, birth_lon.0.0, degree = 10) |
                                     factor(birth_year) + 
                                     factor(birth_mon), 
                                   data   = .,
@@ -36,9 +39,9 @@ mod_uni_sun$poly <- famhist %>%
 
 mod_income_sun$poly <- famhist %>% 
                         filter(! is.na(birth_lat.0.0), ! is.na(birth_lon.0.0)) %>% 
-                        {lm(income_cat ~ 
+                        {feols(income_cat ~ 
                                       birth_sun_s + 
-                                      poly(birth_lat.0.0, birth_lon.0.0, degree = 5) +
+                                      poly(birth_lat.0.0, birth_lon.0.0, degree = 10) |
                                       factor(birth_year) + 
                                       factor(birth_mon), 
                                     data = .
@@ -48,7 +51,7 @@ mod_ea3_sun$poly <- famhist %>%
                       filter(! is.na(birth_lat.0.0), ! is.na(birth_lon.0.0)) %>% 
                       {lm(EA3 ~ 
                                     birth_sun_s + 
-                                    poly(birth_lat.0.0, birth_lon.0.0, degree = 5) +
+                                    poly(birth_lat.0.0, birth_lon.0.0, degree = 10) +
                                     factor(birth_year) + 
                                     factor(birth_mon), 
                                   data = .
@@ -133,4 +136,4 @@ huxreg(mod_ea3_sun,
       insert_row(after = 3, "Geography", "Polynomial", "50k dummies", "10k dummies") %>% 
       set_number_format(4, everywhere, NA) %>% 
       set_latex_float("ht")
-```
+
