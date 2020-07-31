@@ -254,7 +254,7 @@ and this increases the correlation between genetics and social status.
 Figure \@ref(fig:pic-theory) plots the second generation correlation coefficient
 of $S_i$ and $G_i$ against $k$, for $\gamma = \sigma = \theta = 0.5$.
 
-```{r pic-theory, fig.cap = "Social stratification and genetic lock-in: theory", fig.width = 4, fig.height = 3.5}
+```{r pic-theory, fig.cap = "Social stratification and genetic lock-in: theory", fig.width = 2.5, fig.height = 3.5}
 rho <- function (g, s, theta, k) {
   phi <- theta - g * s
   
@@ -413,7 +413,7 @@ pval_bo_1st <- map(mod_bo_1st,
 pval_bo_1st %<>% map(format, digits = 3)
 ```
 
-Figures \@ref(fig:pic-bo-university) and \@ref(fig:pic-bo-income) show the
+Figures \@ref(fig:pic-bo-uni) and \@ref(fig:pic-bo-income) show the
 relationship between birth order, university education and income, separately for
 respondents with 1-3 siblings. We test this formally in a linear regression
 controlling for family size, which may be correlated with parents'
@@ -465,7 +465,7 @@ and income.
 
 TODO: try to explain this better!
 
-Table \@ref(tab:tbl-bo-sea) shows the results. Column 1 shows the effect of 
+Table \@ref(tab:tbl-bo-psea) shows the results. Column 1 shows the effect of 
 birth order controlling only for own PSEA and family size. It establishes
 that earlier-born children have spouses with higher PSEA. The effect size
 is small. This is to be expected, because (a) the effects of birth order on
@@ -485,26 +485,24 @@ order's effect decreases when income is included.
 fml_bo_psea <- list()
 
 fml_bo_psea[[1]] <- EA3.y ~ n_older_sibs.x + EA3.x | factor(n_sibs.x)
-fml_bo_psea[[2]] <- EA3.y ~ university.x + EA3.x | factor(n_sibs.x)
-fml_bo_psea[[3]] <- EA3.y ~ university.x + n_older_sibs.x + EA3.x | factor(n_sibs.x)
-fml_bo_psea[[4]] <- EA3.y ~ income_cat.x + n_older_sibs.x + EA3.x | factor(n_sibs.x)
-fml_bo_psea[[5]] <- EA3.y ~ income_cat.x + n_older_sibs.x + EA3.x | factor(n_sibs.x)
+fml_bo_psea[[2]] <- EA3.y ~ university.x + n_older_sibs.x + EA3.x | factor(n_sibs.x)
+fml_bo_psea[[3]] <- EA3.y ~ income_cat.x + n_older_sibs.x + EA3.x | factor(n_sibs.x)
+fml_bo_psea[[4]] <- EA3.y ~ income_cat.x + university.x + n_older_sibs.x + EA3.x |
+      factor(n_sibs.x)
 
 mf_pairs_reg <- mf_pairs_twice %>% 
-                  filter(n_sibs.x >= 2, n_sibs.x <= 8, ! is.na(n_older_sibs.x))
+                  filter(
+                    n_sibs.x >= 2, 
+                    n_sibs.x <= 8, 
+                    ! is.na(n_older_sibs.x),
+                    ! is.na(university.x),
+                    ! is.na(income_cat.x)
+                  )
+
 mod_bo_psea <- lapply(fml_bo_psea, fixest::feols, 
                  data = mf_pairs_reg,
                  notes = FALSE
                )
-
-# vcov_bo_psea <- lapply(mod_bo_psea, vcov, cluster = list(mf_pairs_reg$couple_id))
-
-# glances <- lapply(mod_bo_psea, broom::glance)
-# mod_bo_psea_cl <- lapply(mod_bo_psea, lmtest::coeftest, 
-#                       vcov. = function (x) vcovCL(x, ~ couple_id))
-# mod_bo_psea_cl <- purrr::map2(mod_bo_psea_cl, glances, 
-#                  ~ huxtable::tidy_override(.x, glance = as.list(.y), extend = TRUE)
-#                )
 
 huxreg(mod_bo_psea, 
         coefs = c(
@@ -516,8 +514,9 @@ huxreg(mod_bo_psea,
          note = "{stars}. Standard errors clustered by spouse pair.",
          tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id))
        ) %>% 
-       insert_row(after = 9, "Family size dummies", rep("Yes", 5)) %>% 
-       set_number_format(2:9, -1, 4)
+       insert_row(after = 9, "Family size dummies", rep("Yes", 4)) %>% 
+       set_number_format(2:9, -1, 4) %>% 
+       set_caption("Regressions of spouse PSEA")
 ```
 
 
@@ -539,31 +538,28 @@ drake::loadd(score_names)
 score_names <- paste0(score_names, "_resid")
 check_result <- purrr::map_dfr(score_names, check_cor)
 
-table(check_result$p.value < 0.1/33) %>% 
-      addmargins(FUN = list(Total = sum)) %>% 
-      as_huxtable() %>% 
-      set_caption("Count of polygenic scores associated with birth order (p < 0.10/33)")
+if (any(check_result$p.value < 0.1/33)) stop("Some check p values < 0.1/33; rewrite text!")
 
 n_10 <- sum(check_result$p.value < 0.1)
 max_coef <- max(abs(check_result$estimate))
 ```
 
 
-Although all children of the same parents have the same
-polygenic scores in expectation, it could still be possible that genetics 
-correlates with birth order within the sample. This could happen if parents 
-select family size on the basis of genetics. For example, if the first child had
-a phenotype reflecting a high (or low) polygenic score, then that might
-affect the parents' decision to have a second child. Alternatively, respondents
-might select into the sample on the basis of a combination of birth order and
-genetics. We check this by regressing 33 different polygenic scores on birth
-order, controlling for family size.^[Polygenic scores were residualized on the first
-principal components of the genetic data.] Table \@ref(tab:tbl-pgs-check) shows the
-results. No scores were significant at $p < 0.10/33$. `n_10` scores were significant
-at $p < 0.10$ (body mass index, conscientousness, and neuroticism). 
-Coefficients were never greater than 0.01 of a standard deviation. 
-Table \@ref(tab:tbl-bo-psea-robust) in the appendix reruns regressions 
-controlling for these scores. Results are almost unchanged.
+Although all children of the same parents have the same polygenic scores in
+expectation, it could still be possible that genetics correlates with birth
+order within the sample. This could happen if parents select family size on the
+basis of genetics. For example, if the first child had a phenotype reflecting a
+high (or low) polygenic score, then that might affect the parents' decision to
+have a second child. Alternatively, respondents might select into the sample on
+the basis of a combination of birth order and genetics. We check this by
+regressing 33 different polygenic scores on birth order, controlling for family
+size.^[Polygenic scores were residualized on the first principal components of
+the genetic data.] Table \@ref(tab:tbl-pgs-check) shows the results. No scores
+were significant at $p < 0.10/33$. `r n_10` scores were significant at $p <
+0.10$ (body mass index, conscientousness, and neuroticism). Coefficients were
+never greater than 0.01 of a standard deviation. Table
+\@ref(tab:tbl-bo-psea-robust) in the appendix reruns regressions controlling for
+these scores. Results are almost unchanged.
 
 
 # Conclusion
@@ -777,10 +773,10 @@ fml_bo_psea_robust <- fml_bo_psea %>%
                            neuroticism_resid.x
                         )
 
-mod_bo_psea_robust <- purrr::map(fml_bo_psea_robust, fixest::feols, 
-                 data = mf_pairs_reg,
-                 notes = FALSE
-               )
+mod_bo_psea_robust <-  purrr::map(fml_bo_psea_robust, fixest::feols, 
+                         data = mf_pairs_reg,
+                         notes = FALSE
+                       )
 
 huxreg(mod_bo_psea_robust, 
         coefs = c(
@@ -792,11 +788,11 @@ huxreg(mod_bo_psea_robust,
          note = "{stars}. Standard errors clustered by spouse pair.",
          tidy_args = list(conf.int = FALSE, cluster = mf_pairs_reg$couple_id)
        ) %>% 
-       insert_row(after = 9, "Family size dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 10, "Polygenic score controls", rep("Yes", 5)) %>% 
+       insert_row(after = 9, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 10, "Polygenic score controls", rep("Yes", 4)) %>% 
        set_top_border(11, everywhere, 0) %>% 
        set_number_format(2:9, -1, 4) %>% 
-       set_caption("Regressions on spouse's PSEA with controls for polygenic scores")
+       set_caption("Regressions of spouse PSEA with controls for polygenic scores")
 ```
 
 
