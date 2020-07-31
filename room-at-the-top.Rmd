@@ -162,7 +162,7 @@ gives access to the high matching group. When $k$ is close to 0, "good genes"
 play a larger role in the marriage market, and social status alone rarely gives access 
 to the high group.
 
-```{r pic-extreme-socs, fig.subcap = c("Caste society", "Egalitarian society"), fig.cap = "Genetic lock-in: example societies"}
+```{r pic-extreme-socs, fig.subcap = c("Caste society", "Egalitarian society"), fig.cap = "Genetic lock-in: example societies", fig.width = 2.5}
 sigma <- 0.4
 gamma <- 0.5
 
@@ -254,7 +254,7 @@ and this increases the correlation between genetics and social status.
 Figure \@ref(fig:pic-theory) plots the second generation correlation coefficient
 of $S_i$ and $G_i$ against $k$, for $\gamma = \sigma = \theta = 0.5$.
 
-```{r pic-theory, fig.cap = "Social stratification and genetic lock-in: theory", fig.width = 2.5, fig.height = 3.5}
+```{r pic-theory, fig.cap = "Social stratification and genetic lock-in: theory", fig.height = 3.5}
 rho <- function (g, s, theta, k) {
   phi <- theta - g * s
   
@@ -465,20 +465,6 @@ and income.
 
 TODO: try to explain this better!
 
-Table \@ref(tab:tbl-bo-psea) shows the results. Column 1 shows the effect of 
-birth order controlling only for own PSEA and family size. It establishes
-that earlier-born children have spouses with higher PSEA. The effect size
-is small. This is to be expected, because (a) the effects of birth order on
-university, income and (presumably) other variables are small, and (b) PSEA is
-measured with a lot of error. We aim to test theory rather than estimating 
-an effect size, so we focus more on statistical significance.
-
-Column 2 removes birth order and includes university attendance. Column 3
-includes birth order and university attendance. The coefficient on university 
-attendance barely shifts, but the coefficient on birth order decreases by about
-20%. Columns 4 and 5 repeat this exercise with income category. Again,
-the coefficient on income is unchanged by including birth order but birth
-order's effect decreases when income is included.
 
 ```{r tbl-bo-psea}
 
@@ -518,6 +504,62 @@ huxreg(mod_bo_psea,
        set_number_format(2:9, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA")
 ```
+
+
+```{r calc-bootstrap-proportions, cache = TRUE}
+
+n_boot <- 199
+
+bo_prop_boot <- replicate(n_boot, {
+  mf_pairs_resample <- mf_pairs_reg %>% sample_frac(1, replace = TRUE)
+  tmp  <- fixest::feols(fml_bo_psea[[1]], data = mf_pairs_resample, notes = FALSE)
+  tmp2 <- fixest::feols(fml_bo_psea[[2]], data = mf_pairs_resample, notes = FALSE)
+  tmp3 <- fixest::feols(fml_bo_psea[[3]], data = mf_pairs_resample, notes = FALSE)
+  tmp4 <- fixest::feols(fml_bo_psea[[4]], data = mf_pairs_resample, notes = FALSE)
+  orig_coef <- coef(tmp)["n_older_sibs.x"]
+  c(
+    prop_uni  = coef(tmp2)["n_older_sibs.x"]/orig_coef,
+    prop_inc  = coef(tmp3)["n_older_sibs.x"]/orig_coef,
+    prop_both = coef(tmp4)["n_older_sibs.x"]/orig_coef
+  )
+})
+```
+
+
+```{r clean-bootstrap-proportions}
+bo_prop_ci <- apply(bo_prop_boot, 1, quantile, probs = c(.975, .025))
+# the percentage reduction:
+bo_prop_ci[] <- sprintf("%.1f%%", (1 - bo_prop_ci) * 100)
+
+# point estimates from main regressions:
+orig_coef <- coef(mod_bo_psea[[1]])["n_older_sibs.x"]
+bo_prop_est <- c(
+  coef(mod_bo_psea[[2]])["n_older_sibs.x"]/orig_coef,
+  coef(mod_bo_psea[[3]])["n_older_sibs.x"]/orig_coef,
+  coef(mod_bo_psea[[4]])["n_older_sibs.x"]/orig_coef
+)
+bo_prop_est  <- sprintf("%.1f%%", (1 - bo_prop_est) * 100)
+
+```
+
+
+Table \@ref(tab:tbl-bo-psea) shows the results. Column 1 shows the effect of 
+birth order controlling only for own PSEA and family size. It establishes
+that earlier-born children have spouses with higher PSEA. The effect size
+is small. This is to be expected, because (a) the effects of birth order on
+university, income and (presumably) other variables are small, and (b) PSEA is
+measured with a lot of error. We aim to test theory rather than estimating 
+an effect size, so we focus more on statistical significance.
+
+Column 2 includes university attendance. Column 3
+includes income. Column 4 includes both. We calculate the percentage decrease in
+the effect of birth order across the columns, and estimate 95% confidence intervals
+for this figure by running bootstraps (N = `r n_boot`). Including university
+attendance alone reduces the effect of birth order by  `r bo_prop_est[1]`
+(CI `r bo_prop_ci[1, 1]` -- `r bo_prop_ci[2, 1]`). Including income alone 
+reduces the effect of birth order by `r bo_prop_est[2]` (CI 
+`r bo_prop_ci[1, 2]` -- `r bo_prop_ci[2, 2]`).  Including both decreases the 
+effect by `r bo_prop_est[3]` (CI `r bo_prop_ci[1, 3]` --`r bo_prop_ci[2, 3]`).
 
 
 ## Robustness
