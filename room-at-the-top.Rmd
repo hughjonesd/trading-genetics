@@ -19,6 +19,7 @@ header-includes:
 ---
 
 ```{r setup, include = FALSE}
+library(Formula)
 library(drake)
 library(dplyr)
 library(magrittr)
@@ -161,6 +162,62 @@ gives access to the high matching group. When $k$ is close to 0, "good genes"
 play a larger role in the marriage market, and social status alone rarely gives access 
 to the high group.
 
+```{r pic-extreme-socs, fig.subcap = c("Caste society", "Egalitarian society"), fig.cap = "Genetic lock-in: example societies"}
+sigma <- 0.4
+gamma <- 0.5
+
+plot.new()
+plot.window(0:1, 0:1, xaxs = "i", yaxs = "i")
+box()
+adj <- 0.02
+rect(0 + adj, 1 - sigma + adj, 1 - adj, 1 - adj, col = "grey90")
+text(0 + adj * 2, 1 - sigma + adj *2, "H")
+rect(0 + adj, 0 + adj, 1 - adj, 1 - sigma - adj, col = "grey90")
+text(0 + adj * 2, 0 + adj *2, "L")
+# abline(h = 1 - sigma, lty = 2)
+abline(v = 1 - gamma, lty = 2)
+mtext(paste("G:", 0:1), side = 1, line = 1, at = c((1 - gamma)/2, (1 - gamma)/2 + 1/2))
+mtext(paste("S:", 0:1), side = 2, line = 1, at = c((1 - sigma)/2, (1 - sigma)/2 + 1/2))
+
+len <- 0.1
+arrows(
+        x0     = 1 - gamma - len,
+        x1     = 1 - gamma + len, 
+        y0     = c((1 - sigma)/2, 1/2 + (1 - sigma)/2),
+        code   = 3, 
+        length = 0.1,
+        lwd = 1.5
+      )
+text(0 + 2 * adj, 1 - 2 * adj, paste0("No intermarriage across status.\n",
+      "Mix of G remains same over\n", "time in each group."), cex = 0.8, adj = c(0, 1))
+
+
+plot.new()
+plot.window(0:1, 0:1, xaxs = "i", yaxs = "i")
+box()
+adj <- 0.02
+rect(1 - gamma + adj, 0 + adj, 1 - adj, 1 - adj, col = "grey90")
+text(1 - gamma + adj * 2, 0 + adj *2, "H")
+rect(0 + adj, 0 + adj, 1 - gamma - adj, 1 - adj, col = "grey90")
+text(0 + adj * 2, 0 + adj *2, "L")
+abline(h = 1 - sigma, lty = 2)
+# abline(v = 1 - gamma, lty = 2)
+mtext(paste("G:", 0:1), side = 1, line = 1, at = c((1 - gamma)/2, (1 - gamma)/2 + 1/2))
+mtext(paste("S:", 0:1), side = 2, line = 1, at = c((1 - sigma)/2, (1 - sigma)/2 + 1/2))
+
+len <- 0.1
+arrows(
+        x0     = c((1 - gamma)/2, 1/2 + (1 - gamma)/2),
+        y0     = 1 - sigma - len,
+        y1     = 1 - sigma + len,
+        code   = 3, 
+        length = 0.1,
+        lwd = 1.5
+      )
+text(0 + 2 * adj, 1 - 2 * adj, paste0("No intermarriage between\n", "G = 0 and 1.\n",
+      "Mix of S remains same over\n", "time in each group."), cex = 0.8, adj = c(0, 1))
+```
+
 To build intuition, we start with two extreme examples. Suppose first
 that $k=1$ and that $\theta = \sigma$. This is a \emph{caste society}
 where marital matching is entirely driven by social status. All individuals
@@ -262,26 +319,37 @@ decreases in $\alpha$.
 
 
 
+
 TODO: Points about the theory.
 
-- Differences with meritocracy. Meritocracy models of this phenomenon have that G
-  causes S. Here G may not play any causal role in determining status.
 - A more complex model with continuous S and G would still have the same results
   (maybe discuss in appendix)?
 
 Behaviour geneticists often make the point that in meritocratic societies,
-successful people may transmit relevant genes to their offspring. (TODO: cite relevant papers.) 
-Like genetic
-genetic lock-in, meritocracy may therefore lead to a correlation between social status and genetics.
-However, genetic lock-in is broader. Under meritocracy, certain
-genetic variants *cause* higher social status and are then transmitted along
-with it. The logic does not apply to non-meritocratic societies where social status
-is ascribed rather than earned. By contrast, genetic lock-in applies to genetic
-variants that are *associated* with higher social status in the spouse matching process.
-They do not need to exert any influence whatsoever on an individual's own social status. 
-The logic of genetic lock-in therefore applies to a historically much wider 
-range of societies, including societies where social status is wholly ascribed or
+successful people may transmit relevant genes to their offspring. (TODO: cite
+relevant papers.) Like genetic genetic lock-in, meritocracy may therefore lead
+to a correlation between social status and genetics. However, genetic lock-in is
+a distinct, though overlapping, mechanism. Under meritocracy, certain genetic variants *cause* higher social
+status and are then transmitted along with it. This logic does not apply in
+non-meritocratic societies where social status is ascribed rather than earned.
+Conversely, genetic variations which cause social status will become associated
+with it, even in the absence of assortative mating.
+
+By contrast, genetic lock-in applies to genetic variants that are *associated*
+with higher social status in the spouse matching process. They do not need to
+exert any influence whatsoever on an individual's own social status. This process
+requires assortative mating, but does not require meritocracy. The logic
+of genetic lock-in therefore applies to a historically much wider range of
+societies, including societies where social status is wholly ascribed or
 inherited, such as aristocracies.
+
+In modern societies, both assortative mating and meritocracy are likely to be 
+at play. Genetic variants that cause (e.g.) higher income and wealth will be 
+inherited along with components of social status such as inherited wealth, 
+networks and cultural capital. At the same time, higher social status and
+"good genes" will assort in the marriage market, even if that higher social
+status is caused by purely environmental variation. Our empirical analysis shows
+this latter process at work.
 
 
 
@@ -329,7 +397,6 @@ order on spouse's PSEA changes when social status is included, that is evidence
 that social status mediates the effect of birth order.
 
 * TODO: clarify the empirical model, you may need help....
-* TODO: reduced form
 * TODO: estimate individual income from job SIC codes? ASHE gives data
 
 
@@ -355,7 +422,7 @@ both measures (among respondents with 1-7 siblings: university $p$ =
 `r pval_bo_1st$uni`, income $p$ = `r pval_bo_1st$income`).
 
 
-```{r pic-bo-uni}
+```{r pic-bo-uni, fig.cap = "University attendance by birth order and family size", fig.height = 3}
 famhist %>% 
       filter(n_sibs <= 4, n_sibs >= 2, ! is.na(n_older_sibs)) %>% 
       mutate(
@@ -372,7 +439,7 @@ famhist %>%
 ```
 
 
-```{r pic-bo-income}
+```{r pic-bo-income, fig.cap = "Income by birth order and family size", fig.height = 3}
 famhist %>% 
       filter(
         n_sibs <= 4, 
@@ -415,31 +482,39 @@ order's effect decreases when income is included.
 
 ```{r tbl-bo-psea}
 
-mod_bo_psea <- list()
+fml_bo_psea <- list()
 
-mod_bo_psea[[1]] <- lm(EA3.y ~ n_older_sibs.x + EA3.x + factor(n_sibs.x), 
-                       data   = mf_pairs_twice, 
-                       subset = n_sibs.x >= 2 & n_sibs.x <= 8 & ! is.na(n_older_sibs.x))
-mod_bo_psea[[2]] <- update(mod_bo_psea[[1]], . ~ . + university.x - n_older_sibs.x)
-mod_bo_psea[[3]] <- update(mod_bo_psea[[1]], . ~ . + university.x)
-mod_bo_psea[[4]] <- update(mod_bo_psea[[1]], . ~ . + income_cat.x - n_older_sibs.x)
-mod_bo_psea[[5]] <- update(mod_bo_psea[[1]], . ~ . + income_cat.x)
+fml_bo_psea[[1]] <- EA3.y ~ n_older_sibs.x + EA3.x | factor(n_sibs.x)
+fml_bo_psea[[2]] <- EA3.y ~ university.x + EA3.x | factor(n_sibs.x)
+fml_bo_psea[[3]] <- EA3.y ~ university.x + n_older_sibs.x + EA3.x | factor(n_sibs.x)
+fml_bo_psea[[4]] <- EA3.y ~ income_cat.x + n_older_sibs.x + EA3.x | factor(n_sibs.x)
+fml_bo_psea[[5]] <- EA3.y ~ income_cat.x + n_older_sibs.x + EA3.x | factor(n_sibs.x)
 
-glances <- lapply(mod_bo_psea, broom::glance)
-mod_bo_psea_cl <- lapply(mod_bo_psea, lmtest::coeftest, 
-                      vcov. = function (x) vcovCL(x, ~ couple_id))
-mod_bo_psea_cl <- purrr::map2(mod_bo_psea_cl, glances, 
-                 ~ huxtable::tidy_override(.x, glance = as.list(.y), extend = TRUE)
+mf_pairs_reg <- mf_pairs_twice %>% 
+                  filter(n_sibs.x >= 2, n_sibs.x <= 8, ! is.na(n_older_sibs.x))
+mod_bo_psea <- lapply(fml_bo_psea, fixest::feols, 
+                 data = mf_pairs_reg,
+                 notes = FALSE
                )
 
-huxreg(mod_bo_psea_cl, 
+# vcov_bo_psea <- lapply(mod_bo_psea, vcov, cluster = list(mf_pairs_reg$couple_id))
+
+# glances <- lapply(mod_bo_psea, broom::glance)
+# mod_bo_psea_cl <- lapply(mod_bo_psea, lmtest::coeftest, 
+#                       vcov. = function (x) vcovCL(x, ~ couple_id))
+# mod_bo_psea_cl <- purrr::map2(mod_bo_psea_cl, glances, 
+#                  ~ huxtable::tidy_override(.x, glance = as.list(.y), extend = TRUE)
+#                )
+
+huxreg(mod_bo_psea, 
         coefs = c(
           "Birth order" = "n_older_sibs.x", 
           "University"  = "university.xTRUE", 
           "Income"      = "income_cat.x",
           "Own EA3"     = "EA3.x"
         ),
-         note = "{stars}. Standard errors clustered by spouse pair."
+         note = "{stars}. Standard errors clustered by spouse pair.",
+         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id))
        ) %>% 
        insert_row(after = 9, "Family size dummies", rep("Yes", 5)) %>% 
        set_number_format(2:9, -1, 4)
@@ -693,27 +768,33 @@ TODO: complete!
 
 ```{r tbl-bo-psea-robust}
 
-mod_bo_psea_robust <- lapply(mod_bo_psea, update, 
-       . ~ . + bmi_combined_resid.x + conscientiousness_resid.x + neuroticism_resid.x)
+fml_bo_psea_robust <- fml_bo_psea %>% 
+                        purrr::map(Formula::as.Formula) %>% 
+                        purrr::map(update, 
+                           . ~ . + 
+                           bmi_combined_resid.x + 
+                           conscientiousness_resid.x + 
+                           neuroticism_resid.x
+                        )
 
-glances <- lapply(mod_bo_psea_robust, broom::glance)
-mod_bo_psea_r_cl <- lapply(mod_bo_psea_robust, lmtest::coeftest, 
-                      vcov. = function (x) vcovCL(x, ~ couple_id))
-mod_bo_psea_r_cl <- purrr::map2(mod_bo_psea_r_cl, glances, 
-                 ~ huxtable::tidy_override(.x, glance = as.list(.y), extend = TRUE)
+mod_bo_psea_robust <- purrr::map(fml_bo_psea_robust, fixest::feols, 
+                 data = mf_pairs_reg,
+                 notes = FALSE
                )
 
-huxreg(mod_bo_psea_r_cl, 
+huxreg(mod_bo_psea_robust, 
         coefs = c(
           "Birth order" = "n_older_sibs.x", 
           "University"  = "university.xTRUE", 
           "Income"      = "income_cat.x",
           "Own EA3"     = "EA3.x"
         ),
-         note = "{stars}. Standard errors clustered by spouse pair."
+         note = "{stars}. Standard errors clustered by spouse pair.",
+         tidy_args = list(conf.int = FALSE, cluster = mf_pairs_reg$couple_id)
        ) %>% 
        insert_row(after = 9, "Family size dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 9, "Polygenic score controls", rep("Yes", 5)) %>% 
+       insert_row(after = 10, "Polygenic score controls", rep("Yes", 5)) %>% 
+       set_top_border(11, everywhere, 0) %>% 
        set_number_format(2:9, -1, 4) %>% 
        set_caption("Regressions on spouse's PSEA with controls for polygenic scores")
 ```
