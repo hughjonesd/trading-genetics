@@ -162,7 +162,7 @@ gives access to the high matching group. When $k$ is close to 0, "good genes"
 play a larger role in the marriage market, and social status alone rarely gives access 
 to the high group.
 
-```{r pic-extreme-socs, fig.subcap = c("Caste society", "Egalitarian society"), fig.cap = "Genetic lock-in: example societies", fig.width = 2.5}
+```{r pic-extreme-socs, fig.subcap = c("Caste society", "Egalitarian society"), fig.cap = "Genetic lock-in: example societies", fig.width = 3.5}
 sigma <- 0.4
 gamma <- 0.5
 
@@ -533,11 +533,7 @@ bo_prop_ci[] <- sprintf("%.1f%%", (1 - bo_prop_ci) * 100)
 
 # point estimates from main regressions:
 orig_coef <- coef(mod_bo_psea[[1]])["n_older_sibs.x"]
-bo_prop_est <- c(
-  coef(mod_bo_psea[[2]])["n_older_sibs.x"]/orig_coef,
-  coef(mod_bo_psea[[3]])["n_older_sibs.x"]/orig_coef,
-  coef(mod_bo_psea[[4]])["n_older_sibs.x"]/orig_coef
-)
+bo_prop_est <- apply(bo_prop_boot, 1, mean)
 bo_prop_est  <- sprintf("%.1f%%", (1 - bo_prop_est) * 100)
 
 ```
@@ -551,11 +547,13 @@ university, income and (presumably) other variables are small, and (b) PSEA is
 measured with a lot of error. We aim to test theory rather than estimating 
 an effect size, so we focus more on statistical significance.
 
-Column 2 includes university attendance. Column 3
-includes income. Column 4 includes both. We calculate the percentage decrease in
-the effect of birth order across the columns, and estimate 95% confidence intervals
-for this figure by running bootstraps (N = `r n_boot`). Including university
-attendance alone reduces the effect of birth order by  `r bo_prop_est[1]`
+Column 2 includes university attendance. Column 3 includes income. Column 4
+includes both. We estimate the percentage decrease in the effect of birth order
+across the columns, along with 95% confidence intervals for this figure, by
+running bootstraps (N = `r n_boot`).^[The sample percentage decrease calculated
+from the figures in Table \@ref(tab:tbl-bo-psea) is not the correct estimate,
+since $E(X/Y) \ne EX/EY$.] Including university attendance alone reduces 
+the effect of birth order by  `r bo_prop_est[1]`
 (CI `r bo_prop_ci[1, 1]` -- `r bo_prop_ci[2, 1]`). Including income alone 
 reduces the effect of birth order by `r bo_prop_est[2]` (CI 
 `r bo_prop_ci[1, 2]` -- `r bo_prop_ci[2, 2]`).  Including both decreases the 
