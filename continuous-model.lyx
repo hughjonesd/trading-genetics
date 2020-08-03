@@ -1,0 +1,1010 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Continuous model
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $G_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ are now random variables which need not be independent, and may be discrete
+ or mixed.
+ (We assume they are non-degenerate, i.e.
+ with positive variance.
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+be a bit more careful.
+ We need that 
+\begin_inset Formula $Var(B|A)>0$
+\end_inset
+
+ for at least some 
+\begin_inset Formula $A$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+) Couples match randomly among individuals of the same 
+\begin_inset Quotes eld
+\end_inset
+
+attractiveness
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $a_{i}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+A_{i}=a(G_{i},S_{i})=(1-k)f(G_{i})+kv(S_{i})
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $f$
+\end_inset
+
+ and 
+\begin_inset Formula $v$
+\end_inset
+
+ are continuous increasing functions.
+ Without loss of generality, we measure 
+\begin_inset Formula $G_{i}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{i}$
+\end_inset
+
+ in 
+\begin_inset Quotes eld
+\end_inset
+
+attractiles
+\begin_inset Quotes erd
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+A_{i}=(1-k)G_{i}+kS_{i}.
+\]
+
+\end_inset
+
+We also scale them so that 
+\begin_inset Formula $EG_{i}=ES_{i}=0$
+\end_inset
+
+, 
+\begin_inset Formula $Var(G_{i})=Var(S_{i})=1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Define
+\begin_inset Formula 
+\[
+B_{i}=kG_{i}-(1-k)S_{i}.
+\]
+
+\end_inset
+
+This is orthogonal to 
+\begin_inset Formula $A_{i}$
+\end_inset
+
+.
+ It can be thought of as the relative weight of 
+\begin_inset Quotes eld
+\end_inset
+
+Beauty
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+Brains
+\begin_inset Quotes erd
+\end_inset
+
+ in making someone attractive.
+ We assume that 
+\begin_inset Formula 
+\begin{equation}
+Var(B|A)>0\textrm{ for a set of values of \ensuremath{A} of positive measure.}\label{eq:pos-var-B-given-A}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Couples have two children each, and children's value of 
+\begin_inset Formula $G$
+\end_inset
+
+ or 
+\begin_inset Formula $S$
+\end_inset
+
+ is equal to the mean of their parents.
+ As a result, children have the same value of 
+\begin_inset Formula $A$
+\end_inset
+
+ as both their parents.
+ From now on we drop 
+\begin_inset Formula $i$
+\end_inset
+
+ subscripts, and write 
+\begin_inset Formula $G_{p}$
+\end_inset
+
+ or 
+\begin_inset Formula $G_{c}$
+\end_inset
+
+, etc., to refer to the parents' or children's generation; statements without
+ subscripts apply to both generations.
+ 
+\end_layout
+
+\begin_layout Standard
+We now prove that the correlation between genetic endowment and social status
+ is higher in the children's generation, and that the increase is largest
+ for intermediate values of 
+\begin_inset Formula $k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+PROPOSITION 1
+\end_layout
+
+\begin_layout Standard
+(i) When 
+\begin_inset Formula $0<k<1$
+\end_inset
+
+, 
+\begin_inset Formula $Corr(G_{c},S_{c})>Corr(G_{p},S_{p})$
+\end_inset
+
+.
+ When 
+\begin_inset Formula $k=0$
+\end_inset
+
+ or 
+\begin_inset Formula $k=1$
+\end_inset
+
+, 
+\begin_inset Formula $Corr(G_{c},S_{c})=Corr(G_{p},S_{p})$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+(ii) 
+\begin_inset Formula $Cov(G_{c},S_{c})$
+\end_inset
+
+ is quasiconcave in 
+\begin_inset Formula $k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+PROOF
+\end_layout
+
+\begin_layout Standard
+Rearranging the equations gives
+\begin_inset Formula 
+\begin{align*}
+S & =cA+dB,\\
+G & =dA-cB
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\begin{align*}
+c & \equiv\frac{1-k}{z},\\
+d & \equiv\frac{k}{z},\textrm{ and}\\
+z & \equiv k^{2}+(1-k)^{2}.
+\end{align*}
+
+\end_inset
+
+ We calculate the covariance of 
+\begin_inset Formula $G$
+\end_inset
+
+ and 
+\begin_inset Formula $S$
+\end_inset
+
+ in terms of the new variables:
+\begin_inset Formula 
+\begin{align}
+Cov(G,S) & =E(GS)\nonumber \\
+ & =E(dA-cB)(cA+dB)\nonumber \\
+ & =E(cdA^{2}+(d^{2}-c^{2})AB-cdB^{2})\nonumber \\
+ & =cd\ [Var(A)-Var(B)]+(d^{2}-c^{2})Cov(A,B)\label{eq:cov-G-S}
+\end{align}
+
+\end_inset
+
+since 
+\begin_inset Formula $EA=EB=EG=ES=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Now we note that since children's 
+\begin_inset Formula $A$
+\end_inset
+
+ is equal to parents' 
+\begin_inset Formula $A$
+\end_inset
+
+,
+\begin_inset Formula 
+\begin{equation}
+Var(A_{p})=Var(A_{c}),\label{eq:var-A-same}
+\end{equation}
+
+\end_inset
+
+and indeed the whole distribution is the same:
+\begin_inset Formula 
+\begin{equation}
+Pr(A_{p}=a)=Pr(A_{c}=a)\textrm{ for all }a.\label{eq:dist-A-same}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next, note that for every value of 
+\begin_inset Formula $A$
+\end_inset
+
+, 
+\begin_inset Formula 
+\begin{equation}
+E(B_{c}|A)=E(B_{p}|A).\label{eq:E-b-given-a-same}
+\end{equation}
+
+\end_inset
+
+Lastly, for every value of 
+\begin_inset Formula $A$
+\end_inset
+
+, the children's 
+\begin_inset Formula $B$
+\end_inset
+
+ is the mean of two random draws from 
+\begin_inset Formula $B$
+\end_inset
+
+ given 
+\begin_inset Formula $A$
+\end_inset
+
+.
+ Therefore:
+\begin_inset Formula 
+\begin{equation}
+Var(B_{c}|A)=\frac{1}{2}Var(B_{p}|A).\label{eq:cond-var-B-less}
+\end{equation}
+
+\end_inset
+
+Applying the law of total variance to 
+\begin_inset Formula $B$
+\end_inset
+
+, and using (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cond-var-B-less"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:E-b-given-a-same"
+
+\end_inset
+
+), along with (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pos-var-B-given-A"
+
+\end_inset
+
+):
+\begin_inset Formula 
+\begin{align}
+Var(B_{c}) & =E_{A}(Var(B_{c}|A))+Var(E(B_{c}|A))\label{eq:var-B-less}\\
+ & <E_{A}(Var(B_{p}|A))+Var(E(B_{p}|A))=Var(B_{p}).\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Rewrite
+\begin_inset Formula 
+\begin{align*}
+ & Cov(A,B)\\
+= & \int\int ab\ Pr(a)Pr(b|a)\ \textrm{d}b\ \textrm{d}a\\
+= & \int a\ Pr(a)\int bPr(b|a)\ \textrm{d}b\ \textrm{d}a\\
+= & \int a\ Pr(a)E(B|A)\ \textrm{d}a.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Using (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:dist-A-same"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:E-b-given-a-same"
+
+\end_inset
+
+) then shows that
+\begin_inset Formula 
+\begin{equation}
+Cov(A_{p},B_{p})=Cov(A_{c},B_{c}).\label{eq:cov-A-B-same}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Plugging facts(
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cov-A-B-same"
+
+\end_inset
+
+), (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:var-B-less"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cov-A-B-same"
+
+\end_inset
+
+) into the expression in (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cov-G-S"
+
+\end_inset
+
+), we have shown
+\begin_inset Formula 
+\begin{align*}
+Cov(G_{p},S_{p})= & cd[Var(A_{p})-Var(B_{p})]+(d^{2}-c^{2})Cov(A_{p},B_{p})\\
+\le & cd[Var(A_{c})-Var(B_{c})]+(d^{2}-c^{2})Cov(A_{c},B_{c})\\
+= & Cov(G_{c},S_{c}).
+\end{align*}
+
+\end_inset
+
+The inequality is strict when 
+\begin_inset Formula $cd$
+\end_inset
+
+ is positive, equivalently when 
+\begin_inset Formula $k\in(0,1)$
+\end_inset
+
+, and holds with equality otherwise.
+ The covariance and correlation share the same sign, so this completes the
+ first part of the proof.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Proof ideas for the second part: 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+show that 
+\begin_inset Formula $Cov(G_{c},S_{c})$
+\end_inset
+
+, or perhaps 
+\begin_inset Formula $Corr(G_{c},S_{c})$
+\end_inset
+
+, is a quartic in 
+\begin_inset Formula $k$
+\end_inset
+
+, so has at most 3 turning points.
+ Actually, it's a rational function with degree at most 4, and this still
+ has at most 3 turning points.
+\end_layout
+
+\begin_layout Plain Layout
+Then show that the derivative is 0 at 1/2.
+ (And the second derivative had better be negative too.
+ Otherwise we could have an M shape!)
+\end_layout
+
+\begin_layout Plain Layout
+And, show that 
+\begin_inset Formula $Cov(G_{p},S_{p})$
+\end_inset
+
+ is symmetric in 
+\begin_inset Formula $k$
+\end_inset
+
+ around 1/2.
+ (True? 
+\begin_inset Formula $cd$
+\end_inset
+
+ is antisymmetric around 
+\begin_inset Formula $k=1/2$
+\end_inset
+
+; so is 
+\begin_inset Formula $d^{2}-c^{2}$
+\end_inset
+
+; if 
+\begin_inset Formula $Var(A_{c})-Var(B_{c})$
+\end_inset
+
+ is antisymmetric, and 
+\begin_inset Formula $Cov(A_{p},B_{p})$
+\end_inset
+
+ is too, then the whole expression is symmetric.) 
+\end_layout
+
+\begin_layout Plain Layout
+Then the covariance/correlation must be increasing up to 1/2 and decreasing
+ thereafter; if it had any turning points, it would have to have one at
+ e.g.
+ 
+\begin_inset Formula $x$
+\end_inset
+
+ on either side of 1/2, but if so, it would be decreasing on 
+\begin_inset Formula $(0,x)$
+\end_inset
+
+ and therefore could not be 0 at 0 and positive at 
+\begin_inset Formula $x$
+\end_inset
+
+!
+\end_layout
+
+\begin_layout Plain Layout
+This proof could be combined with the idea of using the difference in covariance
+s 
+\begin_inset Formula $cd\frac{1}{2}E_{A}(Var(B_{p}|A))$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Use the difference in covariances, which is just 
+\begin_inset Formula $cd(Var(B_{p})-Var(B_{c}))$
+\end_inset
+
+.
+ We know that 
+\begin_inset Formula $Cov(G_{p},S_{p})$
+\end_inset
+
+ does not depend on 
+\begin_inset Formula $k$
+\end_inset
+
+, so this will suffice.
+\end_layout
+
+\begin_layout Plain Layout
+Indeed, this is just
+\begin_inset Formula 
+\[
+cd\frac{1}{2}E_{A}(Var(B_{p}|A))
+\]
+
+\end_inset
+
+using (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:var-B-less"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cond-var-B-less"
+
+\end_inset
+
+); and perhaps we can calculate 
+\begin_inset Formula $Var(E(B_{p}|A))$
+\end_inset
+
+ – this being the variance of this number across different values of 
+\begin_inset Formula $A$
+\end_inset
+
+, and then turn the above into an expression involving that and 
+\begin_inset Formula $Var(B_{p})$
+\end_inset
+
+, which will be easy to differentiate.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+An alternative is just not to worry about it.
+ The exact peak at 
+\begin_inset Formula $k=1/2$
+\end_inset
+
+ doesn't matter.
+ Getting quasiconcavity would be nice.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Differentiation of 
+\begin_inset Formula $cd$
+\end_inset
+
+, showing the derivative is +ve to 1/2 then negative.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Furthermore, write the increase in covariance over one generation as
+\begin_inset Formula 
+\begin{equation}
+Cov(G_{c},S_{c})-Cov(G_{p},S_{p})=cd[Var(B_{p})-Var(B_{c})].\label{eq:increase-in-cov}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Differentiating 
+\begin_inset Formula 
+\[
+cd=\frac{(1-k)k}{(k^{2}+(1-k)^{2})^{2}}
+\]
+
+\end_inset
+
+reveals that (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:increase-in-cov"
+
+\end_inset
+
+) is quasi-concave, and reaches a unique maximum at 
+\begin_inset Formula $k=\frac{1}{2}$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Not sure about this proof because 
+\begin_inset Formula $B_{c}$
+\end_inset
+
+ and 
+\begin_inset Formula $B_{p}$
+\end_inset
+
+ are themselves defined in terms of 
+\begin_inset Formula $k$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Expression for 
+\begin_inset Formula $Corr(G_{c},S_{c})$
+\end_inset
+
+ in terms of 
+\begin_inset Formula $A_{c}$
+\end_inset
+
+ and 
+\begin_inset Formula $B_{c}$
+\end_inset
+
+.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+To do comparative statics, we write
+\begin_inset Formula 
+\begin{align*}
+Corr(G_{c},S_{c}) & =\frac{Cov(G_{c},S_{c})}{\sqrt{Var(G_{c})Var(S_{c})}}\\
+ & =\frac{cd[Var(A_{c})-Var(B_{c})]+(d^{2}-c^{2})Cov(A_{c},B_{c})}{\sqrt{d^{2}Var(A_{c})+c^{2}Var(B_{c})-2cdCov(A_{c},B_{c})}\sqrt{c^{2}Var(A_{c})+d^{2}Var(B_{c})+2cdCov(A_{c},B_{c})}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Proof that 
+\begin_inset Formula $d/dk(VarA_{p})$
+\end_inset
+
+ is -ve to 1/2 then +ve.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+To complete the second part, write
+\begin_inset Formula 
+\begin{align*}
+Cov(G_{c},S_{c}) & =cd[Var(A_{c})-Var(B_{c})]+(d^{2}-c^{2})Cov(A_{c},B_{c})\\
+ & =cd[Var(A_{p})-Var(B_{c})]+(d^{2}-c^{2})Cov(A_{p},B_{p})
+\end{align*}
+
+\end_inset
+
+using (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cov-A-B-same"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cov-A-B-same"
+
+\end_inset
+
+).
+ Writing out 
+\begin_inset Formula 
+\begin{align*}
+Var(A_{p}) & =(1-k)^{2}Var(G_{p})+k^{2}Var(S_{p})+2k(1-k)Cov(S_{p},G_{p})\\
+ & =(1-k)^{2}+k^{2}+2k(1-k)Cov(S_{p},G_{p})
+\end{align*}
+
+\end_inset
+
+and differentiating gives
+\begin_inset Formula 
+\[
+\frac{d}{dk}Var(A_{p})=2(2k-1)(1-Cov(S_{p},G_{p}))
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Since 
+\begin_inset Formula $Cov(S_{p},G_{p})=Corr(S_{p},G_{p})<1$
+\end_inset
+
+ (as both 
+\begin_inset Formula $S_{p}$
+\end_inset
+
+ and 
+\begin_inset Formula $G_{p}$
+\end_inset
+
+have unit variance), this is positive iff 
+\begin_inset Formula $k>\frac{1}{2}$
+\end_inset
+
+.
+ Differentiating 
+\begin_inset Formula $cd$
+\end_inset
+
+ reveals that it is positive iff 
+\begin_inset Formula $k<\frac{1}{2}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Robustness
+\end_layout
+
+\begin_layout Standard
+The proof does not depend strongly on the precise details of how 
+\begin_inset Formula $S$
+\end_inset
+
+ and 
+\begin_inset Formula $G$
+\end_inset
+
+ are inherited.
+ All that is required is that (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:dist-A-same"
+
+\end_inset
+
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:E-b-given-a-same"
+
+\end_inset
+
+) hold, and that 
+\begin_inset Formula 
+\[
+Var(B_{c}|A)\le Var(B_{p}|A)
+\]
+
+\end_inset
+
+with strict inequality on a set of positive measure.
+ These conditions would hold, for example, if 
+\begin_inset Formula $S$
+\end_inset
+
+ represented inherited wealth that was divided up between children not too
+ unequally (and without taking account of the children's 
+\begin_inset Formula $G$
+\end_inset
+
+!); or if children's expected value of 
+\begin_inset Formula $G$
+\end_inset
+
+ were equal to the mean of the parents' 
+\begin_inset Formula $G$
+\end_inset
+
+, but with some variance.
+\end_layout
+
+\end_body
+\end_document
