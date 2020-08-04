@@ -290,18 +290,6 @@ PROPOSITION 1
 \end_layout
 
 \begin_layout Standard
-(ii) 
-\begin_inset Formula $Cov(G_{c},S_{c})$
-\end_inset
-
- is quasiconcave in 
-\begin_inset Formula $k$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
 
 \series bold
 PROOF
@@ -311,8 +299,8 @@ PROOF
 Rearranging the equations gives
 \begin_inset Formula 
 \begin{align*}
-S & =cA+dB,\\
-G & =dA-cB
+S & =cA-dB,\\
+G & =dA+cB
 \end{align*}
 
 \end_inset
@@ -339,9 +327,9 @@ z & \equiv k^{2}+(1-k)^{2}.
 \begin_inset Formula 
 \begin{align}
 Cov(G,S) & =E(GS)\nonumber \\
- & =E(dA-cB)(cA+dB)\nonumber \\
- & =E(cdA^{2}+(d^{2}-c^{2})AB-cdB^{2})\nonumber \\
- & =cd\ [Var(A)-Var(B)]+(d^{2}-c^{2})Cov(A,B)\label{eq:cov-G-S}
+ & =E(dA+cB)(cA-dB)\nonumber \\
+ & =E(cdA^{2}+(c^{2}-d^{2})AB-cdB^{2})\nonumber \\
+ & =cd\ [Var(A)-Var(B)]+(c^{2}-d^{2})Cov(A,B)\label{eq:cov-G-S}
 \end{align}
 
 \end_inset
@@ -445,6 +433,36 @@ reference "eq:pos-var-B-given-A"
 \end_inset
 
 ):
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+question, if 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $B$
+\end_inset
+
+ are orthogonal then shouldn't the 
+\begin_inset Quotes eld
+\end_inset
+
+explained variance
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $Var(E(B_{c}|A))=0$
+\end_inset
+
+?
+\end_layout
+
+\end_inset
+
+
 \begin_inset Formula 
 \begin{align}
 Var(B_{c}) & =E_{A}(Var(B_{c}|A))+Var(E(B_{c}|A))\label{eq:var-B-less}\\
@@ -529,8 +547,8 @@ reference "eq:cov-G-S"
 ), we have shown
 \begin_inset Formula 
 \begin{align*}
-Cov(G_{p},S_{p})= & cd[Var(A_{p})-Var(B_{p})]+(d^{2}-c^{2})Cov(A_{p},B_{p})\\
-\le & cd[Var(A_{c})-Var(B_{c})]+(d^{2}-c^{2})Cov(A_{c},B_{c})\\
+Cov(G_{p},S_{p})= & cd[Var(A_{p})-Var(B_{p})]+(c^{2}-d^{2})Cov(A_{p},B_{p})\\
+\le & cd[Var(A_{c})-Var(B_{c})]+(c^{2}-d^{2})Cov(A_{c},B_{c})\\
 = & Cov(G_{c},S_{c}).
 \end{align*}
 
@@ -546,7 +564,7 @@ The inequality is strict when
 
 , and holds with equality otherwise.
  The covariance and correlation share the same sign, so this completes the
- first part of the proof.
+ proof.
 \end_layout
 
 \begin_layout Standard
@@ -556,7 +574,7 @@ status open
 \begin_layout Plain Layout
 Proof ideas for the second part: 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 show that 
@@ -596,23 +614,23 @@ And, show that
 \begin_inset Formula $cd$
 \end_inset
 
- is antisymmetric around 
+ is symmetric around 
 \begin_inset Formula $k=1/2$
 \end_inset
 
-; so is 
+; 
 \begin_inset Formula $d^{2}-c^{2}$
 \end_inset
 
-; if 
+ is antisymmetric [check]; if 
 \begin_inset Formula $Var(A_{c})-Var(B_{c})$
 \end_inset
 
- is antisymmetric, and 
+ is symmetric, and 
 \begin_inset Formula $Cov(A_{p},B_{p})$
 \end_inset
 
- is too, then the whole expression is symmetric.) 
+ is antisymmetric, then the whole expression is symmetric.) 
 \end_layout
 
 \begin_layout Plain Layout
@@ -647,7 +665,7 @@ s
 
 
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Use the difference in covariances, which is just 
@@ -710,13 +728,12 @@ reference "eq:cond-var-B-less"
 \end_layout
 
 \begin_layout Plain Layout
-An alternative is just not to worry about it.
- The exact peak at 
-\begin_inset Formula $k=1/2$
+None of these work: see example-non-quasiconcavity.R for an example where
+ the covariance is not quasiconcave in 
+\begin_inset Formula $k$
 \end_inset
 
- doesn't matter.
- Getting quasiconcavity would be nice.
+.
 \end_layout
 
 \end_inset
@@ -949,7 +966,7 @@ have unit variance), this is positive iff
 
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Section*
 Robustness
 \end_layout
 
