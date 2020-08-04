@@ -75,41 +75,41 @@
 
 \begin_body
 
-\begin_layout Title
-Continuous model
-\end_layout
-
 \begin_layout Standard
+There is a large population, whose members have a single genetic trait 
 \begin_inset Formula $G_{i}$
 \end_inset
 
- and 
+ and a single social trait 
 \begin_inset Formula $S_{i}$
 \end_inset
 
- are now random variables which need not be independent, and may be discrete
- or mixed.
- (We assume they are non-degenerate, i.e.
- with positive variance.
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-be a bit more careful.
- We need that 
-\begin_inset Formula $Var(B|A)>0$
-\end_inset
-
- for at least some 
-\begin_inset Formula $A$
-\end_inset
-
 .
+ These are random variables which may be discrete or mixed and may also
+ be correlated.
+ Couples match and have children: we write 
+\begin_inset Formula $G_{p}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{p}$
+\end_inset
+
+ for the parents' generation, 
+\begin_inset Formula $G_{c}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{c}$
+\end_inset
+
+ for the children's generation, and drop the subscripts for statements which
+ apply to both.
+ 
 \end_layout
 
-\end_inset
-
-) Couples match randomly among individuals of the same 
+\begin_layout Standard
+Couples match randomly among individuals of the same 
 \begin_inset Quotes eld
 \end_inset
 
@@ -117,14 +117,10 @@ attractiveness
 \begin_inset Quotes erd
 \end_inset
 
- 
-\begin_inset Formula $a_{i}$
-\end_inset
-
-:
+, defined as
 \begin_inset Formula 
 \[
-A_{i}=a(G_{i},S_{i})=(1-k)f(G_{i})+kv(S_{i})
+A=a(G,S)=(1-k)f(G)+kv(S)
 \]
 
 \end_inset
@@ -139,11 +135,11 @@ where
 
  are continuous increasing functions.
  Without loss of generality, we measure 
-\begin_inset Formula $G_{i}$
+\begin_inset Formula $G$
 \end_inset
 
  and 
-\begin_inset Formula $S_{i}$
+\begin_inset Formula $S$
 \end_inset
 
  in 
@@ -157,34 +153,33 @@ attractiles
 , so that 
 \begin_inset Formula 
 \[
-A_{i}=(1-k)G_{i}+kS_{i}.
+A=(1-k)G+kS.
 \]
 
 \end_inset
 
 We also scale them so that 
-\begin_inset Formula $EG_{i}=ES_{i}=0$
+\begin_inset Formula $EG_{p}=ES_{p}=0$
 \end_inset
 
 , 
-\begin_inset Formula $Var(G_{i})=Var(S_{i})=1$
+\begin_inset Formula $Var(G_{p})=Var(S_{p})=1$
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Standard
 Define
 \begin_inset Formula 
 \[
-B_{i}=kG_{i}-(1-k)S_{i}.
+B=kG-(1-k)S.
 \]
 
 \end_inset
 
 This is orthogonal to 
-\begin_inset Formula $A_{i}$
+\begin_inset Formula $A$
 \end_inset
 
 .
@@ -208,7 +203,7 @@ Brains
  We assume that 
 \begin_inset Formula 
 \begin{equation}
-Var(B|A)>0\textrm{ for a set of values of \ensuremath{A} of positive measure.}\label{eq:pos-var-B-given-A}
+Var(B_{p}|A_{p})>0\textrm{ for a set of values of \ensuremath{A_{p}} of positive measure.}\label{eq:pos-var-B-given-A}
 \end{equation}
 
 \end_inset
@@ -217,11 +212,32 @@ Var(B|A)>0\textrm{ for a set of values of \ensuremath{A} of positive measure.}\l
 \end_layout
 
 \begin_layout Standard
+Note that 
+\begin_inset Formula $EA_{p}=EB_{p}=0$
+\end_inset
+
+.
+ Recall that if 
+\begin_inset Formula $EX=EY=0$
+\end_inset
+
+, 
+\begin_inset Formula $Var(X)=EX^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $Cov(X,Y)=EXY$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 Couples have two children each, and children's value of 
 \begin_inset Formula $G$
 \end_inset
 
- or 
+ and 
 \begin_inset Formula $S$
 \end_inset
 
@@ -231,28 +247,13 @@ Couples have two children each, and children's value of
 \end_inset
 
  as both their parents.
- From now on we drop 
-\begin_inset Formula $i$
-\end_inset
-
- subscripts, and write 
-\begin_inset Formula $G_{p}$
-\end_inset
-
- or 
-\begin_inset Formula $G_{c}$
-\end_inset
-
-, etc., to refer to the parents' or children's generation; statements without
- subscripts apply to both generations.
  
 \end_layout
 
 \begin_layout Standard
 We now prove that the correlation between genetic endowment and social status
- is higher in the children's generation, and that the increase is largest
- for intermediate values of 
-\begin_inset Formula $k$
+ is higher in the children's generation, so long as 
+\begin_inset Formula $0<k<1$
 \end_inset
 
 .
@@ -265,7 +266,7 @@ PROPOSITION 1
 \end_layout
 
 \begin_layout Standard
-(i) When 
+When 
 \begin_inset Formula $0<k<1$
 \end_inset
 
@@ -377,11 +378,19 @@ Next, note that for every value of
 , 
 \begin_inset Formula 
 \begin{equation}
-E(B_{c}|A)=E(B_{p}|A).\label{eq:E-b-given-a-same}
+E(B_{c}|A)=E(B_{p}|A),\label{eq:E-b-given-a-same}
 \end{equation}
 
 \end_inset
 
+since within each pair, the children's value of 
+\begin_inset Formula $B$
+\end_inset
+
+ is equal to the parents' mean.
+\end_layout
+
+\begin_layout Standard
 Lastly, for every value of 
 \begin_inset Formula $A$
 \end_inset
@@ -458,6 +467,18 @@ explained variance
 \end_inset
 
 ?
+\end_layout
+
+\begin_layout Plain Layout
+NB: this would hold true and might be useful if 
+\begin_inset Formula $G_{p}$
+\end_inset
+
+ and 
+\begin_inset Formula $S_{p}$
+\end_inset
+
+ are independent.
 \end_layout
 
 \end_inset
