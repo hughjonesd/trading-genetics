@@ -18,7 +18,9 @@ cov_Gc_Sc <- function (Gp, Sp, k) {
   Gc <- colMeans(Gp)
   Sc <- colMeans(Sp)
   
-  return(mean(Gc * Sc))
+  # for covariance
+  # return(cov(Gc, Sc))
+  return(cor(Gc, Sc))
 }
 cov_Gc_Sc_v <- Vectorize(cov_Gc_Sc, vectorize.args = "k")
 
