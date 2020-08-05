@@ -128,13 +128,15 @@ match and have children: we write $G_{p}$ and $S_{p}$ for the parents'
 generation, $G_{c}$ and $S_{c}$ for the children's generation, and
 drop the subscripts for statements which apply to both. 
 
-Couples match randomly among individuals of the same ``attractiveness'',
+Couples match randomly among individuals of the same "attractiveness",
 defined as
+
 \[
 A=a(G,S)=(1-k)f(G)+kv(S)
 \]
+
 where $f$ and $v$ are continuous increasing functions. Without loss
-of generality, we measure $G$ and $S$ in ``attractiles'', so that
+of generality, we measure $G$ and $S$ in "attractiles", so that
 \[
 A=(1-k)G+kS.
 \]
@@ -145,7 +147,7 @@ Define
 B=kG-(1-k)S.
 \]
 This is orthogonal to $A$. It can be thought of as the relative weight
-of ``Beauty'' or ``Brains'' in making someone attractive. We assume
+of "Beauty" or "Brains" in making someone attractive. We assume
 that 
 \begin{equation}
 Var(B_{p}|A_{p})>0\textrm{ for a set of values of \ensuremath{A_{p}} of positive measure.}\label{eq:pos-var-B-given-A}
@@ -497,55 +499,70 @@ TODO: Write!
 ## Proof of Proposition \@ref(prop:increased-corr)
 
 Rearranging the equations gives
+
 \begin{align*}
-S & =cA-dB,\\
-G & =dA+cB
+S & = cA - dB,\\
+G & = dA + cB
 \end{align*}
+
 where 
+
 \begin{align*}
 c & \equiv\frac{1-k}{z},\\
 d & \equiv\frac{k}{z},\textrm{ and}\\
 z & \equiv k^{2}+(1-k)^{2}.
 \end{align*}
+
  We calculate the covariance of $G$ and $S$ in terms of the new
 variables:
+
 \begin{align}
 Cov(G,S) & =E(GS)\nonumber \\
- & =E(dA+cB)(cA-dB)\nonumber \\
- & =E(cdA^{2}+(c^{2}-d^{2})AB-cdB^{2})\nonumber \\
- & =cd\ [Var(A)-Var(B)]+(c^{2}-d^{2})Cov(A,B)\label{eq:cov-G-S}
+ & = E(dA+cB)(cA-dB)\nonumber \\
+ & = E(cdA^{2}+(c^{2}-d^{2})AB-cdB^{2})\nonumber \\
+ & = cd\ [Var(A)-Var(B)]+(c^{2}-d^{2})Cov(A,B)\label{eq:cov-G-S}
 \end{align}
+
 since $EA=EB=EG=ES=0$.
 
 Now we note that since children's $A$ is equal to parents' $A$,
+
 \begin{equation}
-Var(A_{p})=Var(A_{c}),\label{eq:var-A-same}
+Var(A_{p}) = Var(A_{c}),\label{eq:var-A-same}
 \end{equation}
+
 and indeed the whole distribution is the same:
+
 \begin{equation}
-Pr(A_{p}=a)=Pr(A_{c}=a)\textrm{ for all }a.\label{eq:dist-A-same}
+Pr(A_{p}=a) = Pr(A_{c}=a)\textrm{ for all }a.\label{eq:dist-A-same}
 \end{equation}
 
 Next, note that for every value of $A$, 
+
 \begin{equation}
-E(B_{c}|A)=E(B_{p}|A),\label{eq:E-b-given-a-same}
+E(B_{c}|A) = E(B_{p}|A),\label{eq:E-b-given-a-same}
 \end{equation}
+
 since within each pair, the children's value of $B$ is equal to the
 parents' mean.
 
 Lastly, for every value of $A$, the children's $B$ is the mean of
 two random draws from $B$ given $A$. Therefore:
+
 \begin{equation}
 Var(B_{c}|A)=\frac{1}{2}Var(B_{p}|A).\label{eq:cond-var-B-less}
 \end{equation}
+
 Applying the law of total variance to $B$, and using (\ref{eq:cond-var-B-less})
 and (\ref{eq:E-b-given-a-same}), along with (\ref{eq:pos-var-B-given-A}):
+
 \begin{align}
-Var(B_{c}) & =E_{A}(Var(B_{c}|A))+Var(E(B_{c}|A))\label{eq:var-B-less}\\
- & <E_{A}(Var(B_{p}|A))+Var(E(B_{p}|A))=Var(B_{p}).\nonumber 
+Var(B_{c}) & = E_{A}(Var(B_{c}|A))+Var(E(B_{c}|A))\label{eq:var-B-less}\\
+ & < E_{A}(Var(B_{p}|A)) + Var(E(B_{p}|A)) = Var(B_{p}).\nonumber 
 \end{align}
 
 Rewrite
+
 \begin{align*}
  & Cov(A,B)\\
 = & \int\int ab\ Pr(a)Pr(b|a)\ \textrm{d}b\ \textrm{d}a\\
@@ -555,20 +572,23 @@ Rewrite
 
 Using (\ref{eq:dist-A-same}) and (\ref{eq:E-b-given-a-same}) then
 shows that
+
 \begin{equation}
-Cov(A_{p},B_{p})=Cov(A_{c},B_{c}).\label{eq:cov-A-B-same}
+Cov(A_{p}, B_{p}) = Cov(A_{c}, B_{c}).\label{eq:cov-A-B-same}
 \end{equation}
 
-Plugging facts(\ref{eq:cov-A-B-same}), (\ref{eq:var-B-less}) and
+Plugging facts(\ref{eq:var-A-same}), (\ref{eq:var-B-less}) and
 (\ref{eq:cov-A-B-same}) into the expression in (\ref{eq:cov-G-S}),
 we have shown
+
 \begin{align*}
-Cov(G_{p},S_{p})= & cd[Var(A_{p})-Var(B_{p})]+(c^{2}-d^{2})Cov(A_{p},B_{p})\\
-\le & cd[Var(A_{c})-Var(B_{c})]+(c^{2}-d^{2})Cov(A_{c},B_{c})\\
+Cov(G_{p},S_{p}) = & cd[Var(A_{p})-Var(B_{p})]+(c^{2}-d^{2})Cov(A_{p},B_{p})\\
+\le & cd[Var(A_{c}) - Var(B_{c})] + (c^{2} - d^{2})Cov(A_{c}, B_{c})\\
 = & Cov(G_{c},S_{c}).
 \end{align*}
+
 The inequality is strict when $cd$ is positive, equivalently when
-$k\in(0,1)$, and holds with equality otherwise. The covariance and
+$k \in (0,1)$, and holds with equality otherwise. The covariance and
 correlation share the same sign, so this completes the proof.
 
 
