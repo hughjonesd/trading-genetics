@@ -1,5 +1,5 @@
 ---
-title: 'Genetic lock-in of social advantage: evidence from UK Biobank'
+title: 'Effects of inequality on genetics: evidence from UK Biobank'
 author: David Hugh-Jones & Abdel Abdellaoui
 date: "`r Sys.Date()`"
 output: 
@@ -20,6 +20,7 @@ header-includes:
 
 ```{r setup, include = FALSE}
 library(Formula)
+library(car)
 library(drake)
 library(dplyr)
 library(magrittr)
@@ -121,72 +122,314 @@ mf_pairs %>%
 
 
 # Theory
+
 There is a large population, whose members have a single genetic trait
-$G_{i}$ and a single social trait $S_{i}$. These are random variables
-which may be discrete or mixed and may also be correlated. Couples
-match and have children: we write $G_{p}$ and $S_{p}$ for the parents'
-generation, $G_{c}$ and $S_{c}$ for the children's generation, and
-drop the subscripts for statements which apply to both. 
+$g_{i}$ and a single social trait $s_{i}$. 
 
-Couples match randomly among individuals of the same "attractiveness",
-defined as
+Suppose that $G$ and $S$ are continuously distributed. Without loss
+of generality, $EG = ES = 0$.^[Continuous distribution is not strictly required.
+All that is needed is for a set of pairs of positive measure to have different values
+of $G$ and $S$, along a set of attractiveness curves of positive measure.] People 
+pair according to an attractiveness function
 
 \[
-A=a(G,S)=(1-k)f(G)+kv(S)
+A(g_{i},s_{i}) = f((1-k)g_{i},ks_{i})
 \]
 
-where $f$ and $v$ are continuous increasing functions. Without loss
-of generality, we measure $G$ and $S$ in "attractiles", so that
+which is smooth and strictly increasing in both its arguments. If
+$k = 0$, "indifference curves" of attractiveness are vertical lines
+in $(G, S)$ space. If $k = 1$, they are horizontal lines. If $k \in (0,1)$
+they are arbitrary downward sloping curves. 
+
+Write $p(i)$ for $i$'s partner. Pairs always have the
+same attractiveness.
+
 \[
-A=(1-k)G+kS.
+A(g_{i},s_{i}) = A(g_{p(i)},s_{p(i)}).
 \]
-We also scale them so that $EG_{p}=ES_{p}=0$, $Var(G_{p})=Var(S_{p})=1$.
 
-Define
-\[
-B=kG-(1-k)S.
-\]
-This is orthogonal to $A$. It can be thought of as the relative weight
-of "Beauty" or "Brains" in making someone attractive. We assume
-that 
-\begin{equation}
-Var(B_{p}|A_{p})>0\textrm{ for a set of values of \ensuremath{A_{p}} of positive measure.}\label{eq:pos-var-B-given-A}
-\end{equation}
+Each pair has two children. We assume that both children $c(d)$ of
+parents $d$, $m$ have
 
-Note that $EA_{p}=EB_{p}=0$. Recall that if $EX=EY=0$, $Var(X)=EX^{2}$
-and $Cov(X,Y)=EXY$.
+\begin{align}
+g_{c(d)} & =\frac{g_{d}+g_{m}}{2};\label{eq:children-average}\\
+s_{c(d)} & =\frac{s_{d}+s_{m}}{2}.\nonumber 
+\end{align}
 
-Couples have two children each, and children's value of $G$ and $S$
-is equal to the mean of their parents. As a result, children have
-the same value of $A$ as both their parents. 
-
-Our main result that the correlation between genetic endowment and social
-status is higher in the children's generation, so long as $0<k<1$.
+This is a strong assumption; we relax it later. For real world examples
+approximated by it, $S$ could be wealth which is equally divided
+between the children; $G$ could be a highly polygenic trait with
+many small effects. Write $G_{p}, S_{p}$ to denote the population
+variables in the parents' generation; $G_{c}, S_{c}$ for the children's
+generation. 
 
 \begin{prop}
-When $0<k<1$, $Corr(G_{c}, S_{c}) > Corr(G_{p}, S_{p})$. When $k=0$
-or $k=1$, $Corr(G_{c},S_{c}) = Corr(G_{p}, S_{p})$.
-\label{prop:prop-increased-corr}
+\label{prop:prop1}
+(i) $Cov(G_{c}, S_{c}) \ge Cov(G_{p},S_{p})$, with strict inequality
+if and only if $0 < k < 1$. 
+
+(ii) If $corr(G_{p}, S_{p}) \ge 0$, then $corr(G_{c},S_{c}) \ge corr(G_{p},S_{p})$,
+with strict inequality if and only if $0 < k < 1$ \uline{or} 
+$corr(G_{p}, S_{p}) > 0$.
 \end{prop}
 
-Some points are in order. First, the proof does not depend strongly on the precise details of how $S$
-and $G$ are inherited. All that is required is that the distribution of 
-$A$ does not change too much from parents to children, that along values of
-$A$, $E(B_c | A_p) \approx E(B_p | A_p)$
-, and that 
 
+\begin{proof}
+
+Within each pair $i,p(i)$ write $d$ for the person with $s_{d}>s_{p(d)}$
+and $m$ for $p(d)$. (Think of these as "dukes" and "milkmaids",
+or if you prefer "duchesses" and "tennis instructors".) If
+$k < 1$, then $g_{d} < g_{m}$. (If $k = 0$, then define $d$ as the person
+with $g_{d} < g_{p(d)}$.)
+
+We integrate over the "dukes" to calculate the covariance in the
+parents' generation:
 \[
-Var(B_{c}|A)\le Var(B_{p}|A)
+cov(G_{p},S_{p})=\int\frac{1}{2}(g_{d}s_{d}+g_{p(d)}s_{p(d)})\,\mathrm{d}d.
 \]
 
-with strict inequality on a set of positive measure. These conditions
-would hold, for example, if $S$ represented inherited wealth that
-was divided up between children not too unequally (and without taking
-account of the children's $G$!); or if children's expected value
-of $G$ were equal to the mean of the parents' $G$, but with some
-variance.
+For the children, the equivalent expression is
+\[
+cov(G_{c},S_{c})=\int g_{c(d)}s_{c(d)}\mathrm{d}d,
+\]
 
-Second, the "marriage market" here is a reduced form
+observing that $EG_{c} = ES_{c}=0$ from (\ref{eq:children-average}).
+
+Take an arbitrary pair $d,m$. Write
+
+\begin{align*}
+g_{d}s_{d} & =(g_{c}-\Delta g)(s_{c}+\Delta s);\\
+g_{m}s_{m} & =(g_{c}+\text{\ensuremath{\Delta g)(s_{c}-\Delta s)}}
+\end{align*}
+
+where 
+
+\begin{align*}
+\text{\ensuremath{\Delta g=\frac{g_{m}-g_{d}}{2}\ge0}}, & \textrm{strictly so if and only if }k>0;\\
+\Delta s=\frac{s_{d}-s_{m}}{2}\ge0 & \textrm{strictly so if and only if }k<1.
+\end{align*}
+
+Taking the average of the parents gives
+
+\[
+\frac{1}{2}(g_{d}s_{d}+g_{m}s_{m})= g _{c}s_{c}-\Delta g\Delta s.
+\]
+
+This is less than $g_{c}s_{c}$ if $0 < k < 1$, and equal to it if $k = 0$
+or $k = 1$. Plugging this into the integral shows that 
+\[
+cov(G_{p},S_{p})\le cov(G_{c},S_{c})
+\]
+again with strict inequality if and only if $0 < k < 1$. This proves
+the first part.
+
+Write
+
+\begin{equation}
+corr(G_{j},S_{j})=\frac{cov(G_{j},S_{j})}{\sqrt{var(G_{j})var(S_{j})}}\textrm{ for both generations }j\in\{p,c\}.\label{eq:corr-cov-var}
+\end{equation}
+
+where 
+
+\begin{align*}
+var(G_{p}) & =\frac{1}{2}\int g_{d}^{2}+g_{p(d)}^{2}\textrm{d}d;\\
+var(G_{c}) & =\int g_{c(d)}^{2}\textrm{d}d.
+\end{align*}
+
+Much as before,
+\begin{align*}
+g_{d}^{2}+g_{m}^{2} & =(g_{c}-\Delta g)^{2}+(g_{c}+\Delta g)^{2}\\
+ & =2g_{c}^{2}+2(\Delta g)^{2}\\
+ & \ge2g_{c}^{2}.
+\end{align*}
+
+This shows that $var(G_{c})\le var(G_{p})$ and a similar argument
+shows $var(S_{c})\le var(S_{p})$. Thus the covariance is higher (and
+positive) in the children's generation, while the variances are lower.
+Combining these ensures that 
+
+\[
+corr(G_{c},S_{c}) \ge corr(G_{p},S_{p}).
+\]
+
+Since for any $k$, either $var(G_{c}) < var(G_{p})$ or $var(S_{c}) < var(S_{p})$,
+the only way to get strict equality for the above is if $k \in \{0,1\}$
+and $cov(G_{c}, S_{c}) = cov(G_{p},S_{p}) = 0$.
+
+\end{proof}
+
+
+```{r pic-intuition, fig.subcap = c("Caste society (k = 1): parents", "Caste society (k = 1): children", "Egalitarian society (k = 0): parents", "Egalitarian society (k = 0): children", "Intermediate society (0 < k < 1): parents", "Intermediate society (0 < k < 1): children"), fig.cap = "Theory: shaded area is the population distribution. Dotted lines are attractiveness isoquants. Solid dots are example parents, transparent dots are example children. The right hand side shows the children's generation.", fig.ncol = 2, fig.width = 2.75, fig.height = 2.4, fig.align='center'}
+
+
+setup_plot <- function () {
+  par(mar = rep(2.1, 4))
+  plot.new()
+  plot.window(c(-1.2, 1.2), c(-1.2, 1.2))
+  arrows(x0 = -1.1, x1 = 1.1, y0 = -1.1, length = .1)
+  arrows(y0 = -1.1, y1 = 1.1, x0 = -1.1, length = .1)
+  text(-1.1, 1.2, "S", cex = 0.8)
+  text(1.2, -1.1, "G", cex = 0.8)
+}
+
+draw_dist <- function (w) {
+  if (! is.matrix(w)) w <- matrix(c(w, 0, 0, 1), nrow = 2)
+  mygrey <- grey(.85, .03)
+  for (rad in seq(0.2, 1, 0.1)) {
+    v <- car::ellipse(c(0, 0), shape = w, radius = rad, add = TRUE, center.pch = NULL,
+               fill = TRUE, col = mygrey, lwd = 0, segments = 241)
+  }
+  
+  v
+}
+
+draw_dist_with_a <- function (width, shift, curved_lines = FALSE) {
+  setup_plot()  
+  v <- draw_dist(width)
+  nr_v <- nrow(v)
+  
+  rotation <- (-shift + seq_len(nr_v)) %% nr_v
+  rotation[rotation == 0] <- nr_v
+  
+  v <- v[rotation, ]
+  v_rev <- v[nr_v:1, ]
+  
+  ivls <- quantile(seq_len(nr_v/2), seq(0.2, 0.8, .2), type = 1)
+  
+  start_x <- v[ivls, 1]
+  end_x   <- v_rev[ivls, 1]
+  start_y <- v[ivls, 2]
+  end_y <- v_rev[ivls, 2]
+  
+  if (curved_lines) {
+    for (l in seq_along(start_x)) {
+      sx <- start_x[l] + c(0, 0.2, 0.8, 1) * (end_x[l] - start_x[l])
+      sy <- start_y[l] + c(0, 0.1, 0.6, 1) * (end_y[l] - start_y[l])
+      spl <- stats::spline(sx, sy)
+      if (l ==2) mid_spl <- spl
+      lines(spl, lty = 2)
+    }
+    
+    start_x <- mid_spl$x[2]
+    start_y <- mid_spl$y[2]
+    end_x <- mid_spl$x[8]
+    end_y <- mid_spl$y[8]
+    inset <- 0
+  } else {
+    segments(x0 = start_x, x1 = end_x, y0 = start_y, y1 = end_y, lty = 2)  
+    
+    ivls <- ivls[2:3]
+  
+    start_x <- mean(v[ivls, 1])
+    end_x   <- mean(v_rev[ivls, 1])
+    start_y <- mean(v[ivls, 2])
+    end_y   <- mean(v_rev[ivls, 2])
+    inset <- 0.15
+  }
+  
+  
+  along <- function (tt) list(
+    x = start_x + tt * (end_x - start_x),
+    y = start_y + tt * (end_y - start_y)
+  )
+  
+  end_inset <- 0.15
+  starts <- along(c(inset, 1 - inset))
+  ends   <- along(c(0.5 - end_inset, 0.5 + end_inset))
+  pts <- along(c(inset/2, .5, 1 - inset/2))
+  arrows(x0 = starts$x, x1 = ends$x, y0 = starts$y, y1 = ends$y,
+         length = 0.05)
+  
+  points(x = pts$x, y = pts$y, pch = c(19, 21, 19), cex = 0.8)
+}
+
+draw_dist_with_a(.8, 0)
+setup_plot()
+invisible(draw_dist(matrix(c(.4, 0, 0, 1), nrow = 2)))
+
+draw_dist_with_a(.8, 60)
+setup_plot()
+invisible(draw_dist(matrix(c(.8, 0, 0, .4), nrow = 2)))
+
+draw_dist_with_a(.8, -30, curved_lines = TRUE)
+setup_plot()
+invisible(draw_dist(matrix(c(1, .4, .4, .8), nrow = 2)))
+
+
+
+```
+
+
+Figure \@ref(fig:pic-intuition) shows the intuition behind this result. The top
+row shows a *caste society* with $k = 1$. A typical pair is shown: children have
+intermediate values of $G$ and $S$ between their two parents (hollow circle). In
+this society pairs match only by social status; genetics plays no role. As a
+result, while the variance of $G$ shrinks within each status group, genetics
+remain uncorrelated with social status in the children's population
+distribution, shown on the right. The next row shows an *egalitarian society*
+with $k = 0$. Parents match only by genetics and ignore social status. Again, as
+a result there is no correlation between genetics and social status in the
+children's generation. The bottom row shows an intermediate society. Because
+both genetics and social status contribute to attractiveness, matched spouses
+typically trade them off against each other. As a result, the distribution is
+squeezed along the gradient of $k$, and $G$ and $S$ are correlated in the children's 
+generation.
+
+Figure \ref{fig:Correlation-counterexample} in the Appendix shows that
+the condition in the second part cannot be relaxed further.
+
+
+
+## Robustness
+
+We now relax the condition that children are exactly at the mean
+of their parents' values for $G$ and $S$. Let
+
+\begin{align*}
+g_{c(i)} & =\bar{g}_{i}+\varepsilon_{i}^{G}\\
+s_{c(i)} & =\bar{s}_{i}+\varepsilon_{i}^{S}
+\end{align*}
+
+where 
+
+\[
+\bar{g}_{i} = \frac{g_{i} + g_{p(i)}}{2}; \bar{s}_{i} = \frac{s_{i} + s_{p(i)}}{2}
+\]
+
+, $\varepsilon^{G}$ has mean 0 and variance $\sigma_{G}^{2}$ and
+$\varepsilon^{S}$ has mean 0 and variance $\sigma_{S}^{2}$. 
+
+\begin{prop}
+\label{prop:robustness}
+\begin{enumerate}
+\item if $\sigma_{G}^{2}$ and $\sigma_{S}^{2}$ are small enough and $corr(G_{p},S_{p}) \ge 0$,
+then $corr(G_{c},S_{c}) > corr(G_{p},S_{p})$ for $k \in (0,1)$.
+\item if $\varepsilon^{G}$ and $\varepsilon^{S}$ are uncorrelated with
+each other and with $\bar{G}$ and $\bar{S}$; and if $G_{p}$ and
+$S_{p}$ are uncorrelated, then $corr(G_{c},S_{c}) \ge 0$, with strict
+inequality if and only if $0<k<1$.
+\end{enumerate}
+\end{prop}
+
+The conditions in Proposition \label{prop:robustness} are quite plausible. For
+$G$, they require that either variance in siblings' scores on some summary statistic
+is not too large, or that it is uncorrelated with the parents' scores. Both of 
+these hold for most polygenic scores, which are additive sums of many small effects
+of alleles derived randomly from one or other parent. For $S$, the conditions
+would hold, for example, if $S$ measures wealth, which is inherited not too
+unequally between siblings; or if wealth is inherited unequally but not in a
+way that correlates with $S$ or $G$.
+
+It is worth considering what kind of social arrangements would *violate* these
+conditions. For example, suppose that parents' combined wealth is inherited by
+the child with the lowest value of $g_{c(i)}$. This creates a negative correlation
+between $s_{c(i)}$ and $g_{c(i)}$.
+
+
+
+## Discussion
+
+The "marriage market" here is a reduced form
 mechanism, encompassing that makes a difference to partner choice. For example,
 if earned income affects attractiveness in the marriage market, then society's
 level of meritocracy in the labour market will correlate with the value of $k$:
@@ -496,101 +739,64 @@ TODO: Write!
 
 # Appendix
 
-## Proof of Proposition \@ref(prop:increased-corr)
+## Second condition in Proposition \@ref(prop:prop1)
 
-Rearranging the equations gives
+To show that the condition in the second part cannot be relaxed further,
+consider the distribution in Figure \ref{fig:Correlation-counterexample}.
+There is negative correlation in the parents' generation (the shaded
+area). If $k = 1$ or is close enough to 1, then assortative mating along the dotted
+lines will reduce the variance of $S$ along those lines, pushing the
+distribution towards the darker central area, without
+affecting the covariance. This will make the correlation more negative.
+After repeated generations the horizontal variance within values of $G$ will almost disappear and the correlation will approach -1.
 
-\begin{align*}
-S & = cA - dB,\\
-G & = dA + cB
-\end{align*}
+\begin{figure}
+\begin{centering}
+\includegraphics[width=0.5\columnwidth]{correlation-counterexample}
+\par\end{centering}
+\caption{Correlation counterexample\label{fig:Correlation-counterexample}}
 
-where 
+\end{figure}
 
-\begin{align*}
-c & \equiv\frac{1-k}{z},\\
-d & \equiv\frac{k}{z},\textrm{ and}\\
-z & \equiv k^{2}+(1-k)^{2}.
-\end{align*}
+## Proposition \ref{prop:robustness}
 
- We calculate the covariance of $G$ and $S$ in terms of the new
-variables:
+\begin{proof}
 
-\begin{align}
-Cov(G,S) & =E(GS)\nonumber \\
- & = E(dA+cB)(cA-dB)\nonumber \\
- & = E(cdA^{2}+(c^{2}-d^{2})AB-cdB^{2})\nonumber \\
- & = cd\ [Var(A)-Var(B)]+(c^{2}-d^{2})Cov(A,B)\label{eq:cov-G-S}
-\end{align}
-
-since $EA=EB=EG=ES=0$.
-
-Now we note that since children's $A$ is equal to parents' $A$,
-
-\begin{equation}
-Var(A_{p}) = Var(A_{c}),\label{eq:var-A-same}
-\end{equation}
-
-and indeed the whole distribution is the same:
-
-\begin{equation}
-Pr(A_{p}=a) = Pr(A_{c}=a)\textrm{ for all }a.\label{eq:dist-A-same}
-\end{equation}
-
-Next, note that for every value of $A$, 
-
-\begin{equation}
-E(B_{c}|A) = E(B_{p}|A),\label{eq:E-b-given-a-same}
-\end{equation}
-
-since within each pair, the children's value of $B$ is equal to the
-parents' mean.
-
-Lastly, for every value of $A$, the children's $B$ is the mean of
-two random draws from $B$ given $A$. Therefore:
-
-\begin{equation}
-Var(B_{c}|A)=\frac{1}{2}Var(B_{p}|A).\label{eq:cond-var-B-less}
-\end{equation}
-
-Applying the law of total variance to $B$, and using (\ref{eq:cond-var-B-less})
-and (\ref{eq:E-b-given-a-same}), along with (\ref{eq:pos-var-B-given-A}):
+Note that in proposition \ref{prop:prop1}, we took $g_{c(i)} = \bar{g}_{i}$ and $s_{c(i)} = \bar{s}_i$. Write 
 
 \begin{align}
-Var(B_{c}) & = E_{A}(Var(B_{c}|A))+Var(E(B_{c}|A))\label{eq:var-B-less}\\
- & < E_{A}(Var(B_{p}|A)) + Var(E(B_{p}|A)) = Var(B_{p}).\nonumber 
+cov(G_{c},S_{c}) & =cov(\bar{G}+\varepsilon^{G},\bar{S}+\varepsilon^{S})\nonumber \\
+ & = cov(\bar{G},\bar{S}) + cov(\varepsilon^{G},\bar{S}) + 
+     cov(\bar{G},\varepsilon^{S}) + cov(\varepsilon^{G},\varepsilon^{S}).
+ \label{eq:cov-with-error}
 \end{align}
 
-Rewrite
+For any $X$ and $Y$, $cov(X, Y)$ is bounded by $\sqrt{var(X) var(Y)}$.
+Plugging $\sigma_{G}^{2}$ and $\sigma_{S}^{2}$ into this formula
+shows that under condition 1, $cov(G_{c},S_{c})$ will be arbitrarily
+close to $cov(\bar{G},\bar{S})$. Similarly, writing
 
-\begin{align*}
- & Cov(A,B)\\
-= & \int\int ab\ Pr(a)Pr(b|a)\ \textrm{d}b\ \textrm{d}a\\
-= & \int a\ Pr(a)\int bPr(b|a)\ \textrm{d}b\ \textrm{d}a\\
-= & \int a\ Pr(a)E(B|A)\ \textrm{d}a.
-\end{align*}
+\[
+var(G_{c}) = var(\bar{G}) + var(\varepsilon^{G}) + 2cov(\bar{G},\varepsilon^{G})
+\]
 
-Using (\ref{eq:dist-A-same}) and (\ref{eq:E-b-given-a-same}) then
-shows that
+shows that $var(G_{c})$ will approach $var(\bar{G})$ as $\sigma_{G}^{2}$
+grows small, and similarly for $var(S_{c})$. Plugging these facts
+into (\ref{eq:corr-cov-var}) shows that $corr(G_{c},S_{c})$ approaches
+$corr(\bar{G},\bar{S})$ as $\sigma_{G}^{2}$ and $\sigma_{S}^{2}$
+grow small. Proposition 1 then shows $corr(\bar{G},\bar{S}) < corr(G_{p},S_{p})$
+for $k\in(0,1)$.
 
-\begin{equation}
-Cov(A_{p}, B_{p}) = Cov(A_{c}, B_{c}).\label{eq:cov-A-B-same}
-\end{equation}
+Under condition 2, $cov(G_{c}, S_{c}) = cov(\bar{G},\bar{S})$ since
+the last three terms of the sum in (\ref{eq:cov-with-error}) are
+zero. Then since 
+\[
+cov(\bar{G},\bar{S})\ge cov(G_{p},S_{p}) = 0
+\]
+with strict inequality iff $k\in(0,1)$, the covariance signs the
+correlation. 
 
-Plugging facts(\ref{eq:var-A-same}), (\ref{eq:var-B-less}) and
-(\ref{eq:cov-A-B-same}) into the expression in (\ref{eq:cov-G-S}),
-we have shown
-
-\begin{align*}
-Cov(G_{p},S_{p}) = & cd[Var(A_{p})-Var(B_{p})]+(c^{2}-d^{2})Cov(A_{p},B_{p})\\
-\le & cd[Var(A_{c}) - Var(B_{c})] + (c^{2} - d^{2})Cov(A_{c}, B_{c})\\
-= & Cov(G_{c},S_{c}).
-\end{align*}
-
-The inequality is strict when $cd$ is positive, equivalently when
-$k \in (0,1)$, and holds with equality otherwise. The covariance and
-correlation share the same sign, so this completes the proof.
-
+\end{proof}
 
 \FloatBarrier
 
