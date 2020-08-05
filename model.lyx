@@ -909,10 +909,10 @@ We can now calculate the covariance between
 In the first generation, we can calculate:
 \begin_inset Formula 
 \begin{align*}
-b_{H,2} & =\gamma\sigma/\theta;\\
-g_{H,2} & =(1-k)\phi/\theta\\
-s_{H,2} & =k\phi/\theta;\\
-n_{H,2} & =0;
+b_{H,1} & =\gamma\sigma/\theta;\\
+g_{H,1} & =(1-k)\phi/\theta\\
+s_{H,1} & =k\phi/\theta;\\
+n_{H,1} & =0;
 \end{align*}
 
 \end_inset
@@ -920,10 +920,10 @@ n_{H,2} & =0;
 and
 \begin_inset Formula 
 \begin{align*}
-b_{L,2} & =0;\\
-g_{L,2} & =\frac{\gamma(1-\sigma)-\phi(1-k)}{1-\theta}\\
-s_{L,2} & =\frac{(1-\gamma)\sigma-\phi k}{1-\theta}\\
-n_{L,2} & =\frac{(1-\gamma)(1-\sigma)}{1-\theta};
+b_{L,1} & =0;\\
+g_{L,1} & =\frac{\gamma(1-\sigma)-\phi(1-k)}{1-\theta}\\
+s_{L,1} & =\frac{(1-\gamma)\sigma-\phi k}{1-\theta}\\
+n_{L,1} & =\frac{(1-\gamma)(1-\sigma)}{1-\theta};
 \end{align*}
 
 \end_inset
@@ -1951,8 +1951,8 @@ Proportions of children born from different types of parents (b-type; g-type;
 Again, summing over types within groups and then over groups, we get
 \begin_inset Formula 
 \begin{align*}
-b_{t+1} & =b_{t}-\theta(1-2\alpha)b_{t}g_{t}+\alpha g_{t}s_{t}\\
-g_{t+1} & =g_{t}+\theta(1-2\alpha)b_{t}g_{t}-\alpha g_{t}s_{t}\\
+b_{t+1} & =b_{t}-\theta(1-2\alpha)b_{H,t}g_{H,t}+\alpha g_{t}s_{t}\\
+g_{t+1} & =g_{t}+\theta(1-2\alpha)b_{H,t}g_{H,t}-\alpha g_{t}s_{t}\\
 s_{t+1} & =s_{t}-(1-\alpha)g_{t}s_{t}\\
 n_{t+1} & =n_{t}+(1-\alpha)g_{t}s_{t}
 \end{align*}
@@ -1966,19 +1966,11 @@ as the intergenerational difference equation in type shares.
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-b_{2} & =b_{1}-\theta(1-2\alpha)b_{H,1}g_{H,1}+\alpha\rho_{\alpha}\\
-g_{2} & =g_{1}+\theta(1-2\alpha)b_{H,1}g_{H,1}-\alpha\rho_{\alpha}\\
-s_{2} & =s_{1}-(1-\alpha)\rho_{\alpha}\\
-n_{2} & =n_{1}+(1-\alpha)\rho_{\alpha}
+b_{2} & =b_{1}-\theta(1-2\alpha)b_{H,1}g_{H,1}+\alpha\rho\\
+g_{2} & =g_{1}+\theta(1-2\alpha)b_{H,1}g_{H,1}-\alpha\rho\\
+s_{2} & =s_{1}-(1-\alpha)\rho\\
+n_{2} & =n_{1}+(1-\alpha)\rho
 \end{align*}
-
-\end_inset
-
-where 
-\begin_inset Formula 
-\[
-\rho_{\alpha}=\theta(g_{H}s_{H})+(1-\theta)(g_{L}s_{L}).
-\]
 
 \end_inset
 
@@ -1987,14 +1979,30 @@ where
 
 \begin_layout Standard
 Calculating the second-generation covariance as 
-\begin_inset Formula $b_{2}-\gamma\sigma=b_{2}-b_{1}$
+\begin_inset Formula $b_{2}-(b_{2}+g_{2})(b_{2}+s_{2})$
 \end_inset
 
- gives:
+, we can use that 
+\begin_inset Formula $b_{2}+g_{2}=\gamma$
+\end_inset
+
+ since the proportion with 
+\begin_inset Formula $G_{i}=1$
+\end_inset
+
+ remains constant over time – although now, the proportion with 
+\begin_inset Formula $S_{i}=1$
+\end_inset
+
+ is not constant.
+ This gives:
 \begin_inset Formula 
-\[
-\alpha[\theta(g_{H}s_{H})+(1-\theta)(g_{L}s_{L})]-\theta(1-2\alpha)b_{H,1}g_{H,1}
-\]
+\begin{align*}
+ & b_{2}-\gamma(b_{2}+s_{2})\\
+= & (1-\gamma)b_{2}-\gamma s_{2}\\
+= & (1-\gamma)[b_{1}-\theta(1-2\alpha)b_{H,1}g_{H,1}+\alpha\rho_{\alpha}]-\gamma[s_{1}-(1-\alpha)\rho]\\
+= & (1-\gamma)[b_{1}-\theta(1-2\alpha)b_{H,1}g_{H,1}]-\gamma s_{1}+[(1-\gamma)\alpha+\gamma(1-\alpha)]\rho
+\end{align*}
 
 \end_inset
 
@@ -2004,36 +2012,56 @@ Calculating the second-generation covariance as
 \begin_layout Standard
 and plugging in values for the first generation as before gives
 \begin_inset Formula 
-\begin{align*}
-\alpha\frac{k(1-k)\phi^{2}}{\theta}+\alpha\frac{[\gamma(1-\sigma)-\phi(1-k)][(1-\gamma)\sigma-\phi k]}{1-\theta}\\
--(1-2\alpha)\frac{\gamma\sigma(1-k)\phi}{\theta}.
-\end{align*}
+\[
+(2\alpha-1)\frac{\gamma(1-\gamma)\sigma\phi}{\theta}(1-k)+[(1-\gamma)\alpha+\gamma(1-\alpha)][\frac{\phi^{2}k(1-k)}{\theta}+\frac{[\gamma(1-\sigma)-(1-k)\phi][(1-\gamma)\sigma-k\phi]}{1-\theta}]
+\]
 
 \end_inset
 
-This expression equals the old value of 
-\begin_inset Formula $\rho$
+
+\end_layout
+
+\begin_layout Standard
+This expression is concave in 
+\begin_inset Formula $k$
 \end_inset
 
- when 
+, as before.
+ 
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+when 
 \begin_inset Formula $\alpha=\frac{1}{2}$
 \end_inset
 
-.
- It is also increasing in 
+, the first term disappears and the first square brackets reduce to 
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+, giving the same expression as before.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Differentiating this with respect to 
 \begin_inset Formula $\alpha$
 \end_inset
 
-, since all the fractions in it are positive.
- Thus, more 
-\begin_inset Quotes eld
+ gives
+\begin_inset Formula 
+\[
+2\frac{\gamma(1-\gamma)\sigma\phi}{\theta}(1-k)+(1-2\gamma)[\frac{\phi^{2}k(1-k)}{\theta}+\frac{[\gamma(1-\sigma)-(1-k)\phi][(1-\gamma)\sigma-k\phi]}{1-\theta}]
+\]
+
 \end_inset
 
-expansive
-\begin_inset Quotes erd
-\end_inset
-
- inheritance of social status increases biological lock-in.
+which
 \end_layout
 
 \end_body
