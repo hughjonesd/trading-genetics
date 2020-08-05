@@ -227,7 +227,7 @@ $var(S_c) \le var(S_p)$, proves the second part (see the appendix).
 \end{proof}
 
 
-```{r pic-intuition, fig.subcap = c("Caste society (k = 1): parents", "Caste society (k = 1): children", "Egalitarian society (k = 0): parents", "Egalitarian society (k = 0): children", "Intermediate society (0 < k < 1): parents", "Intermediate society (0 < k < 1): children"), fig.cap = "Theory: shaded area is the population distribution. Dotted lines are attractiveness isoquants. Solid dots are example parents, transparent dots are example children. The right hand side shows the children's generation.", fig.ncol = 2, fig.width = 2.75, fig.height = 2.4, fig.align='center'}
+```{r pic-intuition, fig.subcap = c("Caste society ($k = 1$): parents", "Caste society: children", "Egalitarian society ($k = 0$): parents", "Egalitarian society: children", "Intermediate society ($0 < k < 1$): parents", "Intermediate society: children"), fig.cap = "Theory: shaded area is the population distribution. Dotted lines are attractiveness isoquants. Solid dots are example parents, transparent dots are example children. The right hand side shows the children's generation.", fig.ncol = 2, fig.width = 2.75, fig.height = 2.4, fig.align='center'}
 
 
 setup_plot <- function () {
@@ -236,8 +236,8 @@ setup_plot <- function () {
   plot.window(c(-1.2, 1.2), c(-1.2, 1.2))
   arrows(x0 = -1.1, x1 = 1.1, y0 = -1.1, length = .1)
   arrows(y0 = -1.1, y1 = 1.1, x0 = -1.1, length = .1)
-  text(-1.1, 1.2, "S", cex = 0.8)
-  text(1.2, -1.1, "G", cex = 0.8)
+  text(-1.1, 1.2, "S", cex = 0.7)
+  text(1.2, -1.1, "G", cex = 0.7)
 }
 
 draw_dist <- function (w) {
@@ -320,8 +320,8 @@ setup_plot()
 invisible(draw_dist(matrix(c(.8, 0, 0, .4), nrow = 2)))
 
 draw_dist_with_a(.8, -30, curved_lines = TRUE)
-# setup_plot()
-# invisible(draw_dist(matrix(c(1, .4, .4, .8), nrow = 2)))
+setup_plot()
+invisible(draw_dist(matrix(c(1, .4, .4, .8), nrow = 2)))
 
 
 
