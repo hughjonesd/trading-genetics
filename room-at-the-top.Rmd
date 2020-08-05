@@ -221,40 +221,8 @@ or $k = 1$. Plugging this into the integral shows that
 cov(G_{p},S_{p})\le cov(G_{c},S_{c})
 \]
 again with strict inequality if and only if $0 < k < 1$. This proves
-the first part.
-
-Write
-
-\begin{equation}
-corr(G_{j},S_{j})=\frac{cov(G_{j},S_{j})}{\sqrt{var(G_{j})var(S_{j})}}\textrm{ for both generations }j\in\{p,c\}.\label{eq:corr-cov-var}
-\end{equation}
-
-where 
-
-\begin{align*}
-var(G_{p}) & =\frac{1}{2}\int g_{d}^{2}+g_{p(d)}^{2}\textrm{d}d;\\
-var(G_{c}) & =\int g_{c(d)}^{2}\textrm{d}d.
-\end{align*}
-
-Much as before,
-\begin{align*}
-g_{d}^{2}+g_{m}^{2} & =(g_{c}-\Delta g)^{2}+(g_{c}+\Delta g)^{2}\\
- & =2g_{c}^{2}+2(\Delta g)^{2}\\
- & \ge2g_{c}^{2}.
-\end{align*}
-
-This shows that $var(G_{c})\le var(G_{p})$ and a similar argument
-shows $var(S_{c})\le var(S_{p})$. Thus the covariance is higher (and
-positive) in the children's generation, while the variances are lower.
-Combining these ensures that 
-
-\[
-corr(G_{c},S_{c}) \ge corr(G_{p},S_{p}).
-\]
-
-Since for any $k$, either $var(G_{c}) < var(G_{p})$ or $var(S_{c}) < var(S_{p})$,
-the only way to get strict equality for the above is if $k \in \{0,1\}$
-and $cov(G_{c}, S_{c}) = cov(G_{p},S_{p}) = 0$.
+the first part. A similar argument, showing $var(G_c) \le var(G_p)$ and 
+$var(S_c) \le var(S_p)$, proves the second part (see the appendix).
 
 \end{proof}
 
@@ -303,8 +271,8 @@ draw_dist_with_a <- function (width, shift, curved_lines = FALSE) {
   
   if (curved_lines) {
     for (l in seq_along(start_x)) {
-      sx <- start_x[l] + c(0, 0.2, 0.8, 1) * (end_x[l] - start_x[l])
-      sy <- start_y[l] + c(0, 0.1, 0.6, 1) * (end_y[l] - start_y[l])
+      sx <- start_x[l] + c(0, 0.15, 0.85, 1) * (end_x[l] - start_x[l])
+      sy <- start_y[l] + c(0, 0.05, 0.65, 1) * (end_y[l] - start_y[l])
       spl <- stats::spline(sx, sy)
       if (l ==2) mid_spl <- spl
       lines(spl, lty = 2)
@@ -352,8 +320,8 @@ setup_plot()
 invisible(draw_dist(matrix(c(.8, 0, 0, .4), nrow = 2)))
 
 draw_dist_with_a(.8, -30, curved_lines = TRUE)
-setup_plot()
-invisible(draw_dist(matrix(c(1, .4, .4, .8), nrow = 2)))
+# setup_plot()
+# invisible(draw_dist(matrix(c(1, .4, .4, .8), nrow = 2)))
 
 
 
@@ -739,7 +707,43 @@ TODO: Write!
 
 # Appendix
 
-## Second condition in Proposition \@ref(prop:prop1)
+## Second part of Proposition \@ref(prop:prop1)
+
+\begin{proof}
+Write
+
+\begin{equation}
+corr(G_{j},S_{j})=\frac{cov(G_{j},S_{j})}{\sqrt{var(G_{j})var(S_{j})}}\textrm{ for both generations }j\in\{p,c\}.\label{eq:corr-cov-var}
+\end{equation}
+
+where 
+
+\begin{align*}
+var(G_{p}) & =\frac{1}{2}\int g_{d}^{2}+g_{p(d)}^{2}\textrm{d}d;\\
+var(G_{c}) & =\int g_{c(d)}^{2}\textrm{d}d.
+\end{align*}
+
+Much as before,
+\begin{align*}
+g_{d}^{2}+g_{m}^{2} & =(g_{c}-\Delta g)^{2}+(g_{c}+\Delta g)^{2}\\
+ & =2g_{c}^{2}+2(\Delta g)^{2}\\
+ & \ge2g_{c}^{2}.
+\end{align*}
+
+This shows that $var(G_{c})\le var(G_{p})$ and a similar argument
+shows $var(S_{c})\le var(S_{p})$. Thus the covariance is higher (and
+positive) in the children's generation, while the variances are lower.
+Combining these ensures that 
+
+\[
+corr(G_{c},S_{c}) \ge corr(G_{p},S_{p}).
+\]
+
+Since for any $k$, either $var(G_{c}) < var(G_{p})$ or $var(S_{c}) < var(S_{p})$,
+the only way to get strict equality for the above is if $k \in \{0,1\}$
+and $cov(G_{c}, S_{c}) = cov(G_{p},S_{p}) = 0$.
+
+\end{proof}
 
 To show that the condition in the second part cannot be relaxed further,
 consider the distribution in Figure \ref{fig:Correlation-counterexample}.
