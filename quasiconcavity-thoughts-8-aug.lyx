@@ -214,12 +214,16 @@ E(G|A=a)=\frac{\int g\zeta(g,a/k-(1-k)g/k)dg}{\int\zeta(g,a/k-(1-k)g/k)dg}
 and
 \begin_inset Formula 
 \[
-E(S|A=a)=\frac{\int s\zeta(a/(1-k)-ks/(1-k),s)ds}{\int\zeta(a/(1-k)-ks/(1-k),s)ds}\equiv\frac{\int(a/k-(1-k)g/k)\zeta(g,a/k-(1-k)g/k)dg}{\int\zeta(g,a/k-(1-k)g/k)dg}.)
+E(S|A=a)=\frac{\int s\zeta(a/(1-k)-ks/(1-k),s)ds}{\int\zeta(a/(1-k)-ks/(1-k),s)ds}\equiv\frac{\int(a/k-(1-k)g/k)\zeta(g,a/k-(1-k)g/k)dg}{\int\zeta(g,a/k-(1-k)g/k)dg}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+.)
 \end_layout
 
 \begin_layout Standard

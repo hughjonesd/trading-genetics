@@ -308,11 +308,11 @@ G & =dA+cB
 
 where 
 \begin_inset Formula 
-\begin{align*}
-c & \equiv\frac{1-k}{z},\\
-d & \equiv\frac{k}{z},\textrm{ and}\\
-z & \equiv k^{2}+(1-k)^{2}.
-\end{align*}
+\begin{align}
+c & \equiv\frac{k}{z},\label{eq:def-cd}\\
+d & \equiv\frac{1-k}{z},\textrm{ and}\nonumber \\
+z & \equiv k^{2}+(1-k)^{2}.\nonumber 
+\end{align}
 
 \end_inset
 
@@ -470,15 +470,24 @@ explained variance
 \end_layout
 
 \begin_layout Plain Layout
-NB: this would hold true and might be useful if 
-\begin_inset Formula $G_{p}$
+But NB, 
+\begin_inset Formula $G$
 \end_inset
 
  and 
-\begin_inset Formula $S_{p}$
+\begin_inset Formula $S$
 \end_inset
 
- are independent.
+ being independent doesn't guarantee independence of 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $B$
+\end_inset
+
+, not even mean-independence I think.
+ Maybe for normal distribution
 \end_layout
 
 \end_inset
@@ -537,14 +546,7 @@ Cov(A_{p},B_{p})=Cov(A_{c},B_{c}).\label{eq:cov-A-B-same}
 \end_layout
 
 \begin_layout Standard
-Plugging facts(
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:cov-A-B-same"
-
-\end_inset
-
-), (
+Plugging facts (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:var-B-less"
@@ -987,61 +989,221 @@ have unit variance), this is positive iff
 
 \end_layout
 
-\begin_layout Section*
-Robustness
-\end_layout
-
 \begin_layout Standard
-The proof does not depend strongly on the precise details of how 
-\begin_inset Formula $S$
-\end_inset
-
- and 
-\begin_inset Formula $G$
-\end_inset
-
- are inherited.
- All that is required is that (
+Note that applying (
 \begin_inset CommandInset ref
 LatexCommand ref
-reference "eq:dist-A-same"
+reference "eq:cond-var-B-less"
 
 \end_inset
 
-) and (
+), (
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "eq:E-b-given-a-same"
 
 \end_inset
 
-) hold, and that 
+) and (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:var-B-less"
+
+\end_inset
+
+):
+\begin_inset Formula 
+\begin{equation}
+Cov(G_{c},S_{c})-Cov(G_{p},S_{p})=\frac{1}{2}cdE_{A}[Var(B_{p}|A)].\label{eq:dcov-G-S}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Another start
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Let 
+\begin_inset Formula $\zeta(g,s)$
+\end_inset
+
+ be the probability density function of 
+\begin_inset Formula $(G_{p},S_{p})$
+\end_inset
+
+.
+ We can write the variance as
 \begin_inset Formula 
 \[
-Var(B_{c}|A)\le Var(B_{p}|A)
+Var(B_{p}|A=a)=E(B_{p}^{2}|A)-E(B_{p}|A)^{2}
 \]
 
 \end_inset
 
-with strict inequality on a set of positive measure.
- These conditions would hold, for example, if 
+where
+\begin_inset Formula 
+\[
+E(B_{p}^{2}|A)=\int_{-\infty}^{\infty}b^{2}\zeta(da+cb,ca-db)db
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Or by a change of variable: 
+\begin_inset Formula 
+\[
+E(B_{p}^{2}|A)=\int(\frac{k}{1-k}a-\left(\frac{k^{2}+1-k}{1-k}\right)s)^{2}\zeta(\frac{a-ks}{1-k},s)ds
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+If 
+\begin_inset Formula $G$
+\end_inset
+
+ and 
 \begin_inset Formula $S$
 \end_inset
 
- represented inherited wealth that was divided up between children not too
- unequally (and without taking account of the children's 
-\begin_inset Formula $G$
+ are bivariate normal with correlation 
+\begin_inset Formula $\rho$
 \end_inset
 
-!); or if children's expected value of 
-\begin_inset Formula $G$
+, then standard results imply that 
+\begin_inset Formula $A$
 \end_inset
 
- were equal to the mean of the parents' 
-\begin_inset Formula $G$
+ and 
+\begin_inset Formula $B_{p}$
 \end_inset
 
-, but with some variance.
+ are bivariate normal with mean 0, and
+\begin_inset Formula 
+\begin{align*}
+Var(A) & =(1-k)^{2}+k^{2}+2k(1-k)\rho\\
+Var(B_{p}) & =(1-k)^{2}+k^{2}-2k(1-k)\rho\\
+Cov(A,B_{p}) & =(2k-1)\rho.
+\end{align*}
+
+\end_inset
+
+and as a result
+\begin_inset Formula 
+\begin{align*}
+\rho_{AB} & \equiv Corr(A,B_{p})=\frac{(2k-1)\rho}{\sqrt{Var(A)Var(B_{p})}}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The conditional distribution of 
+\begin_inset Formula $B_{p}$
+\end_inset
+
+ has 
+\begin_inset Formula $E[B_{p}|A=a)=\rho_{AB}\sqrt{Var(B)/Var(A)}a$
+\end_inset
+
+ and 
+\begin_inset Formula 
+\begin{align*}
+Var(B_{p}|A) & =(1-\rho_{AB}^{2})Var(B).
+\end{align*}
+
+\end_inset
+
+Plugging this into (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:dcov-G-S"
+
+\end_inset
+
+) and simplifying gives:
+\begin_inset Formula 
+\begin{align*}
+Cov(G_{c},S_{c})-Cov(G_{p},S_{p}) & =\frac{1}{2}cd(1-\rho_{AB}^{2})Var(B).\\
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We now prove the following:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $cd\ Var(B)$
+\end_inset
+
+ is symmetric around 
+\begin_inset Formula $k=\frac{1}{2}$
+\end_inset
+
+, increasing for 
+\begin_inset Formula $k<\frac{1}{2}$
+\end_inset
+
+ and decreasing for 
+\begin_inset Formula $k>\frac{1}{2}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $(1-\rho_{AB}^{2})$
+\end_inset
+
+ is symmetric around 
+\begin_inset Formula $k=\frac{1}{2}$
+\end_inset
+
+, increasing for 
+\begin_inset Formula $k<\frac{1}{2}$
+\end_inset
+
+ and decreasing for 
+\begin_inset Formula $k>\frac{1}{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \end_body

@@ -1,4 +1,5 @@
 
+# this is for the old binary version of the model
 
 type_names <- c("b", "g", "s", "n")
 
