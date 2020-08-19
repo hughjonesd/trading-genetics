@@ -1,0 +1,788 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+Suppose 
+\begin_inset Formula $G$
+\end_inset
+
+ and 
+\begin_inset Formula $S$
+\end_inset
+
+ are standard normal with correlation 
+\begin_inset Formula $\rho$
+\end_inset
+
+.
+ Define
+\begin_inset Formula 
+\begin{align*}
+A & =dG+cS\\
+B & =cG-dS
+\end{align*}
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+;where
+\begin_inset Formula 
+\[
+c=\frac{k}{z};d=\frac{1-k}{z};z=\sqrt{k^{2}+(1-k)^{2}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Write
+\begin_inset Formula 
+\begin{align*}
+G & =A/d-cS/d\\
+S & =cG/d-B/d
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+hence
+\begin_inset Formula 
+\begin{align*}
+G & =A/d-c^{2}G/d^{2}+cB/d^{2}\\
+G(1+c^{2}/d^{2}) & =A/d+cB/d^{2}\\
+G((1-k)/k+k/(1-k)) & =zA/k+kzB/(1-k)k\\
+G & =\frac{zA(1-k)+kzB}{(1-k)^{2}+k^{2}}\\
+G & =\frac{(1-k)A+kB}{z}\\
+ & =dA+cB.
+\end{align*}
+
+\end_inset
+
+and so
+\begin_inset Formula 
+\begin{align*}
+G & =dA+cB.\\
+S & =cA-dB.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As before
+\begin_inset Formula 
+\[
+Cov(G,S)=cd\ [Var(A)-Var(B)]+(c^{2}-d^{2})Cov(A,B).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now standard results imply that 
+\begin_inset Formula $A$
+\end_inset
+
+ and 
+\begin_inset Formula $B_{p}$
+\end_inset
+
+ are bivariate normal with mean 0, and
+\begin_inset Formula 
+\begin{align*}
+Var(A) & =d^{2}+c^{2}+2cd\rho=1+2cd\rho\\
+Var(B_{p}) & =1-2cd\rho\\
+Cov(A,B_{p}) & =(c^{2}-d^{2})\rho=(c-d)\rho/z
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And note that
+\begin_inset Formula 
+\begin{align*}
+\rho_{AB} & \equiv Corr(A,B_{p})=\frac{(c^{2}-d^{2})\rho}{\sqrt{(1+2cd\rho)(1-2cd\rho)}}\\
+ & =\frac{(c^{2}-d^{2})\rho}{\sqrt{1-4c^{2}d^{2}\rho^{2}}}\\
+ & =\frac{z^{2}(c^{2}-d^{2})\rho}{\sqrt{[z^{4}-4k^{2}(1-k)^{2}\rho^{2}]}}\\
+ & =\frac{(k^{2}-(1-k)^{2})\rho}{\sqrt{[k^{2}+(1-k)^{2}]^{2}-4k^{2}(1-k)^{2}\rho^{2}]}}\\
+ & =\frac{(k^{2}-(1-k)^{2})\rho}{\sqrt{(k^{2}+(1-k)^{2}+2k(1-k)\rho)(k^{2}+(1-k)^{2}-2k(1-k)\rho)}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Though keeping it terms of 
+\begin_inset Formula $c$
+\end_inset
+
+ and 
+\begin_inset Formula $d$
+\end_inset
+
+ may be the cooler approach.
+\end_layout
+
+\begin_layout Standard
+As before, 
+\begin_inset Formula 
+\[
+Cov(G_{c},S_{c})-Cov(G_{p},S_{p})=\frac{1}{2}cdE_{A}[Var(B_{p}|A)].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And as before, the conditional distribution of 
+\begin_inset Formula $B_{p}$
+\end_inset
+
+ has 
+\begin_inset Formula $E[B_{p}|A=a)=\rho_{AB}\sqrt{Var(B)/Var(A)}a$
+\end_inset
+
+ and 
+\begin_inset Formula 
+\begin{align*}
+Var(B_{p}|A) & =(1-\rho_{AB}^{2})Var(B_{p}).
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hence
+\begin_inset Formula 
+\[
+Cov(G_{c},S_{c})-Cov(G_{p},S_{p})=\frac{1}{2}cd(1-\rho_{AB}^{2})Var(B_{p}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can write
+\begin_inset Formula 
+\[
+Cov(G_{c},S_{c})=\rho+\frac{1}{2}cd(1-\frac{(c^{2}-d^{2})^{2}\rho^{2}}{(1+2cd\rho)(1-2cd\rho)})(1-2cd\rho).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Simplify using 
+\begin_inset Formula $c+d=1/z$
+\end_inset
+
+, which implies that 
+\begin_inset Formula $c^{2}-d^{2}=(c+d)(c-d)=(c-d)/z$
+\end_inset
+
+.
+ 
+\begin_inset Formula $z^{2}=k^{2}+(1-k)^{2}$
+\end_inset
+
+.
+\begin_inset Formula 
+\begin{align*}
+Cov(G_{c},S_{c}) & =\rho+\frac{1}{2}cd(1-\frac{(c-d)^{2}\rho^{2}/z^{2}}{(1+2cd\rho)(1-2cd\rho)})(1-2cd\rho).\\
+ & =\rho+\frac{1}{2}cd\left(1-2cd\rho-\frac{(c-d)^{2}\rho^{2}/z^{2}}{(1+2cd\rho)}\right)\\
+ & =\rho+\frac{1}{2}cd\left(1-2cd\rho-\frac{(c-d)^{2}\rho^{2}/z^{2}}{(1+2cd\rho)}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Interesting point about this: what are the c.s.
+ in 
+\begin_inset Formula $\rho$
+\end_inset
+
+? Note that as before, it's all symmetric around 
+\begin_inset Formula $k=\frac{1}{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Plain Layout
+Differentiating the whole things gives
+\begin_inset Formula 
+\begin{align*}
+ & 1+\frac{1}{2}cd\left(-2cd-\frac{(c-d)^{2}}{z^{2}}\frac{\mathrm{d}}{\mathrm{d}\rho}\frac{\rho^{2}}{(1+2cd\rho)}\right)\\
+= & 1+\frac{1}{2}cd\left(-2cd-\frac{(c-d)^{2}}{z^{2}}\frac{2}{(1+2cd\rho)^{2}}[\rho+cd\rho^{2}]\right)
+\end{align*}
+
+\end_inset
+
+NB:
+\begin_inset Formula 
+\[
+\frac{\rho^{2}}{(1+2cd\rho)}
+\]
+
+\end_inset
+
+ differentiates to 
+\begin_inset Formula 
+\begin{align*}
+= & \frac{1}{(1+2cd\rho)^{2}}[2\rho(1+2cd\rho)-\rho^{2}2cd]\\
+= & \frac{2}{(1+2cd\rho)^{2}}[\rho+cd\rho^{2}]
+\end{align*}
+
+\end_inset
+
+which is positive if 
+\begin_inset Formula 
+\begin{align*}
+\rho+cd\rho^{2} & >0\\
+\rho(1+cd\rho) & >0
+\end{align*}
+
+\end_inset
+
+i.e.
+ either 
+\begin_inset Formula $\rho>0$
+\end_inset
+
+ or 
+\begin_inset Formula $\rho<0$
+\end_inset
+
+ and 
+\begin_inset Formula $\rho<-1/cd$
+\end_inset
+
+.
+ But 
+\begin_inset Formula $cd=k(1-k)/(k^{2}+(1-k)^{2})$
+\end_inset
+
+ is never more than 
+\begin_inset Formula $\frac{1}{2}$
+\end_inset
+
+.
+ So, the second term above is decreasing in 
+\begin_inset Formula $\rho$
+\end_inset
+
+ for 
+\begin_inset Formula $\rho>0$
+\end_inset
+
+, at least.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And
+\begin_inset Formula 
+\[
+Corr(G_{c},S_{c})=\frac{cov(G_{c},S_{c})}{\sqrt{Var(G_{c})Var(S_{c})}}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now 
+\begin_inset Formula 
+\begin{align*}
+Var(G_{c}) & =Var(dA+cB_{c})=d^{2}Var(A)+c^{2}Var(B_{c})+2cdCov(A,B_{c})\\
+ & =d^{2}(1+2cd\rho)+c^{2}Var(B_{c})+2cd(c-d)\rho/z
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+on the assumption that 
+\begin_inset Formula $Cov(A,B_{c})=Cov(A,B_{p})$
+\end_inset
+
+ as in previous version.
+\end_layout
+
+\begin_layout Standard
+And
+\begin_inset Formula 
+\[
+Var(S_{c})=c^{2}(1+2cd\rho)+d^{2}Var(B_{c})-2cd(c-d)\rho/z.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Then 
+\begin_inset Formula 
+\begin{align*}
+Var(B_{c}) & =E_{A}(\frac{1}{2}Var(B_{p}|A))+Var(E(B_{c}|A))\\
+ & =\frac{1}{2}(1-\rho_{AB}^{2})Var(B_{p})+Var(E(B_{c}|A))
+\end{align*}
+
+\end_inset
+
+and since 
+\begin_inset Formula $E(B_{c}|A)=E(B_{p}|A)=\rho_{AB}\sqrt{Var(B_{p})/Var(A)}a$
+\end_inset
+
+, its variance is 
+\begin_inset Formula 
+\[
+\rho_{AB}^{2}\frac{Var(B_{p})}{Var(A)}Var(A)=\rho_{AB}^{2}Var(B_{p}).
+\]
+
+\end_inset
+
+So
+\begin_inset Formula 
+\begin{align*}
+Var(B_{c}) & =\frac{1}{2}(1-\rho_{AB}^{2})Var(B_{p})+\rho_{AB}^{2}Var(B_{p})\\
+ & =\frac{1+\rho_{AB}^{2}}{2}Var(B_{p})\\
+ & =\frac{1+\rho_{AB}^{2}}{2}(1-2cd\rho).
+\end{align*}
+
+\end_inset
+
+Now plug this back in:
+\begin_inset Formula 
+\begin{align*}
+Var(G_{c}) & =d^{2}(1+2cd\rho)+c^{2}\frac{1+\rho_{AB}^{2}}{2}(1-2cd\rho)+2cd(c-d)\rho/z\\
+Var(S_{c}) & =c^{2}(1+2cd\rho)+d^{2}\frac{1+\rho_{AB}^{2}}{2}(1-2cd\rho)-2cd(c-d)\rho/z.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Recall that
+\begin_inset Formula 
+\[
+\rho_{AB}^{2}=\frac{(c^{2}-d^{2})^{2}\rho^{2}}{(1+2cd\rho)(1-2cd\rho)}=\frac{(c-d)^{2}\rho^{2}/z^{2}}{(1+2cd\rho)(1-2cd\rho)}.
+\]
+
+\end_inset
+
+So
+\begin_inset Formula 
+\begin{align*}
+Var(G_{c}) & =d^{2}(1+2cd\rho)+c^{2}\left(\frac{1-2cd\rho}{2}+\frac{(c-d)^{2}\rho^{2}/z^{2}}{2(1+2cd\rho)}\right)+2cd(c-d)\rho/z\\
+Var(S_{c}) & =c^{2}(1+2cd\rho)+d^{2}\left(\frac{1-2cd\rho}{2}+\frac{(c-d)^{2}\rho^{2}/z^{2}}{2(1+2cd\rho)}\right)-2cd(c-d)\rho/z.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status open
+
+\begin_layout Plain Layout
+Plotting this in R reveals that the denominator of the correlation can decrease
+ or increase on [0,0.5].
+ For positive 
+\begin_inset Formula $\rho$
+\end_inset
+
+, it increases.
+ But not by much.
+ It's always increasing in 
+\begin_inset Formula $\rho$
+\end_inset
+
+ itself for 
+\begin_inset Formula $\rho>0$
+\end_inset
+
+.
+ If you want to be lazy you might use this.
+\end_layout
+
+\begin_layout Plain Layout
+For 
+\begin_inset Formula $-1/3<\rho<0$
+\end_inset
+
+ the curve changes direction even on [0,0.5].
+ Below -1/3, it's decreasing again.
+\end_layout
+
+\begin_layout Plain Layout
+The whole correlation can indeed sometimes decrease, when 
+\begin_inset Formula $\rho$
+\end_inset
+
+ is very negative.
+\end_layout
+
+\begin_layout Plain Layout
+The whole correlation is always Q-C, though.
+\end_layout
+
+\begin_layout Plain Layout
+Thoughts:
+\end_layout
+
+\begin_layout Plain Layout
+If you took logs, the change in correlation will be dcorr = corr - rho =
+ cov/var -rho.
+ So rho + dcorr = cov/var.
+ Just integrate the RHS to show it's increasing in 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ And taking logs is fine so you have log(cov)-log(var) and just want to
+ prove one is bigger.
+\end_layout
+
+\begin_layout Plain Layout
+Indeed the log will be log(cov) - 0.5log(var(Gc)) - 0.5log(var(Sc)).
+\end_layout
+
+\begin_layout Plain Layout
+Problem is, the logs of the denominator have lots of + terms...
+\end_layout
+
+\begin_layout Plain Layout
+—
+\end_layout
+
+\begin_layout Plain Layout
+Probably the easiest thing will be to find the derivatives of the top and
+ bottom, then hunt for common factors.
+ It might be sufficient to show that 
+\begin_inset Formula $f'-g'>0$
+\end_inset
+
+, because 
+\begin_inset Formula $g>f$
+\end_inset
+
+ so
+\begin_inset Formula 
+\[
+f'f-g'f<f'g-g'f
+\]
+
+\end_inset
+
+so long as 
+\begin_inset Formula $f'$
+\end_inset
+
+ is positive which we already know.
+\end_layout
+
+\begin_layout Plain Layout
+Indeed 
+\begin_inset Formula $f'-g'>0$
+\end_inset
+
+ always seems to be true, even for 
+\begin_inset Formula $\rho<0$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let's differentiate 
+\begin_inset Formula $Cov(G_{c},S_{c})$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+Cov(G_{c},S_{c})=\rho+\frac{1}{2}cd(1-\rho_{AB}^{2})Var(B_{p}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Differentiate it:
+\begin_inset Formula 
+\[
+\frac{1}{2}\left((cd)'(1-\rho_{AB}^{2})Var(B_{p})+(cd)(1-\rho_{AB}^{2})'Var(B_{p})+cd(1-\rho_{AB}^{2})Var(B_{p})'\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Differentiate 
+\begin_inset Formula 
+\begin{align*}
+cd & =k(1-k)/z^{2}\\
+(cd)' & =\frac{1}{z^{4}}[(1-2k)z^{2}-k(1-k)2zz']
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And
+\begin_inset Formula 
+\begin{align*}
+z & =\sqrt{k^{2}+(1-k)^{2}}\\
+z' & =(2k-1)/\sqrt{k^{2}+(1-k)^{2}}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So 
+\begin_inset Formula 
+\[
+(cd)'=\frac{1}{z^{4}}[(1-2k)z^{2}-k(1-k)2(2k-1)]
+\]
+
+\end_inset
+
+and we have that 
+\begin_inset Formula $2k-1$
+\end_inset
+
+ factor.
+\end_layout
+
+\begin_layout Standard
+Next differentiate 
+\begin_inset Formula $1-\rho_{AB}^{2}$
+\end_inset
+
+, or rather:
+\begin_inset Formula 
+\[
+\rho_{AB}^{2}=\frac{(c-d)^{2}\rho^{2}}{z^{2}(1-q^{2})}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $q=2cd\rho=2k(1-k)/z^{2}$
+\end_inset
+
+.
+ The derivative is
+\begin_inset Formula 
+\begin{align*}
+ & \frac{\rho^{2}}{z^{4}(1-q^{2})^{2}}[2(c-d)(c'-d')z^{2}(1-q^{2})-(c-d)^{2}(2zz'(1-q^{2})-z^{2}2qq')]\\
+= & \frac{\rho^{2}(c-d)}{z^{4}(1-q^{2})^{2}}[2(c'-d')z^{2}(1-q^{2})-(c-d)(2zz'(1-q^{2})-z^{2}2qq')]
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now
+\begin_inset Formula 
+\begin{align*}
+q & =2k(1-k)/(k^{2}+(1-k)^{2})=2k(1-k)/z^{2}\\
+q' & =\frac{1}{z^{4}}[(2-4k)z^{2}-2k(1-k)(4k-2)]\\
+ & =\frac{(2-4k)}{z^{4}}[z^{2}+2k(1-k)]\\
+ & =\frac{2(1-2k)}{z^{4}}.
+\end{align*}
+
+\end_inset
+
+And 
+\begin_inset Formula 
+\begin{align*}
+c' & =(k/z)'=\frac{1}{z^{2}}(z-k(2k-1)/z)\\
+d' & =((1-k)/z)'=\frac{1}{z^{2}}(-z-(1-k)(2k-1)/z)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So
+\begin_inset Formula 
+\[
+c'-d'=\frac{1}{z^{2}}(2z-(2k-1)^{2}/z).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Plug these in and simplify to get
+\begin_inset Formula 
+\begin{align*}
+(\rho_{AB}^{2})' & =\frac{2\rho^{2}(c-d)}{z^{4}(1-q^{2})^{2}}\left\{ (2z-(2k-1)^{2}/z)(1-q^{2})-\frac{(2k-1)^{2}}{z}((1-q^{2})+\frac{2q}{z^{2}})\right\} \\
+ & =\frac{2\rho^{2}(2k-1)/z}{z^{4}(1-q^{2})^{2}}\left\{ (1-q^{2})2z-\frac{(2k-1)^{2}}{z}[2(1-q^{2})+\frac{2q}{z^{2}}]\right\} 
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Meh...
+\end_layout
+
+\end_body
+\end_document
