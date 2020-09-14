@@ -1,5 +1,5 @@
 ---
-title: 'Effects of inequality on genetics: evidence from UK Biobank'
+title: 'Effects of socio-economic status on genetics: evidence from UK Biobank'
 author: David Hugh-Jones & Abdel Abdellaoui
 date: "`r Sys.Date()`"
 output: 
@@ -8,6 +8,7 @@ output:
     latex_engine: xelatex
 editor_options: 
   chunk_output_type: console
+spacing: double
 header-includes:
   - \usepackage{subfig}
   - \usepackage{amsmath}
@@ -45,40 +46,42 @@ rm(resid_scores)
 
 famhist$EA3 <- famhist$EA3_excl_23andMe_UK_resid
 
-
 theme_set(theme_minimal())
+
 ```
 
 # Introduction
 
 Charles Murray (1995) warned of "a merging of the cognitive elite with the
-affluent". On the opposite side of the political spectrum, Karl Marx (1844)
-wrote "I am ugly, but I can buy the most beautiful woman.... the effect of
-ugliness, its repelling power, is destroyed by money." These quotations suggest
-that social advantages, such as wealth, caste or status, may be transformed into
-biological advantages in the next generation, via assortative mating between
-socially and genetically advantaged people. We call this process 
-*genetic lock-in*.
+affluent". On the opposite side of the political spectrum, Karl Marx wrote
+(1974) "History is the true natural history of man" and  (1844) "I am ugly, but
+I can buy the most beautiful woman.... the effect of ugliness, its repelling
+power, is destroyed by money." These quotations suggest that social advantages, 
+such as wealth, income, caste
+or class, may have genetic consequences. If there is 
+assortative mating between socially and genetically advantaged people, then
+socio-economic status may become encoded in the DNA of subsequent generations.
 
 Figures \@ref(fig:pic-basic-corr-uni) and \@ref(fig:pic-basic-corr-income) 
-illustrate the idea using data for spouse
-pairs from UK Biobank. Figures \@ref(fig:pic-basic-corr-uni) plots one partner's 
-mean polygenic score for educational attainment (PSEA) against a measure of the 
-other partner's actual educational
+illustrate this idea using data for spouse
+pairs from UK Biobank. Figures \@ref(fig:pic-basic-corr-uni) plots means of one
+partner's polygenic score for educational attainment (PSEA), a purely genetic
+measure, against a measure of the other partner's actual educational
 attainment: possession of a university degree. University graduates had spouses
 with higher PSEA.^[To minimize concerns about genetic stratification, i.e.
-correlations between genetics and non-genetic forms of inherited advantage, PSEA
-is residualized by the first 100 principal components of UK Biobank array data.]
-Figure \@ref(fig:pic-basic-corr-income) plots one partner's PSEA against another
-measure of social status: income. 
+correlations between genetics and non-genetic inherited characteristics such
+as culture, PSEA is residualized on the first 100 principal components of UK 
+Biobank array data.] Figure \@ref(fig:pic-basic-corr-income) plots partner's
+PSEA against another measure of own socio-economic status: income. Again, people
+with higher income had spouses with higher PSEA.
 
-These figures do not prove that genetic lock-in is taking place: since an
-individual's own PSEA correlates with both their educational attainment, and
-their income, both figures could be a result of partner selection on a purely
-genetic basis. In this paper, we test the theory more rigorously, using
-environmental shocks to social status that are unlikely to be correlated with
-own genetics. First, we develop a simple theory of genetic lock-in, to
-illustrate how its effects vary with social structure.
+These figures do not prove that genetic encoding of socio-economic status is
+taking place. Since an individual's own PSEA correlates with both their
+educational attainment, and their income, both figures could be a result of
+partner selection on a purely genetic basis. In this paper, we test the theory
+more rigorously, using environmental shocks to socio-economic status that are
+unlikely to be correlated with own genetics. First, we develop a simple theory
+of genetic lock-in, to illustrate how its effects vary with social structure.
 
 
 ```{r pic-basic-corr-uni, fig.subcap = c("Female PSEA by male educational attainment", "Male PSEA by female educational attainment"), fig.cap = "Social and genetic advantage among spouse pairs in UK Biobank", fig.width = 3, fig.height = 3}
@@ -126,8 +129,9 @@ mf_pairs %>%
 There is a large population, whose members have a single genetic trait
 $g_{i}$ and a single social trait $s_{i}$. 
 
-Suppose that $G$ and $S$ are continuously distributed. Without loss
-of generality, $EG = ES = 0$.^[Continuous distribution is not strictly required.
+$G$ and $S$ are continuously distributed. Without loss
+of generality, $EG = ES = 0$ and $Var(G) = Var(S) = 1$.^[Continuous distribution
+is not strictly required.
 All that is needed is for a set of pairs of positive measure to have different values
 of $G$ and $S$, along a set of attractiveness curves of positive measure.] People 
 pair according to an attractiveness function
@@ -136,8 +140,30 @@ pair according to an attractiveness function
 A(g_{i},s_{i}) = f((1-k)g_{i},ks_{i})
 \]
 
-which is smooth and strictly increasing in both its arguments. If
-$k = 0$, "indifference curves" of attractiveness are vertical lines
+which is smooth and strictly increasing in both its arguments. 
+
+The key parameter is $k$. This describes the working of the society's marriage
+market. If $k = 0$, only genetics $G$ are relevant in marriage markets, and social status $S$ has no effect. That is, the marriage market is highly egalitarian.
+Conversely, if $k = 1$, only social status matters, to the complete exclusion of
+genetics. This is the equivalent of a marriage market driven only by "caste" or
+"class". Realistic societies are between these extremes.
+
+Figure \@ref(fig:pic-intuition) shows the intuition behind our theory. The top
+row shows a *caste marriage market* with $k = 1$. A typical pair is shown: children have
+intermediate values of $G$ and $S$ between their two parents (hollow circle). In
+this society pairs match only by social status; genetics plays no role. As a
+result, while the variance of $G$ shrinks within each status group, genetics
+remain uncorrelated with social status in the children's population
+distribution, shown on the right. The next row shows a purely *egalitarian marriage market*
+with $k = 0$. Parents match only by genetics and ignore social status. Again, as
+a result there is no correlation between genetics and social status in the
+children's generation. The bottom row shows a (more realistic) intermediate society, with an intermediate value of $k$. Because
+both genetics and social status contribute to attractiveness, matched spouses
+typically trade them off against each other. As a result, the distribution is
+squeezed along the gradient of $k$, and $G$ and $S$ are correlated in the children's 
+generation. We next prove this formally.
+
+If $k = 0$, "indifference curves" of attractiveness are vertical lines
 in $(G, S)$ space. If $k = 1$, they are horizontal lines. If $k \in (0,1)$
 they are arbitrary downward sloping curves. 
 
@@ -217,12 +243,16 @@ Taking the average of the parents gives
 
 This is less than $g_{c}s_{c}$ if $0 < k < 1$, and equal to it if $k = 0$
 or $k = 1$. Plugging this into the integral shows that 
+
 \[
 cov(G_{p},S_{p})\le cov(G_{c},S_{c})
 \]
-again with strict inequality if and only if $0 < k < 1$. This proves
-the first part. A similar argument, showing $var(G_c) \le var(G_p)$ and 
-$var(S_c) \le var(S_p)$, proves the second part (see the appendix).
+
+again with strict inequality if and only if $0 < k < 1$. This proves the first
+part. A similar argument, showing $var(G_c) \le var(G_p)$ and $var(S_c) \le
+var(S_p)$, proves the second part (see the appendix). Figure
+\ref{fig:Correlation-counterexample} in the appendix shows that the condition in
+the second part cannot be relaxed further.
 
 \end{proof}
 
@@ -328,24 +358,6 @@ invisible(draw_dist(matrix(c(1, .4, .4, .8), nrow = 2)))
 ```
 
 
-Figure \@ref(fig:pic-intuition) shows the intuition behind this result. The top
-row shows a *caste society* with $k = 1$. A typical pair is shown: children have
-intermediate values of $G$ and $S$ between their two parents (hollow circle). In
-this society pairs match only by social status; genetics plays no role. As a
-result, while the variance of $G$ shrinks within each status group, genetics
-remain uncorrelated with social status in the children's population
-distribution, shown on the right. The next row shows an *egalitarian society*
-with $k = 0$. Parents match only by genetics and ignore social status. Again, as
-a result there is no correlation between genetics and social status in the
-children's generation. The bottom row shows an intermediate society. Because
-both genetics and social status contribute to attractiveness, matched spouses
-typically trade them off against each other. As a result, the distribution is
-squeezed along the gradient of $k$, and $G$ and $S$ are correlated in the children's 
-generation.
-
-Figure \ref{fig:Correlation-counterexample} in the Appendix shows that
-the condition in the second part cannot be relaxed further.
-
 
 
 ## Robustness
@@ -393,7 +405,24 @@ conditions. For example, suppose that parents' combined wealth is inherited by
 the child with the lowest value of $g_{c(i)}$. This creates a negative correlation
 between $s_{c(i)}$ and $g_{c(i)}$.
 
+## Comparative statics
 
+In the model, intermediate values of $k$ drive increased covariance between
+genetics and social status. That naturally raises the question whether the
+change in covariance and/or correlation is increasing in $k$ towards some
+maximum value in $(0,1)$, then decreasing, i.e., whether it is quasiconcave
+in $k$. In general the answer is no, even on the assumption that
+
+\[
+A(g_{i},s_{i}) = (1-k)g_{i} + ks_{i}
+\]
+
+i.e. that indifference curves are straight lines in $(G, S)$ space. However,
+quasiconcavity in $k$ does hold when indifference curves are straight and $(G, S)$ are jointly normally distributed. We conjecture that it also holds whenever the 
+distribution $(G, S)$ is quasiconcave.
+
+* TODO: I can prove covariance is quasiconcave in $k$ for normal $G, S$. Prove
+  the same for correlation?
 
 ## Discussion
 
@@ -527,11 +556,11 @@ famhist %>%
         `Family size` = n_sibs
       ) %>% 
       group_by(`Birth order`, `Family size`) %>% 
-      dplyr::summarize(University = mean(university, na.rm = TRUE)) %>% 
+      dplyr::summarize(University = mean(university, na.rm = TRUE), 
+                       .groups = "drop_last") %>% 
       ggplot(aes(`Birth order`, University)) + 
-      geom_col() +
-      facet_grid(cols = vars(`Family size`), labeller = label_both) + 
-      ylim(0, 0.15) 
+        geom_col() +
+        facet_grid(cols = vars(`Family size`), labeller = label_both) 
 
 ```
 
@@ -560,18 +589,52 @@ famhist %>%
 Next we run regressions of spouse PSEA on birth order, university attendance
 and income.
 
-TODO: try to explain this better!
-
+* TODO: include age FTE as well as university - to check university has an
+    "extra effect" - this slightly suggests that uni is a "marriage
+    market" and not just granting extra skills
+* TODO: get profession data from Abdel for ASHE
+* TODO: enquire about job history data - does it predict current profession well?
+  - otherwise we risk the critique that current profession is endogenous to
+    spouse PSEA
+* TODO: consider alternative exogenous shocks to income. For example, some
+    professions are more "cyclical" than others wrt recessions. If we could
+    do predicted income at age 21-25 from business cycle X profession, that might
+    count as exogenous. (Could use an independent source to estimate evolution
+    of incomes, e.g. GHS or BHPS)
+* TODO: get IQ data from Abdel - again this controls for skills
+* TODO: get 2178 "overall health" and 2188 "longstanding illness/disability/infirmity"
+   - control for effect on health
+* Overall idea here is to unpack the different effects of birth order, separate
+   them from university/income.
+* TODO: control for age (polynomial) and birth month (seasonality)
+* TODO: check whether sunshine is well established in the medical/health literature 
+    as an environmental effect. If not, probably skip it.
+* TODO: split up by gender.
+* TODO: look up "birth order" and "early parental investment" for economists on
+  the topic
+* TODO: maybe split by number of brothers/sisters?
+* TODO: compare early life conditions for 1st/2nd/3rd etc. children, within
+  fixed family size, using e.g. UKHLS?
 
 ```{r tbl-bo-psea}
 
+
 fml_bo_psea <- list()
 
-fml_bo_psea[[1]] <- EA3.y ~ n_older_sibs.x + EA3.x | factor(n_sibs.x)
-fml_bo_psea[[2]] <- EA3.y ~ university.x + n_older_sibs.x + EA3.x | factor(n_sibs.x)
-fml_bo_psea[[3]] <- EA3.y ~ income_cat.x + n_older_sibs.x + EA3.x | factor(n_sibs.x)
-fml_bo_psea[[4]] <- EA3.y ~ income_cat.x + university.x + n_older_sibs.x + EA3.x |
+fml_bo_psea[[1]] <- EA3.y ~ n_older_sibs.x | factor(n_sibs.x)
+fml_bo_psea[[2]] <- EA3.y ~ university.x + n_older_sibs.x | factor(n_sibs.x)
+fml_bo_psea[[3]] <- EA3.y ~ income_cat.x + n_older_sibs.x | factor(n_sibs.x)
+fml_bo_psea[[4]] <- EA3.y ~ income_cat.x + university.x + n_older_sibs.x |
       factor(n_sibs.x)
+
+fml_bo_psea <- lapply(fml_bo_psea, Formula::as.Formula)
+
+# common controls
+fml_bo_psea <- lapply(fml_bo_psea, update, 
+                        . ~ . + EA3.x + age_at_recruitment.x +
+                          I(age_at_recruitment.x^2), 
+                        rhs = 1
+                      )
 
 mf_pairs_reg <- mf_pairs_twice %>% 
                   filter(
@@ -601,6 +664,7 @@ huxreg(mod_bo_psea,
        set_number_format(2:9, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA")
 ```
+
 
 
 ```{r calc-bootstrap-proportions, cache = TRUE}
@@ -656,6 +720,49 @@ reduces the effect of birth order by `r bo_prop_est[2]` (CI
 `r bo_prop_ci[1, 2]` -- `r bo_prop_ci[2, 2]`).  Including both decreases the 
 effect by `r bo_prop_est[3]` (CI `r bo_prop_ci[1, 3]` --`r bo_prop_ci[2, 3]`).
 
+Our next regressions split up the data into subsets. We regress male
+birth order on female spouses' PSEA; female birth order on male spouses' 
+PSEA; and the subset of individuals who had children. Table 
+\@ref(tab:tbl-bo-subsets) shows the results.
+
+* TODO: describe results
+* TODO: very few couple pairs (< 50%) report the same number of children. Why?
+  - equally likely to be males or females reporting more.
+
+```{r tbl-bo-subsets}
+
+mod_bo_males <- lapply(fml_bo_psea[1:2], fixest::feols, 
+                 data = mf_pairs_reg %>% filter(x == "Male"),
+                 notes = FALSE
+               )
+mod_bo_females <- lapply(fml_bo_psea[1:2], fixest::feols, 
+                 data = mf_pairs_reg %>% filter(x == "Female"),
+                 notes = FALSE
+               )
+
+mf_pairs_children <- mf_pairs_reg %>% 
+                   filter(n_children.x > 0, n_children.y > 0)
+mod_bo_children <- lapply(fml_bo_psea[1:2], fixest::feols, 
+                 data = mf_pairs_children,
+                 notes = FALSE
+               )
+
+ta <-  list(conf.int = FALSE, cluster = list(mf_pairs_children$couple_id))
+
+huxreg(c(mod_bo_males, mod_bo_females, mod_bo_children),
+       coefs = c(
+          "Birth order" = "n_older_sibs.x", 
+          "University"  = "university.xTRUE", 
+          "Own EA3"     = "EA3.x"
+        ),
+         note = "{stars}. Standard errors for columns 5 and 6 clustered by spouse pair.",
+          tidy_args = list(list(), list(), list(), list(), ta, ta)
+       ) %>% 
+       # insert_row(after = 9, "Family size dummies", rep("Yes", 4)) %>% 
+       # set_number_format(2:9, -1, 4) %>% 
+       set_caption("Regressions of spouse PSEA: subsets")
+```
+
 
 ## Robustness
 
@@ -678,6 +785,8 @@ check_result <- purrr::map_dfr(score_names, check_cor)
 if (any(check_result$p.value < 0.1/33)) stop("Some check p values < 0.1/33; rewrite text!")
 
 n_10 <- sum(check_result$p.value < 0.1)
+if (n_10 != 3) stop("Different number of PGS had p < 0.10; rewrite text!")
+
 max_coef <- max(abs(check_result$estimate))
 ```
 
@@ -691,17 +800,83 @@ have a second child. Alternatively, respondents might select into the sample on
 the basis of a combination of birth order and genetics. We check this by
 regressing 33 different polygenic scores on birth order, controlling for family
 size.^[Polygenic scores were residualized on the first principal components of
-the genetic data.] Table \@ref(tab:tbl-pgs-check) shows the results. No scores
+the genetic data.]  No scores
 were significant at $p < 0.10/33$. `r n_10` scores were significant at $p <
 0.10$ (body mass index, conscientousness, and neuroticism). Coefficients were
 never greater than 0.01 of a standard deviation. Table
 \@ref(tab:tbl-bo-psea-robust) in the appendix reruns regressions controlling for
 these scores. Results are almost unchanged.
 
+One early explanation for birth order effects was that these could be due to
+genetic mutations in older parents. More recent research has mostly rejected
+this explanation in favour of "social" explanations. (TODO: cite that paper.)
+Nevertheless, we rerun regressions controlling for father's age at birth,
+using the subset of respondents who reported this data. (Cochran and Harpending
+(2013) report that mutational load is approximately linear in father's age,
+while it is constant in mothers' age. This is because female eggs are created 
+once, before the female's own birth, while male sperma cells continue dividing 
+throughout the lifespan.)  Table \@ref(tab:tbl-bo-fath-age) in the appendix
+shows that the effect of birth order remains significant and surprisingly 
+increases in size. 
+
+* TODO: given that father's age correlates with birth order and has
+  an opposite signed effect, should we use it as a control in the main
+  regressions?
+  - Problem is selection: people who answer father's age question are 
+    those whose father is still alive.
+* TODO: add mother's age also (and both)
+
 
 # Conclusion
 
-TODO: Write!
+* Other points: to study inequality,  study marriage markets: this is where
+  genes and SES meet. See Philip Oreopoulos, "Hint: money isn't everything"
+  - need to know the existing literature... 
+
+Behaviour geneticists have pointed out that in meritocratic societies, genetics and social status
+will be correlated, because some genetic variants will be causally linked to 
+success in the labour market. We argue that causality can also go the other way.
+If social factors and genetics both matter in marriage markets, then "good genes"
+will become associated with markers of social status, such as class, education or
+income. 
+
+Our empirical analysis shows that in a modern Western democracy, earlier-born
+children had spouses with higher PSEA. Thus, an environmental shock has effects
+on the genetics of people's spouses and becomes encoded in the genetics of their
+children. We also provided evidence that these effects are mediated by social
+status: income and education.
+
+Over history, our marriage market mechanism has probably operated in a much greater
+variety of societies than the labour market mechanism, because societies in
+which status can be earned are relatively rare compared to those in which status
+is inherited. (TODO: cite WEIRD? Or "status vs contract"?) As a result, we 
+would expect long-standing correlations between status and genetic variation. We
+have not tested this here, but it could be tested using ancient DNA data.
+
+Our analysis also has implications for the practice of controlling polygenic
+scores by partialling out principal components of genetic data. This is done so
+as to avoid confounding the effects of genetic variation with social
+stratification. However, insofar as the geneticists' concept of stratification
+(mating which is non-random with respect to genetics) overlaps with the
+sociological concept of stratification (a hierarchical ranking of individuals),
+stratification will predictably associate with causally relevant genetic
+variants. For this reason, we would expect principal components to contain real
+information about causally relevant variants. Of course, they may also contain
+information about variants of no effect, which only correlate with outcomes
+because of social stratification. So, it is an empirical question whether
+controlling for principal components improves or weakens the predictive power of
+polygenic scores. Within-family analyses could help to resolve this question.
+
+In popular media, and sometimes by social scientists, genetics are 
+often thought of as an external, "natural" constraint on social structure.
+This is one reason why behaviour genetics remains such a controversial topic. The
+broadest message of our research is that individual genetics are a social
+outcome like any other. They can even be viewed as another form of 
+capital, alongside human, social and cultural capital: that is, a resource to be
+sought, accumulated and competed over. The analysis of this kind of capital
+is an exciting area for further research to which both social scientists and
+geneticists can contribute.
+
 
 \FloatBarrier
 
@@ -804,12 +979,11 @@ correlation.
 
 \FloatBarrier
 
-## Regressions controlling for polygenic scores
+## Robustness checks
 
 ```{r tbl-bo-psea-robust}
 
 fml_bo_psea_robust <- fml_bo_psea %>% 
-                        purrr::map(Formula::as.Formula) %>% 
                         purrr::map(update, 
                            . ~ . + 
                            bmi_combined_resid.x + 
@@ -839,4 +1013,54 @@ huxreg(mod_bo_psea_robust,
        set_caption("Regressions of spouse PSEA with controls for polygenic scores")
 ```
 
+
+
+```{r tbl-bo-fath-age} 
+
+
+age_table <- famhist %>% 
+      filter(n_sibs >=2, n_sibs <= 8, ! is.na(n_older_sibs)) %>% 
+      group_by(n_sibs, n_older_sibs) %>% 
+      dplyr::summarize(
+        N   = n(), 
+        mfa = mean(fath_age_birth, na.rm = TRUE),
+        mma = mean(moth_age_birth, na.rm = TRUE)
+      )
+
+# not so helpful if mutation is linear in father's age;
+# still significant anyway:
+# 
+# mf_pairs_young <- mf_pairs_reg %>% 
+#                     filter(
+#                       moth_age_birth.x <= 30 | fath_age_birth.x <= 30
+#                     )
+# 
+# mod_bo_young <- lapply(fml_bo_psea[1:2], fixest::feols, 
+#                  data = mf_pairs_young,
+#                  notes = FALSE
+#                )
+
+fml_bo_fath_age <- lapply(fml_bo_psea[1:2], update, 
+                     . ~ . + fath_age_birth.x, 
+                     rhs = 1
+                   )
+mod_bo_fath_age <- lapply(fml_bo_fath_age, fixest::feols,
+                     data  = mf_pairs_reg, 
+                     notes = FALSE
+                   )
+
+huxreg(mod_bo_fath_age, 
+        coefs = c(
+          "Birth order"           = "n_older_sibs.x", 
+          "University"            = "university.xTRUE", 
+          "Father's age at birth" = "fath_age_birth.x",
+          "Own EA3"               = "EA3.x"
+        ),
+         note = "{stars}. Standard errors clustered by spouse pair.",
+         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id))
+       ) %>% 
+       insert_row(after = 9, "Family size dummies", rep("Yes", 2)) %>% 
+       set_number_format(2:9, -1, 4) %>% 
+       set_caption("Regressions of spouse PSEA controlling for father's age at birth")
+```
 

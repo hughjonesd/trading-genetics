@@ -114,11 +114,13 @@ clean_famhist <- function (famhist, score_names, ashe_income) {
   # "Field 845 was collected from all participants except those who indicated 
   # they have a College or University degree, as defined by their answers to 
   # Field 6138". So, we impute this to be 21.
-  famhist$age_fulltime_edu[is.na(famhist$age_fulltime_edu) & famhist$edu_qual == 1] <- 21
+  famhist$age_fulltime_edu[is.na(famhist$age_fulltime_edu) & famhist$edu_qual.0.0 == 1] <- 21
   
   # TODO: ask Abdel how edu_qual was made up. Seems to be a "max" of all the
-  # individual edu_qual.x.y's; these are just f.6138.x.y
-  famhist$university <- famhist$edu_qual == 1
+  # individual edu_qual.x.y's; these are just f.6138.x.y.
+  # TODO: that doesn't work!!! Warn Abdel.
+  # Currently using edu_qual.0.0
+  famhist$university <- famhist$edu_qual.0.0 == 1
   famhist$income_cat <- famhist$f.738.0.0
   
   famhist$n_children <- pmax(famhist$f.2405.0.0, famhist$f.2405.1.0,
@@ -172,6 +174,12 @@ clean_famhist <- function (famhist, score_names, ashe_income) {
   # TODO: why is n_older_sibs often NaN?
   # TODO: why is f.5057 often NA when n_sibs == 1? And why often NA in general
   
+  # TODO: minimum fath_age_birth is 3, moth_age_birth is 0... Why?
+  famhist$fath_age <- famhist$f.2946.0.0
+  famhist$moth_age <- famhist$f.1845.0.0
+  famhist$fath_age_birth <- famhist$fath_age - famhist$age_at_recruitment
+  famhist$moth_age_birth <- famhist$moth_age - famhist$age_at_recruitment
+
   famhist[score_names] <- scale(famhist[score_names])
 
   # TODO: ask Abdel for job code f.20277
@@ -247,7 +255,8 @@ make_mf_pairs <- function (mf_pairs_file, famhist, resid_scores) {
                   dplyr::select(
                     f.eid, f.6138.0.0, f.52.0.0, matches("_resid$"),
                     n_sibs, n_older_sibs, university, age_at_recruitment,
-                    age_fulltime_edu, age_fte_cat, income_cat, birth_sun
+                    age_fulltime_edu, age_fte_cat, income_cat, birth_sun,
+                    n_children, fath_age_birth, moth_age_birth
                   )
   mf_pairs %<>% 
     left_join(famhist_tmp, by = c("ID.m" = "f.eid")) %>% 
