@@ -1130,13 +1130,13 @@ The conditional distribution of
 \end_inset
 
  has 
-\begin_inset Formula $E[B_{p}|A=a)=\rho_{AB}\sqrt{Var(B)/Var(A)}a$
+\begin_inset Formula $E[B_{p}|A=a)=\rho_{AB}\sqrt{Var(B_{p})/Var(A)}a$
 \end_inset
 
  and 
 \begin_inset Formula 
 \begin{align*}
-Var(B_{p}|A) & =(1-\rho_{AB}^{2})Var(B).
+Var(B_{p}|A) & =(1-\rho_{AB}^{2})Var(B_{p}).
 \end{align*}
 
 \end_inset
@@ -1150,9 +1150,9 @@ reference "eq:dcov-G-S"
 
 ) and simplifying gives:
 \begin_inset Formula 
-\begin{align*}
-Cov(G_{c},S_{c})-Cov(G_{p},S_{p}) & =\frac{1}{2}cd(1-\rho_{AB}^{2})Var(B).\\
-\end{align*}
+\begin{align}
+Cov(G_{c},S_{c})-Cov(G_{p},S_{p}) & =\frac{1}{2}cd(1-\rho_{AB}^{2})Var(B_{p}).\label{eq:dcov-G-S-normal}
+\end{align}
 
 \end_inset
 
@@ -1164,23 +1164,19 @@ We now prove the following:
 \end_layout
 
 \begin_layout Enumerate
-\begin_inset Formula $cd\ Var(B)$
+\begin_inset Formula $cd\ Var(B_{p})$
 \end_inset
 
  is symmetric around 
 \begin_inset Formula $k=\frac{1}{2}$
 \end_inset
 
-, increasing for 
-\begin_inset Formula $k<\frac{1}{2}$
+ and quasiconcave (i.e.
+ increasing up to 
+\begin_inset Formula $k=\frac{1}{2}$
 \end_inset
 
- and decreasing for 
-\begin_inset Formula $k>\frac{1}{2}$
-\end_inset
-
-.
- 
+ and decreasing thereafter).
 \end_layout
 
 \begin_layout Enumerate
@@ -1191,15 +1187,81 @@ We now prove the following:
 \begin_inset Formula $k=\frac{1}{2}$
 \end_inset
 
-, increasing for 
-\begin_inset Formula $k<\frac{1}{2}$
+ and quasiconcave.
+\end_layout
+
+\begin_layout Standard
+Proving these facts shows that (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:dcov-G-S-normal"
+
 \end_inset
 
- and decreasing for 
-\begin_inset Formula $k>\frac{1}{2}$
+) is also symmetric around 
+\begin_inset Formula $k=\frac{1}{2}$
+\end_inset
+
+ and quasiconcave.
+\end_layout
+
+\begin_layout Standard
+To prove 1., write
+\begin_inset Formula 
+\begin{equation}
+cd\ Var(B_{p})=\frac{k(1-k)}{[k^{2}+(1-k)^{2}]^{2}}[(1-k)^{2}+k^{2}-2k(1-k)\rho]\label{eq:cd-var-B}
+\end{equation}
+
+\end_inset
+
+and observe immediately that its value is unchanged if you interchange 
+\begin_inset Formula $k$
+\end_inset
+
+ and 
+\begin_inset Formula $1-k$
+\end_inset
+
+, i.e.
+ it is symmetric around 
+\begin_inset Formula $k=\frac{1}{2}$
 \end_inset
 
 .
+ Next, simplify to
+\begin_inset Formula 
+\[
+cd\ Var(B_{p})=\frac{k(1-k)}{k^{2}+(1-k)^{2}}[1-\frac{k(1-k)}{k^{2}+(1-k)^{2}}2\rho].
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This can be written as
+\begin_inset Formula 
+\[
+f(\frac{k(1-k)}{k^{2}+(1-k)^{2}})\textrm{ where }f(x)\equiv x(1-2\rho x).
+\]
+
+\end_inset
+
+For 
+\begin_inset Formula $\rho\ge0$
+\end_inset
+
+, 
+\begin_inset Formula $f$
+\end_inset
+
+ is concave; on the other hand, 
+\begin_inset Formula $\frac{k(1-k)}{k^{2}+(1-k)^{2}}$
+\end_inset
+
+ is log-concave.
+ 
 \end_layout
 
 \begin_layout Standard
