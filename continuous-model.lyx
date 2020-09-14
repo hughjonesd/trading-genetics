@@ -590,17 +590,9 @@ The inequality is strict when
  proof.
 \end_layout
 
-\begin_layout Section*
-Proving quasiconcavity when 
-\begin_inset Formula $G,S$
-\end_inset
-
- normal
-\end_layout
-
 \begin_layout Standard
 \begin_inset Note Note
-status collapsed
+status open
 
 \begin_layout Plain Layout
 Proof ideas for the second part: 
@@ -1022,7 +1014,7 @@ reference "eq:var-B-less"
 ):
 \begin_inset Formula 
 \begin{equation}
-\Delta Cov(G_{c},S_{c})\equiv Cov(G_{c},S_{c})-Cov(G_{p},S_{p})=\frac{1}{2}cdE_{A}[Var(B_{p}|A)].\label{eq:dcov-G-S}
+Cov(G_{c},S_{c})-Cov(G_{p},S_{p})=\frac{1}{2}cdE_{A}[Var(B_{p}|A)].\label{eq:dcov-G-S}
 \end{equation}
 
 \end_inset
@@ -1138,7 +1130,7 @@ The conditional distribution of
 \end_inset
 
  has 
-\begin_inset Formula $E[B_{p}|A=a)=\rho_{AB}\sqrt{Var(B)/Var(A)}a$
+\begin_inset Formula $E[B_{p}|A=a)=\rho_{AB}\sqrt{Var(B_{p})/Var(A)}a$
 \end_inset
 
  and 
@@ -1159,7 +1151,7 @@ reference "eq:dcov-G-S"
 ) and simplifying gives:
 \begin_inset Formula 
 \begin{align}
-Cov(G_{c},S_{c})-Cov(G_{p},S_{p}) & =\frac{1}{2}cd(1-\rho_{AB}^{2})Var(B_{p}).\label{eq:dcov-GS-norm}
+Cov(G_{c},S_{c})-Cov(G_{p},S_{p}) & =\frac{1}{2}cd(1-\rho_{AB}^{2})Var(B_{p}).\label{eq:dcov-G-S-normal}
 \end{align}
 
 \end_inset
@@ -1168,36 +1160,61 @@ Cov(G_{c},S_{c})-Cov(G_{p},S_{p}) & =\frac{1}{2}cd(1-\rho_{AB}^{2})Var(B_{p}).\l
 \end_layout
 
 \begin_layout Standard
-LEMMA: the above is quasiconcave and symmetric around 
-\begin_inset Formula $k=\frac{1}{2}.$
+We now prove the following:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $cd\ Var(B_{p})$
 \end_inset
 
+ is symmetric around 
+\begin_inset Formula $k=\frac{1}{2}$
+\end_inset
 
+ and quasiconcave (i.e.
+ increasing up to 
+\begin_inset Formula $k=\frac{1}{2}$
+\end_inset
+
+ and decreasing thereafter).
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $(1-\rho_{AB}^{2})$
+\end_inset
+
+ is symmetric around 
+\begin_inset Formula $k=\frac{1}{2}$
+\end_inset
+
+ and quasiconcave.
 \end_layout
 
 \begin_layout Standard
-PROOF: observe that 
+Proving these facts shows that (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:dcov-G-S-normal"
+
+\end_inset
+
+) is also symmetric around 
+\begin_inset Formula $k=\frac{1}{2}$
+\end_inset
+
+ and quasiconcave.
+\end_layout
+
+\begin_layout Standard
+To prove 1., write
 \begin_inset Formula 
-\begin{align*}
-cd & =\frac{k(1-k)}{z^{2}};\\
-1-\rho_{AB}^{2} & =1-\frac{(2k-1)^{2}\rho^{2}}{Var(A)Var(B_{p})};
-\end{align*}
+\begin{equation}
+cd\ Var(B_{p})=\frac{k(1-k)}{[k^{2}+(1-k)^{2}]^{2}}[(1-k)^{2}+k^{2}-2k(1-k)\rho]\label{eq:cd-var-B}
+\end{equation}
 
 \end_inset
 
-and that the values of 
-\begin_inset Formula $z$
-\end_inset
-
-, 
-\begin_inset Formula $Var(A)$
-\end_inset
-
- and 
-\begin_inset Formula $Var(B)$
-\end_inset
-
- are unaffected if you interchange 
+and observe immediately that its value is unchanged if you interchange 
 \begin_inset Formula $k$
 \end_inset
 
@@ -1206,461 +1223,48 @@ and that the values of
 \end_inset
 
 , i.e.
- they are symmetric about 
+ it is symmetric around 
 \begin_inset Formula $k=\frac{1}{2}$
 \end_inset
 
 .
- As a result, the expressions above are all symmetric around 
-\begin_inset Formula $k=\frac{1}{2}$
-\end_inset
-
-, and so is (
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "eq:dcov-GS-norm"
+ Next, simplify to
+\begin_inset Formula 
+\[
+cd\ Var(B_{p})=\frac{k(1-k)}{k^{2}+(1-k)^{2}}[1-\frac{k(1-k)}{k^{2}+(1-k)^{2}}2\rho].
+\]
 
 \end_inset
 
-).
- We can therefore complete the proof by showing that (a) 
-\begin_inset Formula $cd\ Var(B_{p})$
+
+\end_layout
+
+\begin_layout Standard
+This can be written as
+\begin_inset Formula 
+\[
+f(\frac{k(1-k)}{k^{2}+(1-k)^{2}})\textrm{ where }f(x)\equiv x(1-2\rho x).
+\]
+
 \end_inset
 
- is increasing on 
-\begin_inset Formula $k\in(0,\frac{1}{2})$
+For 
+\begin_inset Formula $\rho\ge0$
 \end_inset
 
- and (b) 
-\begin_inset Formula $1-\rho_{AB}^{2}$
+, 
+\begin_inset Formula $f$
 \end_inset
 
- is likewise increasing on 
-\begin_inset Formula $k\in(0,\frac{1}{2})$
+ is concave; on the other hand, 
+\begin_inset Formula $\frac{k(1-k)}{k^{2}+(1-k)^{2}}$
 \end_inset
 
-.
+ is log-concave.
  
 \end_layout
 
 \begin_layout Standard
-PROOF of (a):
-\end_layout
-
-\begin_layout Standard
-Write 
-\begin_inset Formula 
-\[
-cd\ Var(B_{p})=\frac{k(1-k)}{z^{2}}(z-q)=\frac{g}{z^{2}}
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula 
-\[
-q\equiv2\rho k(1-k);h=k(1-k)(z-q)
-\]
-
-\end_inset
-
-are convenient shorthands.
- 
-\end_layout
-
-\begin_layout Standard
-Differentiating this gives
-\begin_inset Formula 
-\begin{align*}
- & \frac{1}{z^{4}}(h'z^{2}-h(z^{2})')\\
-= & \frac{1}{z^{4}}(h'z^{2}-2hzz')
-\end{align*}
-
-\end_inset
-
-using the prime to mean the derivative with respect to 
-\begin_inset Formula $k$
-\end_inset
-
-.
- Since 
-\begin_inset Formula $z>0$
-\end_inset
-
-, this is signed by 
-\begin_inset Formula 
-\[
-h'z-2hz'.
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Calculating derivatives:
-\begin_inset Formula 
-\begin{align*}
-z' & =4k-2;\\
-q' & =2\rho(1-2k)
-\end{align*}
-
-\end_inset
-
-and
-\begin_inset Formula 
-\begin{align*}
-h' & =(1-2k)(z-q)+k(1-k)(z'-q')\\
- & =(1-2k)(z-q)+k(1-k)(4k-2-2\rho(1-2k))\\
- & =(1-2k)[z-q+k(1-k)(2\rho-2)].
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Plug these in and rearrange to give
-\begin_inset Formula 
-\begin{align*}
- & h'z-2hz'\\
-= & (1-2k)[z-q+k(1-k)(2\rho-2)]-2k(1-k)(z-q)(4k-2)\\
-= & (1-2k)[z-q+k(1-k)(2\rho-2)+4k(1-k)(z-q)].
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Lastly observe that 
-\begin_inset Formula 
-\begin{align*}
-z-q+k(1-k)(2\rho-2) & =k^{2}+(1-k^{2})-2\rho k(1-k)+k(1-k)(2\rho-2)\\
- & =k^{2}+(1-k^{2})-2k(1-k)\\
- & =(2k-1)^{2}.
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Plug this in to give
-\begin_inset Formula 
-\[
-h'z-2hz'=(1-2k)[(2k-1)^{2}+4k(1-k)(z-q)].
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $z-q$
-\end_inset
-
- is decreasing in 
-\begin_inset Formula $\rho$
-\end_inset
-
- and reaches a minimum at 
-\begin_inset Formula $\rho=1$
-\end_inset
-
- where it again equals 
-\begin_inset Formula $(2k-1)^{2}$
-\end_inset
-
-.
- As a result the above is signed by 
-\begin_inset Formula $(1-2k)$
-\end_inset
-
- and is increasing for 
-\begin_inset Formula $k<\frac{\text{1}}{2}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-PROOF of (a): We show that the derivative of 
-\begin_inset Formula $\rho_{AB}^{2}$
-\end_inset
-
- is negative on 
-\begin_inset Formula $k<\frac{1}{2}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-The derivative of 
-\begin_inset Formula $\rho_{AB}^{2}$
-\end_inset
-
- is signed by
-\begin_inset Formula 
-\begin{align*}
- & 4(2k-1)(z^{2}-q^{2})-(2k-1)^{2}(z^{2}-q^{2})'\\
-= & 4(2k-1)(z^{2}-q^{2})-(2k-1)^{2}(2zz'-2qq')\\
-= & 4(2k-1)(z^{2}-q^{2})-(2k-1)^{2}(2z(4k-2)-4q\rho(1-2k))\\
-= & 4(2k-1)(z^{2}-q^{2})-(2k-1)^{3}(4z+4q\rho)\\
-= & 4(2k-1)[(z^{2}-q^{2})-(2k-1)^{2}(z+q\rho)]\\
-= & 4(2k-1)[z^{2}-(2k-1)^{2}z-(2k-1)^{2}q\rho-q^{2}].
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Since 
-\begin_inset Formula $2k-1<0$
-\end_inset
-
-, showing that the term in square brackets is positive will complete the
- proof.
-\end_layout
-
-\begin_layout Standard
-Note that 
-\begin_inset Formula $q^{2}=4\rho^{2}k^{2}(1-k)^{2}$
-\end_inset
-
-and is increasing in 
-\begin_inset Formula $\rho^{2}$
-\end_inset
-
-.
- Furthermore 
-\begin_inset Formula $q\rho=2k(1-k)\rho^{2}$
-\end_inset
-
- and is increasing in 
-\begin_inset Formula $\rho^{2}$
-\end_inset
-
-.
- Thus the term in square brackets is greater than
-\begin_inset Formula 
-\[
-z^{2}-(2k-1)^{2}z=z(z-(2k-1)^{2})
-\]
-
-\end_inset
-
-which is positive if
-\begin_inset Formula 
-\begin{align*}
-z & \ge(2k-1)^{2}\\
-\Leftrightarrow k^{2}+(1-k)^{2} & \ge4k^{2}-4k+1\\
-\Leftrightarrow2k(1-k) & \ge0.
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-====
-\end_layout
-
-\begin_layout Standard
-FINAL PROPOSITION: 
-\begin_inset Formula $corr(G_{c},S_{c})$
-\end_inset
-
- is quasiconcave.
-\end_layout
-
-\begin_layout Standard
-Write
-\begin_inset Formula 
-\begin{align*}
-corr(G_{c},S_{c}) & =\frac{cov(G_{c},S_{c})}{\sqrt{var(G_{c})var(S_{c})}}\\
- & =\frac{\rho+\Delta Cov(G_{c},S_{c})}{\sqrt{var(G_{c})var(S_{c})}}.
-\end{align*}
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-LEMMA 1 shows that the numerator is symmetric around 
-\begin_inset Formula $k=\frac{1}{2}$
-\end_inset
-
- and increasing on 
-\begin_inset Formula $k<\frac{1}{2}$
-\end_inset
-
-.
- It will suffice to show that the denominator is symmetric around 
-\begin_inset Formula $k=\frac{1}{2}$
-\end_inset
-
-and decreasing on 
-\begin_inset Formula $k<\frac{1}{2}$
-\end_inset
-
-.
- Write
-\begin_inset Formula 
-\begin{align*}
-var(G_{c}) & =var(cA+dB_{c})=c^{2}var(A)+d^{2}var(B_{c})+2cdCov(A,B_{c})\\
-var(S_{c}) & =var(dA-cB_{c})=d^{2}var(A)+c^{2}var(B_{c})-2cdCov(A,B_{c})
-\end{align*}
-
-\end_inset
-
-...
- to be completed maybe.
- Alas, the denominator is increasing on 
-\begin_inset Formula $k<\frac{1}{2}$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Let's write the whole thing as
-\begin_inset Formula 
-\[
-corr(G_{c},S_{c})=\frac{\rho+\frac{1}{2}cd(1-\rho_{AB}^{2})Var(B_{p})}{\sqrt{c^{2}var(A)+d^{2}var(B_{c})+2cdCov(A,B_{c})}\sqrt{d^{2}var(A)+c^{2}var(B_{c})-2cdCov(A,B_{c})}}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-To calculate
-\begin_inset Formula 
-\[
-cov(A,B_{c})
-\]
-
-\end_inset
-
-we can assume that 
-\begin_inset Formula $A$
-\end_inset
-
- and 
-\begin_inset Formula $B_{c}$
-\end_inset
-
- have the same correlation as 
-\begin_inset Formula $A$
-\end_inset
-
- and 
-\begin_inset Formula $B_{p}$
-\end_inset
-
-.
- 
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
-right?
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-cov(A,B_{c})=\rho_{AB}\sqrt{var(A)var(B_{c})}
-\]
-
-\end_inset
-
-where
-\begin_inset Formula 
-\begin{align*}
-Var(B_{c}) & =E_{A}(\frac{1}{2}Var(B_{p}|A))+Var(E(B_{c}|A))\\
- & =\frac{1}{2}(1-\rho_{AB}^{2})Var(B_{p})+Var(E(B_{c}|A))
-\end{align*}
-
-\end_inset
-
-and since 
-\begin_inset Formula $E(B_{c}|A)=E(B_{p}|A)=\rho_{AB}\sqrt{Var(B_{p})/Var(A)}a$
-\end_inset
-
-, its variance is 
-\begin_inset Formula 
-\[
-\rho_{AB}^{2}\frac{Var(B_{p})}{Var(A)}Var(A)=\rho_{AB}^{2}Var(B_{p}).
-\]
-
-\end_inset
-
-So
-\begin_inset Formula 
-\begin{align*}
-Var(B_{c}) & =\frac{1}{2}(1-\rho_{AB}^{2})Var(B_{p})+\rho_{AB}^{2}Var(B_{p})\\
- & =\frac{1+\rho_{AB}^{2}}{2}Var(B_{p}).
-\end{align*}
-
-\end_inset
-
-This gives us
-\begin_inset Formula 
-\[
-cov(A,B_{c})=\rho_{AB}\sqrt{var(A)\frac{1+\rho_{AB}^{2}}{2}Var(B_{p})}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-and now plugging in 
-\begin_inset Formula $Var(A)$
-\end_inset
-
- and 
-\begin_inset Formula $Var(B_{p})$
-\end_inset
-
- from above, and using the simple notation again
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-cov(A,B_{c})=\rho_{AB}\sqrt{\frac{1+\rho_{AB}^{2}}{2}}\sqrt{[z+q][z-q]}
-\]
-
-\end_inset
-
-We can then rewrite 
-\begin_inset Formula 
-\[
-Corr(G_{c},S_{c})=\frac{\rho+\frac{1}{2}cd(1-\rho_{AB}^{2})Var(B_{p})}{\sqrt{c^{2}var(A)+d^{2}var(B_{c})+2cd\left(\rho_{AB}\sqrt{\frac{1+\rho_{AB}^{2}}{2}}\sqrt{[z+q][z-q]}\right)}\sqrt{d^{2}var(A)+c^{2}var(B_{c})-2cd\left(\rho_{AB}\sqrt{\frac{1+\rho_{AB}^{2}}{2}}\sqrt{[z+q][z-q]}\right)}}
-\]
-
-\end_inset
-
 
 \end_layout
 
