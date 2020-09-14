@@ -8,6 +8,7 @@ output:
     latex_engine: xelatex
 editor_options: 
   chunk_output_type: console
+bibliography: bibliography.bib
 spacing: double
 header-includes:
   - \usepackage{subfig}
@@ -833,12 +834,12 @@ increases in size.
   genes and SES meet. See Philip Oreopoulos, "Hint: money isn't everything"
   - need to know the existing literature... 
 
-Behaviour geneticists have pointed out that in meritocratic societies, genetics and social status
-will be correlated, because some genetic variants will be causally linked to 
-success in the labour market. We argue that causality can also go the other way.
-If social factors and genetics both matter in marriage markets, then "good genes"
-will become associated with markers of social status, such as class, education or
-income. 
+Behaviour geneticists have pointed out that in meritocratic societies, genetics
+and social status will be correlated, because some genetic variants will be
+causally linked to success in the labour market. We argue that causality can
+also go the other way. If social factors and genetics both matter in marriage
+markets, then "good genes" will become associated with markers of social status,
+such as class, education or income.
 
 Our empirical analysis shows that in a modern Western democracy, earlier-born
 children had spouses with higher PSEA. Thus, an environmental shock has effects
@@ -846,10 +847,21 @@ on the genetics of people's spouses and becomes encoded in the genetics of their
 children. We also provided evidence that these effects are mediated by social
 status: income and education.
 
+Social scientists have tended to assume that social status is unrelated to
+"natural" differences between individuals, including genetic differences. This 
+view is part of a tradition of thought going back at least to Hobbes (1648). 
+On the other hand, it has been widely believed in many historical societies that
+human nature varies across social classes, and also that characteristics were
+inherited across generations [@moya2015reasoning; some selected quotations are given in
+the appendix].
+
+
 Over history, our marriage market mechanism has probably operated in a much greater
 variety of societies than the labour market mechanism, because societies in
 which status can be earned are relatively rare compared to those in which status
-is inherited. (TODO: cite WEIRD? Or "status vs contract"?) As a result, we 
+is inherited. (TODO: cite WEIRD? Or "status vs contract"?) 
+
+As a result, we 
 would expect long-standing correlations between status and genetic variation. We
 have not tested this here, but it could be tested using ancient DNA data.
 
@@ -858,14 +870,12 @@ scores by partialling out principal components of genetic data. This is done so
 as to avoid confounding the effects of genetic variation with social
 stratification. However, insofar as the geneticists' concept of stratification
 (mating which is non-random with respect to genetics) overlaps with the
-sociological concept of stratification (a hierarchical ranking of individuals),
+sociological concept of stratification (a hierarchical ranking),
 stratification will predictably associate with causally relevant genetic
 variants. For this reason, we would expect principal components to contain real
-information about causally relevant variants. Of course, they may also contain
-information about variants of no effect, which only correlate with outcomes
-because of social stratification. So, it is an empirical question whether
+information about causally relevant variants. So, it is an empirical question whether
 controlling for principal components improves or weakens the predictive power of
-polygenic scores. Within-family analyses could help to resolve this question.
+polygenic scores. Within-family analyses could resolve this question.
 
 In popular media, and sometimes by social scientists, genetics are 
 often thought of as an external, "natural" constraint on social structure.
@@ -1063,4 +1073,33 @@ huxreg(mod_bo_fath_age,
        set_number_format(2:9, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA controlling for father's age at birth")
 ```
+
+
+## Quotations on social inequality and human nature
+
+Citizens, we shall say to them in our tale, you are brothers, yet God has framed you differently. Some of you have the power of command, and in the composition of these he has mingled gold, wherefore also they have the greatest honour; others he has made of silver, to be auxiliaries; others again who are to be husbandmen and craftsmen he has composed of brass and iron; and the species will generally be preserved in the children. But as all are of the same original stock, a golden parent will sometimes have a silver son, or a silver parent a golden son. 
+
+-- Plato *Republic*
+
+
+Nature would like to distinguish between the
+bodies of freemen and slaves, making the one strong for servile labor,
+the other upright, and although useless for such services, useful
+for political life in the arts both of war and peace. But the opposite
+often happens -- that some have the souls and others have the bodies
+of freemen.
+
+-- Aristotle *Politics*
+
+Sons have no richer endowment than the quality
+A noble and brave father gives in their begetting.
+
+-- Euripides *Heracleidae*
+
+
+His looks are full of peaceful majesty,
+His head by nature fram’d to wear a crown,
+His hands to wield a sceptre
+
+-- Shakespeare *Henry VI Part 3*
 
