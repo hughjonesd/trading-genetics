@@ -87,9 +87,9 @@ a fact of nature, any more than their inherited wealth or social status
 is natural. As [@marx1844economic] wrote, "History is the true natural
 history of man".
 
-Indeed, these kinds of inheritance may be substitutable.
-[@marx1844economic] also wrote "I am ugly, but I can buy the most
-beautiful woman.... the effect of ugliness, its repelling power, is
+Indeed, genetic assets and other kinds may be substitutable in marriage
+markets. [@marx1844economic] also wrote "I am ugly, but I can buy the
+most beautiful woman.... the effect of ugliness, its repelling power, is
 destroyed by money". On the opposite side of the political spectrum,
 [@herrnstein1995bell] warned of "a merging of the cognitive elite with
 the affluent". These quotations suggest that social advantages, such as
@@ -258,68 +258,56 @@ $corr(G_{p}, S_{p}) > 0$.
 ```{=tex}
 \begin{proof}
 
-Within each pair \$i,p(i)\$ write \$d\$ for the person with \$s\_{d} \>
-s\_{p(d)}\$,
-and write \$m\$ for \$p(d)\$. (Think of these as "dukes" and
-"milkmaids",
-or if you prefer "duchesses" and "male models".) If
-\$k \< 1\$, then \$g\_{d} \< g\_{m}\$. (If \$k = 0\$, then define \$d\$
-as the person
-with \$g\_{d} \< g\_{p(d)}\$.)
+Within each pair $i,p(i)$ write $d$ for the person with $s_{d}>s_{p(d)}$
+and $m$ for $p(d)$. (Think of these as "dukes" and "milkmaids",
+or if you prefer "duchesses" and "tennis instructors".) If
+$k < 1$, then $g_{d} < g_{m}$. (If $k = 0$, then define $d$ as the person
+with $g_{d} < g_{p(d)}$.)
 
 We integrate over the "dukes" to calculate the covariance in the
 parents' generation:
-\\[
-cov(G\_{p},S\_{p})=\\int\\frac{1}{2}(g\_{d}s\_{d}+g\_{p(d)}s\_{p(d)})\\,\\mathrm{d}d.
-\\]
+\[
+cov(G_{p},S_{p})=\int\frac{1}{2}(g_{d}s_{d}+g_{p(d)}s_{p(d)})\,\mathrm{d}d.
+\]
 
 For the children, the equivalent expression is
-\\[
-cov(G\_{c},S\_{c})=\\int g\_{c(d)}s\_{c(d)}\\mathrm{d}d,
-\\]
+\[
+cov(G_{c},S_{c})=\int g_{c(d)}s_{c(d)}\mathrm{d}d,
+\]
 
-observing that \$EG\_{c} = ES\_{c}=0\$ from
-(\\ref{eq:children-average}).
+observing that $EG_{c} = ES_{c}=0$ from (\ref{eq:children-average}).
 
-Take an arbitrary pair \$d,m\$. Write
+Take an arbitrary pair $d,m$. Write
 
-\\begin{align\*}
-g\_{d}s\_{d} &=(g\_{c}-\\Delta g)(s\_{c}+\\Delta s);\\\\
-g\_{m}s\_{m} &=(g\_{c}+\\text{\\ensuremath{\\Delta g)(s\_{c}-\\Delta
-s)}}
-\\end{align\*}
+\begin{align*}
+g_{d}s_{d} & =(g_{c}-\Delta g)(s_{c}+\Delta s);\\
+g_{m}s_{m} & =(g_{c}+\text{\ensuremath{\Delta g)(s_{c}-\Delta s)}}
+\end{align*}
 
-where
+where 
 
-\\begin{align\*}
-\\text{\\ensuremath{\\Delta g = \\frac{g\_{m}-g\_{d}}{2} \\ge 0}}, &
-\\textrm{ strictly so if and only if }k\>0;\\\\
-\\Delta s = \\frac{s\_{d}-s\_{m}}{2} \\ge 0, & \\textrm{ strictly so if
-and only if }k\<1.
-\\end{align\*}
+\begin{align*}
+\text{\ensuremath{\Delta g=\frac{g_{m}-g_{d}}{2}\ge0}}, & \textrm{strictly so if and only if }k>0;\\
+\Delta s=\frac{s_{d}-s_{m}}{2}\ge0 & \textrm{strictly so if and only if }k<1.
+\end{align*}
 
 Taking the average of the parents gives
 
-\\[
-\\frac{1}{2}(g\_{d}s\_{d}+g\_{m}s\_{m})= g \_{c}s\_{c}-\\Delta g\\Delta
-s.
-\\]
+\[
+\frac{1}{2}(g_{d}s_{d}+g_{m}s_{m})= g _{c}s_{c}-\Delta g\Delta s.
+\]
 
-This is less than \$g\_{c}s\_{c}\$ if \$0 \< k \< 1\$, and equal to it
-if \$k = 0\$
-or \$k = 1\$. Plugging this into the integral shows that
+This is less than $g_{c}s_{c}$ if $0 < k < 1$, and equal to it if $k = 0$
+or $k = 1$. Plugging this into the integral shows that 
 
-\\[
-cov(G\_{p},S\_{p})\\le cov(G\_{c},S\_{c})
-\\]
+\[
+cov(G_{p},S_{p})\le cov(G_{c},S_{c})
+\]
 
-again with strict inequality if and only if \$0 \< k \< 1\$. This proves
-the first
-part. A similar argument, showing \$var(G\_c) \\le var(G\_p)\$ and
-\$var(S\_c) \\le
-var(S\_p)\$, proves the second part (see the appendix). Figure
-\\ref{fig:Correlation-counterexample} in the appendix shows that the
-condition in
+again with strict inequality if and only if $0 < k < 1$. This proves the first
+part. A similar argument, showing $var(G_c) \le var(G_p)$ and $var(S_c) \le
+var(S_p)$, proves the second part (see the appendix). Figure
+\ref{fig:Correlation-counterexample} in the appendix shows that the condition in
 the second part cannot be relaxed further.
 
 \end{proof}
@@ -580,10 +568,28 @@ parental age, and it might also be linked with the family's economic
 position at the time of birth. We only claim that birth order is
 exogenous to any genetic variation inherited from the parents.
 
-We use data from UK Biobank, a study of about 500,000 individuals born
-between 1935 and 1970.
+We use data from the UK Biobank, a study of about 500,000 individuals
+born between 1935 and 1970. The Biobank contains information on
+respondents' genetics, derived from DNA microarrays, along with
+questionnaire data on health and social outcomes. We use respondents'
+exact home location to infer that some are spouse pairs. Our key
+dependent variable is spouse's *Polygenic Score for Educational
+Attainment* (PSEA). A polygenic score is a DNA-derived summary measure
+of genetic risk or propensity for a particular outcome, created from
+summing small effects of many common genetic variants, known as Single
+Nucleotide Polymorphisms (SNPs). We use per-SNP summary statistics from
+\@lee2018gene, recalculated excluding UK Biobank participants, to
+calculate PSEA.
 
--   TODO: describe N for birth order, describe PSEA calculation.
+Our central independent variable is respondents' birth order, i.e. their
+number of elder siblings plus one. For controls we use family size, i.e.
+their total number of siblings including themselves; month of birth; age
+at interview; respondents' own PSEA; their father's and/or mother's age
+at their birth (calculated from parent's current age, only available if
+the parent was still alive). Our two measures of social status are
+income, and university attendance.
+
+-   TODO: Abdel - details of PSEA calculation and spouse pair inference
 -   TODO: look at mechanisms by which birth order might affect
     university
 -   TODO: get IQ data, control for it
@@ -599,15 +605,16 @@ variables approach would probably fall foul of the exclusion
 restriction.
 
 Instead, we conduct a mediation analysis, following the strategy of
-Heckman and Pinto (2013). We first regress our measures of own social
-status (i.e. income and education) on birth order. Then, we regress
-spouse's PSEA on birth order, with and without controlling for social
-status. Under the assumption that birth order is exogenous to own
-genetics, these regressions identify the effect of birth order, plus
-other environmental variables that correlate with it, on own social
-status and spouse's genetics. Also, if the estimated effect of birth
-order on spouse's PSEA changes when social status is included, that is
-evidence that social status mediates the effect of birth order.
+\@heckman2013understanding. We first run regressions to confirm that
+birth order affects our measures of respondents' social status (income
+and education). Then, we regress spouse's PSEA on birth order, with and
+without controlling for social status. Under the assumption that birth
+order is exogenous to own genetics, these regressions identify the
+effect of birth order, plus other environmental variables that correlate
+with it, on own social status and spouse's genetics. Also, if the
+estimated effect of birth order on spouse's PSEA changes when social
+status is included, that is evidence that social status mediates the
+effect of birth order.
 
 -   TODO: clarify the empirical model, you may need help....
 -   TODO: estimate individual income from job SIC codes? ASHE gives data
@@ -672,14 +679,97 @@ famhist %>%
       labs(y = "Proportion")
 ```
 
-Next we run regressions of spouse PSEA on birth order, university
-attendance and income.
+Next we run regressions of spouse PSEA on birth order. Table
+\@ref(tab:tbl-bo-psea-basic) reports the results. Subjects with 1-7
+siblings are included. Column 1 controls only for family size (using
+dummies). As expected, higher birth order is negatively associated with
+spouse's PSEA, though the estimated effect size is small. Column 2
+includes the respondent's own PSEA, as well as a quadratic in age, and
+dummies for birth month to control for seasonality effects. The effect
+size of birth order is not much changed.
+
+Column 3 includes father's age at birth. Within a family, later children
+have older parents by definition. Older parents have more life
+experience and may have higher income, which would presumably help later
+children. On the other hand, an early explanation for birth order
+effects was that these could be due to genetic mutations in older
+fathers, although more recent research has rejected this in favour of
+"social" explanations [[@kristensen2007explaining];
+\@black2011older].[^5] Including father's age means we can separate the
+effect of father's age from birth order. This reduces the N by a lot,
+since only respondents with live fathers reported the necessary data.
+However, the effect of birth order jumps in size, to about half the
+effect of respondent's own PSEA. Meanwhile, father's age has a positive
+effect. This suggests that the previous estimates mixed two
+opposite-signed effects: having older parents versus being later in
+birth order.[^6]
+
+[^5]: [@cochran2013paternal] report that mutational load is
+    approximately linear in father's age, while it is constant in
+    mothers' age. We observe very similar results if we control for
+    mother's age at respondent's birth.
+
+[^6]: Note that parental age would not be a good independent variable
+    for testing genetic encoding of social advantage, since it is likely
+    to correlate with parents' genetics.
+
+```{r tbl-bo-psea-basic}
+
+
+fml_bo_psea_base <- list()
+
+fml_bo_psea_base[[1]] <- EA3.y ~ n_older_sibs.x | factor(n_sibs.x)
+fml_bo_psea_base[[2]] <- EA3.y ~ n_older_sibs.x + EA3.x + 
+                            age_at_recruitment.x +
+                            I(age_at_recruitment.x^2) + factor(birth_mon.x) |
+                            factor(n_sibs.x)
+  
+fml_bo_psea_base[[3]] <- EA3.y ~ n_older_sibs.x + EA3.x + 
+                            age_at_recruitment.x +
+                            I(age_at_recruitment.x^2) + factor(birth_mon.x) +
+                            fath_age_birth.x | factor(n_sibs.x)
+
+fml_bo_psea_base <- lapply(fml_bo_psea_base, Formula::as.Formula)
+
+
+mf_pairs_reg <- mf_pairs_twice %>% 
+                  filter(
+                    n_sibs.x >= 2, 
+                    n_sibs.x <= 8, 
+                    ! is.na(n_older_sibs.x)
+                  )
+
+mod_bo_psea_base <- lapply(fml_bo_psea_base, fixest::feols, 
+                 data = mf_pairs_reg,
+                 notes = FALSE
+               )
+
+huxreg(mod_bo_psea_base, 
+        coefs = c(
+          "Birth order"           = "n_older_sibs.x", 
+          "Own PSEA"               = "EA3.x",
+          "Father's age at birth" = "fath_age_birth.x"
+        ),
+         statistics = c(
+           "N"           = "nobs", 
+           "R2"          = "r.squared"
+          ),
+         note = "{stars}. Standard errors clustered by spouse pair. Respondents with 1-7 siblings included.",
+         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id))
+       ) %>% 
+       insert_row(after = 7, "Family size dummies", rep("Yes", 3)) %>% 
+       insert_row(after = 8, "Birth month dummies", "No", "Yes", "Yes") %>% 
+       insert_row(after = 9, "Age quadratic", "No", "Yes", "Yes") %>% 
+       set_bottom_border(8:9, everywhere, 0) %>% 
+       set_number_format(2:7, -1, 4) %>% 
+       set_caption("Regressions of spouse PSEA")
+
+
+```
 
 -   TODO: include age FTE as well as university - to check university
     has an "extra effect" - this slightly suggests that uni is a
     "marriage market" and not just granting extra skills
-
--   TODO: get profession data from Abdel for ASHE
 
 -   TODO: enquire about job history data - does it predict current
     profession well?
@@ -703,6 +793,13 @@ attendance and income.
 -   Overall idea here is to unpack the different effects of birth order,
     separate them from university/income.
 
+Having tested that birth order affects spouse's PSEA, we now look for
+potential mediators of this effect. Despite the lower N, we continue to
+control for respondents' fathers' age, since this removes a confound
+which would bias our results towards zero.[^7]
+
+[^7]: The appendix reports results without controlling for father's age.
+
 ```{r tbl-bo-psea}
 
 
@@ -718,7 +815,8 @@ fml_bo_psea <- lapply(fml_bo_psea, Formula::as.Formula)
 
 # common controls
 fml_bo_psea <- lapply(fml_bo_psea, update, 
-                        . ~ . + EA3.x + age_at_recruitment.x +
+                        . ~ . + EA3.x + age_at_recruitment.x + 
+                          fath_age_birth.x +
                           I(age_at_recruitment.x^2) + factor(birth_mon.x), 
                         rhs = 1
                       )
@@ -729,7 +827,8 @@ mf_pairs_reg <- mf_pairs_twice %>%
                     n_sibs.x <= 8, 
                     ! is.na(n_older_sibs.x),
                     ! is.na(university.x),
-                    ! is.na(income_cat.x)
+                    ! is.na(income_cat.x),
+                    ! is.na(fath_age_birth.x)
                   )
 
 mod_bo_psea <- lapply(fml_bo_psea, fixest::feols, 
@@ -739,25 +838,27 @@ mod_bo_psea <- lapply(fml_bo_psea, fixest::feols,
 
 huxreg(mod_bo_psea, 
         coefs = c(
-          "Birth order" = "n_older_sibs.x", 
-          "University"  = "university.xTRUE", 
-          "Income"      = "income_cat.x",
-          "Own EA3"     = "EA3.x"
+          "Birth order"           = "n_older_sibs.x", 
+          "University"            = "university.xTRUE", 
+          "Income"                = "income_cat.x",
+          "Own PSEA"              = "EA3.x",
+          "Father's age at birth" = "fath_age_birth.x"
         ),
          note = "{stars}. Standard errors clustered by spouse pair.",
          tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id))
        ) %>% 
-       insert_row(after = 9, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 10, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 11, "Age quadratic", rep("Yes", 4)) %>% 
-       set_bottom_border(9:10, everywhere, 0) %>% 
-       set_number_format(2:9, -1, 4) %>% 
+       insert_row(after = 11, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 12, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 13, "Age quadratic", rep("Yes", 4)) %>% 
+       set_bottom_border(12:13, everywhere, 0) %>% 
+       set_number_format(2:11, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA")
 ```
 
 ```{r calc-bootstrap-proportions, cache = TRUE}
 
-n_boot <-  199
+# to rerun this, just add a space below. Don't set cache = FALSE!
+n_boot <- 199
 
 bo_prop_boot <- replicate(n_boot, {
   mf_pairs_resample <- mf_pairs_reg %>% sample_frac(1, replace = TRUE)
@@ -787,20 +888,15 @@ bo_prop_est  <- sprintf("%.1f%%", (1 - bo_prop_est) * 100)
 ```
 
 Table \@ref(tab:tbl-bo-psea) shows the results. Column 1 shows the
-effect of birth order. Controls are included for own PSEA, total number
-of siblings (as dummies), own age (quadratic) and birth month dummies.
-Column 1 establishes that earlier-born children have spouses with higher
-PSEA. The effect size is small. This is to be expected for three
-reasons. First, the effects of birth order on university, income and
-(presumably) other variables are small. Second, PSEA is measured with a
-lot of error. Third, the spouse matching process is likely to be noisy.
-We aim to test theory rather than estimating an effect size, so we focus
-more on statistical significance.
-
-Column 2 includes university attendance. Column 3 includes income.
-Column 4 includes both. We estimate the percentage decrease in the
-effect of birth order across the columns, along with 95% confidence
-intervals for this figure, by running bootstraps (N = `r n_boot`).[^5]
+effect of birth order, using the same specification as column 3 of the
+previous table. (We exclude respondents without data on income or
+university attendance, to make comparison easier across the columns:
+this reduces the N slightly.) The remaining columns control for our
+social status variables, which are potential mediators of birth order
+effects. Column 2 includes university attendance. Column 3 includes
+income. Column 4 includes both. We estimate the percentage decrease in
+the effect of birth order across the columns, along with 95% confidence
+intervals for this figure, by running bootstraps (N = `r n_boot`).[^8]
 Including university attendance alone reduces the effect of birth order
 by `r bo_prop_est[1]` (CI `r bo_prop_ci[1, 1]` -- `r bo_prop_ci[2, 1]`).
 Including income alone reduces the effect of birth order by
@@ -808,15 +904,21 @@ Including income alone reduces the effect of birth order by
 Including both decreases the effect by `r bo_prop_est[3]` (CI
 `r bo_prop_ci[1, 3]` -- `r bo_prop_ci[2, 3]`).
 
-[^5]: The sample percentage decrease calculated from the figures in
+[^8]: The sample percentage decrease calculated from the figures in
     Table \@ref(tab:tbl-bo-psea) is not the correct estimator, since
     $E(X/Y)$ is not equal to $EX/EY$.
 
-Our next regressions split up the data into subsets. We regress female
-spouses' PSEA on male birth order; male spouses' PSEA on female birth
-order; and spouse PSEA on spouse birth order among the subset of
-individuals who had children. Table \@ref(tab:tbl-bo-subsets) shows the
-results.
+Our next regressions split up the data into subsets. Cultural
+stereotypes often assume that the link between status and genes is not
+symmetric across the genders, for example, that males with high social
+status are particularly likely to marry attractive spouses. To test
+this, we separately regress female spouses' PSEA on male birth order,
+and male spouses' PSEA on female birth order. We also rerun regressions
+among the subset of individuals who had children. A significant result
+here will confirm that the association between status and genetics is
+carried over into the next generation.
+
+Table \@ref(tab:tbl-bo-subsets) shows the results.
 
 -   TODO: describe results
 
@@ -856,9 +958,10 @@ reg_list <- list(
 
 huxreg(reg_list,
        coefs = c(
-          "Birth order" = "n_older_sibs.x", 
-          "University"  = "university.xTRUE", 
-          "Own PSEA"     = "EA3.x"
+          "Birth order"           = "n_older_sibs.x", 
+          "University"            = "university.xTRUE", 
+          "Father's age at birth" = "fath_age_birth.x",
+          "Own PSEA"              = "EA3.x"
         ),
          note = "{stars}. Standard errors for columns 5 and 6 clustered by spouse pair.",
           tidy_args = list(list(), list(), list(), list(), ta, ta)
@@ -869,79 +972,6 @@ huxreg(reg_list,
 ```
 
 ## Robustness
-
-Birth order could affect social status via different pathways. One is
-parental age. Within a family, later children have older parents by
-definition. Older parents have more life experience and may have higher
-income, which would presumably help later children. On the other hand,
-an early explanation for birth order effects was that these could be due
-to genetic mutations in older fathers. More recent research has rejected
-this in favour of "social" explanations [[@kristensen2007explaining];
-\@black2011older]. In any case, we rerun the regressions controlling for
-father's age at respondent's birth, using the subset of respondents who
-reported this data.[^6] Table \@ref(tab:tbl-bo-fath-age) shows the
-results. Despite the smaller sample size, the effect of birth order
-remains significant and increases in magnitude, while the effect of
-father's age is positive. This suggests that the original estimates
-combined two oppositely-signed effects: a negative effect of being later
-in the birth order, and a positive effect of having older parents. The
-estimated effect of birth order on spouse PSEA is now substantive: about
-half as large as the effect of own PSEA.
-
-[^6]: [@cochran2013paternal] report that mutational load is
-    approximately linear in father's age, while it is constant in
-    mothers' age. We observe very similar results if we control for
-    mother's age at respondent's birth.
-
-```{r tbl-bo-fath-age}
-
-
-age_table <- famhist %>% 
-      filter(n_sibs >=2, n_sibs <= 8, ! is.na(n_older_sibs)) %>% 
-      group_by(n_sibs, n_older_sibs) %>% 
-      dplyr::summarize(
-        N   = n(), 
-        mfa = mean(fath_age_birth, na.rm = TRUE),
-        mma = mean(moth_age_birth, na.rm = TRUE),
-        .groups = "drop"
-      )
-
-fml_bo_fath_age <- lapply(fml_bo_psea, update, 
-                     . ~ . + fath_age_birth.x, 
-                     rhs = 1
-                   )
-mod_bo_fath_age <- lapply(fml_bo_fath_age, fixest::feols,
-                     data  = mf_pairs_reg, 
-                     notes = FALSE
-                   )
-
-fml_bo_moth_age <- lapply(fml_bo_psea, update, 
-                     . ~ . + moth_age_birth.x, 
-                     rhs = 1
-                   )
-mod_bo_moth_age <- lapply(fml_bo_moth_age, fixest::feols,
-                     data  = mf_pairs_reg, 
-                     notes = FALSE
-                   )
-
-huxreg(mod_bo_fath_age, 
-        coefs = c(
-          "Birth order"           = "n_older_sibs.x", 
-          "University"            = "university.xTRUE", 
-          "Income"                = "income_cat.x", 
-          "Father's age at birth" = "fath_age_birth.x",
-          "Own EA3"               = "EA3.x"
-        ),
-         note = "{stars}. Standard errors clustered by spouse pair.",
-         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id))
-       ) %>% 
-       insert_row(after = 11, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 12, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 13, "Age quadratic", rep("Yes", 4)) %>% 
-       set_bottom_border(11:12, everywhere, 0) %>% 
-       set_number_format(2:11, -1, 4) %>% 
-       set_caption("Regressions of spouse PSEA, controlling for father's age at respondent's birth")
-```
 
 ```{r tbl-pgs-check}
 
@@ -987,14 +1017,14 @@ the subset of two-child families, first children would have
 higher-than-average PSEA while second children would not.
 
 We check this by regressing 33 different polygenic scores on birth
-order, controlling for family size.[^7] No scores were significant at
+order, controlling for family size.[^9] No scores were significant at
 $p < 0.10/33$. `r n_10` scores were significant at $p < 0.10$ (body mass
 index, conscientousness, and neuroticism). Coefficients were never
 greater than 0.01 of a standard deviation. Table
 \@ref(tab:tbl-bo-psea-robust) in the appendix reruns regressions
 controlling for these scores. Results are almost unchanged.
 
-[^7]: Polygenic scores were residualized on the first principal
+[^9]: Polygenic scores were residualized on the first principal
     components of the genetic data. Scores were for: ADHD, age at
     menarche, age at menopause, agreeableness, age at smoking
     initiation, alcohol use, Alzheimer's, autism, bipolarity, BMI, body
@@ -1029,7 +1059,7 @@ differences. This view dates back at least to [@hobbes1651leviathan]. By
 contrast, it has been widely believed in many societies that innate
 traits do vary across social classes. The ancient Greeks described the
 social elite as *kaloi kagathoi* ("fine and good"), while the Roman
-nobility were the *optimates* ("best").[^8] This belief has been
+nobility were the *optimates* ("best").[^10] This belief has been
 explained by the human tendency to believe in a just world
 [@furnham1993just], or as an ideology promoted by the dominant class
 [e.g. @gramsci1971selections]. However, it may also simply have been a
@@ -1043,7 +1073,7 @@ the observation that status matters in marriage markets, provides a
 cognitive basis for reasoning to the conclusion of class differences.
 Alternatively, the belief might simply come from empirical observation.
 
-[^8]: The appendix contains a selection of relevant historical
+[^10]: The appendix contains a selection of relevant historical
     quotations.
 
 In our model, the association between social status and genetic
@@ -1201,6 +1231,55 @@ correlation.
 
 ## Robustness checks
 
+```{r tbl-bo-fath-age}
+
+
+age_table <- famhist %>% 
+      filter(n_sibs >=2, n_sibs <= 8, ! is.na(n_older_sibs)) %>% 
+      group_by(n_sibs, n_older_sibs) %>% 
+      dplyr::summarize(
+        N   = n(), 
+        mfa = mean(fath_age_birth, na.rm = TRUE),
+        mma = mean(moth_age_birth, na.rm = TRUE),
+        .groups = "drop"
+      )
+
+fml_bo_no_fath_age <- lapply(fml_bo_psea, update, 
+                     . ~ . - fath_age_birth.x, 
+                     rhs = 1
+                   )
+mod_bo_no_fath_age <- lapply(fml_bo_no_fath_age, fixest::feols,
+                     data  = mf_pairs_reg, 
+                     notes = FALSE
+                   )
+
+fml_bo_moth_age <- lapply(fml_bo_no_fath_age, update, 
+                     . ~ . + moth_age_birth.x, 
+                     rhs = 1
+                   )
+mod_bo_moth_age <- lapply(fml_bo_moth_age, fixest::feols,
+                     data  = mf_pairs_reg, 
+                     notes = FALSE
+                   )
+
+huxreg(mod_bo_no_fath_age, 
+        coefs = c(
+          "Birth order"           = "n_older_sibs.x", 
+          "University"            = "university.xTRUE", 
+          "Income"                = "income_cat.x", 
+          "Own EA3"               = "EA3.x"
+        ),
+         note = "{stars}. Standard errors clustered by spouse pair.",
+         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id))
+       ) %>% 
+       insert_row(after = 9, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 10, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 11, "Age quadratic", rep("Yes", 4)) %>% 
+       set_bottom_border(10:11, everywhere, 0) %>% 
+       set_number_format(2:9, -1, 4) %>% 
+       set_caption("Regressions of spouse PSEA, without controls for father's age at respondent's birth")
+```
+
 ```{r tbl-bo-psea-robust}
 
 fml_bo_psea_robust <- fml_bo_psea %>% 
@@ -1217,21 +1296,26 @@ mod_bo_psea_robust <-  purrr::map(fml_bo_psea_robust, fixest::feols,
                        )
 
 huxreg(mod_bo_psea_robust, 
-        coefs = c(
-          "Birth order" = "n_older_sibs.x", 
-          "University"  = "university.xTRUE", 
-          "Income"      = "income_cat.x",
-          "Own PSEA"    = "EA3.x"
-        ),
+         coefs = c(
+           "Birth order"           = "n_older_sibs.x", 
+           "University"            = "university.xTRUE", 
+           "Income"                = "income_cat.x",
+           "Father's age at birth" = "fath_age_birth.x",
+           "Own PSEA"              = "EA3.x"
+         ),
+         statistics = c(
+           "N" = "nobs", 
+           "R2" = "r.squared"
+         ),
          note = "{stars}. Standard errors clustered by spouse pair.",
          tidy_args = list(conf.int = FALSE, cluster = mf_pairs_reg$couple_id)
        ) %>% 
-       insert_row(after = 9, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 10, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 11, "Age quadratic", rep("Yes", 4)) %>% 
-       insert_row(after = 12, "Polygenic score controls", rep("Yes", 4)) %>% 
-       set_top_border(11:13, everywhere, 0) %>% 
-       set_number_format(2:9, -1, 4) %>% 
+       insert_row(after = 11, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 12, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 13, "Age quadratic", rep("Yes", 4)) %>% 
+       insert_row(after = 14, "Polygenic score controls", rep("Yes", 4)) %>% 
+       set_top_border(13:15, everywhere, 0) %>% 
+       set_number_format(2:11, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA with controls for polygenic scores")
 ```
 
