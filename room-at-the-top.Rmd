@@ -66,7 +66,7 @@ that a person's environment is the product of his or her society; genes,
 on the other hand, are part of his or her nature.
 
 [^1]: This holds even among scientists who wish to go beyond the
-    nature-nurture dichotomy, e.g. @rutter2002nature.
+    nature-nurture dichotomy, e.g. [@rutter2002nature].
 
 At the level of the individual, this idea expresses the fact that our
 genetic endowment is fixed at birth and cannot be influenced by our
@@ -84,14 +84,14 @@ pairs, bear children, and raise them, within social institutions
 including marriage markets and family structures. Therefore, a person's
 genetic inheritance is a social and historical fact about them, and not
 a fact of nature, any more than their inherited wealth or social status
-is natural. As @marx1844economic wrote, "History is the true natural
+is natural. As [@marx1844economic] wrote, "History is the true natural
 history of man".
 
 Indeed, genetic assets and other kinds may be substitutable in marriage
-markets. @marx1844economic also wrote "I am ugly, but I can buy the most
-beautiful woman.... the effect of ugliness, its repelling power, is
+markets. [@marx1844economic] also wrote "I am ugly, but I can buy the
+most beautiful woman.... the effect of ugliness, its repelling power, is
 destroyed by money". On the opposite side of the political spectrum,
-@herrnstein1995bell warned of "a merging of the cognitive elite with
+[@herrnstein1995bell] warned of "a merging of the cognitive elite with
 the affluent". These quotations suggest that social advantages, such as
 wealth, income, caste or class, may have genetic consequences. If there
 is assortative mating between socially and genetically advantaged
@@ -525,7 +525,7 @@ Indeed, genetic variations which lead to high social status will become
 associated with it, even in the absence of assortative mating.
 Conversely, this logic would not apply in non-meritocratic societies
 where social status is ascribed rather than earned. Indeed,
-@Rimfeld_2018 show that genetic influences on education and occupation
+[@Rimfeld_2018] show that genetic influences on education and occupation
 were lower in (non-meritocratic) Soviet Estonia than in the more
 meritocratic post-Soviet period.
 
@@ -560,7 +560,7 @@ Attainment* (PSEA). A polygenic score is a DNA-derived summary measure
 of genetic risk or propensity for a particular outcome, created from
 summing small effects of many common genetic variants, known as Single
 Nucleotide Polymorphisms (SNPs). We use per-SNP summary statistics from
-@lee2018gene, recalculated excluding UK Biobank participants, to
+[@lee2018gene], recalculated excluding UK Biobank participants, to
 calculate PSEA. We focus on PSEA, rather than other polygenic scores,
 because educational attainment plays a key role in human mate search.
 People are attracted to educated potential partners
@@ -579,7 +579,7 @@ link between social status and spouse genetics is likely to be noisy,
 for three reasons: first, measures of genetic variation such as
 polygenic scores contain a large amount of error; second, causal
 mechanisms behind variation in social status are likely to be noisy;
-third, to paraphrase @shakespeare1595midsummer, the spouse matching
+third, to paraphrase [@shakespeare1595midsummer], the spouse matching
 process is notoriously unpredictable. So, we need a large N to give us
 sufficient power. This rules out time-limited shocks such as e.g.
 changes to the school leaving age.
@@ -627,7 +627,7 @@ variables approach would probably fall foul of the exclusion
 restriction.
 
 Instead, we conduct a mediation analysis, following the strategy of
-@heckman2013understanding. We first run regressions to confirm that
+[@heckman2013understanding]. We first run regressions to confirm that
 birth order affects our measures of respondents' social status (income
 and education). Then, we regress spouse's PSEA on birth order, with and
 without controlling for social status. Under the assumption that birth
@@ -729,7 +729,7 @@ PSEA. Meanwhile, father's age has a positive effect. This suggests that
 the previous estimates mixed two opposite-signed effects: having older
 parents versus being later in birth order.[^6]
 
-[^5]: @cochran2013paternal report that mutational load is
+[^5]: [@cochran2013paternal] report that mutational load is
     approximately linear in father's age, while it is constant in
     mothers' age. We observe very similar results if we control for
     mother's age at respondent's birth.
@@ -1029,7 +1029,11 @@ First, siblings with high birth order will typically come from larger
 families than those with low birth order, and parents of different-sized
 families are likely to differ systematically on many dimensions,
 including genetics. We controlled for this by including a full set of
-family size dummies in the regression.
+family size dummies in the regression.[^9]
+
+[^9]: Table \@ref(tab:tbl-bo-psea-interactions) in the appendix
+    estimates a separate birth order coefficient within each family
+    size.
 
 Second, there could be ascertainment bias. For example, if later
 siblings with high PSEA, and earlier siblings with low PSEA, are more
@@ -1042,14 +1046,14 @@ the subset of two-child families, first children would have
 higher-than-average PSEA while second children would not.
 
 We check this by regressing 33 different polygenic scores on birth
-order, controlling for family size.[^9] No scores were significant at
+order, controlling for family size.[^10] No scores were significant at
 $p < 0.10/33$. `r n_10` scores were significant at $p < 0.10$ (body mass
 index, conscientousness, and neuroticism). Coefficients were never
 greater than 0.01 of a standard deviation. Table
 \@ref(tab:tbl-bo-psea-robust) in the appendix reruns regressions
 controlling for these scores. Results are almost unchanged.
 
-[^9]: Polygenic scores were residualized on the first principal
+[^10]: Polygenic scores were residualized on the first principal
     components of the genetic data. Scores were for: ADHD, age at
     menarche, age at menopause, agreeableness, age at smoking
     initiation, alcohol use, Alzheimer's, autism, bipolarity, BMI, body
@@ -1080,11 +1084,11 @@ education.
 
 Social scientists have tended to assume that social status is unrelated
 to "natural" differences between individuals, including genetic
-differences. This view dates back at least to @hobbes1651leviathan. By
+differences. This view dates back at least to [@hobbes1651leviathan]. By
 contrast, it has been widely believed in many societies that innate
 traits do vary across social classes. The ancient Greeks described the
 social elite as *kaloi kagathoi* ("fine and good"), while the Roman
-nobility were the *optimates* ("best").[^10] This belief has been
+nobility were the *optimates* ("best").[^11] This belief has been
 explained by the human tendency to believe in a just world
 [@furnham1993just], or as an ideology promoted by the dominant class
 [e.g. @gramsci1971selections]. However, it may also simply have been a
@@ -1098,7 +1102,7 @@ the observation that status matters in marriage markets, provides a
 cognitive basis for reasoning to the conclusion of class differences.
 Alternatively, the belief might simply come from empirical observation.
 
-[^10]: The appendix contains a selection of relevant historical
+[^11]: The appendix contains a selection of relevant historical
     quotations.
 
 In our model, the association between social status and genetic
@@ -1312,6 +1316,49 @@ huxreg(mod_bo_no_fath_age,
        set_bottom_border(10:11, everywhere, 0) %>% 
        set_number_format(2:9, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, without controls for father's age at respondent's birth")
+
+```
+
+```{r tbl-bo-psea-interactions}
+
+fml_bo_psea_ix <- fml_bo_psea %>% 
+                    purrr::map(update, 
+                               . ~ . - n_older_sibs.x + n_older_sibs.x:factor(n_sibs.x),
+                                 rhs = 1 
+                               )
+
+mod_bo_psea_ix <-  purrr::map(fml_bo_psea_ix, fixest::feols, 
+                         data = mf_pairs_reg,
+                         notes = FALSE
+                       )
+
+
+huxreg_coefs <- grep(":", names(coef(mod_bo_psea_ix[[1]])), value = TRUE)
+names(huxreg_coefs) <- gsub(".*(\\d)$", "Birth order X family size \\1",
+                            huxreg_coefs)
+huxreg_coefs <- c(
+                   huxreg_coefs,
+                   "University"  = "university.xTRUE", 
+                   "Income"      = "income_cat.x", 
+                   "Own EA3"     = "EA3.x"
+                 )
+
+huxtable::huxreg(mod_bo_psea_ix, 
+                   coefs = huxreg_coefs,
+                   note = "{stars}. Standard errors clustered by spouse pair.",
+                   tidy_args = list(
+                     conf.int = FALSE, 
+                     cluster = list(mf_pairs_reg$couple_id)
+                   )
+                 ) %>% 
+       insert_row(after = 21, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 22, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 23, "Age quadratic", rep("Yes", 4)) %>% 
+       set_bottom_border(22:23, everywhere, 0) %>% 
+       set_number_format(2:21, -1, 4) %>% 
+       set_caption("Regressions of spouse PSEA, separate birth order coefficients for each family size") %>% 
+       set_font_size(10)
+
 ```
 
 ```{r tbl-bo-psea-robust}
