@@ -66,7 +66,7 @@ that a person's environment is the product of his or her society; genes,
 on the other hand, are part of his or her nature.
 
 [^1]: This holds even among scientists who wish to go beyond the
-    nature-nurture dichotomy, e.g. [@rutter2002nature].
+    nature-nurture dichotomy, e.g. @rutter2002nature.
 
 At the level of the individual, this idea expresses the fact that our
 genetic endowment is fixed at birth and cannot be influenced by our
@@ -84,14 +84,14 @@ pairs, bear children, and raise them, within social institutions
 including marriage markets and family structures. Therefore, a person's
 genetic inheritance is a social and historical fact about them, and not
 a fact of nature, any more than their inherited wealth or social status
-is natural. As [@marx1844economic] wrote, "History is the true natural
+is natural. As @marx1844economic wrote, "History is the true natural
 history of man".
 
 Indeed, genetic assets and other kinds may be substitutable in marriage
-markets. [@marx1844economic] also wrote "I am ugly, but I can buy the
-most beautiful woman.... the effect of ugliness, its repelling power, is
+markets. @marx1844economic also wrote "I am ugly, but I can buy the most
+beautiful woman.... the effect of ugliness, its repelling power, is
 destroyed by money". On the opposite side of the political spectrum,
-[@herrnstein1995bell] warned of "a merging of the cognitive elite with
+@herrnstein1995bell warned of "a merging of the cognitive elite with
 the affluent". These quotations suggest that social advantages, such as
 wealth, income, caste or class, may have genetic consequences. If there
 is assortative mating between socially and genetically advantaged
@@ -525,7 +525,7 @@ Indeed, genetic variations which lead to high social status will become
 associated with it, even in the absence of assortative mating.
 Conversely, this logic would not apply in non-meritocratic societies
 where social status is ascribed rather than earned. Indeed,
-[@Rimfeld_2018] show that genetic influences on education and occupation
+@Rimfeld_2018 show that genetic influences on education and occupation
 were lower in (non-meritocratic) Soviet Estonia than in the more
 meritocratic post-Soviet period.
 
@@ -560,7 +560,7 @@ Attainment* (PSEA). A polygenic score is a DNA-derived summary measure
 of genetic risk or propensity for a particular outcome, created from
 summing small effects of many common genetic variants, known as Single
 Nucleotide Polymorphisms (SNPs). We use per-SNP summary statistics from
-\@lee2018gene, recalculated excluding UK Biobank participants, to
+@lee2018gene, recalculated excluding UK Biobank participants, to
 calculate PSEA. We focus on PSEA, rather than other polygenic scores,
 because educational attainment plays a key role in human mate search.
 People are attracted to educated potential partners
@@ -579,7 +579,7 @@ link between social status and spouse genetics is likely to be noisy,
 for three reasons: first, measures of genetic variation such as
 polygenic scores contain a large amount of error; second, causal
 mechanisms behind variation in social status are likely to be noisy;
-third, to paraphrase \@shakespeare1595midsummer, the spouse matching
+third, to paraphrase @shakespeare1595midsummer, the spouse matching
 process is notoriously unpredictable. So, we need a large N to give us
 sufficient power. This rules out time-limited shocks such as e.g.
 changes to the school leaving age.
@@ -627,7 +627,7 @@ variables approach would probably fall foul of the exclusion
 restriction.
 
 Instead, we conduct a mediation analysis, following the strategy of
-\@heckman2013understanding. We first run regressions to confirm that
+@heckman2013understanding. We first run regressions to confirm that
 birth order affects our measures of respondents' social status (income
 and education). Then, we regress spouse's PSEA on birth order, with and
 without controlling for social status. Under the assumption that birth
@@ -720,7 +720,7 @@ experience and may have higher income, which would presumably help later
 children. On the other hand, an early explanation for birth order
 effects was that these could be due to genetic mutations in older
 fathers, although more recent research has rejected this in favour of
-"social" explanations [@kristensen2007explaining; \@black2011older].[^5]
+"social" explanations [@kristensen2007explaining; @black2011older].[^5]
 Including father's age means we can separate the effect of father's age
 from birth order. This reduces the N by a lot, since only respondents
 with live fathers reported the necessary data. However, the effect of
@@ -729,7 +729,7 @@ PSEA. Meanwhile, father's age has a positive effect. This suggests that
 the previous estimates mixed two opposite-signed effects: having older
 parents versus being later in birth order.[^6]
 
-[^5]: [@cochran2013paternal] report that mutational load is
+[^5]: @cochran2013paternal report that mutational load is
     approximately linear in father's age, while it is constant in
     mothers' age. We observe very similar results if we control for
     mother's age at respondent's birth.
@@ -786,6 +786,7 @@ huxreg(mod_bo_psea_base,
        insert_row(after = 9, "Age quadratic", "No", "Yes", "Yes") %>% 
        set_bottom_border(8:9, everywhere, 0) %>% 
        set_number_format(2:7, -1, 4) %>% 
+       set_width(0.8) %>% 
        set_caption("Regressions of spouse PSEA")
 
 
@@ -1079,7 +1080,7 @@ education.
 
 Social scientists have tended to assume that social status is unrelated
 to "natural" differences between individuals, including genetic
-differences. This view dates back at least to [@hobbes1651leviathan]. By
+differences. This view dates back at least to @hobbes1651leviathan. By
 contrast, it has been widely believed in many societies that innate
 traits do vary across social classes. The ancient Greeks described the
 social elite as *kaloi kagathoi* ("fine and good"), while the Roman
