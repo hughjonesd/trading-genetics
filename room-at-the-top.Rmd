@@ -487,13 +487,18 @@ even quasiconcave.
 
 ## Discussion
 
+-   TODO: discuss relationship with linkage disequilibrium between
+    genes, caused by assortative mating. Hunt for any pre-existing
+    theory in the genetics literature.
+
 The "marriage market" here is a reduced form mechanism, encompassing
-that makes a difference to partner choice. For example, if earned income
-affects attractiveness in the marriage market, then society's level of
-meritocracy in the labour market will correlate with the value of $k$: a
-more meritocratic labour market will allow people with low social status
-but high human capital (partly genetically determined) to earn more, and
-therefore to enter the high group.
+everything that makes a difference to partner choice. For example, if
+earned income affects attractiveness in the marriage market, then
+society's level of meritocracy in the labour market will correlate with
+the value of $k$: a more meritocratic labour market will allow people
+with low social status but high human capital (partly genetically
+determined) to earn more, and therefore to match with more attractive
+partners.
 
 The contents of both $S$, social status, and $G$ -- what counts as "good
 genes" in the marriage market -- are likely to vary across societies.
@@ -514,29 +519,28 @@ weakened. For example, if social status is inherited deterministically
 from the father, then the results remain unchanged (for each pair of
 parents, just assume that one randomly chosen parent is the father).
 
-Behaviour geneticists often make the point that in meritocratic
-societies, successful people may transmit relevant genes to their
-offspring. (TODO: cite relevant papers.) Like the phenomenon described
-here, meritocracy may therefore lead to a correlation between social
-status and genetics. However, genetic lock-in is a distinct, though
-overlapping, mechanism. Under meritocracy, certain genetic variants
-*cause* higher social status, and are then transmitted along with it.
-Indeed, genetic variations which lead to high social status will become
-associated with it, even in the absence of assortative mating.
-Conversely, this logic would not apply in non-meritocratic societies
-where social status is ascribed rather than earned. Indeed,
-[@Rimfeld_2018] show that genetic influences on education and occupation
-were lower in (non-meritocratic) Soviet Estonia than in the more
-meritocratic post-Soviet period.
+It is well known that genetics, e.g. PSEA, correlate with SES in modern
+societies [e.g. @Krapohl_2015]. A standard explanation for this is that
+in meritocratic societies, successful people may transmit relevant genes
+to their offspring, along with their status [@belsky2018genetic]. Our
+mechanism is different from this, though not mutually exclusive. In the
+standard model, certain genetic variants *cause* higher SES, and are
+then transmitted along with it. Indeed, genetic variations which lead to
+high status will become associated with it, even in the absence of
+assortative mating. Conversely, this logic would not apply in
+non-meritocratic societies, where social status is ascribed rather than
+earned. Indeed, [@Rimfeld_2018] show that genetic influences on
+education and occupation were lower in (non-meritocratic) Soviet Estonia
+than in the more meritocratic post-Soviet period.
 
 By contrast, our mechanism applies to genetic variants that are
-*associated* with higher social status during the spouse matching
-process. They do not need to exert any causal effect on an individual's
-own social status. Whereas the mechanism above requires meritocracy, but
-not assortative mating, our mechanism requires assortative mating, but
-not meritocracy. Our mechanism therefore potentially applies to a much
-wider range of societies, including societies where social status is
-wholly ascribed or inherited, such as aristocracies.
+*associated* with higher status during the spouse matching process. They
+do not need to exert any causal effect on an individual's own social
+status. Whereas the mechanism above requires meritocracy, but not
+assortative mating, our mechanism requires assortative mating, but not
+meritocracy. Our mechanism therefore potentially applies to a much wider
+range of societies, including societies where social status is wholly
+ascribed or inherited.
 
 In modern societies, both assortative mating and meritocracy are likely
 to be at play. Genetic variants that cause (e.g.) higher income and
@@ -622,21 +626,19 @@ However, our measures of social status are noisy and incomplete. For
 example, we know whether subjects went to university, but not which
 university they went to, and we only have rough categorical data on
 household income. Birth order likely affects both these measures, and
-other, unmeasured dimensions of social status. So, an instrumental
-variables approach would probably fall foul of the exclusion
-restriction.
+other, unmeasured dimensions of SES. So, an instrumental variables
+approach would probably fall foul of the exclusion restriction.
 
 Instead, we conduct a mediation analysis, following the strategy of
-[@heckman2013understanding]. We first run regressions to confirm that
-birth order affects our measures of respondents' social status (income
-and education). Then, we regress spouse's PSEA on birth order, with and
-without controlling for social status. Under the assumption that birth
-order is exogenous to own genetics, these regressions identify the
-effect of birth order, plus other environmental variables that correlate
-with it, on own social status and spouse's genetics. Also, if the
-estimated effect of birth order on spouse's PSEA changes when social
-status is included, that is evidence that social status mediates the
-effect of birth order.
+[@heckman2013understanding]. We first confirm statistically that birth
+order affects our measures of respondents' SES (income and education).
+Then, we regress spouse's PSEA on birth order, with and without
+controlling for SES. Under the assumption that birth order is exogenous
+to own genetics, these regressions identify the effect of birth order,
+plus other environmental variables that correlate with it, on own social
+status and spouse's genetics. Also, if the estimated effect of birth
+order on spouse's PSEA changes when SES is controlled for, that is
+evidence that SES mediates the effect of birth order.
 
 -   TODO: Oana - clarify the empirical model including maintained
     assumptions
@@ -916,14 +918,14 @@ Table \@ref(tab:tbl-bo-psea) shows the results. Column 1 shows the
 effect of birth order, using the same specification as column 3 of the
 previous table. (We exclude respondents without data on income or
 university attendance, to make comparison easier across the columns:
-this reduces the N slightly.) The remaining columns control for our
-social status variables, which are potential mediators of birth order
-effects. Column 2 includes university attendance. Column 3 includes
-income. Column 4 includes both. We estimate the percentage decrease in
-the effect of birth order across the columns, along with 95% confidence
-intervals for this figure, by running bootstraps (N = `r n_boot`).[^8]
-Including university attendance alone reduces the effect of birth order
-by `r bo_prop_est[1]` (CI `r bo_prop_ci[1, 1]` -- `r bo_prop_ci[2, 1]`).
+this reduces the N slightly.) The remaining columns control for our SES
+variables, which are potential mediators of birth order effects. Column
+2 includes university attendance. Column 3 includes income. Column 4
+includes both. We estimate the percentage decrease in the effect of
+birth order across the columns, along with 95% confidence intervals for
+this figure, by running bootstraps (N = `r n_boot`).[^8] Including
+university attendance alone reduces the effect of birth order by
+`r bo_prop_est[1]` (CI `r bo_prop_ci[1, 1]` -- `r bo_prop_ci[2, 1]`).
 Including income alone reduces the effect of birth order by
 `r bo_prop_est[2]` (CI `r bo_prop_ci[1, 2]` -- `r bo_prop_ci[2, 2]`).
 Including both decreases the effect by `r bo_prop_est[3]` (CI
@@ -935,13 +937,13 @@ Including both decreases the effect by `r bo_prop_est[3]` (CI
 
 Our next regressions split up the data into subsets. Cultural
 stereotypes often assume that the link between status and genes is not
-symmetric across the genders, for example, that males with high social
-status are particularly likely to marry attractive spouses. To test
-this, we separately regress female spouses' PSEA on male birth order,
-and male spouses' PSEA on female birth order. We also rerun regressions
-among the subset of individuals who had children. A significant result
-here will confirm that the association between status and genetics is
-carried over into the next generation.
+symmetric across the genders, for example, that males with high SES are
+particularly likely to marry attractive spouses. To test this, we
+separately regress female spouses' PSEA on male birth order, and male
+spouses' PSEA on female birth order. We also rerun regressions among the
+subset of individuals who had children. A significant result here will
+confirm that the association between status and genetics is carried over
+into the next generation.
 
 Table \@ref(tab:tbl-bo-subsets) shows the results.
 
@@ -1109,15 +1111,21 @@ In our model, the association between social status and genetic
 variation depends on the structure of the society's marriage market. The
 association is weaker when marriage markets are very socially
 egalitarian, with marriage pairing driven only by genetics, or very
-inegalitarian, with pairings driven only by status. Testing this, by
-comparison across societies or over time, is beyond our scope here, but
-we see it as a good area for future work. Marriage markets may play an
-important role in explaining how social inequality varies across
-different societies. More broadly, the correlation between genetics and
-social status does not undermine our concern with social inequality;
-rather, since it is a social outcome, it is itself one dimension of
-social inequality. Genes, like other kinds of resource, are distributed
-unequally by social systems.
+inegalitarian, with pairings driven only by status. This logic is
+different from the standard reason for association between genes and
+SES. There, more meritocratic societies allow a greater role for genetic
+variants linked to labour market success. Thus, there is a monotonic
+relationship: more meritocracy leads to a stronger gene-environment
+correlation (rGE) between genetics and SES. Here, the relationship is
+non-monotonic: rGE is strongest at intermediate levels of "meritocracy"
+in marriage markets. Comparing rGE across societies or over time is
+beyond our scope here, but we see it as a good area for future work.
+Marriage markets may play an important role in explaining how social
+inequality varies across different societies. More broadly, the
+correlation between genetics and social status does not undermine our
+concern with social inequality; rather, since it is a social outcome, it
+is itself one dimension of social inequality. Genes, like other kinds of
+resource, are distributed unequally by social systems.
 
 Over history, the marriage market mechanism has probably operated in a
 much greater variety of societies than the labour market mechanism,
@@ -1133,13 +1141,13 @@ data. This is done so as to avoid confounding the effects of genetic
 variation with social stratification. However, insofar as the
 geneticists' concept of stratification (mating which is non-random with
 respect to genetics) overlaps with the sociological concept of
-stratification (a hierarchical ranking), stratification will predictably
-associate with causally relevant genetic variants. For this reason, we
-would expect principal components to contain real information about
-causally relevant variants. So, it is an empirical question whether
-controlling for principal components improves or weakens the predictive
-power of polygenic scores. Within-family analyses could resolve this
-question.
+stratification (a hierarchical ranking of social status), stratification
+will predictably associate with causally relevant genetic variants. For
+this reason, we would expect principal components to contain real
+information about causally relevant variants. So, it is an empirical
+question whether controlling for principal components improves or
+weakens the predictive power of polygenic scores. Within-family analyses
+could resolve this question.
 
 In popular media, and sometimes by social scientists, genetics are often
 thought of as an external, "natural" constraint on social structure.
@@ -1153,6 +1161,8 @@ teams of social scientists and geneticists will be well-placed to
 exploit.
 
 \FloatBarrier
+
+\newpage
 
 # Appendix
 
@@ -1257,6 +1267,8 @@ correlation.
 \end{proof}
 ```
 \FloatBarrier
+
+\newpage
 
 ## Robustness checks
 
@@ -1402,6 +1414,8 @@ huxreg(mod_bo_psea_robust,
 
 \FloatBarrier
 
+\newpage
+
 ## Quotations on natural inequality
 
 ...your face and figure have nothing of the slave about them, and
@@ -1455,5 +1469,7 @@ from France and finally banishes the King and Queen from Sicilly. Such
 is the Aristocracy of the natural Talent of Beauty.
 
 -- John Adams to Thomas Jefferson, on Emma Hamilton
+
+\newpage
 
 # References
