@@ -495,11 +495,14 @@ more meritocratic labour market will allow people with low social status
 but high human capital (partly genetically determined) to earn more, and
 therefore to enter the high group.
 
-Also, the contents of $G$ -- what counts as "good genes" in the marriage
-market -- are themselves likely to vary across societies. For instance,
-standards of physical attractiveness, and other characteristics which
-make someone a "good match", vary both across societies and within a
-society over time.
+The contents of both $S$, social status, and $G$ -- what counts as "good
+genes" in the marriage market -- are likely to vary across societies.
+$S$ could encompass variables like social class or caste; ethnic
+identity in "ranked" ethnic systems; or in modern societies,
+*socio-economic status* (SES), i.e. variables affecting a person's
+position in the labour market. Regarding $G$, standards of physical
+attractiveness, and other characteristics which make someone a "good
+match", vary both across societies and within a society over time.
 
 The model predicts variation in the strength of genetic lock-in. In
 particular, in "caste societies" where there is complete endogamy within
@@ -545,49 +548,68 @@ analysis shows this latter process at work.
 
 # Data and methods
 
-As mentioned above, simple correlations between one partner's social
-status and the other partner's genetics do not prove that genetic
-lock-in is taking place. Since social status correlates with one's own
-genetics, the correlation could be driven purely by assortative mating
-for genetics [@hugh2016assortative]. To demonstrate genetic lock-in, we
-therefore need a source of social status which is exogenous to genetics.
-One possibility is *birth order*. It is well known that earlier-born
-children receive more parental care and have better life outcomes
-[@booth2009birth; @black2011older]. On the other hand, all full siblings
-have the same *ex ante* expected genetic endowment from their parents,
-irrespective of their birth order. [^4] We can therefore use birth order
-as a "shock" to social status.
+To test the theory, we use data from the UK Biobank, a study of about
+500,000 individuals born between 1935 and 1970. The Biobank contains
+information on respondents' genetics, derived from DNA microarrays,
+along with questionnaire data on health and social outcomes. Using
+respondents' exact home location, we categorize some respondents as
+spouse pairs.
 
-[^4]: This might not be the case, if parents' choice of whether to have
-    more children is endogenous to the genetic endowment of their
-    earlier children. We check for this below.
-
-Note that we do not claim that birth order is exogenous to all other
-variables. It probably isn't: for example, it naturally correlates with
-parental age, and it might also be linked with the family's economic
-position at the time of birth. We only claim that birth order is
-exogenous to any genetic variation inherited from the parents.
-
-We use data from the UK Biobank, a study of about 500,000 individuals
-born between 1935 and 1970. The Biobank contains information on
-respondents' genetics, derived from DNA microarrays, along with
-questionnaire data on health and social outcomes. We use respondents'
-exact home location to infer that some are spouse pairs. Our key
-dependent variable is spouse's *Polygenic Score for Educational
+Our key dependent variable is spouse's *Polygenic Score for Educational
 Attainment* (PSEA). A polygenic score is a DNA-derived summary measure
 of genetic risk or propensity for a particular outcome, created from
 summing small effects of many common genetic variants, known as Single
 Nucleotide Polymorphisms (SNPs). We use per-SNP summary statistics from
 \@lee2018gene, recalculated excluding UK Biobank participants, to
-calculate PSEA.
+calculate PSEA. We focus on PSEA, rather than other polygenic scores,
+because educational attainment plays a key role in human mate search.
+People are attracted to educated potential partners
+[@buss1986preferences; @belot2013dating]. Spouse pairs often have
+similar levels of educational attainment, as well as similar PSEA
+[@vandenberg1972assortative; @schwartz2005trends; @greenwood2014marry;
+@hugh2016assortative].
 
-Our central independent variable is respondents' birth order, i.e. their
+As we said above, simple correlations between one partner's social
+status and the other partner's genetics do not prove that genetic
+encoding is taking place. Since social status correlates with one's own
+genetics, the correlation could be driven purely by assortative mating
+for genetics [@hugh2016assortative]. To demonstrate genetic lock-in, we
+need a source of social status which is exogenous to genetics. Also, the
+link between social status and spouse genetics is likely to be noisy,
+for three reasons: first, measures of genetic variation such as
+polygenic scores contain a large amount of error; second, causal
+mechanisms behind variation in social status are likely to be noisy;
+third, to paraphrase \@shakespeare1595midsummer, the spouse matching
+process is notoriously unpredictable. So, we need a large N to give us
+sufficient power. This rules out time-limited shocks such as e.g.
+changes to the school leaving age.
+
+One possibility is *birth order*. It is known that earlier-born children
+receive more parental care and have better life outcomes
+[@booth2009birth; @black2011older]. On the other hand, all full siblings
+have the same *ex ante* expected genetic endowment from their parents,
+irrespective of their birth order. For example, siblings' expected
+polygenic score is equal to the mean of their parents' polygenic scores.
+[^4] We can therefore use birth order as a "shock" to social status. We
+do not claim that birth order is exogenous to all other variables. For
+example, it naturally correlates with parental age, and it might also be
+linked with the family's economic position at the time of birth. We only
+claim that birth order is exogenous to genetic variation.
+
+[^4]: Although genetic variation is randomly assigned to children at
+    birth, genetics and birth order could be dependent if parents'
+    choice of whether to have more children is endogenous to the genetic
+    endowment of their earlier children. We check for this below.
+
+Our main independent variable is respondents' birth order, i.e. their
 number of elder siblings plus one. For controls we use family size, i.e.
 their total number of siblings including themselves; month of birth; age
 at interview; respondents' own PSEA; their father's and/or mother's age
 at their birth (calculated from parent's current age, only available if
-the parent was still alive). Our two measures of social status are
-income, and university attendance.
+the parent was still alive). To test whether birth order effects are
+mediated by SES, we use two measures: income, and university attendance.
+Current income is a direct measure of SES, while university attendance
+is a predictor of income over the entire life course.
 
 -   TODO: Abdel - details of PSEA calculation and spouse pair inference
 -   TODO: look at mechanisms by which birth order might affect
@@ -595,7 +617,7 @@ income, and university attendance.
 -   TODO: get IQ data, control for it
 -   TODO: overall index of social status?
 
-Ideally, we might prefer to instrument social status with birth order.
+Ideally, we might prefer to use birth order as an instrument for SES.
 However, our measures of social status are noisy and incomplete. For
 example, we know whether subjects went to university, but not which
 university they went to, and we only have rough categorical data on
@@ -616,12 +638,14 @@ estimated effect of birth order on spouse's PSEA changes when social
 status is included, that is evidence that social status mediates the
 effect of birth order.
 
--   TODO: clarify the empirical model, you may need help....
+-   TODO: Oana - clarify the empirical model including maintained
+    assumptions
 -   TODO: estimate individual income from job SIC codes? ASHE gives data
 
 # Results
 
 ```{r calc-bo-first-stage}
+
 mod_bo_1st <- list()
 mod_bo_1st$uni    <- lm(university ~ n_older_sibs + factor(n_sibs), famhist, 
                     subset = n_sibs >= 2 & n_sibs <= 8)
@@ -644,6 +668,7 @@ respondents with 1-7 siblings: university $p$ = `r pval_bo_1st$uni`,
 income $p$ = `r pval_bo_1st$income`).
 
 ```{r pic-bo-uni, fig.cap = "University attendance by birth order and family size", fig.height = 3}
+
 famhist %>% 
       filter(n_sibs <= 4, n_sibs >= 2, ! is.na(n_older_sibs)) %>% 
       mutate(
@@ -660,6 +685,7 @@ famhist %>%
 ```
 
 ```{r pic-bo-income, fig.cap = "Income by birth order and family size", fig.height = 3}
+
 famhist %>% 
       filter(
         n_sibs <= 4, 
@@ -694,15 +720,14 @@ experience and may have higher income, which would presumably help later
 children. On the other hand, an early explanation for birth order
 effects was that these could be due to genetic mutations in older
 fathers, although more recent research has rejected this in favour of
-"social" explanations [[@kristensen2007explaining];
-\@black2011older].[^5] Including father's age means we can separate the
-effect of father's age from birth order. This reduces the N by a lot,
-since only respondents with live fathers reported the necessary data.
-However, the effect of birth order jumps in size, to about half the
-effect of respondent's own PSEA. Meanwhile, father's age has a positive
-effect. This suggests that the previous estimates mixed two
-opposite-signed effects: having older parents versus being later in
-birth order.[^6]
+"social" explanations [@kristensen2007explaining; \@black2011older].[^5]
+Including father's age means we can separate the effect of father's age
+from birth order. This reduces the N by a lot, since only respondents
+with live fathers reported the necessary data. However, the effect of
+birth order jumps in size, to about half the effect of respondent's own
+PSEA. Meanwhile, father's age has a positive effect. This suggests that
+the previous estimates mixed two opposite-signed effects: having older
+parents versus being later in birth order.[^6]
 
 [^5]: [@cochran2013paternal] report that mutational load is
     approximately linear in father's age, while it is constant in
@@ -714,7 +739,6 @@ birth order.[^6]
     to correlate with parents' genetics.
 
 ```{r tbl-bo-psea-basic}
-
 
 fml_bo_psea_base <- list()
 
@@ -1231,7 +1255,7 @@ correlation.
 
 ## Robustness checks
 
-```{r tbl-bo-fath-age}
+```{r tbl-bo-no-fath-age}
 
 
 age_table <- famhist %>% 
@@ -1244,12 +1268,21 @@ age_table <- famhist %>%
         .groups = "drop"
       )
 
+mf_pairs_reg_big <- mf_pairs_twice %>% 
+                  filter(
+                    n_sibs.x >= 2, 
+                    n_sibs.x <= 8, 
+                    ! is.na(n_older_sibs.x),
+                    ! is.na(university.x),
+                    ! is.na(income_cat.x)
+                  )
+
 fml_bo_no_fath_age <- lapply(fml_bo_psea, update, 
                      . ~ . - fath_age_birth.x, 
                      rhs = 1
                    )
 mod_bo_no_fath_age <- lapply(fml_bo_no_fath_age, fixest::feols,
-                     data  = mf_pairs_reg, 
+                     data  = mf_pairs_reg_big, 
                      notes = FALSE
                    )
 
@@ -1258,7 +1291,7 @@ fml_bo_moth_age <- lapply(fml_bo_no_fath_age, update,
                      rhs = 1
                    )
 mod_bo_moth_age <- lapply(fml_bo_moth_age, fixest::feols,
-                     data  = mf_pairs_reg, 
+                     data  = mf_pairs_reg_big, 
                      notes = FALSE
                    )
 
@@ -1270,7 +1303,7 @@ huxreg(mod_bo_no_fath_age,
           "Own EA3"               = "EA3.x"
         ),
          note = "{stars}. Standard errors clustered by spouse pair.",
-         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id))
+         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg_big$couple_id))
        ) %>% 
        insert_row(after = 9, "Family size dummies", rep("Yes", 4)) %>% 
        insert_row(after = 10, "Birth month dummies", rep("Yes", 4)) %>% 
