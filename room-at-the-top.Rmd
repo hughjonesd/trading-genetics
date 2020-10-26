@@ -550,6 +550,27 @@ genes" will assort in the marriage market, even if that higher social
 status is caused by purely environmental variation. Our empirical
 analysis shows this latter process at work.
 
+# Related literature
+
+-   Idea that assortative mating might increase inequality is widely
+    known, but it is usually put in terms of assortation by IQ or by
+    genetics alone.
+
+-   Could the result be thought of as a kind of population
+    stratification?
+
+-   [@halsey1958genetics] showed in a two-class model that social
+    mobility combined with assortative mating might increase the
+    association between genetics and social class. But NB, the
+    assortation is completely random within classes. So effectively this
+    is a society with $k=1$, but some social mobility.
+
+-   
+
+-   [@belsky2018genetic] offer three reasons for the association between
+    education-linked genetics and SES, but do not consider our
+    mechanism.
+
 # Data and methods
 
 To test the theory, we use data from the UK Biobank, a study of about
