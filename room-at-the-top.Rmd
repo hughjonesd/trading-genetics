@@ -643,6 +643,7 @@ evidence that SES mediates the effect of birth order.
 -   TODO: Oana - clarify the empirical model including maintained
     assumptions
 -   TODO: estimate individual income from job SIC codes? ASHE gives data
+-   TODO: add year-of-birth dummies for cohort effects
 
 # Results
 
@@ -1046,6 +1047,8 @@ example, suppose that if the first child had a phenotype reflecting a
 high PSEA, parents are more likely to have a second child. Then within
 the subset of two-child families, first children would have
 higher-than-average PSEA while second children would not.
+
+- TODO: repeat balance tests within family sizes.
 
 We check this by regressing 33 different polygenic scores on birth
 order, controlling for family size.[^10] No scores were significant at
