@@ -1026,23 +1026,42 @@ huxreg(reg_list,
 
 check_cor <- function (score_name) {
   fml_check <- as.formula(paste(score_name, "~ factor(n_sibs) + n_older_sibs"))
-  mod_check <- lm(fml_check, famhist, n_sibs >= 2 & n_sibs <= 8)
+  mod_check <- lm(fml_check, famhist, n_sibs >= 2 & n_sibs <= 8 & ! is.na(n_older_sibs))
   mod_check %>% 
         tidy() %>% 
         filter(term == "n_older_sibs") %>% 
         mutate(score = score_name)
 }
 
+check_cor_within <- function (score_name) {
+  fml_check_within <- as.formula(paste(score_name, 
+                        "~ 0 + factor(n_sibs) + factor(n_sibs):factor(n_older_sibs)"))
+  mod_check <- lm(fml_check_within, famhist, 
+                  n_sibs >= 2 & n_sibs <= 8 & ! is.na(n_older_sibs))
+  # NB: the model creates NA estimates for when n_sibs <= n_older_sibs
+  # since these have 0 rows in the data. I think this is not a problem.
+  mod_check %>% 
+        tidy() %>% 
+        filter(grepl("n_older_sibs", term)) %>% 
+        filter(! is.na(estimate)) %>% 
+        mutate(score = score_name)
+}
+
 drake::loadd(score_names)
 score_names <- paste0(score_names, "_resid")
-check_result <- purrr::map_dfr(score_names, check_cor)
+balance_check <- purrr::map_dfr(score_names, check_cor)
+balance_check_within <- purrr::map_dfr(score_names, check_cor_within)
 
-if (any(check_result$p.value < 0.1/33)) stop("Some check p values < 0.1/33; rewrite text!")
+if (any(balance_check$p.value < 0.1/33)) stop("Some check p values < 0.1/33; rewrite text!")
 
-n_10 <- sum(check_result$p.value < 0.1)
+n_10 <- sum(balance_check$p.value < 0.1)
 if (n_10 != 3) stop("Different number of PGS had p < 0.10; rewrite text!")
 
-max_coef <- max(abs(check_result$estimate))
+n_within_coefs <- nrow(balance_check_within)
+if (any(balance_check_within$p.value < 0.001)) stop("Some within-siblings p values < 0.001; rewrite text!")
+
+
+max_coef <- max(abs(balance_check$estimate))
 ```
 
 Although all children of the same parents have the same polygenic scores
@@ -1069,15 +1088,22 @@ high PSEA, parents are more likely to have a second child. Then within
 the subset of two-child families, first children would have
 higher-than-average PSEA while second children would not.
 
-- TODO: repeat balance tests within family sizes.
-
-We check this by regressing 33 different polygenic scores on birth
-order, controlling for family size.[^10] No scores were significant at
-$p < 0.10/33$. `r n_10` scores were significant at $p < 0.10$ (body mass
-index, conscientousness, and neuroticism). Coefficients were never
-greater than 0.01 of a standard deviation. Table
-\@ref(tab:tbl-bo-psea-robust) in the appendix reruns regressions
-controlling for these scores. Results are almost unchanged.
+To check this, we run balance tests on 33 different polygenic
+scores.[^10] We regress each score on birth order, controlling for
+family size. No scores were significant at $p < 0.10/33$. `r n_10`
+scores were significant at $p < 0.10$ (body mass index,
+conscientousness, and neuroticism). Coefficients were never greater than
+0.01 of a standard deviation. Table \@ref(tab:tbl-bo-psea-robust) in the
+appendix reruns regressions controlling for these scores. Results are
+almost unchanged. To test whether polygenic scores might vary for
+particular birth orders within particular family size, we also regress
+each score on a full set of birth order dummies, interacted with a full
+set of family size dummies. None of the `r n_within_coefs` birth order
+coefficients were significant at $p < 0.001$. Of course, there could
+still be unmeasured genetic variants which correlate with birth order in
+our sample. Nevertheless, a wide set of polygenic scores shows no large
+or significant correlation. This increases our confidence that birth
+order is indeed exogenous to genetics.
 
 [^10]: Polygenic scores were residualized on the first principal
     components of the genetic data. Scores were for: ADHD, age at
