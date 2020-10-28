@@ -254,7 +254,7 @@ make_mf_pairs <- function (mf_pairs_file, famhist, resid_scores) {
                   left_join(resid_scores, by = "f.eid") %>% 
                   dplyr::select(
                     f.eid, f.6138.0.0, f.52.0.0, matches("_resid$"),
-                    n_sibs, n_older_sibs, university, age_at_recruitment,
+                    n_sibs, n_older_sibs, university, age_at_recruitment, YOB,
                     age_fulltime_edu, age_fte_cat, income_cat, birth_sun,
                     birth_mon, n_children, fath_age_birth, moth_age_birth
                   )

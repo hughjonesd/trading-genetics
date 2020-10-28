@@ -734,9 +734,9 @@ Next we run regressions of spouse PSEA on birth order. Table
 siblings are included. Column 1 controls only for family size (using
 dummies). As expected, higher birth order is negatively associated with
 spouse's PSEA, though the estimated effect size is small. Column 2
-includes the respondent's own PSEA, as well as a quadratic in age, and
-dummies for birth month to control for seasonality effects. The effect
-size of birth order is not much changed.
+includes the respondent's own PSEA, as well as dummies for birth year to
+control for cohort effects, and dummies for birth month to control for
+seasonality effects. The effect size of birth order is not much changed.
 
 Column 3 includes father's age at birth. Within a family, later children
 have older parents by definition. Older parents have more life
@@ -773,9 +773,8 @@ fml_bo_psea_base[[2]] <- EA3.y ~ n_older_sibs.x + EA3.x +
                             factor(n_sibs.x)
   
 fml_bo_psea_base[[3]] <- EA3.y ~ n_older_sibs.x + EA3.x + 
-                            age_at_recruitment.x +
-                            I(age_at_recruitment.x^2) + factor(birth_mon.x) +
-                            fath_age_birth.x | factor(n_sibs.x)
+                            factor(birth_mon.x) +
+                            fath_age_birth.x | factor(n_sibs.x) + factor(YOB.x)
 
 fml_bo_psea_base <- lapply(fml_bo_psea_base, Formula::as.Formula)
 
@@ -807,11 +806,11 @@ huxreg(mod_bo_psea_base,
        ) %>% 
        insert_row(after = 7, "Family size dummies", rep("Yes", 3)) %>% 
        insert_row(after = 8, "Birth month dummies", "No", "Yes", "Yes") %>% 
-       insert_row(after = 9, "Age quadratic", "No", "Yes", "Yes") %>% 
+       insert_row(after = 9, "Birth year dummies", "No", "Yes", "Yes") %>% 
        set_bottom_border(8:9, everywhere, 0) %>% 
        set_number_format(2:7, -1, 4) %>% 
        set_width(0.8) %>% 
-       set_caption("Regressions of spouse PSEA")
+       set_caption("Regressions of spouse PSEA on birth order")
 
 
 ```
@@ -819,12 +818,6 @@ huxreg(mod_bo_psea_base,
 -   TODO: include age FTE as well as university - to check university
     has an "extra effect" - this slightly suggests that uni is a
     "marriage market" and not just granting extra skills
-
--   TODO: enquire about job history data - does it predict current
-    profession well?
-
-    -   otherwise we risk the critique that current profession is
-        endogenous to spouse PSEA
 
 -   TODO: consider alternative exogenous shocks to income. For example,
     some professions are more "cyclical" than others wrt recessions. If
@@ -864,11 +857,11 @@ fml_bo_psea <- lapply(fml_bo_psea, Formula::as.Formula)
 
 # common controls
 fml_bo_psea <- lapply(fml_bo_psea, update, 
-                        . ~ . + EA3.x + age_at_recruitment.x + 
-                          fath_age_birth.x +
-                          I(age_at_recruitment.x^2) + factor(birth_mon.x), 
-                        rhs = 1
-                      )
+                        . ~ . + EA3.x + fath_age_birth.x, 
+                        rhs = 1)
+fml_bo_psea <- lapply(fml_bo_psea, update, 
+                        . ~ . + factor(YOB.x) + factor(birth_mon.x),
+                        rhs = 2)
 
 mf_pairs_reg <- mf_pairs_twice %>% 
                   filter(
@@ -898,16 +891,16 @@ huxreg(mod_bo_psea,
        ) %>% 
        insert_row(after = 11, "Family size dummies", rep("Yes", 4)) %>% 
        insert_row(after = 12, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 13, "Age quadratic", rep("Yes", 4)) %>% 
+       insert_row(after = 13, "Birth year dummies", rep("Yes", 4)) %>% 
        set_bottom_border(12:13, everywhere, 0) %>% 
        set_number_format(2:11, -1, 4) %>% 
-       set_caption("Regressions of spouse PSEA")
+       set_caption("Regressions of spouse PSEA on birth order and potential mediators")
 ```
 
 ```{r calc-bootstrap-proportions, cache = TRUE}
 
 # to rerun this, just add a space below. Don't set cache = FALSE!
-n_boot <- 199
+n_boot <- 199 
 
 bo_prop_boot <- replicate(n_boot, {
   mf_pairs_resample <- mf_pairs_reg %>% sample_frac(1, replace = TRUE)
@@ -961,15 +954,23 @@ Our next regressions split up the data into subsets. Cultural
 stereotypes often assume that the link between status and genes is not
 symmetric across the genders, for example, that males with high SES are
 particularly likely to marry attractive spouses. To test this, we
-separately regress female spouses' PSEA on male birth order, and male
+separately regress male spouses' PSEA on female birth order, and female
 spouses' PSEA on female birth order. We also rerun regressions among the
 subset of individuals who had children. A significant result here will
 confirm that the association between status and genetics is carried over
 into the next generation.
 
-Table \@ref(tab:tbl-bo-subsets) shows the results.
-
--   TODO: describe results
+Table \@ref(tab:tbl-bo-subsets) shows the results. Columns 1 and 2 use
+birth order of male respondents to predict female spouses' PSEA. Columns
+3 and 4 use female respondents to predict male spouses' PSEA. Effect
+sizes are larger for female respondents. This might be because social
+status matters more for females in the marriage markets (contrary to a
+common stereotype), or because males place less value on phenotypes
+related to PSEA. For both sexes, controlling for university attendance
+reduces the effect of birth order. Columns 5 and 6 use only couples with
+children. The effect of birth order is slightly larger than for the
+sample as a whole, and university attendance still seems to mediate the
+birth order effect.
 
 -   TODO: very few couple pairs (\< 50%) report the same number of
     children. Why?
@@ -997,12 +998,12 @@ mod_bo_children <- lapply(fml_bo_psea[1:2], fixest::feols,
 ta <-  list(conf.int = FALSE, cluster = list(mf_pairs_children$couple_id))
 
 reg_list <- list(
-        `Females` = mod_bo_males[[1]],
-        `Females` = mod_bo_males[[2]],
-        `Males`   = mod_bo_females[[1]],
-        `Males`   = mod_bo_females[[2]],
-        `With children` = mod_bo_children[[1]],
-        `With children` = mod_bo_children[[2]]
+        "Male respondents"     = mod_bo_males[[1]],
+        "Male respondents"     = mod_bo_males[[2]],
+        "Female respondents"   = mod_bo_females[[1]],
+        "Female respondents"   = mod_bo_females[[2]],
+        "With children"        = mod_bo_children[[1]],
+        "With children"        = mod_bo_children[[2]]
       )
 
 huxreg(reg_list,
@@ -1012,17 +1013,22 @@ huxreg(reg_list,
           "Father's age at birth" = "fath_age_birth.x",
           "Own PSEA"              = "EA3.x"
         ),
+       statistics = c("N" = "nobs", "R2" = "r.squared"),
          note = "{stars}. Standard errors for columns 5 and 6 clustered by spouse pair.",
           tidy_args = list(list(), list(), list(), list(), ta, ta)
        ) %>% 
-       # insert_row(after = 9, "Family size dummies", rep("Yes", 4)) %>% 
-       # set_number_format(2:9, -1, 4) %>% 
-       set_caption("Regressions of spouse PSEA: subsets")
+       insert_row(after = 9, "Family size dummies", rep("Yes", 6)) %>% 
+       insert_row(after = 10, "Birth month dummies", rep("Yes", 6)) %>% 
+       insert_row(after = 11, "Birth year dummies", rep("Yes", 6)) %>% 
+       set_bottom_border(10:11, everywhere, 0) %>% 
+       set_font_size(10) %>% 
+       set_width(1) %>% 
+       set_caption("Regressions of spouse PSEA on birth order: subsets")
 ```
 
 ## Robustness
 
-```{r tbl-pgs-check}
+```{r tbl-pgs-check, cache = TRUE}
 
 check_cor <- function (score_name) {
   fml_check <- as.formula(paste(score_name, "~ factor(n_sibs) + n_older_sibs"))
@@ -1374,7 +1380,7 @@ huxreg(mod_bo_no_fath_age,
        ) %>% 
        insert_row(after = 9, "Family size dummies", rep("Yes", 4)) %>% 
        insert_row(after = 10, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 11, "Age quadratic", rep("Yes", 4)) %>% 
+       insert_row(after = 11, "Birth year dummies", rep("Yes", 4)) %>% 
        set_bottom_border(10:11, everywhere, 0) %>% 
        set_number_format(2:9, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, without controls for father's age at respondent's birth")
@@ -1415,7 +1421,7 @@ huxtable::huxreg(mod_bo_psea_ix,
                  ) %>% 
        insert_row(after = 21, "Family size dummies", rep("Yes", 4)) %>% 
        insert_row(after = 22, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 23, "Age quadratic", rep("Yes", 4)) %>% 
+       insert_row(after = 23, "Birth year dummies", rep("Yes", 4)) %>% 
        set_bottom_border(22:23, everywhere, 0) %>% 
        set_number_format(2:21, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, separate birth order coefficients for each family size") %>% 
