@@ -64,10 +64,13 @@ import_pcs <- function (pcs_file) {
 
 import_ashe_income <- function (ashe_income_file) {
   ashe_income <- readxl::read_xls(ashe_income_file, range = "A5:F475")
+  
   ashe_income %<>% 
         dplyr::select(Description, Code, Median, Mean) %>% 
         mutate(across(c(Median, Mean), as.numeric)) %>% 
         rename(median_pay = Median, mean_pay = Mean)
+  
+  ashe_income %<>% filter(! is.na(Code))
   
   ashe_income
 } 
@@ -180,10 +183,33 @@ clean_famhist <- function (famhist, score_names, ashe_income) {
   famhist$fath_age_birth <- famhist$fath_age - famhist$age_at_recruitment
   famhist$moth_age_birth <- famhist$moth_age - famhist$age_at_recruitment
 
+  # TODO: could add in later scores, picks up some extra people
+  famhist$fluid_iq <- famhist$f.20016.0.0
+  
+  # first measurement has almost everyone
+  # 1 = excellent, 2 = good, 3 = fair, 4 = poor
+  famhist$sr_health <- negative_to_na(famhist$f.2178.0.0)
+  # "longstanding illness, disability or infirmity". 1 = TRUE
+  famhist$illness   <- negative_to_na(famhist$f.2188.0.0)
+  
+  famhist$num_jobs <- famhist$f.22599.0.0
+  # job codes are f.22601.0.x
+  # SOC2000 job codes are f.22617.0.x
+  # start years   f.22602.0.x
+  # end years     f.22603.0.x, which we don't have
+  
+
   famhist[score_names] <- scale(famhist[score_names])
 
   # TODO: ask Abdel for job code f.20277
   # famhist %<>% left_join(ashe_income, by = c("f.20277" = "Code"))
+  
+  famhist %<>% 
+        mutate(f.22617.0.0 = as.character(f.22617.0.0)) %>% 
+        left_join(ashe_income, by = c("f.22617.0.0" = "Code")) %>% 
+        select(-Description, -mean_pay) %>% 
+        mutate(first_job_pay = median_pay/1000) %>% 
+        select(-median_pay)
   
   return(famhist)
 }
@@ -256,7 +282,8 @@ make_mf_pairs <- function (mf_pairs_file, famhist, resid_scores) {
                     f.eid, f.6138.0.0, f.52.0.0, matches("_resid$"),
                     n_sibs, n_older_sibs, university, age_at_recruitment, YOB,
                     age_fulltime_edu, age_fte_cat, income_cat, birth_sun,
-                    birth_mon, n_children, fath_age_birth, moth_age_birth
+                    birth_mon, n_children, fath_age_birth, moth_age_birth,
+                    first_job_pay
                   )
   mf_pairs %<>% 
     left_join(famhist_tmp, by = c("ID.m" = "f.eid")) %>% 
@@ -301,13 +328,14 @@ famhist_files <- file.path(data_dir, c(
                     "david.family_history.traits.16052020.out.csv",
                     "david.family_history.traits.18052020.out.csv",
                     "david.family_history.traits.17062020.out.csv",
-                    "david.birthinfo.traits.14072020.out.csv"
+                    "david.birthinfo.traits.14072020.out.csv",
+                    "david.traits.03112020.out.csv"
                   ))
 rgs_file       <- file.path(data_dir, "EA3_rgs.10052019.rgs.csv")
 mf_pairs_file  <- file.path(data_dir, "spouse_pair_info", 
                             "UKB_out.mf_pairs_rebadged.csv")
 ashe_income_file <- file.path(data_dir, 
-                      "SOC-income", "Occupation (4) Table 14.7b   Annual pay - Gross 2007 CV.xls") 
+                      "SOC-income", "Occupation (4) Table 14.7a   Annual pay - Gross 2007.xls") 
 
 
 plan <- drake_plan(

@@ -148,20 +148,24 @@ mf_pairs %>%
 
 ```{r pic-basic-corr-income, fig.subcap = c("Female EA3 by male income", "Male EA3 by female income"), fig.cap = "Social and genetic advantage among spouse pairs in UK Biobank", fig.width = 3, fig.height = 3}
 
-pic_ss <- stat_summary(fun.data = mean_cl_normal, na.rm = TRUE)
+pic_ss <- stat_summary(fun.data = mean_se, fun.args = list(mult = 1.96))
 pic_cc <- coord_cartesian(ylim = c(-0.15, 0.25))
 
 mf_pairs %>% 
-      filter(! is.na(income_cat.m)) %>% 
-      ggplot(aes(income_cat.m, EA3.f)) + 
-        pic_ss + pic_cc + 
-        labs(x = "Male income category", y = "Female PSEA")
+      filter(! is.na(first_job_pay.m)) %>% 
+      mutate(Income = santoku::chop_deciles(first_job_pay.m, labels = 1:10)) %>% 
+      ggplot(aes(Income, EA3.f)) + 
+        pic_ss + 
+        # pic_cc + 
+        labs(x = "Male income decile", y = "Female PSEA")
 
 mf_pairs %>% 
-      filter(! is.na(income_cat.f)) %>% 
-      ggplot(aes(income_cat.f, EA3.m)) + 
-        pic_ss + pic_cc +
-        labs(x = "Female income category", y = "Male PSEA")
+      filter(! is.na(first_job_pay.f)) %>% 
+      mutate(Income = santoku::chop_deciles(first_job_pay.f, labels = 1:10)) %>% 
+      ggplot(aes(Income, EA3.m)) + 
+        pic_ss + 
+        # pic_cc +
+        labs(x = "Female income decile", y = "Male PSEA")
         
 ```
 
@@ -708,25 +712,23 @@ famhist %>%
 
 ```
 
-```{r pic-bo-income, fig.cap = "Income by birth order and family size", fig.height = 3}
+```{r pic-bo-income, fig.cap = "Median income of first job by birth order and family size", fig.height = 3}
 
 famhist %>% 
       filter(
         n_sibs <= 4, 
         n_sibs >= 2, 
         ! is.na(n_older_sibs), 
-        ! is.na(income_cat)
+        ! is.na(first_job_pay)
       ) %>% 
       mutate(
-        `Birth order` = n_older_sibs + 1,
+        `Birth order` = factor(n_older_sibs + 1),
         `Family size` = n_sibs,
-        `Income category` = factor(income_cat)
+        `Income` = first_job_pay
       ) %>% 
-      ggplot(aes(`Birth order`, fill = `Income category`)) + 
-      geom_bar(position = "fill") +
-      facet_grid(cols = vars(`Family size`), labeller = label_both) + 
-      scale_fill_brewer(palette = 2) + 
-      labs(y = "Proportion")
+      ggplot(aes(`Birth order`, Income)) + 
+      stat_summary(fun.data = mean_se, fun.args = list(mult = 1.96)) +
+      facet_grid(cols = vars(`Family size`), labeller = label_both)
 ```
 
 Next we run regressions of spouse PSEA on birth order. Table
@@ -849,8 +851,8 @@ fml_bo_psea <- list()
 
 fml_bo_psea[[1]] <- EA3.y ~ n_older_sibs.x | factor(n_sibs.x)
 fml_bo_psea[[2]] <- EA3.y ~ university.x + n_older_sibs.x | factor(n_sibs.x)
-fml_bo_psea[[3]] <- EA3.y ~ income_cat.x + n_older_sibs.x | factor(n_sibs.x)
-fml_bo_psea[[4]] <- EA3.y ~ income_cat.x + university.x + n_older_sibs.x |
+fml_bo_psea[[3]] <- EA3.y ~ first_job_pay.x + n_older_sibs.x | factor(n_sibs.x)
+fml_bo_psea[[4]] <- EA3.y ~ first_job_pay.x + university.x + n_older_sibs.x |
       factor(n_sibs.x)
 
 fml_bo_psea <- lapply(fml_bo_psea, Formula::as.Formula)
@@ -869,7 +871,7 @@ mf_pairs_reg <- mf_pairs_twice %>%
                     n_sibs.x <= 8, 
                     ! is.na(n_older_sibs.x),
                     ! is.na(university.x),
-                    ! is.na(income_cat.x),
+                    ! is.na(first_job_pay.x),
                     ! is.na(fath_age_birth.x)
                   )
 
@@ -882,7 +884,7 @@ huxreg(mod_bo_psea,
         coefs = c(
           "Birth order"           = "n_older_sibs.x", 
           "University"            = "university.xTRUE", 
-          "Income"                = "income_cat.x",
+          "Income"                = "first_job_pay.x",
           "Own PSEA"              = "EA3.x",
           "Father's age at birth" = "fath_age_birth.x"
         ),
@@ -1347,7 +1349,7 @@ mf_pairs_reg_big <- mf_pairs_twice %>%
                     n_sibs.x <= 8, 
                     ! is.na(n_older_sibs.x),
                     ! is.na(university.x),
-                    ! is.na(income_cat.x)
+                    ! is.na(first_job_pay.x)
                   )
 
 fml_bo_no_fath_age <- lapply(fml_bo_psea, update, 
@@ -1372,7 +1374,7 @@ huxreg(mod_bo_no_fath_age,
         coefs = c(
           "Birth order"           = "n_older_sibs.x", 
           "University"            = "university.xTRUE", 
-          "Income"                = "income_cat.x", 
+          "Income"                = "first_job_pay.x", 
           "Own EA3"               = "EA3.x"
         ),
          note = "{stars}. Standard errors clustered by spouse pair.",
@@ -1407,7 +1409,7 @@ names(huxreg_coefs) <- gsub(".*(\\d)$", "Birth order X family size \\1",
 huxreg_coefs <- c(
                    huxreg_coefs,
                    "University"  = "university.xTRUE", 
-                   "Income"      = "income_cat.x", 
+                   "Income"      = "first_job_pay.x", 
                    "Own EA3"     = "EA3.x"
                  )
 
@@ -1448,7 +1450,7 @@ huxreg(mod_bo_psea_robust,
          coefs = c(
            "Birth order"           = "n_older_sibs.x", 
            "University"            = "university.xTRUE", 
-           "Income"                = "income_cat.x",
+           "Income"                = "first_job_pay.x",
            "Father's age at birth" = "fath_age_birth.x",
            "Own PSEA"              = "EA3.x"
          ),
