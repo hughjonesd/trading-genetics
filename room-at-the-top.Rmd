@@ -47,7 +47,6 @@ drake::loadd(resid_scores)
 
 famhist %<>% left_join(resid_scores, by = "f.eid")
 rm(resid_scores)
-
 famhist$EA3 <- famhist$EA3_excl_23andMe_UK_resid
 
 
