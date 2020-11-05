@@ -14,6 +14,28 @@ suppressPackageStartupMessages({
   library(abind)
 })
 
+data_dir       <- "../negative-selection-data"
+pgs_dir        <- file.path(data_dir, "polygenic_scores")
+sun_dir        <- file.path(data_dir, "sunshine-records")
+
+pcs_file       <- file.path(data_dir, "UKB.HM3.100PCs.40310.txt")
+famhist_files <- file.path(data_dir, c(
+                    "UKB.EA_pheno.coordinates.QC.csv",
+                    "david.family_history.traits.out.csv",
+                    "david.family_history.traits.20042020.out.csv",
+                    "david.family_history.traits.05052020.out.csv",
+                    "david.family_history.traits.16052020.out.csv",
+                    "david.family_history.traits.18052020.out.csv",
+                    "david.family_history.traits.17062020.out.csv",
+                    "david.birthinfo.traits.14072020.out.csv",
+                    "david.traits.03112020.out.csv"
+                  ))
+rgs_file       <- file.path(data_dir, "EA3_rgs.10052019.rgs.csv")
+mf_pairs_file  <- file.path(data_dir, "spouse_pair_info", 
+                            "UKB_out.mf_pairs_rebadged.csv")
+ashe_income_file <- file.path(data_dir, 
+                      "SOC-income", "Occupation (4) Table 14.7a   Annual pay - Gross 2007.xls") 
+
 
 # utility function:
 negative_to_na <- function (x) {
@@ -188,7 +210,8 @@ clean_famhist <- function (famhist, score_names, ashe_income) {
   
   # first measurement has almost everyone
   # 1 = excellent, 2 = good, 3 = fair, 4 = poor
-  famhist$sr_health <- negative_to_na(famhist$f.2178.0.0)
+  # I reverse-code
+  famhist$sr_health <- -1 * negative_to_na(famhist$f.2178.0.0)
   # "longstanding illness, disability or infirmity". 1 = TRUE
   famhist$illness   <- negative_to_na(famhist$f.2188.0.0)
   
@@ -279,17 +302,34 @@ make_mf_pairs <- function (mf_pairs_file, famhist, resid_scores) {
   famhist_tmp <- famhist %>% 
                   left_join(resid_scores, by = "f.eid") %>% 
                   dplyr::select(
-                    f.eid, f.6138.0.0, f.52.0.0, matches("_resid$"),
+                    f.eid, f.6138.0.0, matches("f.6141"), f.52.0.0, 
+                    matches("_resid$"),
                     n_sibs, n_older_sibs, university, age_at_recruitment, YOB,
                     age_fulltime_edu, age_fte_cat, income_cat, birth_sun,
                     birth_mon, n_children, fath_age_birth, moth_age_birth,
-                    first_job_pay
+                    first_job_pay, sr_health, illness, fluid_iq
                   )
   mf_pairs %<>% 
     left_join(famhist_tmp, by = c("ID.m" = "f.eid")) %>% 
     left_join(famhist_tmp, by = c("ID.f" = "f.eid"), suffix = c(".m", ".f"))
   
   mf_pairs$couple_id <- paste(mf_pairs$ID.m, mf_pairs$ID.f, sep = "_")
+  mf_pairs %<>% distinct(couple_id, .keep_all = TRUE)
+  
+  # at any time,
+  # do both say they are "living with spouse"?
+  # almost all are at visit 1 (and maybe others also)
+  mf_pairs %<>% mutate(
+                  ever_lived_with_spouse = (
+                                       (f.6141.0.0.m == 1 & f.6141.0.0.f == 1) |
+                                       (f.6141.1.0.m == 1 & f.6141.1.0.f == 1) |
+                                       (f.6141.2.0.m == 1 & f.6141.2.0.f == 1)
+                                     )
+                )
+   mf_pairs %<>% 
+    filter(ever_lived_with_spouse) %>% 
+    select(-ever_lived_with_spouse)
+  
   mf_pairs$EA3.m <- mf_pairs$EA3_excl_23andMe_UK_resid.m
   mf_pairs$EA3.f <- mf_pairs$EA3_excl_23andMe_UK_resid.f
 
@@ -313,29 +353,6 @@ make_mf_pairs_twice <- function (mf_pairs) {
   
   mf_pairs_twice
 }
-
-
-data_dir       <- "../negative-selection-data"
-pgs_dir        <- file.path(data_dir, "polygenic_scores")
-sun_dir        <- file.path(data_dir, "sunshine-records")
-
-pcs_file       <- file.path(data_dir, "UKB.HM3.100PCs.40310.txt")
-famhist_files <- file.path(data_dir, c(
-                    "UKB.EA_pheno.coordinates.QC.csv",
-                    "david.family_history.traits.out.csv",
-                    "david.family_history.traits.20042020.out.csv",
-                    "david.family_history.traits.05052020.out.csv",
-                    "david.family_history.traits.16052020.out.csv",
-                    "david.family_history.traits.18052020.out.csv",
-                    "david.family_history.traits.17062020.out.csv",
-                    "david.birthinfo.traits.14072020.out.csv",
-                    "david.traits.03112020.out.csv"
-                  ))
-rgs_file       <- file.path(data_dir, "EA3_rgs.10052019.rgs.csv")
-mf_pairs_file  <- file.path(data_dir, "spouse_pair_info", 
-                            "UKB_out.mf_pairs_rebadged.csv")
-ashe_income_file <- file.path(data_dir, 
-                      "SOC-income", "Occupation (4) Table 14.7a   Annual pay - Gross 2007.xls") 
 
 
 plan <- drake_plan(
