@@ -233,11 +233,14 @@ in $(G, S)$ space. If $k = 1$, they are horizontal lines. If
 $k \in (0,1)$ they are downward sloping curves.
 
 Write $p(i)$ for $i$'s partner. Pairs always have the same
-attractiveness.
+attractiveness:
 
-$$
-A(g_{i},s_{i}) = A(g_{p(i)},s_{p(i)}).
-$$
+```{=tex}
+\begin{equation}
+A(g_{i},s_{i}) = A(g_{p(i)},s_{p(i)}),
+\label{eq:same-A}
+\end{equation}
+```
 
 Each pair has two children. We assume that both children $c(d)$ of
 parents $d$, $m$ have
@@ -689,6 +692,20 @@ evidence that SES mediates the effect of birth order.
 
 ## Decomposition of the Birth Order effect on spouse genetics
 
+Linearizing our model so that $A(g, s) = (1-k)g + ks$ and applying \@ref(eq:same-A) gives:
+
+```{=tex}
+\[
+\frac{d g_{p(i)}}{d s_i} = \frac{k}{1-k}
+\]
+```
+
+We wish to test whether $k > 0$. Doing so requires estimating $\frac{d g_p}{d s_i}$
+while controlling for $i$'s own genetics $g_i$. Since our measures of genetic
+endowment (e.g. PSEA) are noisy and incomplete, it is not enough to include them in 
+the regression. Instead, we use birth order as a source of variation in $s_i$
+which is orthogonal to $g_i$.
+
 We follow @heckman2013understanding to
 decompose the aggregate treatment effect into components due to observed and
 unobserved proximate channels affected by the treatment. Our aim is to
@@ -698,12 +715,12 @@ The reduced-form regression of spouse PSEA on birth order ($BO$) is:
 
 ```{=tex}
 \begin{align}
-Y = \delta +\alpha \cdot BO+\beta \cdot \textbf{X} + \varepsilon,
+Y  = \delta +\alpha \cdot BO+\beta \cdot \textbf{X} + \varepsilon,
 \end{align}
 ```
 
-where $\textbf{X}$ is a vector of predetermined controls (own year of
-birth, own PSEA, father or mother's year of birth).
+where $Y \equiv g_{p(i)}$ and $\textbf{X}$ is a vector of predetermined controls
+(own year of birth, own PSEA, father or mother's year of birth).
 
 Assume $BO$ is a binary treatment variable (e.g. indicator for first
 born). Then, the observed outcome is:
@@ -1201,6 +1218,8 @@ huxreg(reg_list,
        set_width(1) %>% 
        set_caption("Regressions of spouse PSEA on birth order: subsets")
 ```
+
+\FloatBarrier
 
 ## Robustness
 
