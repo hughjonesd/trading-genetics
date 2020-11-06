@@ -1,5 +1,5 @@
 ---
-title: "Genes are not nature: effects of socio-economic status on genetics in UK Biobank"
+title: "Trading social status for genetics in marriage markets: evidence from UK Biobank"
 author: David Hugh-Jones, Oana Borcan & Abdel Abdellaoui
 date: "`r Sys.Date()`"
 output: 
@@ -57,118 +57,123 @@ famhist$EA3 <- famhist$EA3_excl_23andMe_UK_resid
 
 # Introduction
 
-It is well known that both an individual's genetics, and his or her
-environment, influence a wide range of life outcomes, including physical
-and mental health, income and social status, spouse choice, family
-formation and personality. Both popular and scientific discourse often
-parse these two forces as "nature" and "nurture" [e.g.
-@plomin1994genetics; @chakravarti2003nature].[^1] The implicit logic is
-that a person's environment is the product of his or her society; genes,
-on the other hand, are part of his or her nature.
+There is a well-known association between an individual's socio-economic status 
+(SES) and their genetics. Twin studies show that the heritability of occupational
+class and educational attainment, i.e. the proportion of variance explained by 
+genetics, is around 50% [@Tambs_1989]. Genome-wide Complex Trait Analysis 
+(GCTA) shows that even 2-year-old children's family SES can be predicted from their
+genes [@Trzaskowski_2014]. Polygenic scores for educational attainment (EA) 
+ predict both occupational class and (of course) EA itself [@Rimfeld_2018].
 
-[^1]: This holds even among scientists who wish to go beyond the
-    nature-nurture dichotomy, e.g. [@rutter2002nature].
+A common explanation is that in meritocratic societies, advantageous genes lead
+to success in education and the labour market. Successful parents may then pass
+both SES and their genes to their children, leading to an association between
+the two [@belsky2018genetic]. This mechanism depends on the level of meritocracy
+in society's institutions [@Heath_1985; @branigan2013variation]. Indeed, after
+the fall of communism in Estonia, the heritability of SES increased, presumably
+because post-communist society was more meritocratic [@Rimfeld_2018]. In a
+non-meritocratic society where social status was ascribed rather than earned,
+this mechanism could not take effect.
 
-At the level of the individual, this idea expresses the fact that our
-genetic endowment is fixed at birth and cannot be influenced by our
-social environment. While genes may be expressed differently over the
-life cycle, and importantly may interact with the environment to cause
-different outcomes, the genes themselves do not change. This feature
-allows them to be used as an "unmoved mover" to untangle social
-causality, in techniques like Mendelian randomization.
+We propose an alternative explanation for the association between SES and genetics. 
+It is centred on marriage markets rather than labour markets or educational 
+institutions, and it relies on assortative mating, rather than meritocratic 
+institutions. As a result, it applies to a historically wider range of 
+societies. 
 
-But as soon as we move beyond individual level, the idea that human
-genetics are natural becomes highly misleading. Humans inherit their
-genes from their parents, along with other forms of inheritance such as
-economic and cultural capital. Human parents, in turn, meet, form spouse
-pairs, bear children, and raise them, within social institutions
-including marriage markets and family structures. Therefore, a person's
-genetic inheritance is a social and historical fact about them, and not
-a fact of nature, any more than their inherited wealth or social status
-is natural. As [@marx1844economic] wrote, "History is the true natural
-history of man".
+Our mechanism is that both social status[^ss-def] and genetics contribute to a
+person's attractiveness in marriage markets. For example, suppose that wealth
+and intelligence are both attractive qualities in a spouse. Then wealthy people
+will be more likely to marry relatively intelligent people. Children of these
+marriages will then inherit both wealth (via social institutions), and genetic
+variants for intelligence (via biology). As a result, wealth and genes for
+intelligence will become associated in the next generation. More generally,
+whenever people in marriage markets trade social status for a genetically
+inherited characteristic, the two will become associated.
 
-Indeed, genetic assets and other kinds may be substitutable in marriage
-markets. [@marx1844economic] also wrote "I am ugly, but I can buy the
-most beautiful woman.... the effect of ugliness, its repelling power, is
-destroyed by money". On the opposite side of the political spectrum,
-[@herrnstein1995bell] warned of "a merging of the cognitive elite with
-the affluent". These quotations suggest that social advantages, such as
-wealth, income, caste or class, may have genetic consequences. If there
-is assortative mating between socially and genetically advantaged
-people, then socio-economic status may be reflected in the DNA of
-subsequent generations.
+[^ss-def]: *Social status* refers to characteristics that an individual has in
+virtue of their social position. For example, my wealth is a fact about me that
+holds in virtue of my relationship to certain social institutions (bank
+deposits, title deeds etc.). Other examples include caste, class, income,
+educational qualifications. *Socio-economic status* (SES) is a specific kind of
+social status, existing in economically stratified societies, and referring to a
+combination of educational attainment, occupational class, income and wealth
+[e.g. @white1982relation].
 
-Figures \@ref(fig:pic-basic-corr-uni) and
-\@ref(fig:pic-basic-corr-income) illustrate this idea using data for
-spouse pairs from UK Biobank, a sample of about 500,000 UK respondents
-born between 1935 and 1970. The X axis shows a measure of one partner's
-socio-economic status: university attendance (Figure
-\@ref(fig:pic-basic-corr-uni) or income (Figure
-\@ref(fig:pic-basic-corr-income)). The Y axis plots the other partner's
-mean polygenic score for educational attainment (PSEA). This measure is
-derived solely from the partner's genetic data, and is a predictor of
-the number of years spent in education, as well as university attendance
-and IQ.[^2] Both males and females who went to university had spouses
-with higher PSEA. So did males and females with higher income. Since DNA
-is inherited, these people's children will also have higher PSEA.
+We call this mechanism *Social-Genetic Assortative Mating* (SGAM). Note that it
+does not require meritocracy. Even if social status is inherited from birth, and
+cannot be earned (as with e.g. titles of nobility, or caste), it will still
+become associated with attractive genetic variants, so long as there is
+assortative mating and people trade status off for genetics in marriage markets.
+By contrast, the ES mechanism, where social status can be earned with the help
+of advantageous genetic variants, requires meritocracy but not assortative
+mating. 
 
-[^2]: To minimize concerns about genetic stratification, i.e.
-    correlations between genetics and non-genetic inherited
-    characteristics such as culture, PSEA is residualized on the first
-    100 principal components of UK Biobank array data.
+Another difference is in the chain of causality. In ES, genetic variants
+cause an increase in social status, and both genetics and status may then be
+inherited. In SGAM, causality may go from social status to genetics. One
+person's social status causes their spouse to have different genetic variants;
+again, both are then inherited. Thus, changes to social status may be encoded in 
+the genetics of subsequent generations. 
 
-These figures do not prove that genetic encoding of socio-economic
-status is taking place. Since an individual's own PSEA correlates with
-both their educational attainment, and their income, both figures could
-be a result of partner selection on a purely genetic basis. In this
-paper, we test the theory more rigorously, using environmental shocks to
-socio-economic status that are unlikely to be correlated with own
-genetics. First, we develop a simple model of assortative mating to show
-how parents' social status predicts children's genetics, and how this
-varies with social structure.
+The two mechanisms are complementary, and both
+may operate in a given social setting. Table \@ref(tbl:conds) summarizes the
+conditions for each mechanism.
 
-```{r pic-basic-corr-uni, fig.subcap = c("Female PSEA by male educational attainment", "Male PSEA by female educational attainment"), fig.cap = "Social and genetic advantage among spouse pairs in UK Biobank", fig.width = 3, fig.height = 3}
+| Mechanism | Genetics | Social status | Meritocracy | Assortative mating |
+|:----------|:---------|:-------------|:-------------|:-------------------|
+| ES | Inherited | Inherited | Yes | No |
+| SGAM      | Inherited   | Inherited | No  | Yes|
 
-pic_ss <- stat_summary(fun.data = mean_cl_normal, na.rm = TRUE)
-pic_cc <- coord_cartesian(ylim = c(-0.05, 0.2))
+Table: Conditions for Social-Genetic Assortative Mating (SGAM) and Earned Status (ES)  \label{tbl:conds}
 
-mf_pairs %>% 
-      filter(! is.na(university.m)) %>% 
-      ggplot(aes(university.m, EA3.f)) + 
-        pic_ss + pic_cc +
-        labs(x = "Male university attendance", y = "Female PSEA")
+Although SGAM does not require meritocracy, it is affected by a society's
+marriage market institutions. Surprisingly, there is a non-linear relationship
+between "egalitarianism" in marriage market institutions, and the strength of
+the association between social status and genetic variation. When
+marriage markets are fully egalitarian, or fully inegalitarian, SGAM does not
+cause any association. In between these extremes, there is a positive
+association. The intuition is that in a fully "egalitarian" marriage market,
+social status plays no role in determining attractiveness. As a result, people
+do not trade off social status against genetics. On the other hand, in a wholly
+"inegalitarian" marriage market, such as a caste society where mating across
+castes is forbidden, only social status determines attractiveness
+and genetics plays no role, so again people do not trade the two off. In between
+the two extremes, people trade social status for "good genes", and the two
+become associated.
 
-mf_pairs %>% 
-      filter(! is.na(university.f)) %>% 
-      ggplot(aes(university.f, EA3.m)) + 
-        pic_ss + pic_cc +
-        labs(x = "Female university attendance", y = "Male PSEA")
-        
-```
+This paper tests for SGAM in a modern society. To pin down SGAM, we use a causal
+antecedent of social status which is independent of individual genetics: birth
+order. Birth order is known to affect outcomes including income, occupational
+status and educational attainment. We show that people born earlier within a
+sibling group marry spouses with different genetics, specifically, higher
+polygenic scores for educational attainment. We present evidence that this
+effect is mediated by measures of SES, including educational attainment and
+labour market income. First, we develop a simple model of SGAM to show how
+parents' social status predicts children's genetics, and how this varies with
+social structure.
 
-```{r pic-basic-corr-income, fig.subcap = c("Female EA3 by male income", "Male EA3 by female income"), fig.cap = "Social and genetic advantage among spouse pairs in UK Biobank", fig.width = 3, fig.height = 3}
 
-pic_ss <- stat_summary(fun.data = mean_se, fun.args = list(mult = 1.96))
-pic_cc <- coord_cartesian(ylim = c(-0.15, 0.25))
+# Related literature
 
-mf_pairs %>% 
-      filter(! is.na(first_job_pay.m)) %>% 
-      mutate(Income = santoku::chop_deciles(first_job_pay.m, labels = 1:10)) %>% 
-      ggplot(aes(Income, EA3.f)) + 
-        pic_ss + 
-        # pic_cc + 
-        labs(x = "Male income decile", y = "Female PSEA")
+It is widely known that assortative mating may affect social inequality
+[@greenwood2014marry], including variance in polygenic scores. But the mechanism
+is usually genetic assortative mating (GAM), i.e. marriage partners having
+similar genetic variants  [@hugh2016assortative]. A closely-related concept to
+SGAM is cross-trait assortative mating [@Sundet_2005; @Beauchamp_2010]. This 
+refers to people with (genes for) e.g. height marrying people with (genes for) 
+e.g. intelligence. As a result, the two kinds of variation become associated. Our 
+model simply extends this idea to the case of a socially-inherited trait and 
+one or more genetic variants.
 
-mf_pairs %>% 
-      filter(! is.na(first_job_pay.f)) %>% 
-      mutate(Income = santoku::chop_deciles(first_job_pay.f, labels = 1:10)) %>% 
-      ggplot(aes(Income, EA3.m)) + 
-        pic_ss + 
-        # pic_cc +
-        labs(x = "Female income decile", y = "Male PSEA")
-        
-```
+The basic idea behind SGAM is not new. It is a cliché that e.g. wealth and
+beauty tend to assort in marriage markets. However, few papers
+has analysed this mechanism or drawn out its consequences explicitly.
+@halsey1958genetics showed in a two-class model that social mobility combined
+with assortative mating might increase the association between genetics and
+social class. @belsky2018genetic offer three reasons for the association between
+education-linked genetics and SES, but do not consider SGAM.
+
 
 # Model
 
@@ -243,6 +248,7 @@ g_{c(d)} & =\frac{g_{d}+g_{m}}{2};\label{eq:children-average}\\
 s_{c(d)} & =\frac{s_{d}+s_{m}}{2}.\nonumber 
 \end{align}
 ```
+
 This is a strong assumption; we relax it later. For real world examples
 approximated by it, $S$ could be wealth which is equally divided between
 the children; $G$ could be a highly polygenic trait with many small
@@ -260,6 +266,7 @@ with strict inequality if and only if $0 < k < 1$ \uline{or}
 $corr(G_{p}, S_{p}) > 0$.
 \end{prop}
 ```
+
 ```{=tex}
 \begin{proof}
 
@@ -317,6 +324,8 @@ the second part cannot be relaxed further.
 
 \end{proof}
 ```
+
+
 ```{r pic-intuition, fig.subcap = c("Caste society ($k = 1$): parents", "Caste society: children", "Egalitarian society ($k = 0$): parents", "Egalitarian society: children", "Intermediate society ($0 < k < 1$): parents", "Intermediate society: children"), fig.cap = "Theory: shaded area is the population distribution. Dotted lines are attractiveness isoquants. Solid dots are example parents, transparent dots are example children. The right hand side shows the children's generation.", fig.ncol = 2, fig.width = 2.75, fig.height = 2.4, fig.align='center'}
 
 
@@ -440,6 +449,7 @@ $$
 $\varepsilon^{G}$ has mean 0 and variance $\sigma_{G}^{2}$; and
 $\varepsilon^{S}$ has mean 0 and variance $\sigma_{S}^{2}$.
 
+
 ```{=tex}
 \begin{prop}
 \label{prop:robustness}
@@ -458,6 +468,8 @@ inequality if and only if $0<k<1$.
 
 \end{prop}
 ```
+
+
 The conditions in Proposition \ref{prop:robustness} are quite plausible.
 For $G$, they require that either variance in siblings' scores on some
 summary statistic is not too large, or that it is uncorrelated with the
@@ -490,33 +502,29 @@ straight and $(G, S)$ are jointly normally distributed. We conjecture
 that it also holds whenever the distribution $(G, S)$ is log-concave or
 even quasiconcave.
 
-## Discussion
 
--   TODO: discuss relationship with linkage disequilibrium between
-    genes, caused by assortative mating. Hunt for any pre-existing
-    theory in the genetics literature.
+## Discussion
 
 The "marriage market" here is a reduced form mechanism, encompassing
 everything that makes a difference to partner choice. For example, if
 earned income affects attractiveness in the marriage market, then
 society's level of meritocracy in the labour market will correlate with
 the value of $k$: a more meritocratic labour market will allow people
-with low social status but high human capital (partly genetically
-determined) to earn more, and therefore to match with more attractive
+with low social status but high human capital (genetically
+determined in part) to earn more, and therefore to match with more attractive
 partners.
 
-The contents of both $S$, social status, and $G$ -- what counts as "good
+The contents of both $S$, social status, and $G$ -- "good
 genes" in the marriage market -- are likely to vary across societies.
 $S$ could encompass variables like social class or caste; ethnic
-identity in "ranked" ethnic systems; or in modern societies,
-*socio-economic status* (SES), i.e. variables affecting a person's
-position in the labour market. Regarding $G$, standards of physical
-attractiveness, and other characteristics which make someone a "good
-match", vary both across societies and within a society over time.
+identity in "ranked" ethnic systems; or in modern societies, SES. 
+Regarding $G$, standards of physical attractiveness, and other characteristics 
+which make someone a "good match", vary both across societies and within a 
+society over time.
 
-The model predicts variation in the strength of genetic lock-in. In
+The model predicts variation in the strength of SGAM. In
 particular, in "caste societies" where there is complete endogamy within
-social status groups, there is no scope for genetic lock-in, because
+social status groups, there is no scope for SGAM, because
 marriage partners do not trade off genetics for social status. The model
 also assumes that social status is inherited randomly from one parent,
 in the same way a genetic allele is inherited. This assumption can be
@@ -524,30 +532,7 @@ weakened. For example, if social status is inherited deterministically
 from the father, then the results remain unchanged (for each pair of
 parents, just assume that one randomly chosen parent is the father).
 
-It is well known that genetics, e.g. PSEA, correlate with SES in modern
-societies [e.g. @Krapohl_2015]. A standard explanation for this is that
-in meritocratic societies, successful people may transmit relevant genes
-to their offspring, along with their status [@belsky2018genetic]. Our
-mechanism is different from this, though not mutually exclusive. In the
-standard model, certain genetic variants *cause* higher SES, and are
-then transmitted along with it. Indeed, genetic variations which lead to
-high status will become associated with it, even in the absence of
-assortative mating. Conversely, this logic would not apply in
-non-meritocratic societies, where social status is ascribed rather than
-earned. Indeed, [@Rimfeld_2018] show that genetic influences on
-education and occupation were lower in (non-meritocratic) Soviet Estonia
-than in the more meritocratic post-Soviet period.
-
-By contrast, our mechanism applies to genetic variants that are
-*associated* with higher status during the spouse matching process. They
-do not need to exert any causal effect on an individual's own social
-status. Whereas the mechanism above requires meritocracy, but not
-assortative mating, our mechanism requires assortative mating, but not
-meritocracy. Our mechanism therefore potentially applies to a much wider
-range of societies, including societies where social status is wholly
-ascribed or inherited.
-
-In modern societies, both assortative mating and meritocracy are likely
+In modern societies, both SGAM and ES are likely
 to be at play. Genetic variants that cause (e.g.) higher income and
 wealth will be inherited along with components of social status such as
 inherited wealth. At the same time, higher social status and "good
@@ -555,26 +540,6 @@ genes" will assort in the marriage market, even if that higher social
 status is caused by purely environmental variation. Our empirical
 analysis shows this latter process at work.
 
-# Related literature
-
--   Idea that assortative mating might increase inequality is widely
-    known, but it is usually put in terms of assortation by IQ or by
-    genetics alone.
-
--   Could the result be thought of as a kind of population
-    stratification?
-
--   [@halsey1958genetics] showed in a two-class model that social
-    mobility combined with assortative mating might increase the
-    association between genetics and social class. But NB, the
-    assortation is completely random within classes. So effectively this
-    is a society with $k=1$, but some social mobility.
-
--   
-
--   [@belsky2018genetic] offer three reasons for the association between
-    education-linked genetics and SES, but do not consider our
-    mechanism.
 
 # Data and methods
 
@@ -586,47 +551,104 @@ respondents' exact home location, we categorize some respondents as
 spouse pairs.
 
 Our key dependent variable is spouse's *Polygenic Score for Educational
-Attainment* (PSEA). A polygenic score is a DNA-derived summary measure
-of genetic risk or propensity for a particular outcome, created from
-summing small effects of many common genetic variants, known as Single
-Nucleotide Polymorphisms (SNPs). We use per-SNP summary statistics from
-[@lee2018gene], recalculated excluding UK Biobank participants, to
-calculate PSEA. We focus on PSEA, rather than other polygenic scores,
-because educational attainment plays a key role in human mate search.
-People are attracted to educated potential partners
-[@buss1986preferences; @belot2013dating]. Spouse pairs often have
-similar levels of educational attainment, as well as similar PSEA
-[@vandenberg1972assortative; @schwartz2005trends; @greenwood2014marry;
-@hugh2016assortative].
+Attainment* (PSEA). A polygenic score is a DNA-derived summary measure of
+genetic risk or propensity for a particular outcome, created from summing small
+effects of many common genetic variants, known as Single Nucleotide
+Polymorphisms (SNPs). We focus on PSEA, rather than other polygenic scores,
+because educational attainment plays a key role in human mate search. People are
+attracted to educated potential partners [@buss1986preferences;
+@belot2013dating]; spouse pairs often have similar levels of educational
+attainment, as well as similar PSEA [@vandenberg1972assortative;
+@schwartz2005trends; @greenwood2014marry;
+@hugh2016assortative].  We use per-SNP summary statistics from [@lee2018gene],
+recalculated excluding UK Biobank participants, to
+calculate PSEA.[^residualized]
 
-As we said above, simple correlations between one partner's social
-status and the other partner's genetics do not prove that genetic
-encoding is taking place. Since social status correlates with one's own
-genetics, the correlation could be driven purely by assortative mating
-for genetics [@hugh2016assortative]. To demonstrate genetic lock-in, we
-need a source of social status which is exogenous to genetics. Also, the
-link between social status and spouse genetics is likely to be noisy,
-for three reasons: first, measures of genetic variation such as
-polygenic scores contain a large amount of error; second, causal
-mechanisms behind variation in social status are likely to be noisy;
-third, to paraphrase [@shakespeare1595midsummer], the spouse matching
-process is notoriously unpredictable. So, we need a large N to give us
-sufficient power. This rules out time-limited shocks such as e.g.
-changes to the school leaving age.
+[^residualized]:  PSEA is residualized on the first 100 principal components of 
+the SNP array data.
 
-One possibility is *birth order*. It is known that earlier-born children
-receive more parental care and have better life outcomes
-[@booth2009birth; @black2011older]. On the other hand, all full siblings
-have the same *ex ante* expected genetic endowment from their parents,
-irrespective of their birth order. For example, siblings' expected
-polygenic score is equal to the mean of their parents' polygenic scores.
-[^4] We can therefore use birth order as a "shock" to social status. We
-do not claim that birth order is exogenous to all other variables. For
-example, it naturally correlates with parental age, and it might also be
-linked with the family's economic position at the time of birth. We only
-claim that birth order is exogenous to genetic variation.
+* TODO: if our N gets small, we may have to control, rather than residualize,
+  to get accurate p-values.
 
-[^4]: Although genetic variation is randomly assigned to children at
+Figures \@ref(fig:pic-basic-corr-uni) and \@ref(fig:pic-basic-corr-income)
+illustrate the possible consequences of SGAM. The X axis shows a measure of one
+partner's socio-economic status: university attendance (Figure
+\@ref(fig:pic-basic-corr-uni) or income (Figure
+\@ref(fig:pic-basic-corr-income)). The Y axis plots the other partner's mean
+PSEA. Both males and females who went to university had spouses with higher
+PSEA. So did males and females with higher income. Since DNA is inherited, these
+people's children will also have higher PSEA.
+
+
+```{r pic-basic-corr-uni, fig.subcap = c("Female PSEA by male educational attainment", "Male PSEA by female educational attainment"), fig.cap = "Social and genetic advantage among spouse pairs in UK Biobank", fig.width = 3, fig.height = 3}
+
+pic_ss <- stat_summary(fun.data = mean_cl_normal, na.rm = TRUE)
+pic_cc <- coord_cartesian(ylim = c(-0.05, 0.2))
+
+mf_pairs %>% 
+      filter(! is.na(university.m)) %>% 
+      ggplot(aes(university.m, EA3.f)) + 
+        pic_ss + pic_cc +
+        labs(x = "Male university attendance", y = "Female PSEA")
+
+mf_pairs %>% 
+      filter(! is.na(university.f)) %>% 
+      ggplot(aes(university.f, EA3.m)) + 
+        pic_ss + pic_cc +
+        labs(x = "Female university attendance", y = "Male PSEA")
+        
+```
+
+
+```{r pic-basic-corr-income, fig.subcap = c("Female EA3 by male income", "Male EA3 by female income"), fig.cap = "Social and genetic advantage among spouse pairs in UK Biobank", fig.width = 3, fig.height = 3}
+
+pic_ss <- stat_summary(fun.data = mean_se, fun.args = list(mult = 1.96))
+pic_cc <- coord_cartesian(ylim = c(-0.15, 0.25))
+
+mf_pairs %>% 
+      filter(! is.na(first_job_pay.m)) %>% 
+      mutate(Income = santoku::chop_deciles(first_job_pay.m, labels = 1:10)) %>% 
+      ggplot(aes(Income, EA3.f)) + 
+        pic_ss + 
+        # pic_cc + 
+        labs(x = "Male income decile", y = "Female PSEA")
+
+mf_pairs %>% 
+      filter(! is.na(first_job_pay.f)) %>% 
+      mutate(Income = santoku::chop_deciles(first_job_pay.f, labels = 1:10)) %>% 
+      ggplot(aes(Income, EA3.m)) + 
+        pic_ss + 
+        # pic_cc +
+        labs(x = "Female income decile", y = "Male PSEA")
+        
+```
+
+
+These figures do not prove that SGAM is taking place. Since an individual's own
+PSEA correlates with both their educational attainment, and their income, both
+figures could be a result of genetic assortative mating (GAM) alone
+[@hugh2016assortative]. To demonstrate SGAM, we need a source of social status
+which is exogenous to genetics. Also, the link between social status and spouse
+genetics is likely to be noisy, for three reasons: first, polygenic scores
+contain a large amount of error; second, causal mechanisms behind variation in
+social status are likely to be noisy; third, to paraphrase
+@shakespeare1595midsummer, the spouse matching process is notoriously
+unpredictable. So, we need a large N to give us sufficient power. This rules out
+time-limited shocks such as changes to the school leaving age [@Davies_2018].
+
+We use *birth order*. It is known that earlier-born children receive more
+parental care and have better life outcomes, including measures of SES such as
+educational attainment and occupational status [@Lindahl_2008; @booth2009birth;
+@black2011older]. On the other hand, all full siblings have the same *ex ante*
+expected genetic endowment from their parents, irrespective of their birth
+order. For example, siblings' expected polygenic score is equal to the mean of
+their parents' polygenic scores. [^selection] We can therefore use birth order
+as a "shock" to social status. We do not claim that birth order is exogenous to
+all other variables. For example, it naturally correlates with parental age, and
+it may also relate to the family's economic position at the time of birth. We
+only claim that birth order is exogenous to genetic variation.
+
+[^selection]: Although genetic variation is randomly assigned to children at
     birth, genetics and birth order could be dependent if parents'
     choice of whether to have more children is endogenous to the genetic
     endowment of their earlier children. We check for this below.
@@ -641,10 +663,9 @@ mediated by SES, we use two measures: income, and university attendance.
 Current income is a direct measure of SES, while university attendance
 is a predictor of income over the entire life course.
 
--   TODO: Abdel - details of PSEA calculation and spouse pair inference
+-   TODO: Abdel - details of PSEA calculation
 -   TODO: look at mechanisms by which birth order might affect
     university
--   TODO: get IQ data, control for it
 -   TODO: overall index of social status?
 
 Ideally, we might prefer to use birth order as an instrument for SES.
@@ -671,22 +692,20 @@ evidence that SES mediates the effect of birth order.
 We follow @heckman2013understanding to
 decompose the aggregate treatment effect into components due to observed and
 unobserved proximate channels affected by the treatment. Our aim is to
-estimate the effect of socio-economic status (as an effect of the random
-assignment of birth order) on spouse PSEA.
+estimate the effect of SES (as an effect of birth order) on spouse PSEA.
 
-The reduced-form regression of spouse PSEA on birth order (henceforth
-BO) is:
+The reduced-form regression of spouse PSEA on birth order ($BO$) is:
 
 ```{=tex}
 \begin{align}
-Y=\delta +\alpha \cdot BO+\beta \cdot \textbf{X}+\varepsilon,
+Y = \delta +\alpha \cdot BO+\beta \cdot \textbf{X} + \varepsilon,
 \end{align}
 ```
 
 where $\textbf{X}$ is a vector of predetermined controls (own year of
 birth, own PSEA, father or mother's year of birth).
 
-Assume BO is a binary treatment variable (e.g. indicator for first
+Assume $BO$ is a binary treatment variable (e.g. indicator for first
 born). Then, the observed outcome is:
 
 ```{=tex}
@@ -698,11 +717,11 @@ Y = BO \cdot Y_1 + (1-BO) \cdot Y_0  \label{eq:Y-BO}
 $Y_d$ with $d\in${0,1} are the counterfactual outcomes for the first and
 second born, respectively. Given $d$, spouse PSEA is assumed to be
 independent across observations, conditional on predetermined controls,
-which are assumed not to be affected by BO.
+which are assumed not to be affected by $BO$.
 
-Let $\theta_d$ be a set of proximate outcomes determined by BO, which
-account (at least in part) for the BO treatment on spouse PSEA. We can
-think of $\theta_d$ as all the channels by which BO affects
+Let $\theta_d$ be a set of proximate outcomes determined by $BO$, which
+account (at least in part) for the $BO$ treatment on spouse PSEA. We can
+think of $\theta_d$ as all the channels by which $BO$ affects
 attractiveness in the marriage market, including socio-economic status
 (SES), health, cognitive and non-cognitive skills. Similar to
 (\ref{eq:Y-BO}) we define
@@ -725,8 +744,6 @@ $\theta_d$ and $\textbf{X}$.
 We can break down the set of investments $\theta_d$ into SES and other
 measured investments, and investments or skills we cannot measure.
 
--   TODO: Find adequate terminology for the set of proximate
-    outcomes/investments. Maybe gains?
 
 -   TODO: bold the alpha and theta and beta vectors in eq 3.
 
@@ -735,14 +752,13 @@ measured investments, and investments or skills we cannot measure.
 Y_d=\tau_d +\sum_{j\in J_m} \alpha_d^j \cdot \theta_d^j + \beta \cdot \textbf{X}+\varepsilon_d,  \label{eq:measured-unmeasured}
 \end{equation}
 ```
-Where $\tau_d=\kappa_d+\sum_{j\in J_u} \alpha_d^j \cdot E(\theta_d^j)$
-and
-$\varepsilon_d=\tilde{\varepsilon_d}+\sum_{j\in J_u} \alpha_d^j \cdot (\theta_d^j-E(\theta_d^j))$
-and $J_m$ and $J_u$ are the index sets of mediators of attractiveness
-which are measured and unmeasured.
 
-We assume differences in unmeasured investments due to BO are
-independent of $\textbf{X}$. We also assume that $\alpha_0=\alpha_1$ (we
+where $\tau_d=\kappa_d+\sum_{j\in J_u} \alpha_d^j \cdot E(\theta_d^j)$ and
+$\varepsilon_d=\tilde{\varepsilon_d}+\sum_{j\in J_u} \alpha_d^j \cdot (\theta_d^j-E(\theta_d^j))$ and $J_m$ and $J_u$ are the index sets of mediators
+of $BO$ which are measured and unmeasured.
+
+We assume differences in unmeasured investments due to $BO$ are
+independent of $\textbf{X}$. We also assume that $\alpha_0 = \alpha_1$ (we
 can test this if the measured and unmeasured investments gains from BO
 are independent in both treatment regimes).
 
@@ -802,8 +818,6 @@ regression of measured variables on the BO treatment).
     income)
 -   TODO:We need to discuss the plausibility of these assumptions and
     what we can do to test it.
--   TODO: estimate individual income from job SIC codes? ASHE gives data
--   TODO: add year-of-birth dummies for cohort effects
 
 # Results
 
@@ -961,6 +975,8 @@ huxreg(mod_bo_psea_base,
     we could do predicted income at age 21-25 from business cycle X
     profession, that might count as exogenous. (Could use an independent
     source to estimate evolution of incomes, e.g. GHS or BHPS)
+    
+- TODO: number of elder *brothers*?
 
 Having tested that birth order affects spouse's PSEA, we now look for
 potential mediators of this effect. Despite the lower N, we continue to
@@ -1285,6 +1301,7 @@ order is indeed exogenous to genetics.
 
 # Conclusion
 
+
 Behaviour geneticists have pointed out that in meritocratic societies,
 genetics and social status will be correlated, because some genetic
 variants will lead to success in the labour market. We argue that
@@ -1300,25 +1317,17 @@ becomes encoded in the genetics of their children. We also provided
 evidence that these effects are mediated by social status: income and
 education.
 
-Social scientists have tended to assume that social status is unrelated
-to "natural" differences between individuals, including genetic
-differences. This view dates back at least to [@hobbes1651leviathan]. By
-contrast, it has been widely believed in many societies that innate
+It has been widely believed in many societies that innate
 traits do vary across social classes. The ancient Greeks described the
 social elite as *kaloi kagathoi* ("fine and good"), while the Roman
 nobility were the *optimates* ("best").[^11] This belief has been
 explained by the human tendency to believe in a just world
 [@furnham1993just], or as an ideology promoted by the dominant class
 [e.g. @gramsci1971selections]. However, it may also simply have been a
-recognition of (social) reality. In other words,\
+recognition of (social) reality. In other words,
 the belief that elites are taller, stronger, better-looking, etc. is not
 much different from the belief that elites are richer and more powerful,
-and is likely to be held for fairly similar reasons. The belief that
-human traits are inherited across generations is probably quite
-widespread across different cultures [@moya2015reasoning]: this, plus
-the observation that status matters in marriage markets, provides a
-cognitive basis for reasoning to the conclusion of class differences.
-Alternatively, the belief might simply come from empirical observation.
+and is likely to be held for fairly similar reasons.
 
 [^11]: The appendix contains a selection of relevant historical
     quotations.
@@ -1330,21 +1339,16 @@ egalitarian, with marriage pairing driven only by genetics, or very
 inegalitarian, with pairings driven only by status. This logic is
 different from the standard reason for association between genes and
 SES. There, more meritocratic societies allow a greater role for genetic
-variants linked to labour market success. Thus, there is a monotonic
-relationship: more meritocracy leads to a stronger gene-environment
-correlation (rGE) between genetics and SES. Here, the relationship is
+variants linked to labour market success, and thus lead to monotonically 
+stronger gene-environment correlations (rGE) with SES. Here, the relationship is
 non-monotonic: rGE is strongest at intermediate levels of "meritocracy"
 in marriage markets. Comparing rGE across societies or over time is
 beyond our scope here, but we see it as a good area for future work.
 Marriage markets may play an important role in explaining how social
-inequality varies across different societies. More broadly, the
-correlation between genetics and social status does not undermine our
-concern with social inequality; rather, since it is a social outcome, it
-is itself one dimension of social inequality. Genes, like other kinds of
-resource, are distributed unequally by social systems.
+inequality varies across different societies.
 
-Over history, the marriage market mechanism has probably operated in a
-much greater variety of societies than the labour market mechanism,
+Over history, SGAM has probably operated in a
+much greater variety of societies than earned status,
 because societies in which status can be earned are relatively rare
 compared to those in which status is inherited. (TODO: cite WEIRD? Or
 "status vs contract"?) As a result, we would predict long-standing
@@ -1352,29 +1356,41 @@ correlations between social status and causal genetic variants. This
 prediction could be tested on ancient DNA data.
 
 Our analysis also has implications for the practice of controlling
-polygenic scores by partialling out principal components of genetic
+polygenic scores by residualizing on principal components of genetic
 data. This is done so as to avoid confounding the effects of genetic
 variation with social stratification. However, insofar as the
 geneticists' concept of stratification (mating which is non-random with
 respect to genetics) overlaps with the sociological concept of
-stratification (a hierarchical ranking of social status), stratification
-will predictably associate with causally relevant genetic variants. For
+stratification (a hierarchical ranking of social status), SGAM predicts
+that stratification will be associated with causally relevant genetic variants. For
 this reason, we would expect principal components to contain real
 information about causally relevant variants. So, it is an empirical
 question whether controlling for principal components improves or
 weakens the predictive power of polygenic scores. Within-family analyses
 could resolve this question.
 
-In popular media, and sometimes by social scientists, genetics are often
-thought of as an external, "natural" constraint on social structure.
-This is one reason why behaviour genetics remains a controversial topic.
-The broadest message of our research is that individual genetics are a
-social outcome like any other. They can even be viewed as another form
+The broadest message of this paper is that *genetics are a social outcome*.
+Both popular and scientific discourse often
+parse genetics as "nature", in opposition to "nurture" or "society" [e.g.
+@plomin1994genetics; @chakravarti2003nature]. This idea expresses the fact that our
+genetic endowment is fixed at birth and cannot be influenced by our
+social environment (though genes may interact with the environment to cause
+different outcomes). But the idea that human
+genetics are natural can be highly misleading. Humans inherit their
+genes from their parents, along with other forms of inheritance such as
+economic and cultural capital. Human parents, in turn, form spouse
+pairs, bear children, and raise them, within social institutions. A person's
+genetic inheritance is a social and historical fact about them, and not
+a fact of nature, any more than their inherited wealth or social status
+is natural. As [@marx1844economic] wrote, "History is the true natural
+history of man".[^marx] Genetic endowments can even be viewed as another form
 of capital, alongside human, social and cultural capital: a resource to
 be sought, accumulated and competed over. The analysis of this kind of
-capital is an exciting area for further research, which collaborating
-teams of social scientists and geneticists will be well-placed to
-exploit.
+capital is an exciting area for further research, which will require the
+contributions of both social scientists and geneticists.
+
+[^marx]: He also wrote (ibid.) "I am ugly, but I can buy the most beautiful woman.... 
+the effect of ugliness, its repelling power, is destroyed by money".
 
 \FloatBarrier
 
