@@ -192,14 +192,16 @@ clean_famhist <- function (famhist, score_names, ashe_income) {
   # a few people give varying answers, we assume median is fine.
   # including later answers picks up c. 10K extra people.
   # some people have a non-integer median; we round down.
-  famhist$n_older_sibs <- floor(matrixStats::rowMedians(
+  famhist$birth_order <- floor(matrixStats::rowMedians(
     as.matrix(famhist[c("f.5057.0.0", "f.5057.1.0", "f.5057.2.0")]),
     na.rm = TRUE
   ))
-  famhist$n_older_sibs[famhist$n_sibs == 1] <- 0
+  famhist$birth_order[famhist$n_sibs == 1] <- 0
+  # number of older siblings, plus one:
+  famhist$birth_order <- famhist$birth_order + 1
   # TODO: how does this come about??? Stupid answers?
-  famhist$n_older_sibs[famhist$n_older_sibs >= famhist$n_sibs] <- NA
-  # TODO: why is n_older_sibs often NaN?
+  famhist$birth_order[famhist$birth_order >= famhist$n_sibs] <- NA
+  # TODO: why is birth_order often NaN?
   # TODO: why is f.5057 often NA when n_sibs == 1? And why often NA in general
   
   # TODO: minimum fath_age_birth is 3, moth_age_birth is 0... Why?
@@ -246,6 +248,86 @@ subset_resid_scores <- function (resid_scores_raw, famhist, score_names) {
   resid_scores[paste0(score_names, "_resid")] %<>% scale()
   
   resid_scores
+}
+
+
+make_mf_pairs <- function (alto_file, famhist, resid_scores) {
+  # IDEA
+  # pick out every set of people who are living at the same coordinate at UKB
+  # assessment 1.
+  # count the number within each set who are living with their spouse at that time.
+  # if that number is exactly 2, include both people who are living with their spouse.
+  # otherwise don't (not a couple, or multiple couples and can't identify)
+  alto <- read_csv(alto_file)
+  alto %<>% 
+    filter(grepl("1", UKB_assessment.nrs)) %>% 
+    left_join(
+      famhist %>% dplyr::select(f.eid, f.6141.0.0, female), 
+      by = c("ID" = "f.eid")
+    ) %>% 
+    group_by(coordinate_ID) %>% 
+    mutate(n_with_spouse = sum(f.6141.0.0 == 1)) 
+
+  spouse_pairs <- alto %>% 
+                    filter(n_with_spouse == 2, f.6141.0.0 == 1) %>% 
+                    dplyr::select(ID, coordinate_ID, female) %>% 
+                    arrange(coordinate_ID, female)
+
+  # check we only have couples
+  ns <- spouse_pairs %>% group_by(coordinate_ID) %>% count() %>% pull(n)
+  stopifnot(all(ns == 2))
+
+  # only use heterosexual couples. (Others could be gay, or could be mistakes?)
+  spouse_pairs %<>% 
+    group_by(coordinate_ID) %>% 
+    mutate(hetero = (sum(female) == 1)) %>% 
+    filter(hetero) %>% 
+    dplyr::select(-hetero)
+  
+  # reshape to side-by-side
+  mf_pairs <- matrix(spouse_pairs$ID, ncol = 2, byrow = TRUE)
+  colnames(mf_pairs) <- c("f.eid.m", "f.eid.f")
+  mf_pairs %<>% tibble::as_tibble()
+
+  # merge with the famhist data
+  famhist_tmp <- famhist %>% 
+                left_join(resid_scores, by = "f.eid") %>% 
+                dplyr::select(
+                  f.eid, f.6138.0.0, matches("f.6141"), f.52.0.0, female,
+                  matches("_resid$"), nbro, nsis,
+                  n_sibs, birth_order, university, age_at_recruitment, YOB,
+                  age_fulltime_edu, age_fte_cat, income_cat, birth_sun,
+                  birth_mon, n_children, fath_age_birth, moth_age_birth,
+                  first_job_pay, sr_health, illness, fluid_iq
+                )
+  mf_pairs %<>% 
+    left_join(famhist_tmp, by = c("f.eid.m" = "f.eid")) %>% 
+    left_join(famhist_tmp, by = c("f.eid.f" = "f.eid"), suffix = c(".m", ".f"))
+
+  mf_pairs$EA3.m <- mf_pairs$EA3_excl_23andMe_UK_resid.m
+  mf_pairs$EA3.f <- mf_pairs$EA3_excl_23andMe_UK_resid.f
+
+  mf_pairs$couple_id <- paste0(mf_pairs$f.eid.m, "_", mf_pairs$f.eid.f)
+  
+  mf_pairs
+}
+
+
+make_mf_pairs_twice <- function (mf_pairs) {
+  mf_pairs$x <- "Male"
+  
+  mf_pairs_rebadged <- mf_pairs
+  mf_pairs_rebadged$x <- "Female"
+  
+  names(mf_pairs_rebadged) <- sub("\\.f$", ".mxxx", names(mf_pairs_rebadged))
+  names(mf_pairs_rebadged) <- sub("\\.m$", ".f", names(mf_pairs_rebadged))
+  names(mf_pairs_rebadged) <- sub("\\.mxxx$", ".m", names(mf_pairs_rebadged))
+  
+  mf_pairs_twice <- bind_rows(mf_pairs, mf_pairs_rebadged)
+  names(mf_pairs_twice) <- sub("\\.m", ".x", names(mf_pairs_twice))
+  names(mf_pairs_twice) <- sub("\\.f", ".y", names(mf_pairs_twice))
+  
+  mf_pairs_twice
 }
 
 
@@ -296,86 +378,6 @@ compute_sunshine <- function (famhist, sun_dir) {
   }
   
   return(famhist)
-}
-
-
-make_mf_pairs <- function (alto_file, famhist, resid_scores) {
-  # IDEA
-  # pick out every set of people who are living at the same coordinate at UKB
-  # assessment 1.
-  # count the number within each set who are living with their spouse at that time.
-  # if that number is exactly 2, include both people who are living with their spouse.
-  # otherwise don't (not a couple, or multiple couples and can't identify)
-  alto <- read_csv(alto_file)
-  alto %<>% 
-    filter(grepl("1", UKB_assessment.nrs)) %>% 
-    left_join(
-      famhist %>% dplyr::select(f.eid, f.6141.0.0, female), 
-      by = c("ID" = "f.eid")
-    ) %>% 
-    group_by(coordinate_ID) %>% 
-    mutate(n_with_spouse = sum(f.6141.0.0 == 1)) 
-
-  spouse_pairs <- alto %>% 
-                    filter(n_with_spouse == 2, f.6141.0.0 == 1) %>% 
-                    dplyr::select(ID, coordinate_ID, female) %>% 
-                    arrange(coordinate_ID, female)
-
-  # check we only have couples
-  ns <- spouse_pairs %>% group_by(coordinate_ID) %>% count() %>% pull(n)
-  stopifnot(all(ns == 2))
-
-  # only use heterosexual couples. (Others could be gay, or could be mistakes?)
-  spouse_pairs %<>% 
-    group_by(coordinate_ID) %>% 
-    mutate(hetero = (sum(female) == 1)) %>% 
-    filter(hetero) %>% 
-    dplyr::select(-hetero)
-  
-  # reshape to side-by-side
-  mf_pairs <- matrix(spouse_pairs$ID, ncol = 2, byrow = TRUE)
-  colnames(mf_pairs) <- c("f.eid.m", "f.eid.f")
-  mf_pairs %<>% tibble::as_tibble()
-
-  # merge with the famhist data
-  famhist_tmp <- famhist %>% 
-                left_join(resid_scores, by = "f.eid") %>% 
-                dplyr::select(
-                  f.eid, f.6138.0.0, matches("f.6141"), f.52.0.0, female,
-                  matches("_resid$"),
-                  n_sibs, n_older_sibs, university, age_at_recruitment, YOB,
-                  age_fulltime_edu, age_fte_cat, income_cat, birth_sun,
-                  birth_mon, n_children, fath_age_birth, moth_age_birth,
-                  first_job_pay, sr_health, illness, fluid_iq
-                )
-  mf_pairs %<>% 
-    left_join(famhist_tmp, by = c("f.eid.m" = "f.eid")) %>% 
-    left_join(famhist_tmp, by = c("f.eid.f" = "f.eid"), suffix = c(".m", ".f"))
-
-  mf_pairs$EA3.m <- mf_pairs$EA3_excl_23andMe_UK_resid.m
-  mf_pairs$EA3.f <- mf_pairs$EA3_excl_23andMe_UK_resid.f
-
-  mf_pairs$couple_id <- paste0(mf_pairs$f.eid.m, "_", mf_pairs$f.eid.f)
-  
-  mf_pairs
-}
-
-
-make_mf_pairs_twice <- function (mf_pairs) {
-  mf_pairs$x <- "Male"
-  
-  mf_pairs_rebadged <- mf_pairs
-  mf_pairs_rebadged$x <- "Female"
-  
-  names(mf_pairs_rebadged) <- sub("\\.f$", ".mxxx", names(mf_pairs_rebadged))
-  names(mf_pairs_rebadged) <- sub("\\.m$", ".f", names(mf_pairs_rebadged))
-  names(mf_pairs_rebadged) <- sub("\\.mxxx$", ".m", names(mf_pairs_rebadged))
-  
-  mf_pairs_twice <- bind_rows(mf_pairs, mf_pairs_rebadged)
-  names(mf_pairs_twice) <- sub("\\.m", ".x", names(mf_pairs_twice))
-  names(mf_pairs_twice) <- sub("\\.f", ".y", names(mf_pairs_twice))
-  
-  mf_pairs_twice
 }
 
 

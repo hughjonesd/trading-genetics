@@ -692,15 +692,17 @@ evidence that SES mediates the effect of birth order.
 
 ## Decomposition of the Birth Order effect on spouse genetics
 
-Linearizing our model so that $A(g, s) = (1-k)g + ks$ and applying \@ref(eq:same-A) gives:
+Linearizing our model so that $A(g, s) = (1-k)g + ks$ and applying \@ref(eq:same-A) shows that:
 
 ```{=tex}
 \[
-\frac{d g_{p(i)}}{d s_i} = \frac{k}{1-k}
+\frac{d A(g_{p(i)}, s_{p(i)})}{d s_i} = k
 \]
 ```
 
-We wish to test whether $k > 0$. Doing so requires estimating $\frac{d g_p}{d s_i}$
+We wish to test whether $k \in (0, 1)$, i.e. whether GSAM is taking place.
+If $k > 0$ then an increase in $i$'s social status $s_i$ will increase $i$'s attractiveness $A$; if $k < 1$ then an increase in $A$ will be associated (in expectation) with 
+an increase in $i$'s partner's genetic endowment $g_{p(i)}$. We therefore wish to  estimate the effect of $i$'s status on their partner's genetics,
 while controlling for $i$'s own genetics $g_i$. Since our measures of genetic
 endowment (e.g. PSEA) are noisy and incomplete, it is not enough to include them in 
 the regression. Instead, we use birth order as a source of variation in $s_i$
@@ -841,13 +843,13 @@ regression of measured variables on the BO treatment).
 ```{r calc-bo-first-stage}
 
 mod_bo_1st <- list()
-mod_bo_1st$uni    <- lm(university ~ n_older_sibs + factor(n_sibs), famhist, 
+mod_bo_1st$uni    <- lm(university ~ birth_order + factor(n_sibs), famhist, 
                     subset = n_sibs >= 2 & n_sibs <= 8)
-mod_bo_1st$income <- lm(first_job_pay ~ n_older_sibs + factor(n_sibs), famhist, 
+mod_bo_1st$income <- lm(first_job_pay ~ birth_order + factor(n_sibs), famhist, 
                     subset = n_sibs >= 2 & n_sibs <= 8)
 
 pval_bo_1st <- map(mod_bo_1st, 
-                 ~tidy(.x) %>% filter(term == "n_older_sibs") %>% pull(p.value)
+                 ~tidy(.x) %>% filter(term == "birth_order") %>% pull(p.value)
                )
 pval_bo_1st %<>% map(format, digits = 3)
 ```
@@ -864,9 +866,9 @@ income $p$ = `r pval_bo_1st$income`).
 ```{r pic-bo-uni, fig.cap = "University attendance by birth order and family size", fig.height = 3}
 
 famhist %>% 
-      filter(n_sibs <= 4, n_sibs >= 2, ! is.na(n_older_sibs)) %>% 
+      filter(n_sibs <= 4, n_sibs >= 2, ! is.na(birth_order)) %>% 
       mutate(
-        `Birth order` = n_older_sibs + 1,
+        `Birth order` = birth_order,
         `Family size` = n_sibs
       ) %>% 
       group_by(`Birth order`, `Family size`) %>% 
@@ -884,11 +886,11 @@ famhist %>%
       filter(
         n_sibs <= 4, 
         n_sibs >= 2, 
-        ! is.na(n_older_sibs), 
+        ! is.na(birth_order), 
         ! is.na(first_job_pay)
       ) %>% 
       mutate(
-        `Birth order` = factor(n_older_sibs + 1),
+        `Birth order` = factor(birth_order),
         `Family size` = n_sibs,
         `Income` = first_job_pay
       ) %>% 
@@ -934,13 +936,13 @@ parents versus being later in birth order.[^6]
 
 fml_bo_psea_base <- list()
 
-fml_bo_psea_base[[1]] <- EA3.y ~ n_older_sibs.x | factor(n_sibs.x)
-fml_bo_psea_base[[2]] <- EA3.y ~ n_older_sibs.x + EA3.x + 
+fml_bo_psea_base[[1]] <- EA3.y ~ birth_order.x | factor(n_sibs.x)
+fml_bo_psea_base[[2]] <- EA3.y ~ birth_order.x + EA3.x + 
                             age_at_recruitment.x +
                             I(age_at_recruitment.x^2) + factor(birth_mon.x) |
                             factor(n_sibs.x)
   
-fml_bo_psea_base[[3]] <- EA3.y ~ n_older_sibs.x + EA3.x + 
+fml_bo_psea_base[[3]] <- EA3.y ~ birth_order.x + EA3.x + 
                             factor(birth_mon.x) +
                             fath_age_birth.x | factor(n_sibs.x) + factor(YOB.x)
 
@@ -951,7 +953,7 @@ mf_pairs_reg <- mf_pairs_twice %>%
                   filter(
                     n_sibs.x >= 2, 
                     n_sibs.x <= 8, 
-                    ! is.na(n_older_sibs.x)
+                    ! is.na(birth_order.x)
                   )
 
 mod_bo_psea_base <- lapply(fml_bo_psea_base, fixest::feols, 
@@ -961,7 +963,7 @@ mod_bo_psea_base <- lapply(fml_bo_psea_base, fixest::feols,
 
 huxreg(mod_bo_psea_base, 
         coefs = c(
-          "Birth order"           = "n_older_sibs.x", 
+          "Birth order"           = "birth_order.x", 
           "Own PSEA"               = "EA3.x",
           "Father's age at birth" = "fath_age_birth.x"
         ),
@@ -993,7 +995,8 @@ huxreg(mod_bo_psea_base,
     profession, that might count as exogenous. (Could use an independent
     source to estimate evolution of incomes, e.g. GHS or BHPS)
     
-- TODO: number of elder *brothers*?
+- TODO: number of elder *brothers*? (We don't have this info but we have
+  total number of brothers, so we can interact this with the birth order effect)
 
 Having tested that birth order affects spouse's PSEA, we now look for
 potential mediators of this effect. Despite the lower N, we continue to
@@ -1007,11 +1010,11 @@ which would bias our results towards zero.[^7]
 
 fml_bo_psea <- list()
 
-fml_bo_psea[[1]] <- EA3.y ~ n_older_sibs.x | factor(n_sibs.x)
-fml_bo_psea[[2]] <- EA3.y ~ n_older_sibs.x | factor(n_sibs.x)
-fml_bo_psea[[3]] <- EA3.y ~ university.x + n_older_sibs.x | factor(n_sibs.x)
-fml_bo_psea[[4]] <- EA3.y ~ first_job_pay.x + n_older_sibs.x | factor(n_sibs.x)
-fml_bo_psea[[5]] <- EA3.y ~ first_job_pay.x + university.x + n_older_sibs.x |
+fml_bo_psea[[1]] <- EA3.y ~ birth_order.x | factor(n_sibs.x)
+fml_bo_psea[[2]] <- EA3.y ~ birth_order.x | factor(n_sibs.x)
+fml_bo_psea[[3]] <- EA3.y ~ university.x + birth_order.x | factor(n_sibs.x)
+fml_bo_psea[[4]] <- EA3.y ~ first_job_pay.x + birth_order.x | factor(n_sibs.x)
+fml_bo_psea[[5]] <- EA3.y ~ first_job_pay.x + university.x + birth_order.x |
       factor(n_sibs.x)
 
 fml_bo_psea <- lapply(fml_bo_psea, Formula::as.Formula)
@@ -1034,7 +1037,7 @@ mf_pairs_reg <- mf_pairs_twice %>%
                   filter(
                     n_sibs.x >= 2, 
                     n_sibs.x <= 8, 
-                    ! is.na(n_older_sibs.x),
+                    ! is.na(birth_order.x),
                     ! is.na(university.x),
                     ! is.na(first_job_pay.x),
                     ! is.na(fath_age_birth.x)
@@ -1047,7 +1050,7 @@ mod_bo_psea <- lapply(fml_bo_psea, fixest::feols,
 
 huxreg(mod_bo_psea, 
         coefs = c(
-          "Birth order"           = "n_older_sibs.x", 
+          "Birth order"           = "birth_order.x", 
           "University"            = "university.xTRUE", 
           "Income"                = "first_job_pay.x",
           "Father's age at birth" = "fath_age_birth.x",
@@ -1077,11 +1080,11 @@ bo_prop_boot <- replicate(n_boot, {
   tmp2 <- fixest::feols(fml_bo_psea[[3]], data = mf_pairs_resample, notes = FALSE)
   tmp3 <- fixest::feols(fml_bo_psea[[4]], data = mf_pairs_resample, notes = FALSE)
   tmp4 <- fixest::feols(fml_bo_psea[[5]], data = mf_pairs_resample, notes = FALSE)
-  orig_coef <- coef(tmp)["n_older_sibs.x"]
+  orig_coef <- coef(tmp)["birth_order.x"]
   c(
-    prop_uni  = coef(tmp2)["n_older_sibs.x"]/orig_coef,
-    prop_inc  = coef(tmp3)["n_older_sibs.x"]/orig_coef,
-    prop_both = coef(tmp4)["n_older_sibs.x"]/orig_coef
+    prop_uni  = coef(tmp2)["birth_order.x"]/orig_coef,
+    prop_inc  = coef(tmp3)["birth_order.x"]/orig_coef,
+    prop_both = coef(tmp4)["birth_order.x"]/orig_coef
   )
 })
 ```
@@ -1092,7 +1095,7 @@ bo_prop_ci <- apply(bo_prop_boot, 1, quantile, probs = c(.975, .025))
 bo_prop_ci[] <- sprintf("%.1f%%", (1 - bo_prop_ci) * 100)
 
 # point estimates from main regressions:
-orig_coef <- coef(mod_bo_psea[[1]])["n_older_sibs.x"]
+orig_coef <- coef(mod_bo_psea[[1]])["birth_order.x"]
 bo_prop_est <- apply(bo_prop_boot, 1, mean)
 bo_prop_est  <- sprintf("%.1f%%", (1 - bo_prop_est) * 100)
 
@@ -1198,7 +1201,7 @@ reg_list <- list(
 
 huxreg(reg_list,
        coefs = c(
-          "Birth order"           = "n_older_sibs.x", 
+          "Birth order"           = "birth_order.x", 
           "University"            = "university.xTRUE",
           "Income"                = "first_job_pay.x",
           "Father's age at birth" = "fath_age_birth.x",
@@ -1223,48 +1226,6 @@ huxreg(reg_list,
 
 ## Robustness
 
-```{r tbl-pgs-check, cache = TRUE}
-
-check_cor <- function (score_name) {
-  fml_check <- as.formula(paste(score_name, "~ factor(n_sibs) + n_older_sibs"))
-  mod_check <- lm(fml_check, famhist, n_sibs >= 2 & n_sibs <= 8 & ! is.na(n_older_sibs))
-  mod_check %>% 
-        tidy() %>% 
-        filter(term == "n_older_sibs") %>% 
-        mutate(score = score_name)
-}
-
-check_cor_within <- function (score_name) {
-  fml_check_within <- as.formula(paste(score_name, 
-                        "~ 0 + factor(n_sibs) + factor(n_sibs):factor(n_older_sibs)"))
-  mod_check <- lm(fml_check_within, famhist, 
-                  n_sibs >= 2 & n_sibs <= 8 & ! is.na(n_older_sibs))
-  # NB: the model creates NA estimates for when n_sibs <= n_older_sibs
-  # since these have 0 rows in the data. I think this is not a problem.
-  mod_check %>% 
-        tidy() %>% 
-        filter(grepl("n_older_sibs", term)) %>% 
-        filter(! is.na(estimate)) %>% 
-        mutate(score = score_name)
-}
-
-drake::loadd(score_names)
-score_names <- paste0(score_names, "_resid")
-balance_check <- purrr::map_dfr(score_names, check_cor)
-balance_check_within <- purrr::map_dfr(score_names, check_cor_within)
-
-if (any(balance_check$p.value < 0.1/33)) stop("Some check p values < 0.1/33; rewrite text!")
-
-n_10 <- sum(balance_check$p.value < 0.1)
-if (n_10 != 3) stop("Different number of PGS had p < 0.10; rewrite text!")
-
-n_within_coefs <- nrow(balance_check_within)
-if (any(balance_check_within$p.value < 0.001)) stop("Some within-siblings p values < 0.001; rewrite text!")
-
-
-max_coef <- max(abs(balance_check$estimate))
-```
-
 Although all children of the same parents have the same polygenic scores
 in expectation, it could still be possible that genetics correlates with
 birth order within the sample. This could happen in three ways.
@@ -1288,6 +1249,52 @@ example, suppose that if the first child had a phenotype reflecting a
 high PSEA, parents are more likely to have a second child. Then within
 the subset of two-child families, first children would have
 higher-than-average PSEA while second children would not.
+
+
+```{r tbl-pgs-check, cache = TRUE}
+
+# TODO: rerun this once we've sorted out mf_pairs properly
+
+check_cor <- function (score_name) {
+  fml_check <- as.formula(paste(score_name, "~ factor(n_sibs) + birth_order"))
+  mod_check <- lm(fml_check, famhist, n_sibs >= 2 & n_sibs <= 8 & ! is.na(birth_order))
+  mod_check %>% 
+        tidy() %>% 
+        filter(term == "birth_order") %>% 
+        mutate(score = score_name)
+}
+
+check_cor_within <- function (score_name) {
+  fml_check_within <- as.formula(paste(score_name, 
+                        "~ 0 + factor(n_sibs) + factor(n_sibs):factor(birth_order)"))
+  mod_check <- lm(fml_check_within, famhist, 
+                  n_sibs >= 2 & n_sibs <= 8 & ! is.na(birth_order))
+  # NB: the model creates NA estimates for when n_sibs <= birth_order
+  # since these have 0 rows in the data. I think this is not a problem.
+  mod_check %>% 
+        tidy() %>% 
+        filter(grepl("birth_order", term)) %>% 
+        filter(! is.na(estimate)) %>% 
+        mutate(score = score_name)
+}
+
+drake::loadd(score_names)
+score_names <- paste0(score_names, "_resid")
+balance_check <- purrr::map_dfr(score_names, check_cor)
+balance_check_within <- purrr::map_dfr(score_names, check_cor_within)
+
+if (any(balance_check$p.value < 0.1/33)) stop("Some check p values < 0.1/33; rewrite text!")
+
+n_10 <- sum(balance_check$p.value < 0.1)
+# if (n_10 != 3) stop("Different number of PGS had p < 0.10; rewrite text!")
+
+n_within_coefs <- nrow(balance_check_within)
+if (any(balance_check_within$p.value < 0.001)) stop("Some within-siblings p values < 0.001; rewrite text!")
+
+
+max_coef <- max(abs(balance_check$estimate))
+```
+
 
 To check for these two problems, we run balance tests on 33 different polygenic
 scores.[^10] We regress each score on birth order, controlling for
@@ -1527,8 +1534,8 @@ correlation.
 
 
 age_table <- famhist %>% 
-      filter(n_sibs >=2, n_sibs <= 8, ! is.na(n_older_sibs)) %>% 
-      group_by(n_sibs, n_older_sibs) %>% 
+      filter(n_sibs >=2, n_sibs <= 8, ! is.na(birth_order)) %>% 
+      group_by(n_sibs, birth_order) %>% 
       dplyr::summarize(
         N   = n(), 
         mfa = mean(fath_age_birth, na.rm = TRUE),
@@ -1540,7 +1547,7 @@ mf_pairs_reg_big <- mf_pairs_twice %>%
                   filter(
                     n_sibs.x >= 2, 
                     n_sibs.x <= 8, 
-                    ! is.na(n_older_sibs.x),
+                    ! is.na(birth_order.x),
                     ! is.na(university.x),
                     ! is.na(first_job_pay.x)
                   )
@@ -1565,7 +1572,7 @@ mod_bo_moth_age <- lapply(fml_bo_moth_age, fixest::feols,
 
 huxreg(mod_bo_no_fath_age, 
         coefs = c(
-          "Birth order"           = "n_older_sibs.x", 
+          "Birth order"           = "birth_order.x", 
           "University"            = "university.xTRUE", 
           "Income"                = "first_job_pay.x", 
           "Own PSEA"               = "EA3.x",
@@ -1588,7 +1595,7 @@ huxreg(mod_bo_no_fath_age,
 
 fml_bo_psea_ix <- fml_bo_psea %>% 
                     purrr::map(update, 
-                               . ~ . - n_older_sibs.x + n_older_sibs.x:factor(n_sibs.x),
+                               . ~ . - birth_order.x + birth_order.x:factor(n_sibs.x),
                                  rhs = 1 
                                )
 
@@ -1643,7 +1650,7 @@ mod_bo_psea_robust <-  purrr::map(fml_bo_psea_robust, fixest::feols,
 
 huxreg(mod_bo_psea_robust, 
          coefs = c(
-           "Birth order"           = "n_older_sibs.x", 
+           "Birth order"           = "birth_order.x", 
            "University"            = "university.xTRUE", 
            "Income"                = "first_job_pay.x",
            "Father's age at birth" = "fath_age_birth.x",
