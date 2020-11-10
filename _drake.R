@@ -200,7 +200,7 @@ clean_famhist <- function (famhist, score_names, ashe_income) {
   # number of older siblings, plus one:
   famhist$birth_order <- famhist$birth_order + 1
   # TODO: how does this come about??? Stupid answers?
-  famhist$birth_order[famhist$birth_order >= famhist$n_sibs] <- NA
+  famhist$birth_order[famhist$birth_order > famhist$n_sibs] <- NA
   # TODO: why is birth_order often NaN?
   # TODO: why is f.5057 often NA when n_sibs == 1? And why often NA in general
   
