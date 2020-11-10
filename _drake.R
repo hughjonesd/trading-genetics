@@ -200,7 +200,7 @@ clean_famhist <- function (famhist, score_names, ashe_income) {
   # number of older siblings, plus one:
   famhist$birth_order <- famhist$birth_order + 1
   # TODO: how does this come about??? Stupid answers?
-  famhist$birth_order[famhist$birth_order >= famhist$n_sibs] <- NA
+  famhist$birth_order[famhist$birth_order > famhist$n_sibs] <- NA
   # TODO: why is birth_order often NaN?
   # TODO: why is f.5057 often NA when n_sibs == 1? And why often NA in general
   
@@ -291,7 +291,18 @@ make_mf_pairs <- function (mf_pairs_file, famhist, resid_scores) {
   
   # do they both have the same number of kids?
   mf_pairs %<>% filter(n_children_t0.m ==  n_children_t0.f)
-   
+  
+  # only unambiguous monog pairs...
+  # avoided because it kills the N; but without it we still have many
+  # men/women paired with multiple spouses.
+  # TODO: fix
+  # mf_pairs %<>% 
+  #   group_by(ID.m) %>% 
+  #   filter(n() == 1) %>% 
+  #   ungroup() %>% 
+  #   group_by(ID.f) %>% 
+  #   filter(n() == 1) 
+  
   mf_pairs$EA3.m <- mf_pairs$EA3_excl_23andMe_UK_resid.m
   mf_pairs$EA3.f <- mf_pairs$EA3_excl_23andMe_UK_resid.f
 
