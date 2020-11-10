@@ -586,18 +586,20 @@ people's children will also have higher PSEA.
 ```{r pic-basic-corr-uni, fig.subcap = c("Female PSEA by male educational attainment", "Male PSEA by female educational attainment"), fig.cap = "Social and genetic advantage among spouse pairs in UK Biobank", fig.width = 3, fig.height = 3}
 
 pic_ss <- stat_summary(fun.data = mean_cl_normal, na.rm = TRUE)
-pic_cc <- coord_cartesian(ylim = c(-0.05, 0.2))
+pic_cc <- coord_cartesian(ylim = c(-0.2, 0.2))
 
 mf_pairs %>% 
       filter(! is.na(university.m)) %>% 
       ggplot(aes(university.m, EA3.f)) + 
-        pic_ss + pic_cc +
+        pic_ss + 
+        pic_cc +
         labs(x = "Male university attendance", y = "Female PSEA")
 
 mf_pairs %>% 
       filter(! is.na(university.f)) %>% 
       ggplot(aes(university.f, EA3.m)) + 
-        pic_ss + pic_cc +
+        pic_ss + 
+        pic_cc +
         labs(x = "Female university attendance", y = "Male PSEA")
         
 ```
