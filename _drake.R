@@ -251,64 +251,50 @@ subset_resid_scores <- function (resid_scores_raw, famhist, score_names) {
 }
 
 
-make_mf_pairs <- function (alto_file, famhist, resid_scores) {
-  # IDEA
-  # pick out every set of people who are living at the same coordinate at UKB
-  # assessment 1.
-  # count the number within each set who are living with their spouse at that time.
-  # if that number is exactly 2, include both people who are living with their spouse.
-  # otherwise don't (not a couple, or multiple couples and can't identify)
-  alto <- read_csv(alto_file)
-  alto %<>% 
-    filter(grepl("1", UKB_assessment.nrs)) %>% 
-    left_join(
-      famhist %>% dplyr::select(f.eid, f.6141.0.0, female), 
-      by = c("ID" = "f.eid")
-    ) %>% 
-    group_by(coordinate_ID) %>% 
-    mutate(n_with_spouse = sum(f.6141.0.0 == 1)) 
-
-  spouse_pairs <- alto %>% 
-                    filter(n_with_spouse == 2, f.6141.0.0 == 1) %>% 
-                    dplyr::select(ID, coordinate_ID, female) %>% 
-                    arrange(coordinate_ID, female)
-
-  # check we only have couples
-  ns <- spouse_pairs %>% group_by(coordinate_ID) %>% count() %>% pull(n)
-  stopifnot(all(ns == 2))
-
-  # only use heterosexual couples. (Others could be gay, or could be mistakes?)
-  spouse_pairs %<>% 
-    group_by(coordinate_ID) %>% 
-    mutate(hetero = (sum(female) == 1)) %>% 
-    filter(hetero) %>% 
-    dplyr::select(-hetero)
+make_mf_pairs <- function (mf_pairs_file, famhist, resid_scores) {
+  mf_pairs <- read_csv(mf_pairs_file, col_types = "dddccccc")
   
-  # reshape to side-by-side
-  mf_pairs <- matrix(spouse_pairs$ID, ncol = 2, byrow = TRUE)
-  colnames(mf_pairs) <- c("f.eid.m", "f.eid.f")
-  mf_pairs %<>% tibble::as_tibble()
-
-  # merge with the famhist data
   famhist_tmp <- famhist %>% 
-                left_join(resid_scores, by = "f.eid") %>% 
-                dplyr::select(
-                  f.eid, f.6138.0.0, matches("f.6141"), f.52.0.0, female,
-                  matches("_resid$"), nbro, nsis,
-                  n_sibs, birth_order, university, age_at_recruitment, YOB,
-                  age_fulltime_edu, age_fte_cat, income_cat, birth_sun,
-                  birth_mon, n_children, fath_age_birth, moth_age_birth,
-                  first_job_pay, sr_health, illness, fluid_iq
-                )
+                  left_join(resid_scores, by = "f.eid") %>% 
+                  dplyr::select(
+                    f.eid, f.6138.0.0, matches("f.6141"), f.52.0.0, f.2405.0.0,
+                    f.2734.0.0,
+                    matches("_resid$"),
+                    n_sibs, birth_order, university, age_at_recruitment, YOB,
+                    age_fulltime_edu, age_fte_cat, income_cat, birth_sun,
+                    birth_mon, n_children, fath_age_birth, moth_age_birth,
+                    first_job_pay, sr_health, illness, fluid_iq
+                  ) %>% 
+                  mutate(
+                    n_children_t0 = pmax(f.2405.0.0, f.2734.0.0, na.rm = TRUE)
+                  )
+  
   mf_pairs %<>% 
-    left_join(famhist_tmp, by = c("f.eid.m" = "f.eid")) %>% 
-    left_join(famhist_tmp, by = c("f.eid.f" = "f.eid"), suffix = c(".m", ".f"))
-
+    left_join(famhist_tmp, by = c("ID.m" = "f.eid")) %>% 
+    left_join(famhist_tmp, by = c("ID.f" = "f.eid"), suffix = c(".m", ".f"))
+  
+  mf_pairs$couple_id <- paste(mf_pairs$ID.m, mf_pairs$ID.f, sep = "_")
+  mf_pairs %<>% distinct(couple_id, .keep_all = TRUE)
+  
+  # at any time,
+  # do both say they are "living with spouse"?
+  # almost all are at visit 1 (and maybe others also)
+  mf_pairs %<>% mutate(
+                  ever_lived_with_spouse = (
+                                       (f.6141.0.0.m == 1 & f.6141.0.0.f == 1) |
+                                       (f.6141.1.0.m == 1 & f.6141.1.0.f == 1) |
+                                       (f.6141.2.0.m == 1 & f.6141.2.0.f == 1)
+                                     )
+                ) %>% 
+                filter(ever_lived_with_spouse) %>% 
+                select(-ever_lived_with_spouse)
+  
+  # do they both have the same number of kids?
+  mf_pairs %<>% filter(n_children_t0.m ==  n_children_t0.f)
+   
   mf_pairs$EA3.m <- mf_pairs$EA3_excl_23andMe_UK_resid.m
   mf_pairs$EA3.f <- mf_pairs$EA3_excl_23andMe_UK_resid.f
 
-  mf_pairs$couple_id <- paste0(mf_pairs$f.eid.m, "_", mf_pairs$f.eid.f)
-  
   mf_pairs
 }
 
@@ -420,7 +406,7 @@ plan <- drake_plan(
   ),
   
   mf_pairs = target(
-    make_mf_pairs(file_in(!! alto_file), famhist, resid_scores),
+    make_mf_pairs(file_in(!! mf_pairs_file), famhist, resid_scores),
     format = "fst"
   ),
   
