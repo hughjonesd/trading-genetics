@@ -258,6 +258,19 @@ make_mf_pairs <- function (alto_file, famhist, resid_scores) {
   # count the number within each set who are living with their spouse at that time.
   # if that number is exactly 2, include both people who are living with their spouse.
   # otherwise don't (not a couple, or multiple couples and can't identify)
+  # 
+  # TODO: - check raw data with Abdel
+  #       - use genetics to identify shared children
+  #       - use all time periods
+  #       - put couples together when they have the same number
+  #         of kids
+  #       - don't think we have birth year of kids for fathers :-(
+  #       
+  # 20.11.20: options
+  # 1. like that article, find people by household characteristics and location
+  #   - validate with children
+  # 2. just directly use couples who have a shared child
+  # 3. backup: UKHLS (nsibs and fampos are relevant variables for birth order)      
   alto <- read_csv(alto_file)
   alto %<>% 
     filter(grepl("1", UKB_assessment.nrs)) %>% 
