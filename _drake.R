@@ -1,5 +1,7 @@
 
 suppressPackageStartupMessages({
+  requireNamespace("tibble")
+  requireNamespace("tidyr")
   library(drake)
   requireNamespace("matrixStats")
   library(raster)
@@ -28,9 +30,13 @@ famhist_files <- file.path(data_dir, c(
                     "david.family_history.traits.18052020.out.csv",
                     "david.family_history.traits.17062020.out.csv",
                     "david.birthinfo.traits.14072020.out.csv",
-                    "david.traits.03112020.out.csv"
+                    "david.traits.03112020.out.csv",
+                    "david_traits.18112020.I.csv.out.csv",
+                    "david_traits.18112020.II.csv.out.csv",
+                    "david_traits.18112020.III.out.csv"
                   ))
 rgs_file       <- file.path(data_dir, "EA3_rgs.10052019.rgs.csv")
+relatedness_file <- file.path(data_dir, "relatedness_file.txt")
 mf_pairs_file  <- file.path(data_dir, "spouse_pair_info", 
                             "UKB_out.mf_pairs_rebadged.csv")
 alto_file <- file.path(data_dir, "spouse_pair_info", 
@@ -49,11 +55,26 @@ negative_to_na <- function (x) {
 
 import_famhist <- function (famhist_files, pgs_dir) {
 
-  fhl <- lapply(famhist_files, read_csv, col_types = cols(
-            .default = "d", 
+  col_types <- cols(
+            .default               = col_double(), 
             geno_measurement_plate = col_skip(),
-            geno_measurement_well  = col_skip()
-          ))
+            geno_measurement_well  = col_skip(),
+            `53-0.0`               = col_date(),
+            `53-1.0`               = col_date(),
+            `53-2.0`               = col_date()
+          )
+  
+  # this generates a "character" spec for all 22662-x.y columns
+  fake_csv_string <- paste0("22662-0.", 0:18, collapse = ",")
+  fake_csv_string <- paste0(fake_csv_string, "\n")
+  col_types_22662 <- spec_csv(fake_csv_string, 
+                                col_types = cols(
+                                  .default = col_character()
+                                )
+                              )
+  col_types$cols <- c(col_types$cols, col_types_22662$cols)
+  
+  fhl <-  lapply(famhist_files, read_csv, col_types = col_types)
   
   fhl[[1]] %<>% rename(f.eid = eid)
   fhl[-1] <- purrr::map(fhl[-1], ~ {
@@ -64,6 +85,17 @@ import_famhist <- function (famhist_files, pgs_dir) {
   
   famhist <- purrr::reduce(fhl, left_join, by = "f.eid")
 
+  # remove and rename some duplicated columns
+  dupes <- grep("\\.x$", names(famhist), value = TRUE)
+  for (dupe in dupes) {
+    dupe_y <- sub("\\.x$", ".y", dupe)
+    famhist[[dupe_y]] <- NULL
+  }
+  famhist %<>% rename_with(
+                 .fn = ~ sub("\\.x$", "", .x), 
+                 .cols = all_of(dupes)
+               )
+  
   # only self-identified, and genetically identified, white people
   famhist %<>% filter(f.21000.0.0 == 1001, ! is.na(genetic_ethnic_grouping))
   
@@ -84,6 +116,75 @@ import_pcs <- function (pcs_file) {
   pc_names <- grep("PC", names(pcs), value = TRUE)
   pcs[pc_names] <- scale(pcs[pc_names])
   pcs
+}
+
+
+create_relatedness <- function (relatedness_file) {
+  relatedness <- read_table2(relatedness_file, col_names = TRUE)
+
+  relatedness %<>% mutate(
+                     relation = santoku::chop(Kinship,
+                                   breaks = c(
+                                     1/2^(9/2), 
+                                     1/2^(7/2),
+                                     1/2^(5/2), 
+                                     1/2^(3/2)
+                                   ),
+                                   labels = c(
+                                     "unrelated", 
+                                     "deg3",
+                                     "deg2", 
+                                     "parentsib",
+                                      "mztwins"
+                                   )
+                                 ),
+                     relation = case_when(
+                       relation == "parentsib" & IBS0 < 0.0012  ~ "parents",
+                       relation == "parentsib" & IBS0 >= 0.0012 ~ "fullsibs",
+                       TRUE ~ as.character(relation)
+                     )
+                   )
+  
+  relatedness %<>% filter(relation != "unrelated") # remove the two rows with issues from the relatedness file 
+
+  relatedness
+}
+
+
+make_sib_groups <- function (relatedness) {
+  
+  # this beast takes the pairs of siblings found in relatedness, and
+  # converts them into a data frame of sibling groups, with a column for
+  # the group and a column for the id
+  sib_groups <- relatedness %>% 
+               filter(relation %in% c("fullsibs", "mztwins")) %>% 
+               select(ID1, ID2) %>% 
+               igraph::graph_from_data_frame(directed = FALSE) %>% 
+               igraph::max_cliques() %>%  # groups of full siblings
+               purrr::map(igraph::as_ids) %>% 
+               tibble::tibble() %>% 
+               setNames("id") %>% 
+               tibble::rowid_to_column("sib_group") %>% 
+               tidyr::unnest_longer(id) %>% 
+               mutate(
+                 sib_group = paste0("sg", sib_group),
+                 id = as.numeric(id)  # compatibility when joining
+               )
+
+  # we include mztwins because why not, but also because otherwise they
+  # create non-overlapping cliques
+  # a few people are in overlapping maximal cliques - typically because
+  # a-b and b-c are "fullsibs" but a-c is something less, e.g. "deg2".
+  # We delete these and then remove any people who have become "singletons"
+  sib_groups %<>% 
+                distinct(id, .keep_all = TRUE) %>% 
+                group_by(sib_group) %>% 
+                add_count() %>% 
+                filter(n > 1) %>% 
+                select(-n) %>% 
+                ungroup()
+  
+  sib_groups
 }
 
 
@@ -116,15 +217,21 @@ compute_resid_scores <- function (famhist, pcs, score_names) {
 }
 
 
-clean_famhist <- function (famhist, score_names, ashe_income) {
+clean_famhist <- function (famhist, score_names, sib_groups, ashe_income) {
   # we get very few extra cases from adding f.2946.1.0 etc, and it makes calculating
   # father's year of birth more complex
+  
+  # -10 means less than a year, we call that 0 full years
+  famhist$f.699.0.0[famhist$f.699.0.0 == -10] <- 0
+  famhist$f.699.1.0[famhist$f.699.1.0 == -10] <- 0
+  famhist$f.699.2.0[famhist$f.699.2.0 == -10] <- 0
   
   # remove negatives
   famhist %<>% mutate(across(
       c(age_fulltime_edu, starts_with(c(
         "f.2946", "f.1845", "f.2754", "f.738",  "f.2764", "f.2405", "f.2734",
-        "f.2149", "f.1873", "f.1883", "f.2784", "f.2794", "f.709",  "f.3872",
+        "f.2149", "f.1873", "f.1883", "f.2784", "f.2794", "f.709", 
+        "f.699", "f.3872", "f.728", "f.670", "f.680",
         "f.5057", "birth_lon", "birth_lat"
       ))), 
       negative_to_na
@@ -132,6 +239,7 @@ clean_famhist <- function (famhist, score_names, ashe_income) {
   )
   # -7 means "never went to school"
   famhist$f.6138.0.0[famhist$f.6138.0.0 == -3] <- NA
+  
   
   famhist$age_at_recruitment <- famhist$f.21022.0.0
   # questionnaire sex:
@@ -239,6 +347,8 @@ clean_famhist <- function (famhist, score_names, ashe_income) {
         mutate(first_job_pay = median_pay/1000) %>% 
         select(-median_pay)
   
+  famhist %<>% left_join(sib_groups, by = c("f.eid" = "id"))
+  
   return(famhist)
 }
 
@@ -251,98 +361,137 @@ subset_resid_scores <- function (resid_scores_raw, famhist, score_names) {
 }
 
 
-make_mf_pairs <- function (alto_file, famhist, resid_scores) {
-  # IDEA
-  # pick out every set of people who are living at the same coordinate at UKB
-  # assessment 1.
-  # count the number within each set who are living with their spouse at that time.
-  # if that number is exactly 2, include both people who are living with their spouse.
-  # otherwise don't (not a couple, or multiple couples and can't identify)
-  # 
-  # TODO: - check raw data with Abdel
-  #       - use genetics to identify shared children
-  #       - use all time periods
-  #       - put couples together when they have the same number
-  #         of kids
-  #       - don't think we have birth year of kids for fathers :-(
-  #       
-  # 20.11.20: options
-  # 1. like that article, find people by household characteristics and location
-  #   - validate with children
-  # 2. just directly use couples who have a shared child
-  # 3. backup: UKHLS (nsibs and fampos are relevant variables for birth order)      
-  alto <- read_csv(alto_file)
-  alto %<>% 
-    filter(grepl("1", UKB_assessment.nrs)) %>% 
-    left_join(
-      famhist %>% dplyr::select(f.eid, f.6141.0.0, female), 
-      by = c("ID" = "f.eid")
-    ) %>% 
-    group_by(coordinate_ID) %>% 
-    mutate(n_with_spouse = sum(f.6141.0.0 == 1)) 
-
-  spouse_pairs <- alto %>% 
-                    filter(n_with_spouse == 2, f.6141.0.0 == 1) %>% 
-                    dplyr::select(ID, coordinate_ID, female) %>% 
-                    arrange(coordinate_ID, female)
-
-  # check we only have couples
-  ns <- spouse_pairs %>% group_by(coordinate_ID) %>% count() %>% pull(n)
-  stopifnot(all(ns == 2))
-
-  # only use heterosexual couples. (Others could be gay, or could be mistakes?)
-  spouse_pairs %<>% 
-    group_by(coordinate_ID) %>% 
-    mutate(hetero = (sum(female) == 1)) %>% 
-    filter(hetero) %>% 
-    dplyr::select(-hetero)
+make_parent_child <- function (relatedness, famhist_raw) {
   
-  # reshape to side-by-side
-  mf_pairs <- matrix(spouse_pairs$ID, ncol = 2, byrow = TRUE)
-  colnames(mf_pairs) <- c("f.eid.m", "f.eid.f")
-  mf_pairs %<>% tibble::as_tibble()
+  parent_child <- relatedness %>% 
+                    filter(relation == "parents") %>% 
+                    select(ID1, ID2)
 
-  # merge with the famhist data
-  famhist_tmp <- famhist %>% 
-                left_join(resid_scores, by = "f.eid") %>% 
-                dplyr::select(
-                  f.eid, f.6138.0.0, matches("f.6141"), f.52.0.0, female,
-                  matches("_resid$"), nbro, nsis,
-                  n_sibs, birth_order, university, age_at_recruitment, YOB,
-                  age_fulltime_edu, age_fte_cat, income_cat, birth_sun,
-                  birth_mon, n_children, fath_age_birth, moth_age_birth,
-                  first_job_pay, sr_health, illness, fluid_iq
+  fh_age <- famhist_raw %>% 
+              select(f.eid, age_at_reqruitment) %>% 
+              rename(age = age_at_reqruitment)
+  
+  parent_child %<>% 
+                  left_join(fh_age, by = c(ID1 = "f.eid")) %>% 
+                  left_join(fh_age, by = c(ID2 = "f.eid"), suffix = c("1", "2")) %>% 
+                  mutate(
+                    parent_id = ifelse(age1 > age2, ID1, ID2),
+                    child_id  = ifelse(age1 > age2, ID2, ID1)
+                  ) %>% 
+                  filter(
+                    abs(age1 - age2) > 10    # also removes 924 "parent-children"...
+                  )
+
+  # 2 people with 3 "parents" (maybe siblings?)
+  parent_child %<>% 
+                  group_by(child_id) %>% 
+                  add_count() %>% 
+                  filter(n <= 2) %>% 
+                  ungroup()
+
+  parent_child
+}
+
+
+add_data_to_pairs <- function (pairs_df, famhist, resid_scores, 
+                                 suffix = c(".x", ".y")) {
+
+    fhs <- famhist %>% 
+                    left_join(resid_scores, by = "f.eid") %>% 
+                    dplyr::select(
+                      f.eid, f.6138.0.0, matches("f.6141"), female,
+                      matches("_resid$"), nbro, nsis, sib_group,
+                      n_sibs, birth_order, university, age_at_recruitment, YOB,
+                      age_fulltime_edu, age_fte_cat, income_cat, birth_sun,
+                      birth_mon, n_children, fath_age_birth, moth_age_birth,
+                      first_job_pay, sr_health, illness, fluid_iq,
+                      f.20074.0.0, f.20075.0.0, f.699.0.0,
+                      f.709.0.0, f.670.0.0, f.680.0.0, f.52.0.0, f.53.0.0, 
+                      f.54.0.0, f.6139.0.0, f.6140.0.0, f.728.0.0
+                    )
+
+  pairs_df %<>% 
+            left_join(fhs, by = c(eid.x = "f.eid")) %>% 
+            left_join(fhs, by = c(eid.y = "f.eid"), suffix = suffix)
+
+  pairs_df
+}
+
+
+make_mf_pairs <- function (mf_pairs_file, famhist, resid_scores) {
+  
+  mf_pairs <- readr::read_csv(mf_pairs_file)
+
+  mf_pairs$eid.x <- mf_pairs$ID.m
+  mf_pairs$eid.y <- mf_pairs$ID.f
+  mf_pairs <- add_data_to_pairs(mf_pairs, famhist, resid_scores, 
+                                  suffix = c(".m", ".f"))
+
+  mf_pairs %<>% filter(
+                  f.670.0.0.f == f.670.0.0.m,   # same kind of house
+                  f.680.0.0.f == f.680.0.0.m,   # same rent/own status
+                  f.728.0.0.f == f.728.0.0.m,   # same n vehicles
+                  f.699.0.0.f == f.699.0.0.m,   # same length of time in hh
+                  f.709.0.0.f == f.709.0.0.m,   # same n occupants of hh
+                  n_children.m == n_children.f, # same n kids
+                  f.6141.0.0.f == 1,            # both living with spouse
+                  f.6141.0.0.m == 1,
+                  female.m != female.f,         # heterosexual couples only
                 )
+  
+  # remove pairs with duplications
   mf_pairs %<>% 
-    left_join(famhist_tmp, by = c("f.eid.m" = "f.eid")) %>% 
-    left_join(famhist_tmp, by = c("f.eid.f" = "f.eid"), suffix = c(".m", ".f"))
+              group_by(ID.m) %>% 
+              filter(n() == 1) %>% 
+              group_by(ID.f) %>% 
+              filter(n() == 1) %>% 
+              ungroup()
 
+  stopifnot(all(mf_pairs$female.f == TRUE))
+  
   mf_pairs$EA3.m <- mf_pairs$EA3_excl_23andMe_UK_resid.m
   mf_pairs$EA3.f <- mf_pairs$EA3_excl_23andMe_UK_resid.f
 
-  mf_pairs$couple_id <- paste0(mf_pairs$f.eid.m, "_", mf_pairs$f.eid.f)
+  mf_pairs$couple_id <- paste0(mf_pairs$ID.m, "_", mf_pairs$ID.f)
   
   mf_pairs
 }
 
 
-make_mf_pairs_twice <- function (mf_pairs) {
-  mf_pairs$x <- "Male"
+make_parent_pairs <- function (parent_child, famhist, resid_scores) {
+  two_parents <- parent_child %>% 
+                    left_join(parent_child, by = "child_id") %>% 
+                    filter(
+                      parent_id.x != parent_id.y,
+                      parent_id.x < parent_id.y   # get rid of 1 of each 2 dupes
+                    ) %>% 
+                    select(
+                      eid.x = parent_id.x,  
+                      eid.y = parent_id.y
+                    )
   
-  mf_pairs_rebadged <- mf_pairs
-  mf_pairs_rebadged$x <- "Female"
+  parent_pairs <- add_data_to_pairs(two_parents, famhist, resid_scores)  
+  parent_pairs %<>% 
+                  filter(female.x != female.y) # probably a false positive
   
-  names(mf_pairs_rebadged) <- sub("\\.f$", ".mxxx", names(mf_pairs_rebadged))
-  names(mf_pairs_rebadged) <- sub("\\.m$", ".f", names(mf_pairs_rebadged))
-  names(mf_pairs_rebadged) <- sub("\\.mxxx$", ".m", names(mf_pairs_rebadged))
+  parent_pairs$EA3.x <- parent_pairs$EA3_excl_23andMe_UK_resid.x
+  parent_pairs$EA3.y <- parent_pairs$EA3_excl_23andMe_UK_resid.y
   
-  mf_pairs_twice <- bind_rows(mf_pairs, mf_pairs_rebadged)
-  names(mf_pairs_twice) <- sub("\\.m", ".x", names(mf_pairs_twice))
-  names(mf_pairs_twice) <- sub("\\.f", ".y", names(mf_pairs_twice))
-  
-  mf_pairs_twice
+  parent_pairs
 }
 
+
+make_pairs_twice <- function (pairs_df) {
+  pairs_df_rebadged <- pairs_df
+  names(pairs_df_rebadged) <- sub("\\.x$", "\\.tmp", names(pairs_df_rebadged))
+  names(pairs_df_rebadged) <- sub("\\.y$", "\\.x", names(pairs_df_rebadged))
+  names(pairs_df_rebadged) <- sub("\\.tmp$", "\\.y", names(pairs_df_rebadged))
+  
+  pairs_twice <- bind_rows(pairs_df, pairs_df_rebadged)
+  pairs_twice$x <- ifelse(pairs_twice$female.x, "Female", "Male")
+  
+  pairs_twice
+}
 
 compute_sunshine <- function (famhist, sun_dir) {
   years <- 1941:1970
@@ -407,39 +556,64 @@ plan <- drake_plan(
   
   famhist_raw  = target(
     import_famhist(file_in(!! famhist_files), file_in(!! pgs_dir)), 
-    format = "fst"
+    format = "fst_tbl"
   ), 
   
-  pcs = target(import_pcs(file_in(!! pcs_file)), format = "fst"),
+  relatedness = target(
+    create_relatedness(file_in(!! relatedness_file)),
+    format = "fst_tbl"
+  ),
+  
+  pcs = target(import_pcs(file_in(!! pcs_file)), format = "fst_tbl"),
   
   ashe_income = target(import_ashe_income(file_in(!! ashe_income_file))),
   
   famhist = target({
-    famhist <- clean_famhist(famhist_raw, score_names, ashe_income)
+    famhist <- clean_famhist(famhist_raw, score_names, sib_groups, ashe_income)
     famhist <- compute_sunshine(famhist, file_in(!! sun_dir))
     famhist
     },
-    format = "fst"
+    format = "fst_tbl"
   ),
   
   resid_scores_raw = target(
     compute_resid_scores(famhist_raw, pcs, score_names),
-    format = "fst"
+    format = "fst_tbl"
   ),
   
   resid_scores = target(
     subset_resid_scores(resid_scores_raw, famhist, score_names),
-    format = "fst"
+    format = "fst_tbl"
   ),
+  
+  parent_child = target(
+    make_parent_child(relatedness, famhist_raw),
+    format = "fst_tbl"
+  ),
+  
+  sib_groups = target(make_sib_groups(relatedness), format = "fst_tbl"),
   
   mf_pairs = target(
-    make_mf_pairs(file_in(!! alto_file), famhist, resid_scores),
-    format = "fst"
+    make_mf_pairs(file_in(!! mf_pairs_file), famhist, resid_scores),
+    format = "fst_tbl"
   ),
   
-  mf_pairs_twice = target(
-    make_mf_pairs_twice(mf_pairs),
-    format = "fst"
+  mf_pairs_twice = target({
+      names(mf_pairs) <- sub("\\.m$", ".x", names(mf_pairs))
+      names(mf_pairs) <- sub("\\.f$", ".y", names(mf_pairs))
+      make_pairs_twice(mf_pairs)
+    },
+    format = "fst_tbl"
+  ),
+  
+  parent_pairs = target(
+    make_parent_pairs(parent_child, famhist, resid_scores),
+    format = "fst_tbl"
+  ),
+  
+  parent_pairs_twice = target(
+    make_pairs_twice(parent_pairs),
+    format = "fst_tbl"
   )
 )
 

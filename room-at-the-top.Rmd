@@ -22,6 +22,7 @@ header-includes:
 ---
 
 ```{r setup, include = FALSE}
+
 library(Formula)
 library(car)
 library(drake)
@@ -549,9 +550,54 @@ analysis shows this latter process at work.
 To test the theory, we use data from the UK Biobank, a study of about
 500,000 individuals born between 1935 and 1970. The Biobank contains
 information on respondents' genetics, derived from DNA microarrays,
-along with questionnaire data on health and social outcomes. Using
-respondents' exact home location, we categorize some respondents as
-spouse pairs.
+along with questionnaire data on health and social outcomes. 
+
+The Biobank does not contain explicit information on spouse pairs. We
+categorize respondents as pairs if they:
+
+* had the same home postcode on at least one occasion[^postcode]
+* both reported living in the same type of accommodation,
+  homeownership/renting status,  length of time at the address,
+  number of inhabitants in the household, number of vehicles in the household,
+  and number of children;
+* both reported living with their spouse;
+* consisted of one male and one female.
+
+[^postcode]: Typically a UK postcode contains about 15 properties.
+
+We also eliminated any pairs where either spouse appeared more than once in the
+data. 
+
+```{r validate-pairs}
+
+drake::loadd(parent_child)
+mf_w_parent <- mf_pairs %>% 
+      left_join(parent_child, by = c("ID.m" = "parent_id")) %>% 
+      left_join(parent_child, by = c("ID.f" = "parent_id"), 
+                suffix = c(".m", ".f")) %>% 
+      filter(! is.na(child_id.m) | ! is.na(child_id.f))
+
+
+n_one_has_kid <- nrow(mf_w_parent)
+n_both_same_kid <- mf_w_parent %>% 
+                      filter(child_id.m == child_id.f) %>% # NAs excluded
+                      nrow()
+
+
+```
+
+Some of these pairs could be false positives, i.e. people who are not
+each others' spouse but simply live in the same postcode. To validate the
+accuracy of our measures, we used genetic relationships. Some respondents
+in the Biobank sample have a child who is also in the sample, as inferred from
+genetic data. Out of our `r nrow(mf_pairs)` spouse pairs,
+`r n_one_has_kid` have a genetic child of at least one partner in the sample. For `r n_both_same_kid` of these, the child is the genetic child of both 
+partners. If this subsample is representative of the whole, then at least 
+`r percent(n_both_same_kid/n_one_has_kid)` of the pairs who have had
+a child, have had a child together. This is a lower bound because those who
+had a child with someone else may also have had a child with the presumed partner
+in our data.
+
 
 Our key dependent variable is spouse's *Polygenic Score for Educational
 Attainment* (PSEA). A polygenic score is a DNA-derived summary measure of
@@ -939,17 +985,13 @@ parents versus being later in birth order.[^6]
 fml_bo_psea_base <- list()
 
 fml_bo_psea_base[[1]] <- EA3.y ~ birth_order.x | factor(n_sibs.x)
-fml_bo_psea_base[[2]] <- EA3.y ~ birth_order.x + EA3.x + 
-                            age_at_recruitment.x +
-                            I(age_at_recruitment.x^2) + factor(birth_mon.x) |
-                            factor(n_sibs.x)
+fml_bo_psea_base[[2]] <- EA3.y ~ birth_order.x + EA3.x + factor(birth_mon.x) |
+                            factor(n_sibs.x) + factor(YOB.x)
   
-fml_bo_psea_base[[3]] <- EA3.y ~ birth_order.x + EA3.x + 
-                            factor(birth_mon.x) +
+fml_bo_psea_base[[3]] <- EA3.y ~ birth_order.x + EA3.x + factor(birth_mon.x) +
                             fath_age_birth.x | factor(n_sibs.x) + factor(YOB.x)
 
 fml_bo_psea_base <- lapply(fml_bo_psea_base, Formula::as.Formula)
-
 
 mf_pairs_reg <- mf_pairs_twice %>% 
                   filter(
