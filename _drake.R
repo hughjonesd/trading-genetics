@@ -16,8 +16,10 @@ suppressPackageStartupMessages({
   library(abind)
 })
 
-
-source("import-ukbb-data/import-ukbb-data.R")
+# the project import-ukbb-data can also be downloaded from git with:
+# git clone https://github.com/hughjonesd-private/import-ukbb-data.git
+# then change the file path below
+source("~/import-ukbb-data/import-ukbb-data.R")
 
 
 import_pcs <- function (pcs_file) {
