@@ -22,83 +22,6 @@ suppressPackageStartupMessages({
 source("~/import-ukbb-data/import-ukbb-data.R")
 
 
-import_pcs <- function (pcs_file) {
-  pcs <- read_table2(pcs_file)
-  pc_names <- grep("PC", names(pcs), value = TRUE)
-  pcs[pc_names] <- scale(pcs[pc_names])
-  pcs
-}
-
-
-create_relatedness <- function (relatedness_file) {
-  relatedness <- read_table2(relatedness_file, col_names = TRUE)
-
-  relatedness %<>% mutate(
-                     relation = santoku::chop(Kinship,
-                                   breaks = c(
-                                     1/2^(9/2), 
-                                     1/2^(7/2),
-                                     1/2^(5/2), 
-                                     1/2^(3/2)
-                                   ),
-                                   labels = c(
-                                     "unrelated", 
-                                     "deg3",
-                                     "deg2", 
-                                     "parentsib",
-                                      "mztwins"
-                                   )
-                                 ),
-                     relation = case_when(
-                       relation == "parentsib" & IBS0 < 0.0012  ~ "parents",
-                       relation == "parentsib" & IBS0 >= 0.0012 ~ "fullsibs",
-                       TRUE ~ as.character(relation)
-                     )
-                   )
-  
-  relatedness %<>% filter(relation != "unrelated") # remove the two rows with issues from the relatedness file 
-
-  relatedness
-}
-
-
-make_sib_groups <- function (relatedness) {
-  
-  # this beast takes the pairs of siblings found in relatedness, and
-  # converts them into a data frame of sibling groups, with a column for
-  # the group and a column for the id
-  sib_groups <- relatedness %>% 
-               filter(relation %in% c("fullsibs", "mztwins")) %>% 
-               select(ID1, ID2) %>% 
-               igraph::graph_from_data_frame(directed = FALSE) %>% 
-               igraph::max_cliques() %>%  # groups of full siblings
-               purrr::map(igraph::as_ids) %>% 
-               tibble::tibble() %>% 
-               setNames("id") %>% 
-               tibble::rowid_to_column("sib_group") %>% 
-               tidyr::unnest_longer(id) %>% 
-               mutate(
-                 sib_group = paste0("sg", sib_group),
-                 id = as.numeric(id)  # compatibility when joining
-               )
-
-  # we include mztwins because why not, but also because otherwise they
-  # create non-overlapping cliques
-  # a few people are in overlapping maximal cliques - typically because
-  # a-b and b-c are "fullsibs" but a-c is something less, e.g. "deg2".
-  # We delete these and then remove any people who have become "singletons"
-  sib_groups %<>% 
-                distinct(id, .keep_all = TRUE) %>% 
-                group_by(sib_group) %>% 
-                add_count() %>% 
-                filter(n > 1) %>% 
-                select(-n) %>% 
-                ungroup()
-  
-  sib_groups
-}
-
-
 import_ashe_income <- function (ashe_income_file) {
   ashe_income <- readxl::read_xls(ashe_income_file, range = "A5:F475")
   
@@ -111,6 +34,18 @@ import_ashe_income <- function (ashe_income_file) {
   
   ashe_income
 } 
+
+
+add_ashe_income <- function (famhist, ashe_income) {
+  famhist %<>% 
+        mutate(f.22617.0.0 = as.character(f.22617.0.0)) %>% 
+        left_join(ashe_income, by = c("f.22617.0.0" = "Code")) %>% 
+        select(-Description, -mean_pay) %>% 
+        mutate(first_job_pay = median_pay/1000) %>% 
+        select(-median_pay)
+  
+  famhist
+}
 
 
 compute_resid_scores <- function (famhist, pcs, score_names) {
@@ -329,7 +264,7 @@ plan <- drake_plan(
   ), 
   
   relatedness = target(
-    create_relatedness(file_in(!! relatedness_file)),
+    make_relatedness(file_in(!! relatedness_file)),
     format = "fst_tbl"
   ),
   
@@ -338,7 +273,8 @@ plan <- drake_plan(
   ashe_income = target(import_ashe_income(file_in(!! ashe_income_file))),
   
   famhist = target({
-    famhist <- clean_famhist(famhist_raw, score_names, sib_groups, ashe_income)
+    famhist <- clean_famhist(famhist_raw, score_names, sib_groups)
+    famhist <- add_ashe_income(famhist, ashe_income)
     famhist <- compute_sunshine(famhist, file_in(!! sun_dir))
     famhist
     },
