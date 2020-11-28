@@ -1,3 +1,0 @@
-[submodule "import-ukbb-data"]
-	path = import-ukbb-data
-	url = https://github.com/hughjonesd-private/import-ukbb-data
