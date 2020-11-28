@@ -11,6 +11,7 @@ editor_options:
   chunk_output_type: console
 bibliography: bibliography.bib
 spacing: double
+mainfont: Times
 header-includes:
   - \usepackage{subfig}
   - \usepackage{setspace}\doublespacing
@@ -50,7 +51,8 @@ famhist %<>% left_join(resid_scores, by = "f.eid")
 rm(resid_scores)
 famhist$EA3 <- famhist$EA3_excl_23andMe_UK_resid
 
-
+# for p values
+my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
 
 ```
 
@@ -555,22 +557,23 @@ along with questionnaire data on health and social outcomes.
 The Biobank does not contain explicit information on spouse pairs. We
 categorize respondents as pairs if they:
 
-* had the same home postcode on at least one occasion[^postcode]
-* both reported living in the same type of accommodation,
-  homeownership/renting status,  length of time at the address,
-  number of inhabitants in the household, number of vehicles in the household,
-  and number of children;
-* both reported living with their spouse;
+* had the same home postcode on at least one occasion;[^postcode]
+* both reported the same homeownership/renting status, length of time at 
+  the address, number of inhabitants in the household, and number of children;
+* both reported living with their spouse ("husband, wife or partner");
 * consisted of one male and one female.
 
 [^postcode]: Typically a UK postcode contains about 15 properties.
 
-We also eliminated any pairs where either spouse appeared more than once in the
-data. 
+We also eliminated all pairs where either spouse appeared more than once in the
+data.
 
-```{r validate-pairs}
+
+```{r calc-validate-pairs}
 
 drake::loadd(parent_child)
+
+# all pairs where at least 1 parent has a genetic child in the sample
 mf_w_parent <- mf_pairs %>% 
       left_join(parent_child, by = c("ID.m" = "parent_id")) %>% 
       left_join(parent_child, by = c("ID.f" = "parent_id"), 
@@ -583,6 +586,72 @@ n_both_same_kid <- mf_w_parent %>%
                       filter(child_id.m == child_id.f) %>% # NAs excluded
                       nrow()
 
+
+```
+
+```{r estimate-false-positives, eval = FALSE}
+# We can use the number of duplicates to estimate our "false positive"
+#   ratio. Suppose that a proportion x of our pairs are false positives who 
+#   just live in the
+#   same postcode. Suppose UKBB samples a proportion y of people in each postcode. 
+#   Then the number of duplicates will be xy. 
+#
+# Note to calculate xy we need to count *whenever* they 
+# appear in the mf_pairs file. I.e. if they are false positives, we want
+# to catch them matching with someone else.
+
+
+# code to estimate y:
+# in the alto_file, count how many people are observed at the same coordinate
+alto <-readr::read_csv(alto_file)
+
+# count how many people are *not* in the alto file (i.e. for them,
+# people_at_same_coordinate should be 1. Indeed in alto, the min is 2.)
+# 500K is about right :-)
+not_in_alto <- 500000 - length(unique(alto$ID))
+
+all_per_coord <- c(alto$people_at_same_coordinate[! duplicated(alto$coordinate_ID)]
+                   , rep(1, not_in_alto))
+n_at_same <- mean(all_per_coord)
+
+# this is "y" above:
+sample_prop_per_coord <- n_at_same / 15 # 15 people in a postcode on average
+
+# to calculate xy:
+# start with our "purified" sample mf_pairs, but without deleting any duplicates
+# count how many are duplicates in the sense that they are ever at the 
+# same coordinate with someone else
+
+mf_pairs_tmp <- readr::read_csv(mf_pairs_file)
+
+mf_pairs_tmp$eid.x <- mf_pairs_tmp$ID.m
+mf_pairs_tmp$eid.y <- mf_pairs_tmp$ID.f
+mf_pairs_tmp <- add_data_to_pairs(mf_pairs_tmp, famhist, resid_scores, 
+                                suffix = c(".m", ".f"))
+
+mf_pairs_tmp %<>% filter(
+                f.680.0.0.f  == f.680.0.0.m,  # same rent/own status
+                f.699.0.0.f  == f.699.0.0.m,  # same length of time in hh
+                f.709.0.0.f  == f.709.0.0.m,  # same n occupants of hh
+                n_children.f == n_children.m, # same n kids
+                f.54.0.0.f   == f.54.0.0.m,   # same assessment centre 
+                f.53.0.0.f   == f.53.0.0.m,   # attended assessment same day
+                f.6141.0.0.f == 1,            # both living with spouse
+                f.6141.0.0.m == 1,            #   "     "     "    "
+                female.m != female.f,         # heterosexual couples only
+              )
+
+mf_pairs_ids <- unique(c(mf_pairs_tmp$ID.m, mf_pairs_tmp$ID.f))
+
+# observed duplicate proportion, using the alto ID. This also counts
+# people of the same sex, is that right?
+
+dupe_ids <- intersect(mf_pairs_ids, alto$ID[duplicated(alto$ID)])
+# this is "xy" above
+observed_dupe_prop <- length(dupe_ids)/length(mf_pairs_ids)
+
+# so "x" above is: hmm, not quite right yet, this is > 1!!
+estimated_false_pos <- observed_dupe_prop/sample_prop_per_coord
 
 ```
 
@@ -632,7 +701,7 @@ people's children will also have higher PSEA.
 ```{r pic-basic-corr-uni, fig.subcap = c("Female PSEA by male educational attainment", "Male PSEA by female educational attainment"), fig.cap = "Social and genetic advantage among spouse pairs in UK Biobank", fig.width = 3, fig.height = 3}
 
 pic_ss <- stat_summary(fun.data = mean_cl_normal, na.rm = TRUE)
-pic_cc <- coord_cartesian(ylim = c(-0.2, 0.2))
+pic_cc <- coord_cartesian(ylim = c(-0.15, 0.25))
 
 mf_pairs %>% 
       filter(! is.na(university.m)) %>% 
@@ -1015,6 +1084,7 @@ huxreg(mod_bo_psea_base,
            "N"           = "nobs", 
            "R2"          = "r.squared"
           ),
+         stars = my_stars,
          note = "{stars}. Standard errors clustered by spouse pair. Respondents with 1-7 siblings included.",
          tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id))
        ) %>% 
@@ -1073,7 +1143,7 @@ fml_bo_psea <- lapply(fml_bo_psea, update,
 
 # alternative mediators
 fml_bo_psea[-1] <- lapply(fml_bo_psea[-1], update,
-                            . ~ . + sr_health.x + fluid_iq.x, 
+                            . ~ . + fluid_iq.x + height.x, 
                             rhs = 1)
 
 
@@ -1100,9 +1170,10 @@ huxreg(mod_bo_psea,
           "Father's age at birth" = "fath_age_birth.x",
           "Own PSEA"              = "EA3.x",
           "Fluid IQ"              = "fluid_iq.x",
-          "Self-rated health"     = "sr_health.x"
+          "Height"                = "height.x"
         ),
          note = "{stars}. Standard errors clustered by spouse pair.",
+         stars = my_stars,
          tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id))
        ) %>% 
        insert_row(after = 15, "Family size dummies", rep("Yes", 5)) %>% 
@@ -1206,28 +1277,21 @@ Columns 5 and 6 use only couples with children. The effect of birth order is
 larger than for the sample as a whole, and university attendance and income
 still seem to mediate the birth order effect.
 
--   TODO: very few couple pairs (\< 50%) report the same number of
-    children. Why?
-
-    -   equally likely to be males or females reporting more.
 
 ```{r tbl-bo-subsets}
 
-# TODO: is 1 vs 5 the right comparison? 1 has no "mediating" controls, 5
-# has a full set
-
-mod_bo_males <- lapply(fml_bo_psea[c(1, 5)], fixest::feols, 
+mod_bo_males <- lapply(fml_bo_psea[c(2, 5)], fixest::feols, 
                  data = mf_pairs_reg %>% filter(x == "Male"),
                  notes = FALSE
                )
-mod_bo_females <- lapply(fml_bo_psea[c(1, 5)], fixest::feols, 
+mod_bo_females <- lapply(fml_bo_psea[c(2, 5)], fixest::feols, 
                  data = mf_pairs_reg %>% filter(x == "Female"),
                  notes = FALSE
                )
 
 mf_pairs_children <- mf_pairs_reg %>% 
                    filter(n_children.x > 0, n_children.y > 0)
-mod_bo_children <- lapply(fml_bo_psea[c(1, 5)], fixest::feols, 
+mod_bo_children <- lapply(fml_bo_psea[c(2, 5)], fixest::feols, 
                  data = mf_pairs_children,
                  notes = FALSE
                )
@@ -1244,18 +1308,19 @@ reg_list <- list(
       )
 
 huxreg(reg_list,
-       coefs = c(
-          "Birth order"           = "birth_order.x", 
-          "University"            = "university.xTRUE",
-          "Income"                = "first_job_pay.x",
-          "Father's age at birth" = "fath_age_birth.x",
-          "Own PSEA"              = "EA3.x",
-          "Fluid IQ"              = "fluid_iq.x",
-          "Self-rated health"     = "sr_health.x"
-        ),
-       statistics = c("N" = "nobs", "R2" = "r.squared"),
+         coefs = c(
+            "Birth order"           = "birth_order.x", 
+            "University"            = "university.xTRUE",
+            "Income"                = "first_job_pay.x",
+            "Father's age at birth" = "fath_age_birth.x",
+            "Own PSEA"              = "EA3.x",
+            "Fluid IQ"              = "fluid_iq.x",
+            "Height"                = "height.x"
+          ),
+         statistics = c("N" = "nobs", "R2" = "r.squared"),
          note = "{stars}. Standard errors for columns 5 and 6 clustered by spouse pair.",
-          tidy_args = list(list(), list(), list(), list(), ta, ta)
+         stars = my_stars,
+         tidy_args = list(list(), list(), list(), list(), ta, ta)
        ) %>% 
        insert_row(after = 15, "Family size dummies", rep("Yes", 6)) %>% 
        insert_row(after = 16, "Birth month dummies", rep("Yes", 6)) %>% 
@@ -1345,7 +1410,7 @@ scores.[^10] We regress each score on birth order, controlling for
 family size. No scores were significant at $p < 0.10/33$. `r n_10`
 scores were significant at $p < 0.10$ (body mass index,
 conscientousness, and neuroticism). Coefficients were never greater than
-0.01 of a standard deviation. Table \@ref(tab:tbl-bo-psea-robust) in the
+0.01 of a standard deviation. Table \@ref(tab:tbl-bo-psea-pgs) in the
 appendix reruns regressions controlling for these scores. Results are
 almost unchanged. To test whether polygenic scores might vary for
 particular birth orders within particular family size, we also regress
@@ -1619,9 +1684,9 @@ huxreg(mod_bo_no_fath_age,
           "Birth order"           = "birth_order.x", 
           "University"            = "university.xTRUE", 
           "Income"                = "first_job_pay.x", 
-          "Own PSEA"               = "EA3.x",
+          "Own PSEA"              = "EA3.x",
           "Fluid IQ"              = "fluid_iq.x",
-          "Self-rated health"     = "sr_health.x"
+          "Height"                = "height.x"
         ),
          note = "{stars}. Standard errors clustered by spouse pair.",
          tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg_big$couple_id))
@@ -1677,7 +1742,7 @@ huxtable::huxreg(mod_bo_psea_ix,
 
 ```
 
-```{r tbl-bo-psea-robust}
+```{r tbl-bo-psea-pgs}
 
 fml_bo_psea_robust <- fml_bo_psea %>% 
                         purrr::map(update, 
@@ -1700,7 +1765,7 @@ huxreg(mod_bo_psea_robust,
            "Father's age at birth" = "fath_age_birth.x",
            "Own PSEA"              = "EA3.x",
            "Fluid IQ"              = "fluid_iq.x",
-           "Self-rated health"     = "sr_health.x"
+           "Height"                = "height.x"
          ),
          statistics = c(
            "N" = "nobs", 
@@ -1712,7 +1777,7 @@ huxreg(mod_bo_psea_robust,
        ) %>% 
        insert_row(after = 15, "Family size dummies", rep("Yes", 5)) %>% 
        insert_row(after = 16, "Birth month dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 17, "Age quadratic", rep("Yes", 5)) %>% 
+       insert_row(after = 17, "Birth year dummies", rep("Yes", 5)) %>% 
        insert_row(after = 18, "Polygenic score controls", rep("Yes", 5)) %>% 
        set_top_border(17:19, everywhere, 0) %>% 
        set_number_format(2:15, -1, 4) %>% 

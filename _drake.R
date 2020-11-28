@@ -318,8 +318,8 @@ clean_famhist <- function (famhist, score_names, sib_groups, ashe_income) {
   famhist$fath_age_birth <- famhist$fath_age - famhist$age_at_recruitment
   famhist$moth_age_birth <- famhist$moth_age - famhist$age_at_recruitment
 
-  # TODO: could add in later scores, picks up some extra people
-  famhist$fluid_iq <- famhist$f.20016.0.0
+  # TODO: get f.20191, it is the touchscreen equivalent and will have more data
+  famhist$fluid_iq <- rowMeans(famhist %>% select(starts_with("f.20016")), na.rm = TRUE)
   
   # first measurement has almost everyone
   # 1 = excellent, 2 = good, 3 = fair, 4 = poor
@@ -327,6 +327,8 @@ clean_famhist <- function (famhist, score_names, sib_groups, ashe_income) {
   famhist$sr_health <- -1 * negative_to_na(famhist$f.2178.0.0)
   # "longstanding illness, disability or infirmity". 1 = TRUE
   famhist$illness   <- negative_to_na(famhist$f.2188.0.0)
+  famhist$height <- famhist$f.50.0.0
+  famhist$bmi <- famhist$f.21001.0.0
   
   famhist$num_jobs <- famhist$f.22599.0.0
   # job codes are f.22601.0.x
@@ -404,7 +406,7 @@ add_data_to_pairs <- function (pairs_df, famhist, resid_scores,
                       n_sibs, birth_order, university, age_at_recruitment, YOB,
                       age_fulltime_edu, age_fte_cat, income_cat, birth_sun,
                       birth_mon, n_children, fath_age_birth, moth_age_birth,
-                      first_job_pay, sr_health, illness, fluid_iq,
+                      first_job_pay, sr_health, illness, fluid_iq, height, 
                       f.20074.0.0, f.20075.0.0, f.699.0.0,
                       f.709.0.0, f.670.0.0, f.680.0.0, f.52.0.0, f.53.0.0, 
                       f.54.0.0, f.6139.0.0, f.6140.0.0, f.728.0.0
@@ -427,18 +429,19 @@ make_mf_pairs <- function (mf_pairs_file, famhist, resid_scores) {
   mf_pairs <- add_data_to_pairs(mf_pairs, famhist, resid_scores, 
                                   suffix = c(".m", ".f"))
 
+  # removed f.670 and f.728 because they didn't help predict "having the same kid".
   mf_pairs %<>% filter(
-                  f.670.0.0.f == f.670.0.0.m,   # same kind of house
-                  f.680.0.0.f == f.680.0.0.m,   # same rent/own status
-                  f.728.0.0.f == f.728.0.0.m,   # same n vehicles
-                  f.699.0.0.f == f.699.0.0.m,   # same length of time in hh
-                  f.709.0.0.f == f.709.0.0.m,   # same n occupants of hh
-                  n_children.m == n_children.f, # same n kids
+                  f.680.0.0.f  == f.680.0.0.m,  # same rent/own status
+                  f.699.0.0.f  == f.699.0.0.m,  # same length of time in hh
+                  f.709.0.0.f  == f.709.0.0.m,  # same n occupants of hh
+                  n_children.f == n_children.m, # same n kids
+                  f.54.0.0.f   == f.54.0.0.m,   # same assessment centre 
+                  f.53.0.0.f   == f.53.0.0.m,   # attended assessment same day
                   f.6141.0.0.f == 1,            # both living with spouse
-                  f.6141.0.0.m == 1,
+                  f.6141.0.0.m == 1,            #   "     "     "    "
                   female.m != female.f,         # heterosexual couples only
                 )
-  
+  orig_n <- nrow(mf_pairs)
   # remove pairs with duplications
   mf_pairs %<>% 
               group_by(ID.m) %>% 
@@ -447,6 +450,7 @@ make_mf_pairs <- function (mf_pairs_file, famhist, resid_scores) {
               filter(n() == 1) %>% 
               ungroup()
 
+  warning(sprintf("Removed %s pairs with multiple IDs out of %s", orig_n - nrow(mf_pairs), orig_n))
   stopifnot(all(mf_pairs$female.f == TRUE))
   
   mf_pairs$EA3.m <- mf_pairs$EA3_excl_23andMe_UK_resid.m
