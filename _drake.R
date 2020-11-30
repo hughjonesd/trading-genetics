@@ -22,20 +22,6 @@ suppressPackageStartupMessages({
 source("~/import-ukbb-data/import-ukbb-data.R")
 
 
-import_ashe_income <- function (ashe_income_file) {
-  ashe_income <- readxl::read_xls(ashe_income_file, range = "A5:F475")
-  
-  ashe_income %<>% 
-        dplyr::select(Description, Code, Median, Mean) %>% 
-        mutate(across(c(Median, Mean), as.numeric)) %>% 
-        rename(median_pay = Median, mean_pay = Mean)
-  
-  ashe_income %<>% filter(! is.na(Code))
-  
-  ashe_income
-} 
-
-
 add_ashe_income <- function (famhist, ashe_income) {
   famhist %<>% 
         mutate(f.22617.0.0 = as.character(f.22617.0.0)) %>% 
@@ -45,29 +31,6 @@ add_ashe_income <- function (famhist, ashe_income) {
         select(-median_pay)
   
   famhist
-}
-
-
-compute_resid_scores <- function (famhist, pcs, score_names) {
-  famhist <- left_join(famhist, pcs, by = c("f.eid" = "IID"))
-  resid_scores <- data.frame(f.eid = famhist$f.eid)
-  
-  for (score_name in score_names) {
-    resid_fml <- paste(score_name, "~", paste0("PC", 1:100, collapse = " + "))
-    resid_score <- resid(lm(as.formula(resid_fml), famhist, 
-                            na.action = na.exclude))
-    resid_scores[[paste0(score_name, "_resid")]] <- resid_score
-  }
-  
-  resid_scores
-}
-
-
-subset_resid_scores <- function (resid_scores_raw, famhist, score_names) {
-  resid_scores <- dplyr::semi_join(resid_scores_raw, famhist, by = "f.eid")
-  resid_scores[paste0(score_names, "_resid")] %<>% scale()
-  
-  resid_scores
 }
 
 
@@ -125,48 +88,6 @@ add_data_to_pairs <- function (pairs_df, famhist, resid_scores,
             left_join(fhs, by = c(eid.y = "f.eid"), suffix = suffix)
 
   pairs_df
-}
-
-
-make_mf_pairs <- function (mf_pairs_file, famhist, resid_scores) {
-  
-  mf_pairs <- readr::read_csv(mf_pairs_file)
-
-  mf_pairs$eid.x <- mf_pairs$ID.m
-  mf_pairs$eid.y <- mf_pairs$ID.f
-  mf_pairs <- add_data_to_pairs(mf_pairs, famhist, resid_scores, 
-                                  suffix = c(".m", ".f"))
-
-  # removed f.670 and f.728 because they didn't help predict "having the same kid".
-  mf_pairs %<>% filter(
-                  f.680.0.0.f  == f.680.0.0.m,  # same rent/own status
-                  f.699.0.0.f  == f.699.0.0.m,  # same length of time in hh
-                  f.709.0.0.f  == f.709.0.0.m,  # same n occupants of hh
-                  n_children.f == n_children.m, # same n kids
-                  f.54.0.0.f   == f.54.0.0.m,   # same assessment centre 
-                  f.53.0.0.f   == f.53.0.0.m,   # attended assessment same day
-                  f.6141.0.0.f == 1,            # both living with spouse
-                  f.6141.0.0.m == 1,            #   "     "     "    "
-                  female.m != female.f,         # heterosexual couples only
-                )
-  orig_n <- nrow(mf_pairs)
-  # remove pairs with duplications
-  mf_pairs %<>% 
-              group_by(ID.m) %>% 
-              filter(n() == 1) %>% 
-              group_by(ID.f) %>% 
-              filter(n() == 1) %>% 
-              ungroup()
-
-  warning(sprintf("Removed %s pairs with multiple IDs out of %s", orig_n - nrow(mf_pairs), orig_n))
-  stopifnot(all(mf_pairs$female.f == TRUE))
-  
-  mf_pairs$EA3.m <- mf_pairs$EA3_excl_23andMe_UK_resid.m
-  mf_pairs$EA3.f <- mf_pairs$EA3_excl_23andMe_UK_resid.f
-
-  mf_pairs$couple_id <- paste0(mf_pairs$ID.m, "_", mf_pairs$ID.f)
-  
-  mf_pairs
 }
 
 
@@ -323,4 +244,4 @@ plan <- drake_plan(
 )
 
 
-drake_config(plan, history = FALSE)
+drake_config(plan, history = FALSE, log_build_times = FALSE)
