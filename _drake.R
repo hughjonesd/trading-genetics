@@ -22,18 +22,6 @@ suppressPackageStartupMessages({
 source("~/import-ukbb-data/import-ukbb-data.R")
 
 
-add_ashe_income <- function (famhist, ashe_income) {
-  famhist %<>% 
-        mutate(f.22617.0.0 = as.character(f.22617.0.0)) %>% 
-        left_join(ashe_income, by = c("f.22617.0.0" = "Code")) %>% 
-        select(-Description, -mean_pay) %>% 
-        mutate(first_job_pay = median_pay/1000) %>% 
-        select(-median_pay)
-  
-  famhist
-}
-
-
 make_parent_child <- function (relatedness, famhist_raw) {
   
   parent_child <- relatedness %>% 
@@ -63,31 +51,6 @@ make_parent_child <- function (relatedness, famhist_raw) {
                   ungroup()
 
   parent_child
-}
-
-
-add_data_to_pairs <- function (pairs_df, famhist, resid_scores, 
-                                 suffix = c(".x", ".y")) {
-
-    fhs <- famhist %>% 
-                    left_join(resid_scores, by = "f.eid") %>% 
-                    dplyr::select(
-                      f.eid, f.6138.0.0, matches("f.6141"), female,
-                      matches("_resid$"), nbro, nsis, sib_group,
-                      n_sibs, birth_order, university, age_at_recruitment, YOB,
-                      age_fulltime_edu, age_fte_cat, income_cat, birth_sun,
-                      birth_mon, n_children, fath_age_birth, moth_age_birth,
-                      first_job_pay, sr_health, illness, fluid_iq, height, 
-                      f.20074.0.0, f.20075.0.0, f.699.0.0,
-                      f.709.0.0, f.670.0.0, f.680.0.0, f.52.0.0, f.53.0.0, 
-                      f.54.0.0, f.6139.0.0, f.6140.0.0, f.728.0.0
-                    )
-
-  pairs_df %<>% 
-            left_join(fhs, by = c(eid.x = "f.eid")) %>% 
-            left_join(fhs, by = c(eid.y = "f.eid"), suffix = suffix)
-
-  pairs_df
 }
 
 
