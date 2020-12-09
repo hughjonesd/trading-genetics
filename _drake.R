@@ -77,18 +77,6 @@ make_parent_pairs <- function (parent_child, famhist, resid_scores) {
 }
 
 
-make_pairs_twice <- function (pairs_df) {
-  pairs_df_rebadged <- pairs_df
-  names(pairs_df_rebadged) <- sub("\\.x$", "\\.tmp", names(pairs_df_rebadged))
-  names(pairs_df_rebadged) <- sub("\\.y$", "\\.x", names(pairs_df_rebadged))
-  names(pairs_df_rebadged) <- sub("\\.tmp$", "\\.y", names(pairs_df_rebadged))
-  
-  pairs_twice <- bind_rows(pairs_df, pairs_df_rebadged)
-  pairs_twice$x <- ifelse(pairs_twice$female.x, "Female", "Male")
-  
-  pairs_twice
-}
-
 compute_sunshine <- function (famhist, sun_dir) {
   years <- 1941:1970
   sun_files <- list.files(sun_dir, pattern = ".nc$", full.names = TRUE)
@@ -140,71 +128,42 @@ compute_sunshine <- function (famhist, sun_dir) {
 
 
 plan <- drake_plan(
-  score_names  = import_score_names(file_in(!! pgs_dir)),
+  score_names  = target(import_score_names(file_in(!! pgs_dir)), format = "rds"),
   
-  famhist_raw  = target(
-    import_famhist(file_in(!! famhist_files), file_in(!! pgs_dir)), 
-    format = "fst_tbl"
-  ), 
+  famhist_raw = import_famhist(file_in(!! famhist_files), file_in(!! pgs_dir)), 
   
-  relatedness = target(
-    make_relatedness(file_in(!! relatedness_file)),
-    format = "fst_tbl"
-  ),
+  relatedness = make_relatedness(file_in(!! relatedness_file)),
   
-  pcs = target(import_pcs(file_in(!! pcs_file)), format = "fst_tbl"),
+  pcs = import_pcs(file_in(!! pcs_file)),
   
-  ashe_income = target(import_ashe_income(file_in(!! ashe_income_file))),
+  ashe_income = import_ashe_income(file_in(!! ashe_income_file)),
   
-  famhist = target({
+  famhist = {
     famhist <- clean_famhist(famhist_raw, score_names, sib_groups)
     famhist <- add_ashe_income(famhist, ashe_income)
     famhist <- compute_sunshine(famhist, file_in(!! sun_dir))
     famhist
-    },
-    format = "fst_tbl"
-  ),
+  },
+
+  resid_scores_raw = compute_resid_scores(famhist_raw, pcs, score_names),
   
-  resid_scores_raw = target(
-    compute_resid_scores(famhist_raw, pcs, score_names),
-    format = "fst_tbl"
-  ),
+  resid_scores = subset_resid_scores(resid_scores_raw, famhist, score_names),
   
-  resid_scores = target(
-    subset_resid_scores(resid_scores_raw, famhist, score_names),
-    format = "fst_tbl"
-  ),
+  parent_child = make_parent_child(relatedness, famhist_raw),
   
-  parent_child = target(
-    make_parent_child(relatedness, famhist_raw),
-    format = "fst_tbl"
-  ),
+  sib_groups = make_sib_groups(relatedness),
   
-  sib_groups = target(make_sib_groups(relatedness), format = "fst_tbl"),
+  mf_pairs_raw = make_mf_pairs(file_in(!! mf_pairs_file), famhist, resid_scores, 
+                                 ashe_income),
   
-  mf_pairs = target(
-    make_mf_pairs(file_in(!! mf_pairs_file), famhist, resid_scores),
-    format = "fst_tbl"
-  ),
+  mf_pairs = filter_mf_pairs(mf_pairs_raw),
   
-  mf_pairs_twice = target({
-      names(mf_pairs) <- sub("\\.m$", ".x", names(mf_pairs))
-      names(mf_pairs) <- sub("\\.f$", ".y", names(mf_pairs))
-      make_pairs_twice(mf_pairs)
-    },
-    format = "fst_tbl"
-  ),
+  mf_pairs_twice = make_pairs_twice(mf_pairs, suffix = c(".m", ".f")),
   
-  parent_pairs = target(
-    make_parent_pairs(parent_child, famhist, resid_scores),
-    format = "fst_tbl"
-  ),
+  parent_pairs = make_parent_pairs(parent_child, famhist, resid_scores),
   
-  parent_pairs_twice = target(
-    make_pairs_twice(parent_pairs),
-    format = "fst_tbl"
-  )
+  parent_pairs_twice = make_pairs_twice(parent_pairs)
 )
 
 
-drake_config(plan, history = FALSE, log_build_times = FALSE)
+drake_config(plan, history = FALSE, log_build_times = FALSE, format = "fst_tbl")

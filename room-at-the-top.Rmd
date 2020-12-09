@@ -22,16 +22,24 @@ header-includes:
   - \providecommand{\propositionname}{Proposition}
 ---
 
+```{r TODO, eval = FALSE}
+* Why missing all the first job data? - because not everyone does the
+  online followup. We could use "current job" which might be endogenous
+  to your spouse; then do first job as a robustness check.
+```
+
+
+
 ```{r setup, include = FALSE}
 
 library(Formula)
 library(car)
 library(drake)
+library(Hmisc)
 library(dplyr)
 library(magrittr)
 library(AER)
 library(ggplot2)
-library(Hmisc)
 library(huxtable)
 library(broom)
 library(fixest)
@@ -50,6 +58,14 @@ drake::loadd(resid_scores)
 famhist %<>% left_join(resid_scores, by = "f.eid")
 rm(resid_scores)
 famhist$EA3 <- famhist$EA3_excl_23andMe_UK_resid
+
+
+mf_pairs_reg <- mf_pairs_twice %>% 
+                  filter(
+                    n_sibs.x >= 2, 
+                    n_sibs.x <= 8, 
+                    ! is.na(birth_order.x)
+                  )
 
 # for p values
 my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
@@ -554,20 +570,6 @@ To test the theory, we use data from the UK Biobank, a study of about
 information on respondents' genetics, derived from DNA microarrays,
 along with questionnaire data on health and social outcomes. 
 
-The Biobank does not contain explicit information on spouse pairs. We
-categorize respondents as pairs if they:
-
-* had the same home postcode on at least one occasion;[^postcode]
-* both reported the same homeownership/renting status, length of time at 
-  the address, number of inhabitants in the household, and number of children;
-* both reported living with their spouse ("husband, wife or partner");
-* consisted of one male and one female.
-
-[^postcode]: Typically a UK postcode contains about 15 properties.
-
-We also eliminated all pairs where either spouse appeared more than once in the
-data.
-
 
 ```{r calc-validate-pairs}
 
@@ -586,8 +588,21 @@ n_both_same_kid <- mf_w_parent %>%
                       filter(child_id.m == child_id.f) %>% # NAs excluded
                       nrow()
 
-
 ```
+
+
+The Biobank does not contain explicit information on spouse pairs. We
+categorize respondents as pairs if they:
+
+* had the same home postcode on at least one occasion;[^postcode]
+* both reported the same homeownership/renting status, length of time at 
+  the address, and number of children;
+* attended the same UK Biobank assessment centre on the same day;
+* both reported living with their spouse ("husband, wife or partner");
+* consisted of one male and one female.
+
+[^postcode]: Typically a UK postcode contains about 15 properties.
+
 
 ```{r estimate-false-positives, eval = FALSE}
 # We can use the number of duplicates to estimate our "false positive"
@@ -655,11 +670,13 @@ estimated_false_pos <- observed_dupe_prop/sample_prop_per_coord
 
 ```
 
-Some of these pairs could be false positives, i.e. people who are not
+We also eliminated all pairs where either spouse appeared more than once in the
+data. This left us with a total of `r nrow(mf_pairs)` pairs. 
+Some of these could be false positives, i.e. people who are not
 each others' spouse but simply live in the same postcode. To validate the
 accuracy of our measures, we used genetic relationships. Some respondents
 in the Biobank sample have a child who is also in the sample, as inferred from
-genetic data. Out of our `r nrow(mf_pairs)` spouse pairs,
+genetic data. Among our spouse pairs,
 `r n_one_has_kid` have a genetic child of at least one partner in the sample. For `r n_both_same_kid` of these, the child is the genetic child of both 
 partners. If this subsample is representative of the whole, then at least 
 `r percent(n_both_same_kid/n_one_has_kid)` of the pairs who have had
@@ -773,19 +790,18 @@ only claim that birth order is exogenous to genetic variation.
     choice of whether to have more children is endogenous to the genetic
     endowment of their earlier children. We check for this below.
 
-Our main independent variable is respondents' birth order, i.e. their
-number of elder siblings plus one. For controls we use family size, i.e.
-their total number of siblings including themselves; month of birth; age
-at interview; respondents' own PSEA; their father's and/or mother's age
-at their birth (calculated from parent's current age, only available if
-the parent was still alive). To test whether birth order effects are
-mediated by SES, we use two measures: income, and university attendance.
-Current income is a direct measure of SES, while university attendance
-is a predictor of income over the entire life course.
+Our main independent variable is respondents' birth order, i.e. their number of
+elder siblings plus one. For controls we use family size, i.e. their total
+number of siblings including themselves; month of birth; age at interview;
+respondents' own PSEA; their father's and/or mother's age at their birth
+(calculated from parent's current age, only available if the parent was still
+alive). For most regressions, we use only respondents with between 1 and 7
+siblings, i.e. with a family size of 2-8. To test whether birth order effects
+are mediated by SES, we use two measures: income, and university attendance.
+Current income is a direct measure of SES, while university attendance is a
+predictor of income over the entire life course.
 
 -   TODO: Abdel - details of PSEA calculation
--   TODO: look at mechanisms by which birth order might affect
-    university
 -   TODO: overall index of social status?
 
 Ideally, we might prefer to use birth order as an instrument for SES.
@@ -1016,34 +1032,33 @@ famhist %>%
       facet_grid(cols = vars(`Family size`), labeller = label_both)
 ```
 
-Next we run regressions of spouse PSEA on birth order. Table
-\@ref(tab:tbl-bo-psea-basic) reports the results. Subjects with 1-7
-siblings are included. Column 1 controls only for family size (using
-dummies). As expected, higher birth order is negatively associated with
-spouse's PSEA, though the estimated effect size is small. Column 2
-includes the respondent's own PSEA, as well as dummies for birth year to
+Next we run regressions of spouse PSEA on birth order, within our dataset of spouse pairs. Table
+\@ref(tab:tbl-bo-psea-basic) reports the results. Column 1 controls only for
+family size (using dummies). As expected, higher birth order is negatively
+associated with spouse's PSEA, though the estimated effect size is small. Column
+2 includes the respondent's own PSEA, as well as dummies for birth year to
 control for cohort effects, and dummies for birth month to control for
 seasonality effects. The effect size of birth order is not much changed.
 
-Column 3 includes father's age at birth. Within a family, later children
+Column 3 includes mother's age at birth. Within a family, later children
 have older parents by definition. Older parents have more life
 experience and may have higher income, which would presumably help later
-children. On the other hand, an early explanation for birth order
-effects was that these could be due to genetic mutations in older
-fathers, although more recent research has rejected this in favour of
-"social" explanations [@kristensen2007explaining; @black2011older].[^5]
-Including father's age means we can separate the effect of father's age
+children. [^5]
+Including mother's age means we can separate the effect of mother's age
 from birth order. This reduces the N by a lot, since only respondents
-with live fathers reported the necessary data. However, the effect of
-birth order jumps in size, to about half the effect of respondent's own
-PSEA. Meanwhile, father's age has a positive effect. This suggests that
+with live mothers reported the necessary data. However, the effect of
+birth order jumps in size. Meanwhile, mother's age has a positive effect. 
+This suggests that
 the previous estimates mixed two opposite-signed effects: having older
 parents versus being later in birth order.[^6]
 
-[^5]: [@cochran2013paternal] report that mutational load is
-    approximately linear in father's age, while it is constant in
-    mothers' age. We observe very similar results if we control for
-    mother's age at respondent's birth.
+[^5]: There are also potential genetic effects, though  
+      recent research has rejected these in favour of
+      "social" explanations [@kristensen2007explaining; @black2011older].        
+      @cochran2013paternal report that mutational load is
+      approximately linear in father's age, while it is constant in
+      mothers' age. We observe very similar results if we control for
+      father's age at respondent's birth.
 
 [^6]: Note that parental age would not be a good independent variable
     for testing genetic encoding of social advantage, since it is likely
@@ -1058,16 +1073,10 @@ fml_bo_psea_base[[2]] <- EA3.y ~ birth_order.x + EA3.x + factor(birth_mon.x) |
                             factor(n_sibs.x) + factor(YOB.x)
   
 fml_bo_psea_base[[3]] <- EA3.y ~ birth_order.x + EA3.x + factor(birth_mon.x) +
-                            fath_age_birth.x | factor(n_sibs.x) + factor(YOB.x)
+                            moth_age_birth.x | factor(n_sibs.x) + factor(YOB.x)
 
 fml_bo_psea_base <- lapply(fml_bo_psea_base, Formula::as.Formula)
 
-mf_pairs_reg <- mf_pairs_twice %>% 
-                  filter(
-                    n_sibs.x >= 2, 
-                    n_sibs.x <= 8, 
-                    ! is.na(birth_order.x)
-                  )
 
 mod_bo_psea_base <- lapply(fml_bo_psea_base, fixest::feols, 
                  data = mf_pairs_reg,
@@ -1078,15 +1087,15 @@ huxreg(mod_bo_psea_base,
         coefs = c(
           "Birth order"           = "birth_order.x", 
           "Own PSEA"               = "EA3.x",
-          "Father's age at birth" = "fath_age_birth.x"
+          "Mother's age at birth" = "moth_age_birth.x"
         ),
          statistics = c(
            "N"           = "nobs", 
            "R2"          = "r.squared"
           ),
          stars = my_stars,
-         note = "{stars}. Standard errors clustered by spouse pair. Respondents with 1-7 siblings included.",
-         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id))
+         note = "{stars}. Standard errors clustered by spouse pair and family size. Respondents with 1-7 siblings included.",
+         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id, mf_pairs_reg$n_sibs.x))
        ) %>% 
        insert_row(after = 7, "Family size dummies", rep("Yes", 3)) %>% 
        insert_row(after = 8, "Birth month dummies", "No", "Yes", "Yes") %>% 
@@ -1135,7 +1144,7 @@ fml_bo_psea <- lapply(fml_bo_psea, Formula::as.Formula)
 
 # common controls
 fml_bo_psea <- lapply(fml_bo_psea, update, 
-                        . ~ . + EA3.x + fath_age_birth.x,
+                        . ~ . + EA3.x + moth_age_birth.x,
                         rhs = 1)
 fml_bo_psea <- lapply(fml_bo_psea, update, 
                         . ~ . + factor(YOB.x) + factor(birth_mon.x),
@@ -1146,16 +1155,13 @@ fml_bo_psea[-1] <- lapply(fml_bo_psea[-1], update,
                             . ~ . + fluid_iq.x + height.x, 
                             rhs = 1)
 
-
-mf_pairs_reg <- mf_pairs_twice %>% 
-                  filter(
-                    n_sibs.x >= 2, 
-                    n_sibs.x <= 8, 
-                    ! is.na(birth_order.x),
-                    ! is.na(university.x),
-                    ! is.na(first_job_pay.x),
-                    ! is.na(fath_age_birth.x)
-                  )
+# 
+# mf_pairs_reg2 <- mf_pairs_reg %>% 
+#                   filter(
+#                     ! is.na(university.x),
+#                     ! is.na(first_job_pay.x),
+#                     ! is.na(moth_age_birth.x)
+#                   )
 
 mod_bo_psea <- lapply(fml_bo_psea, fixest::feols, 
                  data = mf_pairs_reg,
@@ -1167,14 +1173,17 @@ huxreg(mod_bo_psea,
           "Birth order"           = "birth_order.x", 
           "University"            = "university.xTRUE", 
           "Income"                = "first_job_pay.x",
-          "Father's age at birth" = "fath_age_birth.x",
+          "Mother's age at birth" = "moth_age_birth.x",
           "Own PSEA"              = "EA3.x",
           "Fluid IQ"              = "fluid_iq.x",
           "Height"                = "height.x"
         ),
-         note = "{stars}. Standard errors clustered by spouse pair.",
+         note = "{stars}. Standard errors clustered by spouse pair and family size.",
          stars = my_stars,
-         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id))
+         tidy_args = list(
+           conf.int = FALSE, 
+           cluster = list(mf_pairs_reg$couple_id, mf_pairs_reg$n_sibs.x)
+         )
        ) %>% 
        insert_row(after = 15, "Family size dummies", rep("Yes", 5)) %>% 
        insert_row(after = 16, "Birth month dummies", rep("Yes", 5)) %>% 
@@ -1312,7 +1321,7 @@ huxreg(reg_list,
             "Birth order"           = "birth_order.x", 
             "University"            = "university.xTRUE",
             "Income"                = "first_job_pay.x",
-            "Father's age at birth" = "fath_age_birth.x",
+            "Mother's age at birth" = "moth_age_birth.x",
             "Own PSEA"              = "EA3.x",
             "Fluid IQ"              = "fluid_iq.x",
             "Height"                = "height.x"
@@ -1661,25 +1670,25 @@ mf_pairs_reg_big <- mf_pairs_twice %>%
                     ! is.na(first_job_pay.x)
                   )
 
-fml_bo_no_fath_age <- lapply(fml_bo_psea, update, 
-                     . ~ . - fath_age_birth.x, 
+fml_bo_no_moth_age <- lapply(fml_bo_psea, update, 
+                     . ~ . - moth_age_birth.x, 
                      rhs = 1
                    )
-mod_bo_no_fath_age <- lapply(fml_bo_no_fath_age, fixest::feols,
+mod_bo_no_moth_age <- lapply(fml_bo_no_moth_age, fixest::feols,
                      data  = mf_pairs_reg_big, 
                      notes = FALSE
                    )
 
-fml_bo_moth_age <- lapply(fml_bo_no_fath_age, update, 
-                     . ~ . + moth_age_birth.x, 
+fml_bo_fath_age <- lapply(fml_bo_no_moth_age, update, 
+                     . ~ . + fath_age_birth.x, 
                      rhs = 1
                    )
-mod_bo_moth_age <- lapply(fml_bo_moth_age, fixest::feols,
+mod_bo_moth_age <- lapply(fml_bo_fath_age, fixest::feols,
                      data  = mf_pairs_reg_big, 
                      notes = FALSE
                    )
 
-huxreg(mod_bo_no_fath_age, 
+huxreg(mod_bo_no_moth_age, 
         coefs = c(
           "Birth order"           = "birth_order.x", 
           "University"            = "university.xTRUE", 
@@ -1696,7 +1705,7 @@ huxreg(mod_bo_no_fath_age,
        insert_row(after = 15, "Birth year dummies", rep("Yes", 5)) %>% 
        set_bottom_border(14:15, everywhere, 0) %>% 
        set_number_format(2:13, -1, 4) %>% 
-       set_caption("Regressions of spouse PSEA, without controls for father's age at respondent's birth")
+       set_caption("Regressions of spouse PSEA, without controls for mother's age at respondent's birth")
 
 ```
 
@@ -1726,10 +1735,13 @@ huxreg_coefs <- c(
 
 huxtable::huxreg(mod_bo_psea_ix, 
                    coefs = huxreg_coefs,
-                   note = "{stars}. Standard errors clustered by spouse pair.",
+                   note = "{stars}. Standard errors clustered by spouse pair and family size.",
                    tidy_args = list(
                      conf.int = FALSE, 
-                     cluster = list(mf_pairs_reg$couple_id)
+                     cluster = list(
+                       mf_pairs_reg$couple_id, 
+                       mf_pairs_reg$n_sibs.x
+                     )
                    )
                  ) %>% 
        insert_row(after = 21, "Family size dummies", rep("Yes", 5)) %>% 
@@ -1762,7 +1774,7 @@ huxreg(mod_bo_psea_robust,
            "Birth order"           = "birth_order.x", 
            "University"            = "university.xTRUE", 
            "Income"                = "first_job_pay.x",
-           "Father's age at birth" = "fath_age_birth.x",
+           "Mother's age at birth" = "moth_age_birth.x",
            "Own PSEA"              = "EA3.x",
            "Fluid IQ"              = "fluid_iq.x",
            "Height"                = "height.x"
@@ -1771,9 +1783,15 @@ huxreg(mod_bo_psea_robust,
            "N" = "nobs", 
            "R2" = "r.squared"
          ),
-         note = "{stars}. Standard errors clustered by spouse pair. 
+         note = "{stars}. Standard errors clustered by spouse pair and family size. 
                  Polygenic scores: BMI, conscientiousness, neuroticism.",
-         tidy_args = list(conf.int = FALSE, cluster = mf_pairs_reg$couple_id)
+         tidy_args = list(
+           conf.int = FALSE, 
+           cluster = list(
+             mf_pairs_reg$couple_id,
+             mf_pairs_reg$n_sibs.x
+           )
+         )
        ) %>% 
        insert_row(after = 15, "Family size dummies", rep("Yes", 5)) %>% 
        insert_row(after = 16, "Birth month dummies", rep("Yes", 5)) %>% 
