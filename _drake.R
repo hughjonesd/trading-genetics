@@ -127,6 +127,31 @@ compute_sunshine <- function (famhist, sun_dir) {
 }
 
 
+filter_fake_pairs <- function (mf_pairs) {
+  mf_pairs %<>% 
+                mutate(
+                  sameness_score = same_rent + same_time_hh + w_spouse.m + 
+                                     w_spouse.f + same_n_kids + same_centre +
+                                     same_day
+                ) %>% 
+                filter(
+                  sameness_score == 5,
+                  heterosexual, # heterosexual couples only
+                ) 
+  orig_n <- nrow(mf_pairs)
+  # remove pairs with duplications
+  mf_pairs %<>% 
+              add_count(ID.m, name = "n.m") %>% 
+              add_count(ID.m, name = "n.f") %>% 
+              filter(n.m == 1, n.f == 1) %>% 
+              select(-n.m, -n.f)
+              
+  stopifnot(all(mf_pairs$female.f == TRUE))
+  
+  mf_pairs
+}
+
+
 plan <- drake_plan(
   score_names  = target(import_score_names(file_in(!! pgs_dir)), format = "rds"),
   
@@ -158,7 +183,11 @@ plan <- drake_plan(
   
   mf_pairs = filter_mf_pairs(mf_pairs_raw),
   
+  mf_pairs_fake = filter_fake_pairs(mf_pairs_raw),
+  
   mf_pairs_twice = make_pairs_twice(mf_pairs, suffix = c(".m", ".f")),
+  
+  mf_fake_twice = make_pairs_twice(mf_pairs_fake, suffix = c(".m", ".f")),
   
   parent_pairs = make_parent_pairs(parent_child, famhist, resid_scores),
   

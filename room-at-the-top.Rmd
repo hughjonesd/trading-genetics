@@ -46,6 +46,35 @@ library(fixest)
 library(santoku)
 library(purrr)
 
+
+regression_subset <- function (data) {
+  data %>% 
+         filter(
+           n_sibs.x >= 2, 
+           n_sibs.x <= 8, 
+           ! is.na(birth_order.x)
+         )
+}
+
+
+calc_prop_shared_children <- function (mf_pairs) {
+  drake::loadd(parent_child)
+  # all pairs where at least 1 parent has a genetic child in the sample
+  mf_w_parent <- mf_pairs %>% 
+        left_join(parent_child, by = c("ID.m" = "parent_id")) %>% 
+        left_join(parent_child, by = c("ID.f" = "parent_id"), 
+                  suffix = c(".m", ".f")) %>% 
+        filter(! is.na(child_id.m) | ! is.na(child_id.f))
+  
+  
+  n_one_has_kid <- nrow(mf_w_parent)
+  n_both_same_kid <- mf_w_parent %>% 
+                        filter(child_id.m == child_id.f) %>% # NAs excluded
+                        nrow()
+  return(list(one = n_one_has_kid, both = n_both_same_kid))
+}
+
+
 knitr::opts_chunk$set(echo = FALSE)
 options(huxtable.long_minus = TRUE)
 theme_set(theme_minimal())
@@ -59,13 +88,7 @@ famhist %<>% left_join(resid_scores, by = "f.eid")
 rm(resid_scores)
 famhist$EA3 <- famhist$EA3_excl_23andMe_UK_resid
 
-
-mf_pairs_reg <- mf_pairs_twice %>% 
-                  filter(
-                    n_sibs.x >= 2, 
-                    n_sibs.x <= 8, 
-                    ! is.na(birth_order.x)
-                  )
+mf_pairs_reg <- regression_subset(mf_pairs_twice)
 
 # for p values
 my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
@@ -573,20 +596,9 @@ along with questionnaire data on health and social outcomes.
 
 ```{r calc-validate-pairs}
 
-drake::loadd(parent_child)
-
-# all pairs where at least 1 parent has a genetic child in the sample
-mf_w_parent <- mf_pairs %>% 
-      left_join(parent_child, by = c("ID.m" = "parent_id")) %>% 
-      left_join(parent_child, by = c("ID.f" = "parent_id"), 
-                suffix = c(".m", ".f")) %>% 
-      filter(! is.na(child_id.m) | ! is.na(child_id.f))
-
-
-n_one_has_kid <- nrow(mf_w_parent)
-n_both_same_kid <- mf_w_parent %>% 
-                      filter(child_id.m == child_id.f) %>% # NAs excluded
-                      nrow()
+prop_shared <- calc_prop_shared_children(mf_pairs)
+n_one_has_kid <- prop_shared$one
+n_both_same_kid <- prop_shared$both
 
 ```
 
@@ -1084,18 +1096,21 @@ mod_bo_psea_base <- lapply(fml_bo_psea_base, fixest::feols,
                )
 
 huxreg(mod_bo_psea_base, 
-        coefs = c(
-          "Birth order"           = "birth_order.x", 
-          "Own PSEA"               = "EA3.x",
-          "Mother's age at birth" = "moth_age_birth.x"
-        ),
+         coefs = c(
+           "Birth order"           = "birth_order.x", 
+           "Own PSEA"              = "EA3.x",
+           "Mother's age at birth" = "moth_age_birth.x"
+         ),
          statistics = c(
-           "N"           = "nobs", 
-           "R2"          = "r.squared"
+           "N"  = "nobs", 
+           "R2" = "r.squared"
           ),
          stars = my_stars,
          note = "{stars}. Standard errors clustered by spouse pair and family size. Respondents with 1-7 siblings included.",
-         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg$couple_id, mf_pairs_reg$n_sibs.x))
+         tidy_args = list(
+           conf.int = FALSE, 
+           cluster  = list(mf_pairs_reg$couple_id, mf_pairs_reg$n_sibs.x)
+         )
        ) %>% 
        insert_row(after = 7, "Family size dummies", rep("Yes", 3)) %>% 
        insert_row(after = 8, "Birth month dummies", "No", "Yes", "Yes") %>% 
@@ -1276,24 +1291,23 @@ into the next generation.
 
 Table \@ref(tab:tbl-bo-subsets) shows the results. Columns 1 and 2 use birth
 order of male respondents to predict female spouses' PSEA. Column 1 runs the
-regression of birth order plus controls; column 2 adds the full set of
-mediators, including university and income. Columns 3 and 4 repeat the exercise
+regression of birth order plus controls; column 2 adds university as a mediator.
+Columns 3 and 4 repeat the exercise
 for female respondents, using their birth order to predict male spouses' PSEA.
-Effect sizes are larger for female respondents. This might be because social
-status matters more for females in the marriage markets (contrary to a common
-stereotype), or because males place less value on phenotypes related to PSEA.
-Columns 5 and 6 use only couples with children. The effect of birth order is
-larger than for the sample as a whole, and university attendance and income
-still seem to mediate the birth order effect.
+Effect sizes are smaller for female respondents. This might be because social
+status is less advantageous to females in the marriage markets, or because
+females place less value on PSEA-related phenotypes in a spouse.
+Columns 5 and 6 use only couples with children. University attendance 
+still seems to mediate the birth order effect.
 
 
 ```{r tbl-bo-subsets}
 
-mod_bo_males <- lapply(fml_bo_psea[c(2, 5)], fixest::feols, 
+mod_bo_males <- lapply(fml_bo_psea[c(2, 3)], fixest::feols, 
                  data = mf_pairs_reg %>% filter(x == "Male"),
                  notes = FALSE
                )
-mod_bo_females <- lapply(fml_bo_psea[c(2, 5)], fixest::feols, 
+mod_bo_females <- lapply(fml_bo_psea[c(2, 3)], fixest::feols, 
                  data = mf_pairs_reg %>% filter(x == "Female"),
                  notes = FALSE
                )
@@ -1320,7 +1334,6 @@ huxreg(reg_list,
          coefs = c(
             "Birth order"           = "birth_order.x", 
             "University"            = "university.xTRUE",
-            "Income"                = "first_job_pay.x",
             "Mother's age at birth" = "moth_age_birth.x",
             "Own PSEA"              = "EA3.x",
             "Fluid IQ"              = "fluid_iq.x",
@@ -1803,6 +1816,84 @@ huxreg(mod_bo_psea_robust,
        set_wrap(final(1), everywhere, TRUE) %>% 
        set_caption("Regressions of spouse PSEA with controls for polygenic scores")
 ```
+
+
+
+### Regressions with "fake pairs"
+
+Our dataset of pairs could still contain pairs who live in the same postcode
+but are not spouses. These pairs might still show a relationship between
+one partner's phenotype and the other's genotype. For example, maybe early-born
+children grow up to live in richer postcodes, along with people who have higher
+PSEA scores. This could then bias the results. If the coefficient for "fake pairs"
+is absolutely larger (smaller) than for real pairs, then our results will
+be biased away from zero (towards zero). 
+
+To sign the bias, we create a dataset of "known fake pairs". These are 
+opposite-sexed pairs who live in the same postcode, but do not share all
+the characteristics listed for the real pairs. Specifically, from the
+list of characteristics used to create our real pairs (same homeownership status, same length of time at address, same
+number of children, attended same assessment centre, attended on same day,
+husband reported living with spouse, wife reported liviing with spouse)
+the fake pairs ticked exactly 5 out of 7 boxes.
+
+```{r calc-fake-pairs}
+
+drake::loadd(mf_pairs_fake)
+prop_shared_fake <- calc_prop_shared_children(mf_pairs_fake)
+
+n_one <- prop_shared_fake$one
+n_both <- prop_shared_fake$both
+```
+
+We again use genetic children to confirm that the fake pairs are "real fakes".
+Out of `r n_one` genetic children of the fake pairs, only `r n_both` were children
+of both parents. Thus, the vast majority of fake pairs do not appear to be 
+spouses. Table \@ref(tab:tbl-bo-psea-fake) reruns the regressions of
+\@ref(tab:tbl-bo-psea-basic) using the fake pairs. Although the coefficients
+on birth order are always negative, they are never significant,
+and they are always absolutely smaller than the corresponding coefficient in the 
+main text. This suggests that any fake pairs remaining in our data will have
+the effect of biasing our results towards zero.
+
+
+```{r tbl-bo-psea-fake}
+
+drake::loadd(mf_fake_twice)
+fake_pairs_reg <- regression_subset(mf_fake_twice)
+mod_bo_psea_fake <- lapply(fml_bo_psea_base, fixest::feols, 
+                 data = fake_pairs_reg,
+                 notes = FALSE
+               )
+
+huxreg(mod_bo_psea_fake, 
+         coefs = c(
+           "Birth order"           = "birth_order.x", 
+           "Own PSEA"              = "EA3.x",
+           "Mother's age at birth" = "moth_age_birth.x"
+         ),
+         statistics = c(
+           "N"  = "nobs", 
+           "R2" = "r.squared"
+          ),
+         stars = my_stars,
+         note = "{stars}. Standard errors clustered by pair and family size. Respondents with 1-7 siblings included.",
+         tidy_args = list(
+           conf.int = FALSE, 
+           cluster  = list(fake_pairs_reg$couple_id, fake_pairs_reg$n_sibs.x)
+         )
+       ) %>% 
+       insert_row(after = 7, "Family size dummies", rep("Yes", 3)) %>% 
+       insert_row(after = 8, "Birth month dummies", "No", "Yes", "Yes") %>% 
+       insert_row(after = 9, "Birth year dummies", "No", "Yes", "Yes") %>% 
+       set_bottom_border(8:9, everywhere, 0) %>% 
+       set_number_format(2:7, -1, 4) %>% 
+       set_width(0.8) %>% 
+       set_caption("Regressions of PSEA on birth order: fake pairs")
+
+```
+
+
 
 \FloatBarrier
 
