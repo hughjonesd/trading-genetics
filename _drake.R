@@ -22,6 +22,9 @@ suppressPackageStartupMessages({
 source("~/import-ukbb-data/import-ukbb-data.R")
 
 
+not.na <- Negate(is.na)
+
+
 make_parent_child <- function (relatedness, famhist_raw) {
   
   parent_child <- relatedness %>% 
@@ -50,6 +53,11 @@ make_parent_child <- function (relatedness, famhist_raw) {
                   filter(n <= 2) %>% 
                   ungroup()
 
+  parent_child %<>% 
+                  mutate(
+                    age_parent = ifelse(parent_id == ID1, age1, age2)
+                  )
+  
   parent_child
 }
 
@@ -76,6 +84,55 @@ make_parent_pairs <- function (parent_child, famhist, resid_scores) {
   parent_pairs
 }
 
+
+make_howe_pairs <- function (famhist, resid_scores) {
+  fh_w_spouse <- famhist %>% 
+                   filter(f.6141.0.0 == 1) %>% 
+                   tidyr::drop_na(f.699.0.0, f.709.0.0, f.728.0.0, f.20074.0.0, 
+                     f.20075.0.0, f.670.0.0, f.680.0.0, f.54.0.0)
+  
+  fh_w_spouse %<>% left_join(resid_scores, by = "f.eid")                
+                 
+  howe_pairs <- inner_join(fh_w_spouse, fh_w_spouse, 
+                             by = c("f.699.0.0", "f.709.0.0",  "f.728.0.0", 
+                                    "f.670.0.0", "f.680.0.0",
+                                    "f.20074.0.0", "f.20075.0.0", "f.54.0.0"),
+                             suffix = c(".m", ".f")
+                           )
+  # the above will give two copies of every match,
+  # also some people will be matched with themselves
+
+  howe_pairs %<>% filter(
+                    # no individuals matched with themselves:
+                    f.eid.m != f.eid.f, 
+                    # the below removes (a) all-female pairs; (b) one copy out of
+                    # two for each heterosexual pair:
+                    ! female.m,
+                    # the below removes all-male pairs:
+                    female.f
+                  )
+
+  # no multiple matches
+  howe_pairs %<>% 
+                add_count(f.eid.m, name = "n.m") %>% 
+                filter(n.m == 1) %>% 
+                add_count(f.eid.f, name = "n.f") %>% 
+                filter(n.f == 1)
+
+  howe_pairs %<>% filter(
+                    # no pairs with same age death of both parents:
+                    ! (
+                        # first three lines avoid matching people with NAs:
+                        not.na(f.1807.0.0.m) & not.na(f.1807.0.0.f) &
+                        not.na(f.3526.0.0.m) & not.na(f.3526.0.0.f) &
+                        f.1807.0.0.m >= 0 & f.3526.0.0.m >= 0 & 
+                        f.1807.0.0.m == f.1807.0.0.f & f.3526.0.0.m == f.3526.0.0.f
+                      )
+                  )
+
+  # should also remove pairs with IBD > 0.1
+  howe_pairs
+}
 
 compute_sunshine <- function (famhist, sun_dir) {
   years <- 1941:1970
@@ -191,7 +248,9 @@ plan <- drake_plan(
   
   parent_pairs = make_parent_pairs(parent_child, famhist, resid_scores),
   
-  parent_pairs_twice = make_pairs_twice(parent_pairs)
+  parent_pairs_twice = make_pairs_twice(parent_pairs),
+  
+  howe_pairs = make_howe_pairs(famhist, resid_scores)
 )
 
 
