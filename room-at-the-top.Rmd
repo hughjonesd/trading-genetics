@@ -22,13 +22,6 @@ header-includes:
   - \providecommand{\propositionname}{Proposition}
 ---
 
-```{r TODO, eval = FALSE}
-* Why missing all the first job data? - because not everyone does the
-  online followup. We could use "current job" which might be endogenous
-  to your spouse; then do first job as a robustness check.
-```
-
-
 
 ```{r setup, include = FALSE}
 
@@ -94,6 +87,18 @@ mf_pairs_reg <- regression_subset(mf_pairs_twice)
 my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
 
 ```
+
+
+```{r TODO, eval = FALSE}
+* Why missing all the first job data? - because not everyone does the
+  online followup. We could use "current job" which might be endogenous
+  to your spouse; then do first job as a robustness check.
+  
+Questions for Oana
+- Do we use first_job? Or use current_job and first_job as a robustness check?
+  Or multiply impute?
+```
+
 
 \normalem
 
@@ -208,9 +213,9 @@ e.g. intelligence. As a result, the two kinds of variation become associated. Ou
 model simply extends this idea to the case of a socially-inherited trait and 
 one or more genetic variants.
 
-The basic idea behind SGAM is not new. It is a cliché that e.g. wealth and
-beauty tend to assort in marriage markets. However, few papers
-has analysed this mechanism or drawn out its consequences explicitly.
+The basic idea behind SGAM is not new. It is a cliché that, for example, 
+wealth and beauty tend to assort in marriage markets. However, few papers
+have analysed this mechanism or drawn out its consequences explicitly.
 @halsey1958genetics showed in a two-class model that social mobility combined
 with assortative mating might increase the association between genetics and
 social class. @belsky2018genetic offer three reasons for the association between
@@ -260,7 +265,7 @@ two parents (hollow circle). In this society pairs match only by social
 status; genetics plays no role. As a result, while the variance of $G$
 shrinks within each status group, genetics remain uncorrelated with
 social status in the children's population distribution, shown on the
-right. The next row shows a purely *egalitarian marriage market* with
+right. The next row shows a pure *egalitarian marriage market* with
 $k = 0$. Parents match only by genetics and ignore social status. Again,
 as a result there is no correlation between genetics and social status
 in the children's generation. The bottom row shows a (more realistic)
@@ -294,8 +299,8 @@ s_{c(d)} & =\frac{s_{d}+s_{m}}{2}.\nonumber
 \end{align}
 ```
 
-This is a strong assumption; we relax it later. For real world examples
-approximated by it, $S$ could be wealth which is equally divided between
+This is a strong simplifying assumption; we relax it below. For real world examples
+approximated by the model, $S$ could be wealth which is equally divided between
 the children; $G$ could be a highly polygenic trait with many small
 effects. Write $G_{p}, S_{p}$ to denote the population variables in the
 parents' generation; $G_{c}, S_{c}$ for the children's generation.
@@ -682,20 +687,28 @@ estimated_false_pos <- observed_dupe_prop/sample_prop_per_coord
 
 ```
 
-We also eliminated all pairs where either spouse appeared more than once in the
-data. This left us with a total of `r nrow(mf_pairs)` pairs. 
+We also eliminate all pairs where either spouse appeared more than once in the
+data. This leaves a total of `r nrow(mf_pairs)` pairs. 
 Some of these could be false positives, i.e. people who are not
 each others' spouse but simply live in the same postcode. To validate the
-accuracy of our measures, we used genetic relationships. Some respondents
+accuracy of our measures, we use genetic relationships. Some respondents
 in the Biobank sample have a child who is also in the sample, as inferred from
 genetic data. Among our spouse pairs,
-`r n_one_has_kid` have a genetic child of at least one partner in the sample. For `r n_both_same_kid` of these, the child is the genetic child of both 
-partners. If this subsample is representative of the whole, then at least 
+`r n_one_has_kid` have a genetic child of at least one partner in the sample. 
+For `r n_both_same_kid` of these, the child is the genetic child of both 
+partners. If this subsample is representative, then at least 
 `r percent(n_both_same_kid/n_one_has_kid)` of the pairs who have had
-a child, have had a child together. This is a lower bound because those who
+a child, have had a child together. This is a lower bound, because those who
 had a child with someone else may also have had a child with the presumed partner
-in our data.
+in our data. As a point of comparison, 11% of families with dependent children
+included a stepchild in England and Wales in 2011  [@ons2011stepfamilies].
 
+It is still possible that some pairs in our data may not be
+actual spouses. In the appendix, to sign any possible bias in our estimates 
+resulting from this, we use a dataset of "fake pairs". We show that estimated
+coefficients of interest are closer to zero among these fake pairs than among 
+our "real pairs". Because of this, any fake pairs remaining in our data are 
+likely to bias our coefficients towards zero.
 
 Our key dependent variable is spouse's *Polygenic Score for Educational
 Attainment* (PSEA). A polygenic score is a DNA-derived summary measure of
@@ -814,7 +827,6 @@ Current income is a direct measure of SES, while university attendance is a
 predictor of income over the entire life course.
 
 -   TODO: Abdel - details of PSEA calculation
--   TODO: overall index of social status?
 
 Ideally, we might prefer to use birth order as an instrument for SES.
 However, our measures of social status are noisy and incomplete. For
@@ -835,7 +847,7 @@ status and spouse's genetics. Also, if the estimated effect of birth
 order on spouse's PSEA changes when SES is controlled for, that is
 evidence that SES mediates the effect of birth order.
 
-## Decomposition of the Birth Order effect on spouse genetics
+## Decomposing the Birth Order effect on spouse genetics
 
 Linearizing our model so that $A(g, s) = (1-k)g + ks$ and applying \@ref(eq:same-A) shows that:
 
@@ -1075,6 +1087,7 @@ parents versus being later in birth order.[^6]
 [^6]: Note that parental age would not be a good independent variable
     for testing genetic encoding of social advantage, since it is likely
     to correlate with parents' genetics.
+    
 
 ```{r tbl-bo-psea-basic}
 
@@ -1825,17 +1838,17 @@ Our dataset of pairs could still contain pairs who live in the same postcode
 but are not spouses. These pairs might still show a relationship between
 one partner's phenotype and the other's genotype. For example, maybe early-born
 children grow up to live in richer postcodes, along with people who have higher
-PSEA scores. This could then bias the results. If the coefficient for "fake pairs"
-is absolutely larger (smaller) than for real pairs, then our results will
-be biased away from zero (towards zero). 
+PSEA scores [@abdellaoui2019genetic]. This could then bias the results. If the 
+coefficient for "fake pairs" is absolutely larger (smaller) than for real pairs, 
+then our results will be biased away from zero (towards zero). 
 
-To sign the bias, we create a dataset of "known fake pairs". These are 
-opposite-sexed pairs who live in the same postcode, but do not share all
-the characteristics listed for the real pairs. Specifically, from the
-list of characteristics used to create our real pairs (same homeownership status, same length of time at address, same
-number of children, attended same assessment centre, attended on same day,
-husband reported living with spouse, wife reported liviing with spouse)
-the fake pairs ticked exactly 5 out of 7 boxes.
+To sign the bias, we create a dataset of "known fake pairs". These are
+opposite-sexed pairs who live in the same postcode, but do not share all the
+characteristics listed for the real pairs. Specifically, from the list of
+characteristics used to create our real pairs (same homeownership status, same
+length of time at address, same number of children, attended same assessment
+centre, attended on same day, husband reported living with spouse, wife reported
+liviing with spouse) the fake pairs ticked exactly 5 out of 7 boxes.
 
 ```{r calc-fake-pairs}
 
@@ -1850,11 +1863,11 @@ We again use genetic children to confirm that the fake pairs are "real fakes".
 Out of `r n_one` genetic children of the fake pairs, only `r n_both` were children
 of both parents. Thus, the vast majority of fake pairs do not appear to be 
 spouses. Table \@ref(tab:tbl-bo-psea-fake) reruns the regressions of
-\@ref(tab:tbl-bo-psea-basic) using the fake pairs. Although the coefficients
+Table \@ref(tab:tbl-bo-psea-basic) using the fake pairs. Although the coefficients
 on birth order are always negative, they are never significant,
 and they are always absolutely smaller than the corresponding coefficient in the 
-main text. This suggests that any fake pairs remaining in our data will have
-the effect of biasing our results towards zero.
+main text. This strongly suggests that any fake pairs remaining in our data will 
+have the effect of biasing our results towards zero.
 
 
 ```{r tbl-bo-psea-fake}
