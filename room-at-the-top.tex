@@ -117,7 +117,7 @@
 
 \title{Trading social status for genetics in marriage markets: evidence from UK Biobank}
 \author{David Hugh-Jones, Oana Borcan \& Abdel Abdellaoui}
-\date{2021-02-12}
+\date{2021-02-18}
 
 \begin{document}
 \maketitle
@@ -636,8 +636,8 @@ parents, \(\beta_A = 1\). Thus, regressions on measured components of
 social status will underestimate true persistence over time, embodied in
 genetic variation. Indeed, grandparents' social status will
 independently predict grandchildren's social status, even after
-controlling for parents' social status, because grandparents' social
-status affects parents' genetics.
+controlling for parents' social status, because of the unmeasured
+pathway via parents' genetics.
 
 The model predicts variation in the strength of SGAM. In particular, in
 ``caste societies'' where there is complete endogamy within social status
@@ -1784,24 +1784,28 @@ order is indeed exogenous to genetics.
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
 
-Behaviour geneticists have pointed out that in meritocratic societies,
-genetics and social status will be correlated, because some genetic
-variants will lead to success in the labour market. We argue that
-causality can also go the other way. If social status and genetics both
-matter in marriage markets, then people with high social status will
-attract partners with ``good genes,'' and the two will become associated
-in the next generation.
-
 Our empirical analysis shows that in a modern Western democracy,
-earlier-born children had spouses with higher PSEA. Thus, an
-environmental shock has effects on the genetics of people's spouses and
-becomes encoded in the genetics of their children. We also provided
+earlier-born children had spouses with higher PSEA. We also provide
 evidence that these effects are mediated by social status: income and
 education.
 
-It has been widely believed in many societies that innate traits do vary
-across social classes. The ancient Greeks described the social elite as
-\emph{kaloi kagathoi} (``fine and good''), while the Roman nobility were the
+Inequality gets transmitted within families by multiple mechanisms, from
+bequests to investment in children's human capital. Our analysis shows
+that genetics are another mechanism. Socio-economic status in one
+generation translates into the next generation's genetic endowments, via
+marriage markets. This may be one reason why inequality between families
+is surprisingly persistent in the long-run. Because our measures of PSEA
+are so noisy, it is hard to make confident estimates of the effect size
+of the genetic channel. This will be an important research topic as
+polygenic scores become more accurate.
+
+Our explanation for the genes-SES gradient applies to a wider range of
+societies than the leading alternative explanation. If this mechanism
+has operated, then we would expect the gradient to be widespread or
+universal among all stratified societies. In fact, people in many
+societies have believed that innate traits do vary across social
+classes. The ancient Greeks described the social elite as \emph{kaloi
+kagathoi} (``fine and good''), while the Roman nobility were the
 \emph{optimates} (``best'').\footnote{The appendix contains a selection of relevant historical
   quotations.} This belief has been explained by the human
 tendency to believe in a just world (Furnham 1993), or as an
@@ -1810,7 +1814,22 @@ However, it may also simply have been a recognition of (social) reality.
 In other words, the belief that elites are taller, stronger,
 better-looking, etc. is not much different from the belief that elites
 are richer and more powerful, and is likely to be held for fairly
-similar reasons.
+similar reasons. But our prediction may be directly testable in future,
+for example by using ancient DNA samples.
+
+Our analysis also has implications for the practice of controlling
+polygenic scores by residualizing on principal components of genetic
+data. This is done so as to avoid confounding the effects of genetic
+variation with social stratification. However, insofar as the
+geneticists' concept of stratification (mating which is non-random with
+respect to genetics) overlaps with the sociological concept of
+stratification (a hierarchical ranking of social status), SGAM predicts
+that stratification will be associated with causally relevant genetic
+variants. For this reason, we would expect principal components to
+contain real information about causally relevant variants. So, it is an
+empirical question whether controlling for principal components improves
+or weakens the predictive power of polygenic scores. Within-family
+analyses could resolve this question.
 
 In our model, the association between social status and genetic
 variation depends on the structure of the society's marriage market. The
@@ -1826,28 +1845,6 @@ of ``meritocracy'' in marriage markets. Comparing rGE across societies or
 over time is beyond our scope here, but we see it as a good area for
 future work. Marriage markets may play an important role in explaining
 how social inequality varies across different societies.
-
-Over history, SGAM has probably operated in a much greater variety of
-societies than earned status, because societies in which status can be
-earned are relatively rare compared to those in which status is
-inherited. (TODO: cite WEIRD? Or ``status vs contract?'') As a result, we
-would predict long-standing correlations between social status and
-causal genetic variants. This prediction could be tested on ancient DNA
-data.
-
-Our analysis also has implications for the practice of controlling
-polygenic scores by residualizing on principal components of genetic
-data. This is done so as to avoid confounding the effects of genetic
-variation with social stratification. However, insofar as the
-geneticists' concept of stratification (mating which is non-random with
-respect to genetics) overlaps with the sociological concept of
-stratification (a hierarchical ranking of social status), SGAM predicts
-that stratification will be associated with causally relevant genetic
-variants. For this reason, we would expect principal components to
-contain real information about causally relevant variants. So, it is an
-empirical question whether controlling for principal components improves
-or weakens the predictive power of polygenic scores. Within-family
-analyses could resolve this question.
 
 The broadest message of this paper is that \emph{genetics are a social
 outcome}. Both popular and scientific discourse often parse genetics as
