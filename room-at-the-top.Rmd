@@ -42,6 +42,7 @@ header-includes:
 
 ```{r setup, include = FALSE}
 
+
 library(Formula)
 library(car)
 library(drake)
@@ -55,6 +56,7 @@ library(broom)
 library(fixest)
 library(santoku)
 library(purrr)
+library(scales) # percent should override santoku
 
 
 regression_subset <- function (data) {
@@ -103,6 +105,10 @@ mf_pairs_reg <- regression_subset(mf_pairs_twice)
 # for p values
 my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
 
+pretty <- function (n, digits = 2, ...) {
+  formatC(n, digits = digits, big.mark = ",", ...)
+}
+
 ```
 
 ```{r TODO, eval = FALSE}
@@ -121,6 +127,19 @@ my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
 #   effect)
 # 
 # * Include early vs late?
+
+
+# Check prop 2. (Bob question: if there's noise, then shouldn't
+# correlation tend to a limit less than 1? And if so, then at that limit,
+# parental correlation should equal child correlation).
+
+# Policy implications. None directly, but note that e.g. changes to k,
+# perhaps due to redistribution, will have long-run effects on the G-S
+# gradient.
+
+# TODO: We may have to control, rather than residualize, on PCs
+# to get accurate p-values, as our N is not huge by the end (or is 2000 
+# enough not to worry)
 
 ```
 
@@ -415,7 +434,12 @@ A(g_{i},s_{i}) = f((1-k)g_{i},ks_{i})
 $$
 
 where $f$ is smooth and strictly increasing in both its arguments, and
-$0 \le k \le 1$.
+$0 \le k \le 1$. One microfoundation is that $A$ measures the utility a
+person provides as a spouse, and the marriage market works via a
+Gale-Shapley [-@gale1962college] matching mechanism. Other
+interpretations are possible: for instance, different values of $A$
+could represent segmented marriage markets, like different schools or
+workplaces, within which people match at random.
 
 The key parameter is $k$. This describes the working of the society's
 marriage market. If $k = 0$, only genetics $G$ are relevant in marriage
@@ -909,8 +933,9 @@ human mate search. People are attracted to educated potential partners
 similar levels of educational attainment, as well as similar PSEA
 [@vandenberg1972assortative; @schwartz2005trends; @greenwood2014marry;
 @hugh2016assortative]. We use per-SNP summary statistics from
-[@lee2018gene], recalculated excluding UK Biobank participants, to
-calculate PSEA.[^5]
+[@lee2018gene], re-estimated excluding UK Biobank participants, to
+calculate PSEA.[^5] We normalize the score to have mean 0 and variance
+1.
 
 [^5]: PSEA was computed by summing the alleles across \~1.3 million
     genetic variants weighted by their effect sizes as estimated in
@@ -919,13 +944,47 @@ calculate PSEA.[^5]
     the SNP array data. Further details can be found in
     \@abdellaoui2019genetic.
 
--   TODO: if our N gets small, we may have to control, rather than
-    residualize, to get accurate p-values.
+```{r calc-psea-check}
+
+mod_own_psea <- feols(university ~ EA3, data = famhist, note = FALSE)
+mod_own_psea_within <- feols(university ~ EA3 | sib_group, data = famhist,
+                               note = FALSE)
+
+n_own_psea <- glance(mod_own_psea)[["nobs"]]
+n_own_psea_within <- glance(mod_own_psea_within)[["nobs"]]
+
+mod_own_psea <- tidy(mod_own_psea)
+mod_own_psea_within <- tidy(mod_own_psea_within)
+
+eff_own_psea  <- mod_own_psea[[2, "estimate"]]
+pval_own_psea <- mod_own_psea[[2, "p.value"]]
+
+eff_own_psea_within  <- mod_own_psea_within[[1, "estimate"]]
+pval_own_psea_within <- mod_own_psea_within[[1, "p.value"]]
+
+stopifnot(pval_own_psea < 2e-16)
+stopifnot(pval_own_psea_within < 2e-16)
+```
+
+PSEA is known to correlate with measures of education, including
+university attendance and years of full-time education; from
+within-siblings regressions, where PSEA is randomly assigned by the
+"lottery of meiosis", we know that this correlation is at least partly
+causal. We recheck these facts within the UK Biobank sample. In a simple
+linear regression (N = `r pretty(n_own_psea)`) of university attendance
+on PSEA, a one-standard-deviation increase in PSEA was associated with a
+`r percent(eff_own_psea, 0.01)` increase in the probability of
+university attendance (p \< 2e-16). In a within-siblings regression
+among genetic full siblings (N = `r pretty(n_own_psea_within)`), the
+increase was `r percent(eff_own_psea_within, 0.01)` (p \< 2e-16). This
+suggests that about half of the raw correlation of PSEA with university
+attendance is down to confounds like good environments or parental
+nurture, while the remainder is causal.
 
 Figures \@ref(fig:pic-basic-corr-uni) and
 \@ref(fig:pic-basic-corr-income) illustrate the possible consequences of
 SGAM. The X axis shows a measure of one partner's socio-economic status:
-university attendance (Figure \@ref(fig:pic-basic-corr-uni) or income
+university attendance (Figure \@ref(fig:pic-basic-corr-uni)) or income
 (Figure \@ref(fig:pic-basic-corr-income)). The Y axis plots the other
 partner's mean PSEA. Both males and females who went to university had
 spouses with higher PSEA. So did males and females with higher income.

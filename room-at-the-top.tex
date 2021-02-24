@@ -117,7 +117,7 @@
 
 \title{Trading social status for genetics in marriage markets: evidence from UK Biobank}
 \author{David Hugh-Jones, Oana Borcan \& Abdel Abdellaoui}
-\date{2021-02-18}
+\date{2021-02-24}
 
 \begin{document}
 \maketitle
@@ -388,7 +388,12 @@ A(g_{i},s_{i}) = f((1-k)g_{i},ks_{i})
 \]
 
 where \(f\) is smooth and strictly increasing in both its arguments, and
-\(0 \le k \le 1\).
+\(0 \le k \le 1\). One microfoundation is that \(A\) measures the utility a
+person provides as a spouse, and the marriage market works via a
+Gale-Shapley (1962) matching mechanism. Other
+interpretations are possible: for instance, different values of \(A\)
+could represent segmented marriage markets, like different schools or
+workplaces, within which people match at random.
 
 The key parameter is \(k\). This describes the working of the society's
 marriage market. If \(k = 0\), only genetics \(G\) are relevant in marriage
@@ -693,7 +698,7 @@ genetic data. Among our spouse pairs, 511 have a genetic
 child of at least one partner in the sample. For 441 of
 these, the child is the genetic child of both partners. If this
 subsample is representative, then at least
-86.3\% of the pairs who have had a
+86\% of the pairs who have had a
 child, have had a child together. This is a lower bound, because those
 who had a child with someone else may also have had a child with the
 presumed partner in our data. As a point of comparison, 11\% of families
@@ -717,20 +722,29 @@ human mate search. People are attracted to educated potential partners
 (Buss and Barnes 1986; Belot and Francesconi 2013); spouse pairs often have
 similar levels of educational attainment, as well as similar PSEA
 (Vandenberg 1972; Schwartz and Mare 2005; Greenwood et al. 2014; Hugh-Jones et al. 2016). We use per-SNP summary statistics from
-(Lee et al. 2018), recalculated excluding UK Biobank participants, to
+(Lee et al. 2018), re-estimated excluding UK Biobank participants, to
 calculate PSEA.\footnote{PSEA was computed by summing the alleles across \textasciitilde1.3 million
   genetic variants weighted by their effect sizes as estimated in
   genome-wide association studies (GWASs) that excluded UK Biobank.
   PSEA was then residualized on the first 100 principal components of
   the SNP array data. Further details can be found in
-  @abdellaoui2019genetic.}
+  @abdellaoui2019genetic.} We normalize the score to have mean 0 and variance
+1.
 
-\begin{itemize}
-\tightlist
-\item
-  TODO: if our N gets small, we may have to control, rather than
-  residualize, to get accurate p-values.
-\end{itemize}
+PSEA is known to correlate with measures of education, including
+university attendance and years of full-time education; from
+within-siblings regressions, where PSEA is randomly assigned by the
+``lottery of meiosis,'' we know that this correlation is at least partly
+causal. We recheck these facts within the UK Biobank sample. In a simple
+linear regression (N = 408,524) of university attendance
+on PSEA, a one-standard-deviation increase in PSEA was associated with a
+9.23\% increase in the probability of
+university attendance (p \textless{} 2e-16). In a within-siblings regression
+among genetic full siblings (N = 36,748), the
+increase was 4.46\% (p \textless{} 2e-16). This
+suggests that about half of the raw correlation of PSEA with university
+attendance is down to confounds like good environments or parental
+nurture, while the remainder is causal.
 
 Figures \ref{fig:pic-basic-corr-uni} and
 \ref{fig:pic-basic-corr-income} illustrate the possible consequences of
@@ -1807,15 +1821,14 @@ societies have believed that innate traits do vary across social
 classes. The ancient Greeks described the social elite as \emph{kaloi
 kagathoi} (``fine and good''), while the Roman nobility were the
 \emph{optimates} (``best'').\footnote{The appendix contains a selection of relevant historical
-  quotations.} This belief has been explained by the human
-tendency to believe in a just world (Furnham 1993), or as an
-ideology promoted by the dominant class (e.g. Gramsci 1971).
-However, it may also simply have been a recognition of (social) reality.
-In other words, the belief that elites are taller, stronger,
-better-looking, etc. is not much different from the belief that elites
-are richer and more powerful, and is likely to be held for fairly
-similar reasons. But our prediction may be directly testable in future,
-for example by using ancient DNA samples.
+  quotations.} This belief has been explained by the
+psychological tendency to believe in a just world (Furnham 1993), or
+as an ideology promoted by the dominant class (e.g. Gramsci 1971). However, it may also simply have been a
+recognition of (social) reality. In other words, the belief that elites
+are taller, stronger, better-looking, etc. is not much different from
+the belief that elites are richer and more powerful, and is likely to be
+held for fairly similar reasons. In any case, our prediction may be
+directly testable, for example by using ancient DNA samples.
 
 Our analysis also has implications for the practice of controlling
 polygenic scores by residualizing on principal components of genetic
@@ -3146,6 +3159,9 @@ Fried, Morton Herbert. 1967. \emph{The Evolution of Political Society: An Essay 
 
 \leavevmode\hypertarget{ref-furnham1993just}{}%
 Furnham, Adrian. 1993. {``Just World Beliefs in Twelve Societies.''} \emph{The Journal of Social Psychology} 133 (3): 317--29.
+
+\leavevmode\hypertarget{ref-gale1962college}{}%
+Gale, David, and Lloyd S Shapley. 1962. {``College Admissions and the Stability of Marriage.''} \emph{The American Mathematical Monthly} 69 (1): 9--15.
 
 \leavevmode\hypertarget{ref-gramsci1971selections}{}%
 Gramsci, Antonio. 1971. \emph{Selections from the Prison Notebooks}. Lawrence; Wishart London.
