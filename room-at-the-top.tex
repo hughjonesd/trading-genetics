@@ -117,7 +117,7 @@
 
 \title{Trading social status for genetics in marriage markets: evidence from UK Biobank}
 \author{David Hugh-Jones, Oana Borcan \& Abdel Abdellaoui}
-\date{2021-02-24}
+\date{2021-02-25}
 
 \begin{document}
 \maketitle
@@ -338,30 +338,35 @@ both socially inherited status, and biologically inherited genetic
 variants. This leads to a new explanation of the link between
 socio-economic status and genetics.
 
-The underlying observation behind SGAM is not new. That status and
+The underlying observations behind SGAM are hardly new. That status and
 physical attractiveness tend to assort in marriage markets is a
 commonplace, as well as a perennial theme of literature. In the Iliad,
 powerful leaders fight over the beautiful slave-girl Bryseis. In Jane
 Austen's novels, wealth, attractiveness and ``virtue'' all make a good
 match. Marx (1844) wrote ``the effect of ugliness, its repelling
 power, is destroyed by money.'' And Donald Trump claimed: ``part of the
-beauty of me is that I am very rich.'' Despite this, surprisingly few
-papers have analysed the consequences of SGAM, either within genetics or
-economics. In economics, several empirical papers examine cross-trait
-matching in marriage markets. Chiappori, Oreffice, and Quintana-Domeque (2012) show empirically that
-body mass index and SES (specifically, earnings and education) are both
-valued in a match. Oreffice and Quintana-Domeque (2010) show that height and BMI
-are associated with spouse earnings. Dupuy and Galichon (2014) find spouse
-matching on multiple independent dimensions, including education,
-height, BMI and personality; see also Chiappori, Oreffice, and Quintana-Domeque (2018).
-However, these papers do not use genetic data, and do not attempt to
-disentangle genetic and environmental contributions to attractiveness.
-They also do not theorize the consequences of SGAM. Within genetics,
-Halsey (1958) showed in a two-class model that social mobility
-combined with assortative mating might increase the association between
-genetics and social class. Belsky et al. (2018) offer three reasons for
-the association between education-linked genetics and SES, but do not
-consider SGAM.
+beauty of me is that I am very rich.'' There is also a rich literature on
+mate preference from evolutionary psychology (Buss 1989; Buss and Barnes 1986; Buss and Schmitt 2019). Attractive mate characteristics
+include elements of social status (``high earning capacity,''
+``professional status'') as well as traits that are partly under genetic
+influence (``intelligent,'' ``tall,'' ``kind,'' ``physically attractive'').
+
+Despite this, surprisingly few papers have analysed the consequences of
+SGAM, either within genetics or economics. In economics, several
+empirical papers examine cross-trait matching in marriage markets.
+Chiappori, Oreffice, and Quintana-Domeque (2012) show empirically that body mass index and SES
+(specifically, earnings and education) are both valued in a match.
+Oreffice and Quintana-Domeque (2010) show that height and BMI are associated with
+spouse earnings. Dupuy and Galichon (2014) find spouse matching on multiple
+independent dimensions, including education, height, BMI and
+personality; see also Chiappori, Oreffice, and Quintana-Domeque (2018). However, these papers
+do not use genetic data, and do not attempt to disentangle genetic and
+environmental contributions to attractiveness. They also do not theorize
+the consequences of SGAM. Within genetics, Halsey (1958) showed in
+a two-class model that social mobility combined with assortative mating
+might increase the association between genetics and social class.
+Belsky et al. (2018) offer three reasons for the association between
+education-linked genetics and SES, but do not consider SGAM.
 
 \hypertarget{model}{%
 \section{Model}\label{model}}
@@ -456,62 +461,6 @@ if and only if $0 < k < 1$.
 with strict inequality if and only if $0 < k < 1$ \uline{or} 
 $corr(G_{p}, S_{p}) > 0$.
 \end{prop}
-
-\begin{proof}
-
-Within each pair $i,p(i)$ write $d$ for the person with $s_{d}>s_{p(d)}$
-and $m$ for $p(d)$. (Think of these as "dukes" and "milkmaids",
-or if you prefer "duchesses" and "tennis instructors".) If
-$k < 1$, then $g_{d} < g_{m}$. (If $k = 0$, then define $d$ as the person
-with $g_{d} < g_{p(d)}$.)
-
-We integrate over the "dukes" to calculate the covariance in the
-parents' generation:
-\[
-cov(G_{p},S_{p})=\int\frac{1}{2}(g_{d}s_{d}+g_{p(d)}s_{p(d)})\,\mathrm{d}d.
-\]
-
-For the children, the equivalent expression is
-\[
-cov(G_{c},S_{c})=\int g_{c(d)}s_{c(d)}\mathrm{d}d,
-\]
-
-observing that $EG_{c} = ES_{c}=0$ from (\ref{eq:children-average}).
-
-Take an arbitrary pair $d,m$. Write
-
-\begin{align*}
-g_{d}s_{d} & = (g_{c}-\Delta g)(s_{c}+\Delta s);\\
-g_{m}s_{m} & = (g_{c}+\Delta g)(s_{c}-\Delta s)
-\end{align*}
-
-where 
-
-\begin{align*}
-\text{\ensuremath{\Delta g=\frac{g_{m}-g_{d}}{2}\ge0}}, & \textrm{strictly so if and only if }k>0;\\
-\Delta s=\frac{s_{d}-s_{m}}{2}\ge0 & \textrm{strictly so if and only if }k<1.
-\end{align*}
-
-Taking the average of the parents gives
-
-\[
-\frac{1}{2}(g_{d}s_{d}+g_{m}s_{m})= g _{c}s_{c}-\Delta g\Delta s.
-\]
-
-This is less than $g_{c}s_{c}$ if $0 < k < 1$, and equal to it if $k = 0$
-or $k = 1$. Plugging this into the integral shows that 
-
-\[
-cov(G_{p},S_{p})\le cov(G_{c},S_{c})
-\]
-
-again with strict inequality if and only if $0 < k < 1$. This proves the first
-part. A similar argument, showing $var(G_c) \le var(G_p)$ and $var(S_c) \le
-var(S_p)$, proves the second part (see the appendix). Figure
-\ref{fig:Correlation-counterexample} in the appendix shows that the condition in
-the second part cannot be relaxed further.
-
-\end{proof}
 
 \begin{figure}
 
@@ -749,7 +698,7 @@ nurture, while the remainder is causal.
 Figures \ref{fig:pic-basic-corr-uni} and
 \ref{fig:pic-basic-corr-income} illustrate the possible consequences of
 SGAM. The X axis shows a measure of one partner's socio-economic status:
-university attendance (Figure \ref{fig:pic-basic-corr-uni} or income
+university attendance (Figure \ref{fig:pic-basic-corr-uni}) or income
 (Figure \ref{fig:pic-basic-corr-income}). The Y axis plots the other
 partner's mean PSEA. Both males and females who went to university had
 spouses with higher PSEA. So did males and females with higher income.
@@ -1886,11 +1835,62 @@ geneticists.
 \hypertarget{appendix}{%
 \section{Appendix}\label{appendix}}
 
-\hypertarget{second-part-of-proposition-refpropprop1}{%
-\subsection{Second part of Proposition \ref{prop:prop1}}\label{second-part-of-proposition-refpropprop1}}
+\hypertarget{proof-of-proposition-refpropprop1}{%
+\subsection{Proof of Proposition \ref{prop:prop1}}\label{proof-of-proposition-refpropprop1}}
 
 \begin{proof}
-Write
+
+
+Within each pair $i,p(i)$ write $d$ for the person with $s_{d}>s_{p(d)}$
+and $m$ for $p(d)$. (Think of these as "dukes" and "milkmaids",
+or if you prefer "duchesses" and "tennis instructors".) If
+$k < 1$, then $g_{d} < g_{m}$. (If $k = 0$, then define $d$ as the person
+with $g_{d} < g_{p(d)}$.)
+
+We integrate over the "dukes" to calculate the covariance in the
+parents' generation:
+\[
+cov(G_{p},S_{p})=\int\frac{1}{2}(g_{d}s_{d}+g_{p(d)}s_{p(d)})\,\mathrm{d}d.
+\]
+
+For the children, the equivalent expression is
+\[
+cov(G_{c},S_{c})=\int g_{c(d)}s_{c(d)}\mathrm{d}d,
+\]
+
+observing that $EG_{c} = ES_{c}=0$ from (\ref{eq:children-average}).
+
+Take an arbitrary pair $d,m$. Write
+
+\begin{align*}
+g_{d}s_{d} & = (g_{c}-\Delta g)(s_{c}+\Delta s);\\
+g_{m}s_{m} & = (g_{c}+\Delta g)(s_{c}-\Delta s)
+\end{align*}
+
+where 
+
+\begin{align*}
+\text{\ensuremath{\Delta g=\frac{g_{m}-g_{d}}{2}\ge0}}, & \textrm{strictly so if and only if }k>0;\\
+\Delta s=\frac{s_{d}-s_{m}}{2}\ge0 & \textrm{strictly so if and only if }k<1.
+\end{align*}
+
+Taking the average of the parents gives
+
+\[
+\frac{1}{2}(g_{d}s_{d}+g_{m}s_{m})= g _{c}s_{c}-\Delta g\Delta s.
+\]
+
+This is less than $g_{c}s_{c}$ if $0 < k < 1$, and equal to it if $k = 0$
+or $k = 1$. Plugging this into the integral shows that 
+
+\[
+cov(G_{p},S_{p})\le cov(G_{c},S_{c})
+\]
+
+again with strict inequality if and only if $0 < k < 1$. This proves the first
+part. 
+
+To prove the second part, write
 
 \begin{equation}
 corr(G_{j},S_{j})=\frac{cov(G_{j},S_{j})}{\sqrt{var(G_{j})var(S_{j})}}\textrm{ for both generations }j\in\{p,c\}.\label{eq:corr-cov-var}
@@ -1944,8 +1944,8 @@ will approach -1.
 
 \end{figure}
 
-\hypertarget{proposition}{%
-\subsection{\texorpdfstring{Proposition \ref{prop:robustness}}{Proposition }}\label{proposition}}
+\hypertarget{proof-of-proposition}{%
+\subsection{\texorpdfstring{Proof of Proposition \ref{prop:robustness}}{Proof of Proposition }}\label{proof-of-proposition}}
 
 \begin{proof}
 
@@ -3114,6 +3114,12 @@ Buss, David M. 1989. {``Sex Differences in Human Mate Preferences: Evolutionary 
 
 \leavevmode\hypertarget{ref-buss1986preferences}{}%
 Buss, David M, and Michael Barnes. 1986. {``Preferences in Human Mate Selection.''} \emph{Journal of Personality and Social Psychology} 50 (3): 559.
+
+\leavevmode\hypertarget{ref-buss1986preferences}{}%
+---------. 1986. {``Preferences in Human Mate Selection.''} \emph{Journal of Personality and Social Psychology} 50 (3): 559.
+
+\leavevmode\hypertarget{ref-buss2019mate}{}%
+Buss, David M, and David P Schmitt. 2019. {``Mate Preferences and Their Behavioral Manifestations.''} \emph{Annual Review of Psychology} 70: 77--110.
 
 \leavevmode\hypertarget{ref-chakravarti2003nature}{}%
 Chakravarti, Aravinda, and Peter Little. 2003. {``Nature, Nurture and Human Disease.''} \emph{Nature} 421 (6921): 412--14.

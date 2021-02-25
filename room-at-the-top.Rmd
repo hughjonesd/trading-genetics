@@ -141,6 +141,13 @@ pretty <- function (n, digits = 2, ...) {
 # to get accurate p-values, as our N is not huge by the end (or is 2000 
 # enough not to worry)
 
+#Use ISCED educational attainment measure instead of university attendance, as a robustness check. DHJ
+
+#Connect the model to existing theoretical models of matching (e.g. Gale-Shapley, Becker 1974, econometrics of matching). DHJ.
+#Robustness: look at all 33 polygenic scores for families of size 3. Rerun regressions excluding family size of 3. Appendix. DHJ.
+#Move more of proofs to appendix. DHJ.
+#For future: consider gender asymmetries - e.g. does male SES matter more? Might need some other "good genes" measures e.g. waist-hip ratio.
+
 ```
 
 \normalem
@@ -383,30 +390,36 @@ both socially inherited status, and biologically inherited genetic
 variants. This leads to a new explanation of the link between
 socio-economic status and genetics.
 
-The underlying observation behind SGAM is not new. That status and
+The underlying observations behind SGAM are hardly new. That status and
 physical attractiveness tend to assort in marriage markets is a
 commonplace, as well as a perennial theme of literature. In the Iliad,
 powerful leaders fight over the beautiful slave-girl Bryseis. In Jane
 Austen's novels, wealth, attractiveness and "virtue" all make a good
 match. @marx1844economic wrote "the effect of ugliness, its repelling
 power, is destroyed by money". And Donald Trump claimed: "part of the
-beauty of me is that I am very rich". Despite this, surprisingly few
-papers have analysed the consequences of SGAM, either within genetics or
-economics. In economics, several empirical papers examine cross-trait
-matching in marriage markets. @chiappori2012fatter show empirically that
-body mass index and SES (specifically, earnings and education) are both
-valued in a match. @oreffice2010anthropometry show that height and BMI
-are associated with spouse earnings. @dupuy2014personality find spouse
-matching on multiple independent dimensions, including education,
-height, BMI and personality; see also @chiappori2018bidimensional.
-However, these papers do not use genetic data, and do not attempt to
-disentangle genetic and environmental contributions to attractiveness.
-They also do not theorize the consequences of SGAM. Within genetics,
-@halsey1958genetics showed in a two-class model that social mobility
-combined with assortative mating might increase the association between
-genetics and social class. @belsky2018genetic offer three reasons for
-the association between education-linked genetics and SES, but do not
-consider SGAM.
+beauty of me is that I am very rich". There is also a rich literature on
+mate preference from evolutionary psychology [@buss1989sex;
+@buss1986preferences; @buss2019mate]. Attractive mate characteristics
+include elements of social status ("high earning capacity",
+"professional status") as well as traits that are partly under genetic
+influence ("intelligent", "tall", "kind", "physically attractive").
+
+Despite this, surprisingly few papers have analysed the consequences of
+SGAM, either within genetics or economics. In economics, several
+empirical papers examine cross-trait matching in marriage markets.
+@chiappori2012fatter show empirically that body mass index and SES
+(specifically, earnings and education) are both valued in a match.
+@oreffice2010anthropometry show that height and BMI are associated with
+spouse earnings. @dupuy2014personality find spouse matching on multiple
+independent dimensions, including education, height, BMI and
+personality; see also @chiappori2018bidimensional. However, these papers
+do not use genetic data, and do not attempt to disentangle genetic and
+environmental contributions to attractiveness. They also do not theorize
+the consequences of SGAM. Within genetics, @halsey1958genetics showed in
+a two-class model that social mobility combined with assortative mating
+might increase the association between genetics and social class.
+@belsky2018genetic offer three reasons for the association between
+education-linked genetics and SES, but do not consider SGAM.
 
 # Model
 
@@ -505,63 +518,6 @@ if and only if $0 < k < 1$.
 with strict inequality if and only if $0 < k < 1$ \uline{or} 
 $corr(G_{p}, S_{p}) > 0$.
 \end{prop}
-```
-```{=tex}
-\begin{proof}
-
-Within each pair $i,p(i)$ write $d$ for the person with $s_{d}>s_{p(d)}$
-and $m$ for $p(d)$. (Think of these as "dukes" and "milkmaids",
-or if you prefer "duchesses" and "tennis instructors".) If
-$k < 1$, then $g_{d} < g_{m}$. (If $k = 0$, then define $d$ as the person
-with $g_{d} < g_{p(d)}$.)
-
-We integrate over the "dukes" to calculate the covariance in the
-parents' generation:
-\[
-cov(G_{p},S_{p})=\int\frac{1}{2}(g_{d}s_{d}+g_{p(d)}s_{p(d)})\,\mathrm{d}d.
-\]
-
-For the children, the equivalent expression is
-\[
-cov(G_{c},S_{c})=\int g_{c(d)}s_{c(d)}\mathrm{d}d,
-\]
-
-observing that $EG_{c} = ES_{c}=0$ from (\ref{eq:children-average}).
-
-Take an arbitrary pair $d,m$. Write
-
-\begin{align*}
-g_{d}s_{d} & = (g_{c}-\Delta g)(s_{c}+\Delta s);\\
-g_{m}s_{m} & = (g_{c}+\Delta g)(s_{c}-\Delta s)
-\end{align*}
-
-where 
-
-\begin{align*}
-\text{\ensuremath{\Delta g=\frac{g_{m}-g_{d}}{2}\ge0}}, & \textrm{strictly so if and only if }k>0;\\
-\Delta s=\frac{s_{d}-s_{m}}{2}\ge0 & \textrm{strictly so if and only if }k<1.
-\end{align*}
-
-Taking the average of the parents gives
-
-\[
-\frac{1}{2}(g_{d}s_{d}+g_{m}s_{m})= g _{c}s_{c}-\Delta g\Delta s.
-\]
-
-This is less than $g_{c}s_{c}$ if $0 < k < 1$, and equal to it if $k = 0$
-or $k = 1$. Plugging this into the integral shows that 
-
-\[
-cov(G_{p},S_{p})\le cov(G_{c},S_{c})
-\]
-
-again with strict inequality if and only if $0 < k < 1$. This proves the first
-part. A similar argument, showing $var(G_c) \le var(G_p)$ and $var(S_c) \le
-var(S_p)$, proves the second part (see the appendix). Figure
-\ref{fig:Correlation-counterexample} in the appendix shows that the condition in
-the second part cannot be relaxed further.
-
-\end{proof}
 ```
 ```{r pic-intuition, fig.subcap = c("Caste society ($k = 1$): parents", "Caste society: children", "Egalitarian society ($k = 0$): parents", "Egalitarian society: children", "Intermediate society ($0 < k < 1$): parents", "Intermediate society: children"), fig.cap = "Theory: shaded area is the population distribution. Dotted lines are attractiveness isoquants. Solid dots are example parents, transparent dots are example children. The right hand side shows the children's generation.", fig.ncol = 2, fig.width = 2.75, fig.height = 2.4, fig.align='center'}
 
@@ -1852,11 +1808,62 @@ geneticists.
 
 # Appendix
 
-## Second part of Proposition \@ref(prop:prop1)
+## Proof of Proposition \@ref(prop:prop1)
 
 ```{=tex}
 \begin{proof}
-Write
+
+
+Within each pair $i,p(i)$ write $d$ for the person with $s_{d}>s_{p(d)}$
+and $m$ for $p(d)$. (Think of these as "dukes" and "milkmaids",
+or if you prefer "duchesses" and "tennis instructors".) If
+$k < 1$, then $g_{d} < g_{m}$. (If $k = 0$, then define $d$ as the person
+with $g_{d} < g_{p(d)}$.)
+
+We integrate over the "dukes" to calculate the covariance in the
+parents' generation:
+\[
+cov(G_{p},S_{p})=\int\frac{1}{2}(g_{d}s_{d}+g_{p(d)}s_{p(d)})\,\mathrm{d}d.
+\]
+
+For the children, the equivalent expression is
+\[
+cov(G_{c},S_{c})=\int g_{c(d)}s_{c(d)}\mathrm{d}d,
+\]
+
+observing that $EG_{c} = ES_{c}=0$ from (\ref{eq:children-average}).
+
+Take an arbitrary pair $d,m$. Write
+
+\begin{align*}
+g_{d}s_{d} & = (g_{c}-\Delta g)(s_{c}+\Delta s);\\
+g_{m}s_{m} & = (g_{c}+\Delta g)(s_{c}-\Delta s)
+\end{align*}
+
+where 
+
+\begin{align*}
+\text{\ensuremath{\Delta g=\frac{g_{m}-g_{d}}{2}\ge0}}, & \textrm{strictly so if and only if }k>0;\\
+\Delta s=\frac{s_{d}-s_{m}}{2}\ge0 & \textrm{strictly so if and only if }k<1.
+\end{align*}
+
+Taking the average of the parents gives
+
+\[
+\frac{1}{2}(g_{d}s_{d}+g_{m}s_{m})= g _{c}s_{c}-\Delta g\Delta s.
+\]
+
+This is less than $g_{c}s_{c}$ if $0 < k < 1$, and equal to it if $k = 0$
+or $k = 1$. Plugging this into the integral shows that 
+
+\[
+cov(G_{p},S_{p})\le cov(G_{c},S_{c})
+\]
+
+again with strict inequality if and only if $0 < k < 1$. This proves the first
+part. 
+
+To prove the second part, write
 
 \begin{equation}
 corr(G_{j},S_{j})=\frac{cov(G_{j},S_{j})}{\sqrt{var(G_{j})var(S_{j})}}\textrm{ for both generations }j\in\{p,c\}.\label{eq:corr-cov-var}
@@ -1911,7 +1918,7 @@ will approach -1.
 
 \end{figure}
 ```
-## Proposition \ref{prop:robustness}
+## Proof of Proposition \ref{prop:robustness}
 
 ```{=tex}
 \begin{proof}
