@@ -714,14 +714,6 @@ PSEA.
 \subfloat[Female PSEA by male educational attainment\label{fig:pic-basic-corr-uni-1}]{\includegraphics{room-at-the-top_files/figure-latex/pic-basic-corr-uni-1} }\subfloat[Male PSEA by female educational attainment\label{fig:pic-basic-corr-uni-2}]{\includegraphics{room-at-the-top_files/figure-latex/pic-basic-corr-uni-2} }\caption{Social and genetic advantage among spouse pairs in UK Biobank}\label{fig:pic-basic-corr-uni}
 \end{figure}
 
-\begin{verbatim}
-## Warning: Removed 20 rows containing non-finite values (stat_summary).
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: Removed 15 rows containing non-finite values (stat_summary).
-\end{verbatim}
-
 \begin{figure}
 \subfloat[Female EA3 by male income\label{fig:pic-basic-corr-income-1}]{\includegraphics{room-at-the-top_files/figure-latex/pic-basic-corr-income-1} }\subfloat[Male EA3 by female income\label{fig:pic-basic-corr-income-2}]{\includegraphics{room-at-the-top_files/figure-latex/pic-basic-corr-income-2} }\caption{Social and genetic advantage among spouse pairs in UK Biobank}\label{fig:pic-basic-corr-income}
 \end{figure}
@@ -1695,6 +1687,224 @@ attendance still seems to mediate the birth order effect.
 \end{table}
  
 
+Lastly, we examine whether the level of assortative mating has increased
+over time within our sample. This has been an important question in the
+literature, since it has been proposed as a potential cause of
+increasing inequality. Table \ref{tab:tbl-bo-early-late} splits our
+sample by year of birth at 1954, and estimates columns 2-3 of Table
+\ref{tab:tbl-bo-psea} for each subsample. Interestingly, the effect of
+birth order on spouse PSEA is about 40\% larger for the later-born
+sample, although the lower N makes all coefficients insignificant.
+
+ 
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[ht]
+\begin{centerbox}
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{\label{tab:tbl-bo-early-late} Regressions of spouse PSEA on birth order: early and late born}
+ \setlength{\tabcolsep}{0pt}
+\begin{tabularx}{1\textwidth}{p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth}}
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Born 1934-54}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Born 1934-54}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Born 1955-70}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Born 1955-70}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth order}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont -0.020~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont -0.007~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont -0.028~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont -0.015~~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.023)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.023)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.021)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.021)~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont University}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont ~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.240 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont ~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.221 ***}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont ~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.035)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont ~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.033)~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Mother's age at birth}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.005~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.002~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.009 *~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.007 +~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.004)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.004)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.004)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.004)~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Own PSEA}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.060 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.044 *~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.038 *~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.024~~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.017)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.017)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.018)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.018)~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Fluid IQ}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.033 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.016 *~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.036 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.021 **~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.008)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.008)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.007)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.008)~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Height}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.004 *~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.003~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.002~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.002~~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.002)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.002)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.002)~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.002)~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont N}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 4408~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 4406~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 4569~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 4569~~~~~~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont R2}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.019~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.030~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.023~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.033~~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Family size dummies}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes~~~~~~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth month dummies}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes~~~~~~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth year dummies}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes~~~~~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes~~~~~~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{5}{!{\huxvb{0, 0, 0}{0}}p{1\textwidth+8\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{1\textwidth+8\tabcolsep-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. Standard errors clustered by spouse pair.}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+\end{tabularx}
+\end{threeparttable}\par\end{centerbox}
+
+\end{table}
+ 
+
 \FloatBarrier
 
 \hypertarget{robustness}{%
@@ -1740,7 +1950,7 @@ conscientousness, and neuroticism). Coefficients were never greater than
 0.01 of a standard deviation. Table \ref{tab:tbl-bo-psea-pgs} in the
 appendix reruns regressions controlling for these scores. Results are
 almost unchanged. To test whether polygenic scores might vary for
-particular birth orders within particular family size, we also regress
+particular birth orders within a particular family size, we also regress
 each score on a full set of birth order dummies, interacted with a full
 set of family size dummies. None of the 924 birth order
 coefficients were significant at \(p < 0.001\). Of course, there could
@@ -2025,9 +2235,10 @@ but includes a separate birth order coefficient for each family size.
 The basic pattern of our main result holds: birth order coefficients are
 negative and significant; in column 2, adding controls in column 2
 reduces their size and significance (but some are still significant); in
-column 3, adding mediators reduces their size and significance still
-further (the only exception is the birth order coefficient among
-families of 4 siblings).
+column 3, adding university attendance reduces their size and
+significance still further (the only exception is the birth order
+coefficient among families of 4 siblings). Results are slightly messier
+when we add income, probably because of the low N.
 
 Table \ref{tab:tbl-bo-psea-pgs} reruns our regressions controlling for
 3 polygenic scores (scores for BMI, conscientiousness and neuroticism).
