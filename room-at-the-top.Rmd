@@ -126,7 +126,6 @@ pretty <- function (n, digits = 2, ...) {
 #   total number of brothers, so we can interact this with the birth order
 #   effect)
 # 
-# * Include early vs late?
 
 
 # Check prop 2. (Bob question: if there's noise, then shouldn't
@@ -1703,6 +1702,14 @@ if (any(balance_check_within$p.value < 0.001)) stop("Some within-siblings p valu
 
 
 max_coef <- max(abs(balance_check$estimate))
+
+mod_bo_own_psea <- lm(EA3.x ~ birth_order.x, 
+                      mf_pairs_reg,
+                      subset = n_sibs.x==3)
+coef_own_psea_3 <- tidy(mod_bo_own_psea)[[2, "estimate"]]
+pval_own_psea_3 <- tidy(mod_bo_own_psea)[[2, "p.value"]]
+stopifnot(pval_own_psea_3 < 0.05)
+stopifnot(pval_own_psea_3 > 0.01)
 ```
 
 To check for these two problems, we run balance tests on 33 different
@@ -1716,11 +1723,12 @@ almost unchanged. To test whether polygenic scores might vary for
 particular birth orders within a particular family size, we also regress
 each score on a full set of birth order dummies, interacted with a full
 set of family size dummies. None of the `r n_within_coefs` birth order
-coefficients were significant at $p < 0.001$. Of course, there could
-still be unmeasured genetic variants which correlate with birth order in
-our sample. Nevertheless, a wide set of polygenic scores shows no large
-or significant correlation. This increases our confidence that birth
-order is indeed exogenous to genetics.
+coefficients were significant at $p < 0.001$. However, for families of
+size 3, there is a significant positive correlation of birth order with
+own PSEA (effect size `r pretty(coef_own_psea_3, 3)`, $p < 0.05$) .
+Table \@ref(tab:tbl-bo-psea-no3) in the appendix therefore reruns our
+regressions with families of size 3 excluded. Results are hardly
+changed.
 
 [^11]: Polygenic scores were residualized on the first 100 principal
     components of the genetic data. Scores were for: ADHD, age at
@@ -1733,6 +1741,12 @@ order is indeed exogenous to genetics.
     circumference, major depressive disorder, neuroticism, openness,
     smoking cessation, schizophrenia, smoking initiation, waist
     circumference, and waist-to-hip ratio.
+
+Of course, there could still be unmeasured genetic variants which
+correlate with birth order in our sample. Nevertheless, a wide set of
+polygenic scores shows no large or significant correlation. This
+increases our confidence that birth order is indeed exogenous to
+genetics.
 
 # Conclusion
 
@@ -2028,6 +2042,10 @@ Results are similar to those in the main text: controlling for age of
 leaving full-time education shrinks the effect of birth order and makes
 it insignificant.
 
+Table \@ref(tab:tbl-bo-psea-no3) reruns Table \@ref(tab:tbl-bo-psea)
+excluding families of size 3. Results are very similar to those in the
+main text.
+
 ```{r tbl-bo-psea-no-moth-age}
 
 
@@ -2224,6 +2242,42 @@ huxreg(mod_bo_psea_age_fte,
        set_caption("Regressions of spouse PSEA using age of leaving full-time education")
 ```
 
+```{r tbl-bo-psea-no3}
+
+mod_bo_psea_no3 <- lapply(fml_bo_psea, 
+                            fixest::feols, 
+                            data = mf_pairs_reg %>% 
+                                     filter(n_sibs.x != 3),
+                            note = FALSE
+                          )
+huxreg(mod_bo_psea_no3, 
+        coefs = c(
+          "Birth order"           = "birth_order.x", 
+          "University"            = "university.xTRUE", 
+          "Income"                = "first_job_pay.x",
+          "Mother's age at birth" = "moth_age_birth.x",
+          "Own PSEA"              = "EA3.x",
+          "Fluid IQ"              = "fluid_iq.x",
+          "Height"                = "height.x"
+        ),
+         note = "{stars}. Standard errors clustered by spouse pair and family size.",
+         stars = my_stars,
+         tidy_args = list(
+           conf.int = FALSE, 
+           cluster = list(
+             mf_pairs_reg$couple_id[mf_pairs_reg$n_sibs.x != 3],
+             mf_pairs_reg$n_sibs.x[mf_pairs_reg$n_sibs.x != 3]
+           )
+         )
+       ) %>% 
+       insert_row(after = 15, "Family size dummies", rep("Yes", 5)) %>% 
+       insert_row(after = 16, "Birth month dummies", rep("Yes", 5)) %>% 
+       insert_row(after = 17, "Birth year dummies", rep("Yes", 5)) %>% 
+       set_bottom_border(16:17, everywhere, 0) %>% 
+       set_number_format(2:15, -1, 4) %>% 
+       set_caption("Regressions of spouse PSEA, excluding family size 3")
+```
+
 \FloatBarrier
 
 \newpage
@@ -2367,3 +2421,4 @@ is the Aristocracy of the natural Talent of Beauty.
 \newpage
 
 # References
+
