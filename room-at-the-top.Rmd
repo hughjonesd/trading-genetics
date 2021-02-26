@@ -132,21 +132,24 @@ pretty <- function (n, digits = 2, ...) {
 # Check prop 2. (Bob question: if there's noise, then shouldn't
 # correlation tend to a limit less than 1? And if so, then at that limit,
 # parental correlation should equal child correlation).
+# - I think the claim doesn't contradict this. But do double-check!
 
-# Policy implications. None directly, but note that e.g. changes to k,
-# perhaps due to redistribution, will have long-run effects on the G-S
-# gradient.
 
 # TODO: We may have to control, rather than residualize, on PCs
 # to get accurate p-values, as our N is not huge by the end (or is 2000 
 # enough not to worry)
 
-#Use ISCED educational attainment measure instead of university attendance, as a robustness check. DHJ
+# Use ISCED educational attainment measure instead of university attendance,
+# as a robustness check. DHJ
 
-#Connect the model to existing theoretical models of matching (e.g. Gale-Shapley, Becker 1974, econometrics of matching). DHJ.
-#Robustness: look at all 33 polygenic scores for families of size 3. Rerun regressions excluding family size of 3. Appendix. DHJ.
-#Move more of proofs to appendix. DHJ.
-#For future: consider gender asymmetries - e.g. does male SES matter more? Might need some other "good genes" measures e.g. waist-hip ratio.
+#Connect the model to existing theoretical models of matching 
+# (e.g. Gale-Shapley, Becker 1974, econometrics of matching). DHJ.
+
+# Robustness: look at all 33 polygenic scores for families of size 3. Rerun
+# regressions excluding family size of 3. Appendix. DHJ.
+
+# For future: consider gender asymmetries - e.g. does male SES matter more?
+# Might need some other "good genes" measures e.g. waist-hip ratio.
 
 ```
 
@@ -433,9 +436,8 @@ of his or her position in society, rather than as a natural fact. Caste
 and class are kinds of social status; so are wealth, income, education
 and employment.
 
-$G$ and $S$ are continuously distributed. Without loss of generality,
-$EG = ES = 0$ and $Var(G) = Var(S) = 1$.[^3] People pair according to an
-attractiveness function
+Without loss of generality, $EG = ES = 0$ and $Var(G) = Var(S) = 1$.[^3]
+People pair according to an attractiveness function
 
 [^3]: Continuous distribution is not strictly required. All that is
     needed is for a set of pairs of positive measure to have different
@@ -447,12 +449,18 @@ A(g_{i},s_{i}) = f((1-k)g_{i},ks_{i})
 $$
 
 where $f$ is smooth and strictly increasing in both its arguments, and
-$0 \le k \le 1$. One microfoundation is that $A$ measures the utility a
-person provides as a spouse, and the marriage market works via a
-Gale-Shapley [-@gale1962college] matching mechanism. Other
-interpretations are possible: for instance, different values of $A$
-could represent segmented marriage markets, like different schools or
-workplaces, within which people match at random.
+$0 \le k \le 1$. Our sole condition on $G$ and $S$ is that a positive
+measure of the population has attractiveness $A$ where the distribution
+of $(G, S)|A$ is non-degenerate, i.e. not everybody with attractiveness
+$A$ is both genetically and socially identical. We assume that people
+marry at random within their attractiveness isoquant. One
+microfoundation is that $A$ measures the utility a person provides as a
+spouse, and the marriage market works via a Gale-Shapley
+[-@gale1962college] matching mechanism. Or, $A$ could represent inputs
+into a household production function where male and female inputs are
+complementary [@becker1973theory]. Other interpretations are possible:
+for instance, different values of $A$ could represent segmented marriage
+markets, like different schools or workplaces.
 
 The key parameter is $k$. This describes the working of the society's
 marriage market. If $k = 0$, only genetics $G$ are relevant in marriage
@@ -1781,6 +1789,22 @@ over time is beyond our scope here, but we see it as a good area for
 future work. Marriage markets may play an important role in explaining
 how social inequality varies across different societies.
 
+Marriage markets are likely to respond to other features of the economy.
+For instance, a society's level of redistribution could affect the
+relative weight of social status in the attractiveness function. If so,
+then part of the effect of large-scale policy changes may take place
+over the very long run, by altering marriage markets and thus affecting
+the genes-status gradient. Intuitively one would expect that a more
+"egalitarian" society and marriage market would lead to a weaker
+genes-status gradient. But in our model, the covariance between genes
+$G$ and status $S$ is non-monotonic in the marriage market parameter
+$k$, so this intuition may not always hold true. A natural extension of
+our theory would be to endogenize the marriage market to investigate
+further. In any case, the potential for economic changes to have such
+long-run effects suggests the potential for hysteresis, with initial
+policy differences cumulating over time via their effect on genetic
+inequality.
+
 The broadest message of this paper is that *genetics are a social
 outcome*. Both popular and scientific discourse often parse genetics as
 "nature", in opposition to "nurture" or "society" [e.g.
@@ -1965,7 +1989,34 @@ correlation.
 
 ## Robustness checks
 
-```{r tbl-bo-no-fath-age}
+Table \@ref(tab:tbl-bo-psea-no-moth-age) reruns our central regressions,
+dropping the control for mother's age at birth. Results show the same
+pattern as in the main text: the negative coefficient for birth order
+shrinks when controls are added, and then changes sign when university
+attendance is added as a potential mediator. However, the birth order
+effect is smaller overall, and is never significant.
+
+Table \@ref(tab:tbl-bo-psea-interactions) reruns our central regressions
+but includes a separate birth order coefficient for each family size.
+The basic pattern of our main result holds: birth order coefficients are
+negative and significant; in column 2, adding controls in column 2
+reduces their size and significance (but some are still significant); in
+column 3, adding mediators reduces their size and significance still
+further (the only exception is the birth order coefficient among
+families of 4 siblings).
+
+Table \@ref(tab:tbl-bo-psea-pgs) reruns our regressions controlling for
+3 polygenic scores (scores for BMI, conscientiousness and neuroticism).
+Results are very close to those in the main text.
+
+Table \@ref(tab:tbl-bo-psea-age-fte) reruns relevant columns of Table
+\@ref(tab:tbl-bo-psea) using age of leaving full-time education as a
+measure of educational SES, instead of the university attendance dummy.
+Results are similar to those in the main text: controlling for age of
+leaving full-time education shrinks the effect of birth order and makes
+it insignificant.
+
+```{r tbl-bo-psea-no-moth-age}
 
 
 age_table <- famhist %>% 
@@ -2064,9 +2115,12 @@ huxtable::huxreg(mod_bo_psea_ix,
        insert_row(after = 21, "Family size dummies", rep("Yes", 5)) %>% 
        insert_row(after = 22, "Birth month dummies", rep("Yes", 5)) %>% 
        insert_row(after = 23, "Birth year dummies", rep("Yes", 5)) %>% 
-       set_bottom_border(22:23, everywhere, 0) %>% 
+       insert_row(after = 24, "Controls (IQ, height)", 
+                    c("No", rep("Yes", 4))) %>% 
+       set_bottom_border(22:24, everywhere, 0) %>% 
        set_number_format(2:21, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, separate birth order coefficients for each family size") %>% 
+       set_tb_padding(3) %>% 
        set_font_size(10)
 
 ```
@@ -2121,6 +2175,47 @@ huxreg(mod_bo_psea_robust,
        set_caption("Regressions of spouse PSEA with controls for polygenic scores")
 ```
 
+```{r tbl-bo-psea-age-fte}
+
+fml_bo_psea_age_fte <- fml_bo_psea[c(2, 3, 5)]
+fml_bo_psea_age_fte[2:3] <- lapply(fml_bo_psea_age_fte[2:3], 
+                                update, 
+                                . ~ . - university.x + age_fulltime_edu.x)
+
+mod_bo_psea_age_fte <- lapply(fml_bo_psea_age_fte, fixest::feols, 
+                 data = mf_pairs_reg,
+                 notes = FALSE
+               )
+
+huxreg(mod_bo_psea_age_fte, 
+        coefs = c(
+          "Birth order"           = "birth_order.x", 
+          "Age left full-time educ." = "age_fulltime_edu.x", 
+          "Income"                = "first_job_pay.x",
+          "Mother's age at birth" = "moth_age_birth.x",
+          "Own PSEA"              = "EA3.x",
+          "Fluid IQ"              = "fluid_iq.x",
+          "Height"                = "height.x"
+        ),
+         note = "{stars}. Standard errors clustered by spouse pair and family size.",
+         stars = my_stars,
+         tidy_args = list(
+           conf.int = FALSE, 
+           cluster = list(mf_pairs_reg$couple_id, mf_pairs_reg$n_sibs.x)
+         )
+       ) %>% 
+       insert_row(after = 15, "Family size dummies", rep("Yes", 3)) %>% 
+       insert_row(after = 16, "Birth month dummies", rep("Yes", 3)) %>% 
+       insert_row(after = 17, "Birth year dummies", rep("Yes", 3)) %>% 
+       set_bottom_border(16:17, everywhere, 0) %>% 
+       set_number_format(2:15, -1, 4) %>% 
+       set_caption("Regressions of spouse PSEA using age of leaving full-time education")
+```
+
+\FloatBarrier
+
+\newpage
+
 ### Regressions with "fake pairs"
 
 Our dataset of pairs could still contain pairs who live in the same
@@ -2139,7 +2234,7 @@ the characteristics listed for the real pairs. Specifically, from the
 list of characteristics used to create our real pairs (same
 homeownership status, same length of time at address, same number of
 children, attended same assessment centre, attended on same day, husband
-reported living with spouse, wife reported liviing with spouse) the fake
+reported living with spouse, wife reported living with spouse) the fake
 pairs ticked exactly 5 out of 7 boxes.
 
 ```{r calc-fake-pairs}
