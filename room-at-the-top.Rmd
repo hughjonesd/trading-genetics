@@ -1570,12 +1570,14 @@ huxreg(reg_list,
 
 Lastly, we examine whether the level of assortative mating has increased
 over time within our sample. This has been an important question in the
-literature, since it has been proposed as a potential cause of
-increasing inequality. Table \@ref(tab:tbl-bo-early-late) splits our
-sample by year of birth at 1954, and estimates columns 2-3 of Table
-\@ref(tab:tbl-bo-psea) for each subsample. Interestingly, the effect of
-birth order on spouse PSEA is about 40% larger for the later-born
-sample, although the lower N makes all coefficients insignificant.
+literature, since it is might be a cause of increasing inequality. Table
+\@ref(tab:tbl-bo-early-late) splits our sample by year of birth at 1954,
+and estimates columns 2-3 of Table \@ref(tab:tbl-bo-psea) for each
+subsample. The broad pattern of coefficients is the same, although the
+lower N makes all coefficients insignificant. Interestingly, the effect
+of birth order on spouse PSEA is about 40% larger for the later-born
+group, We do not place too much emphasis on this result, as it could be
+driven by characteristics of the sample.
 
 ```{r tbl-bo-early-late}
 
@@ -1727,8 +1729,8 @@ coefficients were significant at $p < 0.001$. However, for families of
 size 3, there is a significant positive correlation of birth order with
 own PSEA (effect size `r pretty(coef_own_psea_3, 3)`, $p < 0.05$) .
 Table \@ref(tab:tbl-bo-psea-no3) in the appendix therefore reruns our
-regressions with families of size 3 excluded. Results are hardly
-changed.
+regressions with families of size 3 excluded. Results are substantially
+no different.
 
 [^11]: Polygenic scores were residualized on the first 100 principal
     components of the genetic data. Scores were for: ADHD, age at
@@ -1744,9 +1746,8 @@ changed.
 
 Of course, there could still be unmeasured genetic variants which
 correlate with birth order in our sample. Nevertheless, a wide set of
-polygenic scores shows no large or significant correlation. This
-increases our confidence that birth order is indeed exogenous to
-genetics.
+polygenic scores shows no large or significant correlation. This makes
+us more confident that birth order is indeed exogenous to genetics.
 
 # Conclusion
 
@@ -2248,7 +2249,7 @@ mod_bo_psea_no3 <- lapply(fml_bo_psea,
                             fixest::feols, 
                             data = mf_pairs_reg %>% 
                                      filter(n_sibs.x != 3),
-                            note = FALSE
+                            notes = FALSE
                           )
 huxreg(mod_bo_psea_no3, 
         coefs = c(
@@ -2421,4 +2422,3 @@ is the Aristocracy of the natural Talent of Beauty.
 \newpage
 
 # References
-
