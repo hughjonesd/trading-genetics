@@ -305,10 +305,10 @@
     },
     "dreamerr": {
       "Package": "dreamerr",
-      "Version": "1.2.0",
+      "Version": "1.2.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "5acfaaf6c7e55a99cf97ed9122029a03"
+      "Hash": "5b31f43f60613477ee28abec9ab07f1b"
     },
     "ellipsis": {
       "Package": "ellipsis",
@@ -347,10 +347,10 @@
     },
     "fixest": {
       "Package": "fixest",
-      "Version": "0.6.0",
+      "Version": "0.8.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "855288ba72046fed5a11c3fb1f1dc186"
+      "Hash": "3348d7c47859985f2cbb3f92b93be115"
     },
     "forcats": {
       "Package": "forcats",
