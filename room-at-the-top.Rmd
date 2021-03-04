@@ -2033,6 +2033,16 @@ birth order; in column 2, adding controls reduces their size; in column
 still further. Results are slightly messier when we add income, probably
 because of the low N.
 
+We also ran a specification with separate birth order dummies within
+each family size. Figure \@ref(fig:pic-bo-psea-interactions) shows 95%
+confidence intervals for the birth order coefficients, from the column 2
+specification including height and IQ controls but no mediators. Most
+birth order coefficients are negative (compared to the baseline for the
+firstborn) and become more negative as birth order increases. However,
+there is some suggestion of a positive "last born" effect. This could
+happen because last born children receive more attention after elder
+children have left home.
+
 Table \@ref(tab:tbl-bo-psea-pgs) reruns our regressions controlling for
 3 polygenic scores (scores for BMI, conscientiousness and neuroticism).
 Results are very close to those in the main text.
@@ -2169,7 +2179,7 @@ huxtable::huxreg(mod_bo_psea_ix,
 
 ```
 
-```{r pic-bo-psea-interaction, fig.align = "center", fig.cap = "Regressions of spouse PSEA: birth order dummies within different family sizes. Labels show birth order. Lines are 95% confidence intervals clustered by couple ID and family size."}
+```{r pic-bo-psea-interactions, fig.align = "center", fig.cap = "Regressions of spouse PSEA: birth order dummies within different family sizes. Labels show birth order. Lines are 95 per cent confidence intervals clustered by couple ID and family size. The dummy for birth order 8 is not shown."}
  
 mf_pairs_reg$BO2 <- 1 * (mf_pairs_reg$birth_order.x == 2)
 mf_pairs_reg$BO3 <- 1 * (mf_pairs_reg$birth_order.x == 3)
@@ -2187,25 +2197,30 @@ mod_bo_psea_full <- fixest::feols(fml_bo_psea_full, mf_pairs_reg,
                                     notes = FALSE)
 coefs <- tidy(mod_bo_psea_full, conf.int = TRUE, 
             cluster = list(mf_pairs_reg$couple_id, mf_pairs_reg$n_sibs.x))
-coefs[["Family size"]] <- as.numeric(gsub("^nsf(.).*", "\\1", coefs$term))
-coefs[["Birth order"]] <- as.numeric(gsub(".*BO(.)$", "\\1", coefs$term))
+
+suppressWarnings({
+  coefs[["Family size"]] <- as.numeric(gsub("^nsf(.).*", "\\1", coefs$term))
+  coefs[["Birth order"]] <- as.numeric(gsub(".*BO(.)$", "\\1", coefs$term))
+})
 
 coefs %<>% filter(`Birth order` %in% 1:8)
 
 ns_by_n_sibs <- as.data.frame(table(mf_pairs_reg$n_sibs.x))
 ns_by_n_sibs$Var1 <- as.integer(as.character(ns_by_n_sibs$Var1))
 
-ggplot(coefs, aes(estimate, `Family size`, colour = `Birth order`)) + 
-      scale_color_continuous(type = "viridis", name = "Birth order") + 
-      geom_vline(xintercept = 0, linetype = 2) +
-      geom_linerange(aes(xmin = conf.low, xmax = conf.high), 
-                     alpha = 0.7, size = 1.15, 
-                     position = position_dodge2(width = 0.15)) + 
-      geom_text(aes(label = `Birth order`), nudge_y = 0.2, size = 5) + 
-      guides(colour = "none") +
-      xlim(c(-1.5, 0.5)) + 
-      xlab("Estimate")
-
+suppressWarnings({
+  gg <- ggplot(coefs, aes(estimate, `Family size`, colour = `Birth order`)) + 
+          scale_color_continuous(type = "viridis", name = "Birth order") + 
+          geom_vline(xintercept = 0, linetype = 2) +
+          geom_linerange(aes(xmin = conf.low, xmax = conf.high), 
+                         alpha = 0.7, size = 1.15, 
+                         position = position_dodge2(width = 0.15)) + 
+          geom_text(aes(label = `Birth order`), nudge_y = 0.2, size = 5) + 
+          guides(colour = "none") +
+          xlim(c(-1.25, 0.5)) + 
+          xlab("Estimate")
+  print(gg) # captures the warnings inside the suppressWarnings() call
+})
 
 ```
 
@@ -2293,6 +2308,7 @@ huxreg(mod_bo_psea_age_fte,
        insert_row(after = 17, "Birth year dummies", rep("Yes", 3)) %>% 
        set_bottom_border(16:17, everywhere, 0) %>% 
        set_number_format(2:15, -1, 4) %>% 
+       set_width(0.8) %>% 
        set_caption("Regressions of spouse PSEA using age of leaving full-time education")
 ```
 
