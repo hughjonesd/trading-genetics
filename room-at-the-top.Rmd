@@ -109,6 +109,31 @@ pretty <- function (n, digits = 2, ...) {
   formatC(n, digits = digits, big.mark = ",", ...)
 }
 
+# basic formulae
+fml_bo_psea <- list()
+
+fml_bo_psea[[1]] <- EA3.y ~ birth_order.x | factor(n_sibs.x)
+fml_bo_psea[[2]] <- EA3.y ~ birth_order.x | factor(n_sibs.x)
+fml_bo_psea[[3]] <- EA3.y ~ university.x + birth_order.x | factor(n_sibs.x)
+fml_bo_psea[[4]] <- EA3.y ~ first_job_pay.x + birth_order.x | factor(n_sibs.x)
+fml_bo_psea[[5]] <- EA3.y ~ first_job_pay.x + university.x + birth_order.x |
+      factor(n_sibs.x)
+
+fml_bo_psea <- lapply(fml_bo_psea, Formula::as.Formula)
+
+# common controls
+fml_bo_psea <- lapply(fml_bo_psea, update, 
+                        . ~ . + EA3.x + moth_age_birth.x,
+                        rhs = 1)
+fml_bo_psea <- lapply(fml_bo_psea, update, 
+                        . ~ . + factor(YOB.x) + factor(birth_mon.x),
+                        rhs = 2)
+
+# alternative mediators
+fml_bo_psea[-1] <- lapply(fml_bo_psea[-1], update,
+                            . ~ . + fluid_iq.x + height.x, 
+                            rhs = 1)
+
 ```
 
 ```{r TODO, eval = FALSE}
@@ -1360,31 +1385,6 @@ which would bias our results towards zero.[^9]
 [^9]: The appendix reports results without controlling for father's age.
 
 ```{r tbl-bo-psea}
-
-
-fml_bo_psea <- list()
-
-fml_bo_psea[[1]] <- EA3.y ~ birth_order.x | factor(n_sibs.x)
-fml_bo_psea[[2]] <- EA3.y ~ birth_order.x | factor(n_sibs.x)
-fml_bo_psea[[3]] <- EA3.y ~ university.x + birth_order.x | factor(n_sibs.x)
-fml_bo_psea[[4]] <- EA3.y ~ first_job_pay.x + birth_order.x | factor(n_sibs.x)
-fml_bo_psea[[5]] <- EA3.y ~ first_job_pay.x + university.x + birth_order.x |
-      factor(n_sibs.x)
-
-fml_bo_psea <- lapply(fml_bo_psea, Formula::as.Formula)
-
-# common controls
-fml_bo_psea <- lapply(fml_bo_psea, update, 
-                        . ~ . + EA3.x + moth_age_birth.x,
-                        rhs = 1)
-fml_bo_psea <- lapply(fml_bo_psea, update, 
-                        . ~ . + factor(YOB.x) + factor(birth_mon.x),
-                        rhs = 2)
-
-# alternative mediators
-fml_bo_psea[-1] <- lapply(fml_bo_psea[-1], update,
-                            . ~ . + fluid_iq.x + height.x, 
-                            rhs = 1)
 
 # 
 # mf_pairs_reg2 <- mf_pairs_reg %>% 
