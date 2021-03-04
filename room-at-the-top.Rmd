@@ -1363,7 +1363,7 @@ huxreg(mod_bo_psea_base,
          note = "{stars}. Standard errors clustered by spouse pair and family size. Respondents with 1-7 siblings included.",
          tidy_args = list(
            conf.int = FALSE, 
-           cluster  = list(mf_pairs_reg$couple_id, mf_pairs_reg$n_sibs.x)
+           cluster  = list(mf_pairs_reg$f.54.0.0.x)
          )
        ) %>% 
        insert_row(after = 7, "Family size dummies", rep("Yes", 3)) %>% 
@@ -1404,8 +1404,8 @@ huxreg(mod_bo_psea,
           "Birth order"           = "birth_order.x", 
           "University"            = "university.xTRUE", 
           "Income"                = "first_job_pay.x",
-          "Mother's age at birth" = "moth_age_birth.x",
           "Own PSEA"              = "EA3.x",
+          "Mother's age at birth" = "moth_age_birth.x",
           "Fluid IQ"              = "fluid_iq.x",
           "Height"                = "height.x"
         ),
@@ -1413,7 +1413,7 @@ huxreg(mod_bo_psea,
          stars = my_stars,
          tidy_args = list(
            conf.int = FALSE, 
-           cluster = list(mf_pairs_reg$couple_id, mf_pairs_reg$n_sibs.x)
+           cluster = list(mf_pairs_reg$f.54.0.0.x)
          )
        ) %>% 
        insert_row(after = 15, "Family size dummies", rep("Yes", 5)) %>% 
@@ -1535,7 +1535,7 @@ mod_bo_children <- lapply(fml_bo_psea[c(2, 3)], fixest::feols,
                  notes = FALSE
                )
 
-ta <-  list(conf.int = FALSE, cluster = list(mf_pairs_children$couple_id))
+ta <-  list(conf.int = FALSE, cluster = list(mf_pairs_children$f.54.0.0.x))
 
 reg_list <- list(
         "Male respondents"     = mod_bo_males[[1]],
@@ -1604,12 +1604,12 @@ reg_list_el <- list(
 ta_early <-  list(
                conf.int = FALSE, 
                cluster = list(
-                 mf_pairs_reg$couple_id[mf_pairs_reg$YOB.x <= split_year])
+                 mf_pairs_reg$f.54.0.0.x[mf_pairs_reg$YOB.x <= split_year])
              )
 ta_late <-  list(
                 conf.int = FALSE, 
                 cluster = list(
-                  mf_pairs_reg$couple_id[mf_pairs_reg$YOB.x > split_year])
+                  mf_pairs_reg$f.54.0.0.x[mf_pairs_reg$YOB.x > split_year])
               )
 
 huxreg(reg_list_el,
@@ -2108,7 +2108,7 @@ huxreg(mod_bo_no_moth_age,
           "Height"                = "height.x"
         ),
          note = "{stars}. Standard errors clustered by spouse pair.",
-         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg_big$couple_id))
+         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg_big$f.54.0.0.x))
        ) %>% 
        insert_row(after = 13, "Family size dummies", rep("Yes", 5)) %>% 
        insert_row(after = 14, "Birth month dummies", rep("Yes", 5)) %>% 
@@ -2138,7 +2138,7 @@ mod_bo_psea_ix <-  purrr::map(fml_bo_psea_ix, fixest::feols,
 
 wald_tests <- purrr::map(mod_bo_psea_ix, fixest::wald, 
                            keep    = "birth_order",
-                           cluster = c("couple_id", "n_sibs.x"),
+                           cluster = "f.54.0.0.x",
                            print   = FALSE
                          )
 wald_pvals <- purrr::map_dbl(wald_tests, "p")
@@ -2159,10 +2159,7 @@ huxtable::huxreg(mod_bo_psea_ix,
                    note = "{stars}. Standard errors clustered by spouse pair and family size.",
                    tidy_args = list(
                      conf.int = FALSE, 
-                     cluster = list(
-                       mf_pairs_reg$couple_id, 
-                       mf_pairs_reg$n_sibs.x
-                     )
+                     cluster = list(mf_pairs_reg$f.54.0.0.x)
                    )
                  ) %>% 
        insert_row(after = 21, "Wald p-value, birth order", wald_pvals) %>% 
@@ -2196,7 +2193,7 @@ fml_bo_psea_full <- update(fml_bo_psea[[2]], . ~ . - birth_order.x +
 mod_bo_psea_full <- fixest::feols(fml_bo_psea_full, mf_pairs_reg, 
                                     notes = FALSE)
 coefs <- tidy(mod_bo_psea_full, conf.int = TRUE, 
-            cluster = list(mf_pairs_reg$couple_id, mf_pairs_reg$n_sibs.x))
+            cluster = list(mf_pairs_reg$f.54.0.0.x))
 
 suppressWarnings({
   coefs[["Family size"]] <- as.numeric(gsub("^nsf(.).*", "\\1", coefs$term))
@@ -2257,10 +2254,7 @@ huxreg(mod_bo_psea_pgs,
                  Polygenic scores: BMI, conscientiousness, neuroticism.",
          tidy_args = list(
            conf.int = FALSE, 
-           cluster = list(
-             mf_pairs_reg$couple_id,
-             mf_pairs_reg$n_sibs.x
-           )
+           cluster = list(mf_pairs_reg$f.54.0.0.x)
          )
        ) %>% 
        insert_row(after = 15, "Family size dummies", rep("Yes", 5)) %>% 
@@ -2300,7 +2294,7 @@ huxreg(mod_bo_psea_age_fte,
          stars = my_stars,
          tidy_args = list(
            conf.int = FALSE, 
-           cluster = list(mf_pairs_reg$couple_id, mf_pairs_reg$n_sibs.x)
+           cluster = list(mf_pairs_reg$f.54.0.0.x)
          )
        ) %>% 
        insert_row(after = 15, "Family size dummies", rep("Yes", 3)) %>% 
@@ -2335,8 +2329,7 @@ huxreg(mod_bo_psea_no3,
          tidy_args = list(
            conf.int = FALSE, 
            cluster = list(
-             mf_pairs_reg$couple_id[mf_pairs_reg$n_sibs.x != 3],
-             mf_pairs_reg$n_sibs.x[mf_pairs_reg$n_sibs.x != 3]
+             mf_pairs_reg$f.54.0.0.x[mf_pairs_reg$n_sibs.x != 3]
            )
          )
        ) %>% 
@@ -2417,7 +2410,7 @@ huxreg(mod_bo_psea_fake,
          note = "{stars}. Standard errors clustered by pair and family size. Respondents with 1-7 siblings included.",
          tidy_args = list(
            conf.int = FALSE, 
-           cluster  = list(fake_pairs_reg$couple_id, fake_pairs_reg$n_sibs.x)
+           cluster  = list(fake_pairs_reg$f.54.0.0.x)
          )
        ) %>% 
        insert_row(after = 7, "Family size dummies", rep("Yes", 3)) %>% 
