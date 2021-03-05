@@ -63,7 +63,7 @@ regression_subset <- function (data) {
   data %>% 
          filter(
            n_sibs.x >= 2, 
-           n_sibs.x <= 8, 
+           n_sibs.x <= 6, 
            ! is.na(birth_order.x)
          )
 }
@@ -133,6 +133,10 @@ fml_bo_psea <- lapply(fml_bo_psea, update,
 fml_bo_psea[-1] <- lapply(fml_bo_psea[-1], update,
                             . ~ . + fluid_iq.x + height.x, 
                             rhs = 1)
+
+# basic tidy args
+tidy_args <- list(se = "hetero", conf.int = FALSE)
+my_note <- "{stars}. Standard errors: robust."
 
 ```
 
@@ -1064,8 +1068,8 @@ their total number of siblings including themselves; month of birth; age
 at interview; respondents' own PSEA; their father's and/or mother's age
 at their birth (calculated from parent's current age, only available if
 the parent was still alive). For most regressions, we use only
-respondents with between 1 and 7 siblings, i.e. with a family size of
-2-8. To test whether birth order effects are mediated by SES, we use two
+respondents with between 1 and 5 siblings, i.e. with a family size of
+2-6. To test whether birth order effects are mediated by SES, we use two
 measures: income, and university attendance. Current income is a direct
 measure of SES, while university attendance is a predictor of income
 over the entire life course.
@@ -1259,7 +1263,7 @@ separately for respondents with 1-3 siblings. We test this formally in a
 linear regression, controlling for family size, which may be correlated
 with parental characteristics including genetics. Birth order is
 negatively associated with both university attendance and income (among
-respondents with 1-7 siblings: university $p$ = `r pval_bo_1st$uni`,
+respondents with 1-5 siblings: university $p$ = `r pval_bo_1st$uni`,
 income $p$ = `r pval_bo_1st$income`).
 
 ```{r pic-bo-uni, fig.cap = "University attendance by birth order and family size", fig.height = 3}
@@ -1359,12 +1363,9 @@ huxreg(mod_bo_psea_base,
            "N"  = "nobs", 
            "R2" = "r.squared"
           ),
+         note = my_note,
          stars = my_stars,
-         note = "{stars}. Standard errors clustered by assessment centre. Respondents with 1-7 siblings included.",
-         tidy_args = list(
-           conf.int = FALSE, 
-           cluster  = list(mf_pairs_reg$f.54.0.0.x)
-         )
+         tidy_args = tidy_args
        ) %>% 
        insert_row(after = 7, "Family size dummies", rep("Yes", 3)) %>% 
        insert_row(after = 8, "Birth month dummies", "No", "Yes", "Yes") %>% 
@@ -1409,12 +1410,9 @@ huxreg(mod_bo_psea,
           "Fluid IQ"              = "fluid_iq.x",
           "Height"                = "height.x"
         ),
-         note = "{stars}. Standard errors clustered by assessment centre.",
+         note = my_note,
          stars = my_stars,
-         tidy_args = list(
-           conf.int = FALSE, 
-           cluster = list(mf_pairs_reg$f.54.0.0.x)
-         )
+         tidy_args = tidy_args
        ) %>% 
        insert_row(after = 15, "Family size dummies", rep("Yes", 5)) %>% 
        insert_row(after = 16, "Birth month dummies", rep("Yes", 5)) %>% 
@@ -1422,38 +1420,6 @@ huxreg(mod_bo_psea,
        set_bottom_border(16:17, everywhere, 0) %>% 
        set_number_format(2:15, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA on birth order and potential mediators")
-```
-
-```{r calc-bootstrap-proportions, cache = TRUE, eval = FALSE}
-
-# to rerun this, just add a space below. Don't set cache = FALSE!
-n_boot <- 199 
-
-bo_prop_boot <- replicate(n_boot, {
-  mf_pairs_resample <- mf_pairs_reg %>% sample_frac(1, replace = TRUE)
-  tmp  <- fixest::feols(fml_bo_psea[[2]], data = mf_pairs_resample, notes = FALSE)
-  tmp2 <- fixest::feols(fml_bo_psea[[3]], data = mf_pairs_resample, notes = FALSE)
-  tmp3 <- fixest::feols(fml_bo_psea[[4]], data = mf_pairs_resample, notes = FALSE)
-  tmp4 <- fixest::feols(fml_bo_psea[[5]], data = mf_pairs_resample, notes = FALSE)
-  orig_coef <- coef(tmp)["birth_order.x"]
-  c(
-    prop_uni  = coef(tmp2)["birth_order.x"]/orig_coef,
-    prop_inc  = coef(tmp3)["birth_order.x"]/orig_coef,
-    prop_both = coef(tmp4)["birth_order.x"]/orig_coef
-  )
-})
-```
-
-```{r clean-bootstrap-proportions, eval = FALSE}
-bo_prop_ci <- apply(bo_prop_boot, 1, quantile, probs = c(.975, .025))
-# the percentage reduction:
-bo_prop_ci[] <- sprintf("%.1f%%", (1 - bo_prop_ci) * 100)
-
-# point estimates from main regressions:
-orig_coef <- coef(mod_bo_psea[[1]])["birth_order.x"]
-bo_prop_est <- apply(bo_prop_boot, 1, mean)
-bo_prop_est  <- sprintf("%.1f%%", (1 - bo_prop_est) * 100)
-
 ```
 
 Table \@ref(tab:tbl-bo-psea) shows the results. Column 1 shows the
@@ -1560,9 +1526,9 @@ huxreg(reg_list,
             "Height"                = "height.x"
           ),
          statistics = c("N" = "nobs", "R2" = "r.squared"),
-         note = "{stars}. Standard errors clustered by assessment centre.",
+         note = my_note,
          stars = my_stars,
-         tidy_args = list(ta_m, ta_m, ta_f, ta_f, ta_ch, ta_ch)
+         tidy_args = tidy_args
        ) %>% 
        insert_row(after = 15, "Family size dummies", rep("Yes", 6)) %>% 
        insert_row(after = 16, "Birth month dummies", rep("Yes", 6)) %>% 
@@ -1626,9 +1592,9 @@ huxreg(reg_list_el,
             "Height"                = "height.x"
           ),
          statistics = c("N" = "nobs", "R2" = "r.squared"),
-         note = "{stars}. Standard errors clustered by assessment centre.",
+         note = my_note,
          stars = my_stars,
-         tidy_args = list(ta_early, ta_early, ta_late, ta_late)
+         tidy_args = tidy_args
        ) %>% 
        insert_row(after = 15, "Family size dummies", rep("Yes", 4)) %>% 
        insert_row(after = 16, "Birth month dummies", rep("Yes", 4)) %>% 
@@ -1696,7 +1662,7 @@ balance_check_within <- purrr::map_dfr(score_names, check_cor_within)
 if (any(balance_check$p.value < 0.1/33)) stop("Some check p values < 0.1/33; rewrite text!")
 
 n_below_10 <- sum(balance_check$p.value < 0.1)
-stopifnot(n_below_10 == 4)
+stopifnot(n_below_10 == 5)
 if(any(
         balance_check %>% filter(p.value < 0.10) %>% pull(estimate) > 0.02
       )) stop("Some coefs > 0.02; rewrite text!")
@@ -1719,7 +1685,7 @@ stopifnot(pval_own_psea_3 < 0.05)
 To check for the latter two problems, we run balance tests on 33
 different polygenic scores, standardized to have mean zero and unit
 variance.[^11] We regress each score on own birth order, controlling for
-family size. No scores were significant at $p < 0.10/33$. Four scores
+family size. No scores were significant at $p < 0.10/33$. Five scores
 were significant at $p < 0.10$, all with coefficients less than 0.02.
 Table \@ref(tab:tbl-bo-psea-pgs) in the appendix reruns our regressions
 controlling for these scores. Results are almost unchanged. To test
@@ -2107,8 +2073,9 @@ huxreg(mod_bo_no_moth_age,
           "Fluid IQ"              = "fluid_iq.x",
           "Height"                = "height.x"
         ),
-         note = "{stars}. Standard errors clustered by assessment centre.",
-         tidy_args = list(conf.int = FALSE, cluster = list(mf_pairs_reg_big$f.54.0.0.x))
+         note = my_note,
+         stars = my_stars,
+         tidy_args = tidy_args
        ) %>% 
        insert_row(after = 13, "Family size dummies", rep("Yes", 5)) %>% 
        insert_row(after = 14, "Birth month dummies", rep("Yes", 5)) %>% 
@@ -2149,6 +2116,7 @@ names(huxreg_coefs) <- gsub(".*(\\d)$", "Birth order \\1",
                             huxreg_coefs)
 huxreg_coefs <- c(
                    huxreg_coefs,
+                   "Last sibling"= "last_sibTRUE",
                    "University"  = "university.xTRUE", 
                    "Income"      = "first_job_pay.x", 
                    "Own EA3"     = "EA3.x"
@@ -2156,11 +2124,9 @@ huxreg_coefs <- c(
 
 huxtable::huxreg(mod_bo_psea_ix, 
                    coefs = huxreg_coefs,
-                   note = "{stars}. Standard errors clustered by assessment centre.",
-                   tidy_args = list(
-                     conf.int = FALSE, 
-                     cluster = list(mf_pairs_reg$f.54.0.0.x)
-                   )
+                   note = my_note,
+                   stars = my_stars,
+                   tidy_args = tidy_args
                  ) %>% 
        insert_row(after = 21, "Wald p-value, birth order", wald_pvals) %>% 
        insert_row(after = 22, "Family size dummies", rep("Yes", 5)) %>% 
@@ -2176,7 +2142,7 @@ huxtable::huxreg(mod_bo_psea_ix,
 
 ```
 
-```{r pic-bo-psea-interactions, fig.align = "center", fig.cap = "Regressions of spouse PSEA: birth order dummies within different family sizes. Labels show birth order. Lines are 95 per cent confidence intervals clustered by assessment centre. The dummy for birth order 8 is not shown."}
+```{r pic-bo-psea-interactions, fig.align = "center", fig.cap = "Regressions of spouse PSEA: birth order dummies within different family sizes. Labels show birth order. Lines are 95 per cent confidence intervals clustered by assessment centre. "}
  
 mf_pairs_reg$BO2 <- 1 * (mf_pairs_reg$birth_order.x == 2)
 mf_pairs_reg$BO3 <- 1 * (mf_pairs_reg$birth_order.x == 3)
@@ -2192,8 +2158,7 @@ fml_bo_psea_full <- update(fml_bo_psea[[2]], . ~ . - birth_order.x +
 
 mod_bo_psea_full <- fixest::feols(fml_bo_psea_full, mf_pairs_reg, 
                                     notes = FALSE)
-coefs <- tidy(mod_bo_psea_full, conf.int = TRUE, 
-            cluster = list(mf_pairs_reg$f.54.0.0.x))
+coefs <- tidy(mod_bo_psea_full, conf.int = TRUE, se = "hetero")
 
 suppressWarnings({
   coefs[["Family size"]] <- as.numeric(gsub("^nsf(.).*", "\\1", coefs$term))
@@ -2214,7 +2179,6 @@ suppressWarnings({
                          position = position_dodge2(width = 0.15)) + 
           geom_text(aes(label = `Birth order`), nudge_y = 0.2, size = 5) + 
           guides(colour = "none") +
-          xlim(c(-1.25, 0.5)) + 
           xlab("Estimate")
   print(gg) # captures the warnings inside the suppressWarnings() call
 })
@@ -2226,10 +2190,11 @@ suppressWarnings({
 fml_bo_psea_pgs <- fml_bo_psea %>% 
                         purrr::map(update, 
                            . ~ . + 
-                           age_at_menopauze_resid.x + 
+                           alzheimer_resid.x + 
                            caffeine_resid.x + 
-                           coronary_artery_disease_resid.x +
-                           neuroticism_resid.x
+                           cognitive_ability_resid.x +
+                           neuroticism_resid.x +
+                           sc_substance_use_resid.x
                         )
 
 mod_bo_psea_pgs <-  purrr::map(fml_bo_psea_pgs, fixest::feols, 
@@ -2251,8 +2216,9 @@ huxreg(mod_bo_psea_pgs,
            "N" = "nobs", 
            "R2" = "r.squared"
          ),
-         note = "{stars}. Standard errors clustered by assessment centre. 
-                 Polygenic scores: age at menopause, caffeine, coronary artery disease, neuroticism.",
+         note = paste(my_note,
+                 "\nPolygenic scores: alzheimer's, caffeine, cognitive ability, neuroticism, substance use."),
+         stars = my_stars,
          tidy_args = list(
            conf.int = FALSE, 
            cluster = list(mf_pairs_reg$f.54.0.0.x)
@@ -2291,12 +2257,9 @@ huxreg(mod_bo_psea_age_fte,
           "Fluid IQ"              = "fluid_iq.x",
           "Height"                = "height.x"
         ),
-         note = "{stars}. Standard errors clustered by assessment centre.",
+         note = my_note,
          stars = my_stars,
-         tidy_args = list(
-           conf.int = FALSE, 
-           cluster = list(mf_pairs_reg$f.54.0.0.x)
-         )
+         tidy_args = tidy_args
        ) %>% 
        insert_row(after = 15, "Family size dummies", rep("Yes", 3)) %>% 
        insert_row(after = 16, "Birth month dummies", rep("Yes", 3)) %>% 
@@ -2325,14 +2288,9 @@ huxreg(mod_bo_psea_no3,
           "Fluid IQ"              = "fluid_iq.x",
           "Height"                = "height.x"
         ),
-         note = "{stars}. Standard errors clustered by assessment centre.",
+         note = my_note,
          stars = my_stars,
-         tidy_args = list(
-           conf.int = FALSE, 
-           cluster = list(
-             mf_pairs_reg$f.54.0.0.x[mf_pairs_reg$n_sibs.x != 3]
-           )
-         )
+         tidy_args = tidy_args
        ) %>% 
        insert_row(after = 15, "Family size dummies", rep("Yes", 5)) %>% 
        insert_row(after = 16, "Birth month dummies", rep("Yes", 5)) %>% 
@@ -2407,12 +2365,9 @@ huxreg(mod_bo_psea_fake,
            "N"  = "nobs", 
            "R2" = "r.squared"
           ),
+         note = my_note,
          stars = my_stars,
-         note = "{stars}. Standard errors clustered by assessment centre. Respondents with 1-7 siblings included.",
-         tidy_args = list(
-           conf.int = FALSE, 
-           cluster  = list(fake_pairs_reg$f.54.0.0.x)
-         )
+         tidy_args = tidy_args
        ) %>% 
        insert_row(after = 7, "Family size dummies", rep("Yes", 3)) %>% 
        insert_row(after = 8, "Birth month dummies", "No", "Yes", "Yes") %>% 
