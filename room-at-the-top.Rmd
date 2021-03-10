@@ -105,9 +105,16 @@ mf_pairs_reg <- regression_subset(mf_pairs_twice)
 # for p values
 my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
 
+# useful functions
 pretty <- function (n, digits = 2, ...) {
   formatC(n, digits = digits, big.mark = ",", ...)
 }
+
+
+update_with_birth_order_dummies <- function (fml) {
+  update(fml, . ~ . - birth_order.x + factor(birth_order.x))
+}
+
 
 # basic formulae
 fml_bo_psea <- list()
@@ -123,18 +130,16 @@ fml_bo_psea <- lapply(fml_bo_psea, Formula::as.Formula)
 
 # common controls
 fml_bo_psea <- lapply(fml_bo_psea, update, 
-                        . ~ . + EA3.x + moth_age_birth.x,
-                        rhs = 1)
+                        . ~ . + EA3.x + moth_age_birth.x)
 fml_bo_psea <- lapply(fml_bo_psea, update, 
-                        . ~ . + factor(YOB.x) + factor(birth_mon.x),
-                        rhs = 2)
+                        . ~ . | . + factor(YOB.x) + factor(birth_mon.x))
 
 # alternative mediators
 fml_bo_psea[-1] <- lapply(fml_bo_psea[-1], update,
-                            . ~ . + fluid_iq.x + height.x, 
-                            rhs = 1)
+                            . ~ . + fluid_iq.x + height.x)
 
 # basic tidy args
+# tidy_args <- list(se = "cluster", cluster = "couple_id", conf.int = FALSE)
 tidy_args <- list(se = "hetero", conf.int = FALSE)
 my_note <- "{stars}. Standard errors: robust."
 
@@ -1476,12 +1481,12 @@ mod_bo_children <- lapply(fml_bo_psea[c(2, 3)], fixest::feols,
                  data = mf_pairs_children,
                  notes = FALSE
                )
-
-ta_m <-  list(conf.int = FALSE, cluster = 
-                list(mf_pairs_reg$f.54.0.0.x[mf_pairs_reg$x =="Male"]))
-ta_f <-  list(conf.int = FALSE, cluster = 
-                list(mf_pairs_reg$f.54.0.0.x[mf_pairs_reg$x == "Female"]))
-ta_ch <-  list(conf.int = FALSE, cluster = list(mf_pairs_children$f.54.0.0.x))
+# 
+# ta_m <-  list(conf.int = FALSE, cluster = 
+#                 list(mf_pairs_reg$f.54.0.0.x[mf_pairs_reg$x =="Male"]))
+# ta_f <-  list(conf.int = FALSE, cluster = 
+#                 list(mf_pairs_reg$f.54.0.0.x[mf_pairs_reg$x == "Female"]))
+# ta_ch <-  list(conf.int = FALSE, cluster = list(mf_pairs_children$f.54.0.0.x))
 
 reg_list <- list(
         "Male respondents"     = mod_bo_males[[1]],
@@ -1516,72 +1521,6 @@ huxreg(reg_list,
 
 ```
 
-Lastly, we examine whether the level of assortative mating has increased
-over time within our sample. This has been an important question in the
-literature, since it is might be a cause of increasing inequality. Table
-\@ref(tab:tbl-bo-early-late) splits our sample by year of birth at 1954,
-and estimates columns 2-3 of Table \@ref(tab:tbl-bo-psea) for each
-subsample. The broad pattern of coefficients is the same, although the
-lower N makes all coefficients insignificant. Interestingly, the effect
-of birth order on spouse PSEA is about 40% larger for the later-born
-group, We do not place too much emphasis on this result, as it could be
-driven by characteristics of the sample.
-
-```{r tbl-bo-early-late}
-
-split_year <- 1954
-mod_bo_early <- lapply(fml_bo_psea[c(2, 3)], fixest::feols, 
-                 data = mf_pairs_reg %>% filter(YOB.x <= split_year),
-                 notes = FALSE
-               )
-
-mod_bo_late <- lapply(fml_bo_psea[c(2, 3)], fixest::feols, 
-                 data = mf_pairs_reg %>% filter(YOB.x > split_year),
-                 notes = FALSE
-               )
-
-reg_list_el <- list(
-                 "Born 1934-54" = mod_bo_early[[1]],
-                 "Born 1934-54" = mod_bo_early[[2]],
-                 "Born 1955-70" = mod_bo_late[[1]],
-                 "Born 1955-70" = mod_bo_late[[2]]
-               )
-
-ta_early <-  list(
-               conf.int = FALSE, 
-               cluster = list(
-                 mf_pairs_reg$f.54.0.0.x[mf_pairs_reg$YOB.x <= split_year])
-             )
-ta_late <-  list(
-                conf.int = FALSE, 
-                cluster = list(
-                  mf_pairs_reg$f.54.0.0.x[mf_pairs_reg$YOB.x > split_year])
-              )
-
-huxreg(reg_list_el,
-         coefs = c(
-            "Birth order"           = "birth_order.x", 
-            "University"            = "university.xTRUE",
-            "Mother's age at birth" = "moth_age_birth.x",
-            "Own PSEA"              = "EA3.x",
-            "Fluid IQ"              = "fluid_iq.x",
-            "Height"                = "height.x"
-          ),
-         statistics = c("N" = "nobs", "R2" = "r.squared"),
-         note = my_note,
-         stars = my_stars,
-         tidy_args = tidy_args
-       ) %>% 
-       insert_row(after = 15, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 16, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 17, "Birth year dummies", rep("Yes", 4)) %>% 
-       set_bottom_border(16:17, everywhere, 0) %>% 
-       set_font_size(10) %>% 
-       set_width(1) %>% 
-       set_caption("Regressions of spouse PSEA on birth order: early and late born")
-
-```
-
 \FloatBarrier
 
 ## Robustness
@@ -1593,18 +1532,14 @@ siblings with high birth order will typically come from larger families
 than those with low birth order, and parents of different-sized families
 are likely to differ systematically on many dimensions, including
 genetics. We controlled for this by including a full set of family size
-dummies in the regression.[^10] Second, there could be selection bias.
-For example, if later siblings with high PSEA, and earlier siblings with
-low PSEA, are more likely to enter the sample, then this would bias our
+dummies in the regression. Second, there could be selection bias. For
+example, if later siblings with high PSEA, and earlier siblings with low
+PSEA, are more likely to enter the sample, then this would bias our
 results. Thirdly, parents might select family size on the basis of
 genetics. For example, suppose that if the first child has a phenotype
 reflecting a high PSEA, parents are more likely to have a second child.
 Then within the subset of two-child families, first children would have
 higher-than-average PSEA, while second children would not.
-
-[^10]: Table \@ref(tab:tbl-bo-psea-interactions) in the appendix
-    estimates a separate birth order coefficient within each family
-    size.
 
 ```{r tbl-pgs-check}
 
@@ -1660,7 +1595,7 @@ stopifnot(pval_own_psea_3 < 0.05)
 
 To check for the latter two problems, we run balance tests on 33
 different polygenic scores, standardized to have mean zero and unit
-variance.[^11] We regress each score on own birth order, controlling for
+variance.[^10] We regress each score on own birth order, controlling for
 family size. No scores were significant at $p < 0.10/33$. Five scores
 were significant at $p < 0.10$, all with coefficients less than 0.02.
 Table \@ref(tab:tbl-bo-psea-pgs) in the appendix reruns our regressions
@@ -1676,7 +1611,7 @@ size `r pretty(coef_own_psea_3, 3)`, $p =$
 the appendix therefore reruns our regressions with families of size 3
 excluded. Results are substantially unchanged.
 
-[^11]: Polygenic scores were residualized on the first 100 principal
+[^10]: Polygenic scores were residualized on the first 100 principal
     components of the genetic data. Scores were for: ADHD, age at
     menarche, age at menopause, agreeableness, age at smoking
     initiation, alcohol use, Alzheimer's, autism, bipolarity, BMI, body
@@ -1717,7 +1652,7 @@ universal among all stratified societies. In fact, people in many
 societies have believed that innate traits do vary across social
 classes. The ancient Greeks described the social elite as *kaloi
 kagathoi* ("fine and good"), while the Roman nobility were the
-*optimates* ("best").[^12] This belief has been explained by the
+*optimates* ("best").[^11] This belief has been explained by the
 psychological tendency to believe in a just world [@furnham1993just], or
 as an ideology promoted by the dominant class [e.g.
 @gramsci1971selections]. However, it may also simply have been a
@@ -1727,7 +1662,7 @@ the belief that elites are richer and more powerful, and is likely to be
 held for fairly similar reasons. In any case, our prediction may be
 directly testable, for example by using ancient DNA samples.
 
-[^12]: The appendix contains a selection of relevant historical
+[^11]: The appendix contains a selection of relevant historical
     quotations.
 
 Our analysis also has implications for the practice of controlling
@@ -1966,14 +1901,16 @@ shrinks when controls are added, and then changes sign when university
 attendance is added as a potential mediator. However, the birth order
 effect is smaller overall, and is never significant.
 
-Table \@ref(tab:tbl-bo-psea-interactions) reruns our central regressions
-but includes a separate coefficient for each position in the birth order
+Table \@ref(tab:tbl-bo-psea-dummies) reruns our central regressions but
+includes a separate coefficient for each position in the birth order
 (with firstborn as the baseline). The basic pattern of our main result
 holds: birth order coefficients are negative and increase going down the
 birth order; in column 2, adding controls reduces their size; in column
 3, adding university attendance reduces their size and significance
 still further. Results are slightly messier when we add income, probably
-because of the low N.
+because of the low N. Table \@ref(tab:tbl-bo-subset-dummies) runs the
+same exercise for different subsets: male respondents, female
+respondents, and couples with children.
 
 We also ran a specification with separate birth order dummies within
 each family size. Figure \@ref(fig:pic-bo-psea-interactions) shows 95%
@@ -2062,14 +1999,15 @@ huxreg(mod_bo_no_moth_age,
 
 ```
 
-```{r tbl-bo-psea-interactions}
-fml_bo_psea_ix <- fml_bo_psea %>% 
-                    purrr::map(update, 
-                               . ~ . - birth_order.x + factor(birth_order.x),
-                                 rhs = 1 
-                               )
+```{r tbl-bo-psea-dummies}
 
-mod_bo_psea_ix <-  purrr::map(fml_bo_psea_ix, fixest::feols, 
+# we do this to avoid a collinear birth_order.x == 6, n_sibs.x == 6
+# pair of dummies
+fml_bo_psea_dummies <- fml_bo_psea %>% 
+                        purrr::map(update_with_birth_order_dummies) %>% 
+                        purrr::map(update, . ~ . - factor(birth_mon.x), rhs = 2)
+
+mod_bo_psea_dummies <- purrr::map(fml_bo_psea_dummies, fixest::feols, 
                          data = mf_pairs_reg,
                          notes = FALSE
                        )
@@ -2079,42 +2017,113 @@ mod_bo_psea_ix <-  purrr::map(fml_bo_psea_ix, fixest::feols,
 #                                    vcov. = .y)
 #                     )
 
-wald_tests <- purrr::map(mod_bo_psea_ix, fixest::wald, 
+wald_tests <- purrr::map(mod_bo_psea_dummies, fixest::wald, 
                            keep    = "birth_order",
-                           cluster = "f.54.0.0.x",
+                           se      = tidy_args$se,
                            print   = FALSE
                          )
 wald_pvals <- purrr::map_dbl(wald_tests, "p")
 
-huxreg_coefs <- grep("factor\\(birth_order", names(coef(mod_bo_psea_ix[[1]])),
+huxreg_coefs <- grep("factor\\(birth_order", names(coef(mod_bo_psea_dummies[[1]])),
                        value = TRUE)
-names(huxreg_coefs) <- gsub(".*(\\d)$", "Birth order \\1",
+names(huxreg_coefs) <- gsub("^.*(\\d).*$", "Birth order \\1",
                             huxreg_coefs)
 huxreg_coefs <- c(
                    huxreg_coefs,
                    "University"  = "university.xTRUE", 
-                   "Income"      = "first_job_pay.x", 
+                   "Income"      = "first_job_pay.x",
+                   "Mother's age at birth" = "moth_age_birth.x",
                    "Own EA3"     = "EA3.x"
                  )
 
-huxtable::huxreg(mod_bo_psea_ix, 
+huxtable::huxreg(mod_bo_psea_dummies, 
+                   coefs     = huxreg_coefs,
+                   note      = my_note,
+                   stars     = my_stars,
+                   tidy_args = tidy_args
+                 ) %>% 
+       insert_row(after = 19, "Wald p-value, birth order", wald_pvals) %>%
+       insert_row(after = 24, "Family size dummies", rep("Yes", 5)) %>% 
+       insert_row(after = 25, "Birth month dummies", rep("Yes", 5)) %>% 
+       insert_row(after = 26, "Birth year dummies", rep("Yes", 5)) %>% 
+       insert_row(after = 27, "Controls (IQ, height)", 
+                    c("No", rep("Yes", 4))) %>% 
+       set_bottom_border(25:27, everywhere, 0) %>% 
+       set_number_format(2:20, -1, 4) %>% 
+       set_caption("Regressions of spouse PSEA, separate birth order coefficient dummies") %>% 
+       set_tb_padding(3) %>% 
+       set_font_size(10)
+
+```
+
+```{r tbl-bo-subset-dummies}
+
+fml_bo_psea_dummies <- fml_bo_psea %>% 
+                         purrr::map(update_with_birth_order_dummies)
+
+mod_bo_males_dummies <- lapply(fml_bo_psea_dummies[c(2, 3)], 
+                                 fixest::feols, 
+                                 data = mf_pairs_reg %>% 
+                                   filter(x == "Male"),
+                                 notes = FALSE
+                        )
+mod_bo_females_dummies <- lapply(fml_bo_psea_dummies[c(2, 3)], 
+                                  fixest::feols, 
+                                  data = mf_pairs_reg %>% 
+                                    filter(x == "Female"),
+                                  notes = FALSE
+                          )
+
+mf_pairs_children <- mf_pairs_reg %>% 
+                       filter(n_children.x > 0, n_children.y > 0)
+mod_bo_children_dummies <- lapply(fml_bo_psea_dummies[c(2, 3)], 
+                             fixest::feols, 
+                             data = mf_pairs_children,
+                             notes = FALSE
+                           )
+reg_list <- list(
+        "Males"                = mod_bo_males_dummies[[1]],
+        "Males"                = mod_bo_males_dummies[[2]],
+        "Females"              = mod_bo_females_dummies[[1]],
+        "Females"              = mod_bo_females_dummies[[2]],
+        "With children"        = mod_bo_children_dummies[[1]],
+        "With children"        = mod_bo_children_dummies[[2]]
+      )
+
+wald_tests <- purrr::map(reg_list, fixest::wald, 
+                           keep    = "birth_order",
+                           se      = tidy_args$se,
+                           print   = FALSE
+                         )
+wald_pvals <- purrr::map_dbl(wald_tests, "p")
+
+huxreg_coefs <- grep("factor\\(birth_order", names(coef(mod_bo_males_dummies[[1]])),
+                       value = TRUE)
+names(huxreg_coefs) <- gsub(".*(\\d).*$", "Birth order \\1",
+                            huxreg_coefs)
+huxreg_coefs <- c(
+                   huxreg_coefs,
+                   "University"  = "university.xTRUE", 
+                   "Mother's age at birth" = "moth_age_birth.x",
+                   "Own PSEA"     = "EA3.x"
+                 )
+
+huxtable::huxreg(reg_list, 
                    coefs = huxreg_coefs,
                    note = my_note,
                    stars = my_stars,
                    tidy_args = tidy_args
                  ) %>% 
-       insert_row(after = 21, "Wald p-value, birth order", wald_pvals) %>% 
-       insert_row(after = 22, "Family size dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 23, "Birth month dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 24, "Birth year dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 25, "Controls (IQ, height)", 
-                    c("No", rep("Yes", 4))) %>% 
+       insert_row(after = 17, c("Wald p-value, birth order", wald_pvals)) %>% 
+       insert_row(after = 22, "Family size dummies", rep("Yes", 6))   %>% 
+       insert_row(after = 23, "Birth month dummies", rep("Yes", 6))   %>% 
+       insert_row(after = 24, "Birth year dummies", rep("Yes", 6))    %>% 
+       insert_row(after = 25, "Controls (IQ, height)", rep("Yes", 6)) %>% 
        set_bottom_border(23:25, everywhere, 0) %>% 
-       set_number_format(2:22, -1, 4) %>% 
-       set_caption("Regressions of spouse PSEA, separate birth order coefficients for each family size") %>% 
+       set_number_format(2:18, -1, 4) %>% 
+       set_caption("Regressions of spouse PSEA, separate birth order coefficient dummies: subsets") %>% 
        set_tb_padding(3) %>% 
        set_font_size(10)
-
 ```
 
 ```{r pic-bo-psea-interactions, fig.align = "center", fig.cap = "Regressions of spouse PSEA: birth order dummies within different family sizes. Labels show birth order. Lines are 95 per cent confidence intervals clustered by assessment centre. "}
@@ -2124,12 +2133,10 @@ mf_pairs_reg$BO3 <- 1 * (mf_pairs_reg$birth_order.x == 3)
 mf_pairs_reg$BO4 <- 1 * (mf_pairs_reg$birth_order.x == 4)
 mf_pairs_reg$BO5 <- 1 * (mf_pairs_reg$birth_order.x == 5)
 mf_pairs_reg$BO6 <- 1 * (mf_pairs_reg$birth_order.x == 6)
-mf_pairs_reg$BO7 <- 1 * (mf_pairs_reg$birth_order.x == 7)
-mf_pairs_reg$BO8 <- 1 * (mf_pairs_reg$birth_order.x == 8)
 mf_pairs_reg$nsf <- factor(mf_pairs_reg$n_sibs.x)
 
 fml_bo_psea_full <- update(fml_bo_psea[[2]], . ~ . - birth_order.x + 
-                             nsf:(BO2 + BO3 + BO4 + BO5 + BO6 + BO7 + BO8))
+                             nsf:(BO2 + BO3 + BO4 + BO5 + BO6))
 
 mod_bo_psea_full <- fixest::feols(fml_bo_psea_full, mf_pairs_reg, 
                                     notes = FALSE)
