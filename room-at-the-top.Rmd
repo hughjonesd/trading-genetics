@@ -87,6 +87,16 @@ calc_prop_shared_children <- function (mf_pairs) {
 }
 
 
+pretty <- function (n, digits = 2, ...) {
+  formatC(n, digits = digits, big.mark = ",", ...)
+}
+
+
+update_with_birth_order_dummies <- function (fml) {
+  update(fml, . ~ . - birth_order.x + factor(birth_order.x))
+}
+
+
 knitr::opts_chunk$set(echo = FALSE)
 options(huxtable.long_minus = TRUE)
 theme_set(theme_minimal())
@@ -105,25 +115,13 @@ mf_pairs_reg <- regression_subset(mf_pairs_twice)
 # for p values
 my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
 
-# useful functions
-pretty <- function (n, digits = 2, ...) {
-  formatC(n, digits = digits, big.mark = ",", ...)
-}
-
-
-update_with_birth_order_dummies <- function (fml) {
-  update(fml, . ~ . - birth_order.x + factor(birth_order.x))
-}
-
-
 # basic formulae
 fml_bo_psea <- list()
 
 fml_bo_psea[[1]] <- EA3.y ~ birth_order.x | factor(n_sibs.x)
-fml_bo_psea[[2]] <- EA3.y ~ birth_order.x | factor(n_sibs.x)
-fml_bo_psea[[3]] <- EA3.y ~ university.x + birth_order.x | factor(n_sibs.x)
-fml_bo_psea[[4]] <- EA3.y ~ first_job_pay.x + birth_order.x | factor(n_sibs.x)
-fml_bo_psea[[5]] <- EA3.y ~ first_job_pay.x + university.x + birth_order.x |
+fml_bo_psea[[2]] <- EA3.y ~ university.x + birth_order.x | factor(n_sibs.x)
+fml_bo_psea[[3]] <- EA3.y ~ first_job_pay.x + birth_order.x | factor(n_sibs.x)
+fml_bo_psea[[4]] <- EA3.y ~ first_job_pay.x + university.x + birth_order.x |
       factor(n_sibs.x)
 
 fml_bo_psea <- lapply(fml_bo_psea, Formula::as.Formula)
@@ -1224,63 +1222,48 @@ is an indicator for university (income).
 
 # Results
 
-```{r calc-bo-first-stage}
+We first regress our measures of socio-economic status, university
+attendance and income from first job, on birth order in our sample. We
+also do the same for two non-SES controls that could be affected by
+birth order: fluid IQ and height. We control for respondent's own PSEA
+and mother's age at birth (see below). Table
+\@ref(tab:tbl-bo-first-stage) shows that birth order strongly predicts
+both university attendance and logged income. Effect sizes are quite
+substantial: a single extra elder sibling reduces the chance of
+attending university by about 8 percentage points, log income by about
+0.05, fluid IQ by about 0.3 points on a 13 point test, and height by
+about three-quarters of a centimetre.
 
-mod_bo_1st <- list()
-mod_bo_1st$uni    <- lm(university ~ birth_order + factor(n_sibs), famhist, 
-                    subset = n_sibs >= 2 & n_sibs <= 8)
-mod_bo_1st$income <- lm(first_job_pay ~ birth_order + factor(n_sibs), famhist, 
-                    subset = n_sibs >= 2 & n_sibs <= 8)
-
-pval_bo_1st <- map(mod_bo_1st, 
-                 ~tidy(.x) %>% filter(term == "birth_order") %>% pull(p.value)
-               )
-pval_bo_1st %<>% map(format, digits = 3)
-```
-
-Figures \@ref(fig:pic-bo-uni) and \@ref(fig:pic-bo-income) show the
-relationship between birth order, university education and income,
-separately for respondents with 1-3 siblings. We test this formally in a
-linear regression, controlling for family size, which may be correlated
-with parental characteristics including genetics. Birth order is
-negatively associated with both university attendance and income (among
-respondents with 1-5 siblings: university $p$ = `r pval_bo_1st$uni`,
-income $p$ = `r pval_bo_1st$income`).
-
-```{r pic-bo-uni, fig.cap = "University attendance by birth order and family size", fig.height = 3}
-
-famhist %>% 
-      filter(n_sibs <= 4, n_sibs >= 2, ! is.na(birth_order)) %>% 
-      mutate(
-        `Birth order` = birth_order,
-        `Family size` = n_sibs
-      ) %>% 
-      group_by(`Birth order`, `Family size`) %>% 
-      dplyr::summarize(University = mean(university, na.rm = TRUE), 
-                       .groups = "drop_last") %>% 
-      ggplot(aes(`Birth order`, University)) + 
-        geom_col() +
-        facet_grid(cols = vars(`Family size`), labeller = label_both) 
-
-```
-
-```{r pic-bo-income, fig.cap = "Median income of first job by birth order and family size", fig.height = 3}
-
-famhist %>% 
-      filter(
-        n_sibs <= 4, 
-        n_sibs >= 2, 
-        ! is.na(birth_order), 
-        ! is.na(first_job_pay)
-      ) %>% 
-      mutate(
-        `Birth order` = factor(birth_order),
-        `Family size` = n_sibs,
-        `Income` = first_job_pay
-      ) %>% 
-      ggplot(aes(`Birth order`, Income)) + 
-      stat_summary(fun.data = mean_se, fun.args = list(mult = 1.96)) +
-      facet_grid(cols = vars(`Family size`), labeller = label_both)
+```{r tbl-bo-first-stage}
+fml_bo_1st <- list()
+fml_bo_1st[["University"]] <- update(fml_bo_psea[[1]], university.x ~ . )
+fml_bo_1st[["Income"]] <- update(fml_bo_psea[[1]], first_job_pay.x ~ .)
+fml_bo_1st[["Fluid IQ"]] <- update(fml_bo_psea[[1]], fluid_iq.x ~ . )
+fml_bo_1st[["Height"]] <- update(fml_bo_psea[[1]], height.x ~ .)
+mod_bo_1st <- purrr::map(fml_bo_1st, fixest::feols, data = mf_pairs_reg, 
+                           notes = FALSE)
+huxreg(mod_bo_1st, 
+         coefs = c(
+           "Birth order" = "birth_order.x", 
+           "PSEA" = "EA3.x",
+           "Mother's age at birth" = "moth_age_birth.x"
+         ),
+         statistics = c(
+           "N"  = "nobs", 
+           "R2" = "r.squared"
+          ),
+         note = my_note,
+         stars = my_stars,
+         tidy_args = tidy_args
+       ) %>% 
+       insert_row(after = 7, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 8, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 9, "Birth year dummies", rep("Yes", 4)) %>% 
+       set_bottom_border(8:9, everywhere, 0) %>% 
+       set_number_format(2:7, -1, 4) %>% 
+       set_width(0.8) %>% 
+       set_caption("Regressions of socio-economic status variables on birth order")
+       
 ```
 
 Next we run regressions of spouse PSEA on birth order, within our
@@ -1395,9 +1378,9 @@ huxreg(mod_bo_psea,
          stars = my_stars,
          tidy_args = tidy_args
        ) %>% 
-       insert_row(after = 15, "Family size dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 16, "Birth month dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 17, "Birth year dummies", rep("Yes", 5)) %>% 
+       insert_row(after = 15, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 16, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 17, "Birth year dummies", rep("Yes", 4)) %>% 
        set_bottom_border(16:17, everywhere, 0) %>% 
        set_number_format(2:15, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA on birth order and potential mediators")
@@ -1408,39 +1391,82 @@ effect of birth order, using the same specification as column 3 of the
 previous table. (We exclude respondents without data on income or
 university attendance, to make comparison easier across the columns:
 this reduces the N.) The remaining columns add potential mediators of
-birth order effects. Column 2 includes fluid IQ and self-rated health,
-both of which could be affected by birth order and affect spouse
-matching. Columns 3 to 5 then add our measures of SES. Column 3 includes
-university attendance. Column 4 includes income. Column 5 includes both.
+birth order effects. Column 2 includes our first measure of
+socio-economic status: university attendance. As controls, we also
+include fluid IQ and height, both of which could be affected by birth
+order and affect spouse matching. Column 3 adds our second measure of
+socio-economic status, income. Column 4 includes both.
 
-Controlling for fluid IQ and self-rated health (column 2) does not
-reduce the effect of birth order, although both variables are
-significant in the expected direction. When we add a control for
-university attendance (column 3), the effect of birth order drops and
-becomes insignificant. The fluid IQ variable also loses size and
-significance, suggesting that this effect too may work via itse effect
-on university attendance. By contrast, self-rated health is unaffected.
-Controlling for income alone (column 4), birth order again becomes
-insignificant though its size is unchanged. Lastly, when we control for
-both university and income, again birth order's effect size drops and
-the coefficient becomes insignificant.
+When we add university attendance (column 2), the effect of birth order
+drops and becomes insignificant, while the coefficient for university is
+positive and highly significant. Fluid IQ and height are also positive
+and significant. Controlling for income alone (column 3), birth order
+again becomes insignificant and the coefficient changes sign. Lastly,
+when we control for both university and income (column 4), again birth
+order's effect size is positive.
 
-```{r, eval = FALSE}
-- TODO: not sure if we need do this. It's slow. Oana to comment.
+Under the assumptions discussed above, we can estimate the proportion of
+the birth order effect that is mediated by these variables. XXX TODO
 
-# We estimate the percentage decrease in the effect of
-# birth order across the columns, along with 95% confidence intervals for
-# this figure, by running bootstraps (N = `r n_boot`).[^8] Including
-# university attendance alone reduces the effect of birth order by
-# `r bo_prop_est[1]` (CI `r bo_prop_ci[1, 1]` -- `r bo_prop_ci[2, 1]`).
-# Including income alone reduces the effect of birth order by
-# `r bo_prop_est[2]` (CI `r bo_prop_ci[1, 2]` -- `r bo_prop_ci[2, 2]`).
-# Including both decreases the effect by `r bo_prop_est[3]` (CI
-# `r bo_prop_ci[1, 3]` -- `r bo_prop_ci[2, 3]`).
-# 
-# [^8]: The sample percentage decrease calculated from the figures in
-#     Table \@ref(tab:tbl-bo-psea) is not the correct estimator, since
-#     $E(X/Y)$ is not equal to $EX/EY$.
+```{r calc-mediation-prop}
+
+# percent of main effect that is mediated by uni:
+# uni effect of BO (first stage) * PSEA effect of uni (column 2)
+# divided by PSEA effect of BO (column 1)
+
+mediation_pct <- function (mediator, mod_1st, mod_2nd, bootstrap = FALSE,
+                             mod_whole = mod_bo_psea[[1]]) {
+  # presumably must use same bootstrap for all 3
+  if (bootstrap) {
+    mf_pairs_tmp <- mf_pairs_reg[sample(nrow(mf_pairs_reg, replace = TRUE)),]
+    mod_1st <- update(mod_1st, data = mf_pairs_tmp)
+    mod_2nd <- update(mod_2nd, data = mf_pairs_tmp)
+    mod_whole <- update(mod_whole, data = mf_pairs_tmp)
+  }
+  
+  mediator_effect_bo <- tidy(mod_1st) %>% 
+                          filter(term == "birth_order.x") %>%
+                          pull(estimate)
+  psea_effect_mediator <- tidy(mod_2nd) %>% 
+                          filter(term == mediator) %>% 
+                          pull(estimate)
+  psea_effect_bo <- tidy(mod_bo_psea[[1]]) %>% 
+                     filter(term == "birth_order.x") %>% 
+                     pull(estimate)
+  
+  mediator_effect_bo * psea_effect_mediator / psea_effect_bo
+}
+
+
+mod2_meds <- c(
+  University = mediation_pct("university.xTRUE", mod_bo_1st[["University"]], 
+                               mod_bo_psea[[2]]),
+  Height     = mediation_pct("height.x", mod_bo_1st[["Height"]],
+                               mod_bo_psea[[2]]),
+  `Fluid IQ` = mediation_pct("fluid_iq.x", mod_bo_1st[["Fluid IQ"]],
+                               mod_bo_psea[[2]])
+)
+
+mod3_meds <- c(
+  Income     = mediation_pct("first_job_pay.x", mod_bo_1st[["Income"]], 
+                               mod_bo_psea[[3]]),
+  Height     = mediation_pct("height.x", mod_bo_1st[["Height"]],
+                               mod_bo_psea[[3]]),
+  `Fluid IQ` = mediation_pct("fluid_iq.x", mod_bo_1st[["Fluid IQ"]],
+                               mod_bo_psea[[3]])
+)
+
+mod4_meds <- c(
+  University = mediation_pct("university.xTRUE", mod_bo_1st[["University"]], 
+                               mod_bo_psea[[4]]),
+  Income     = mediation_pct("first_job_pay.x", mod_bo_1st[["Income"]], 
+                               mod_bo_psea[[4]]),
+  Height     = mediation_pct("height.x", mod_bo_1st[["Height"]],
+                               mod_bo_psea[[4]]),
+  `Fluid IQ` = mediation_pct("fluid_iq.x", mod_bo_1st[["Fluid IQ"]],
+                               mod_bo_psea[[4]])
+)
+
 ```
 
 Our next regressions split up the data into subsets. Cultural
@@ -1455,29 +1481,35 @@ into the next generation.
 
 Table \@ref(tab:tbl-bo-subsets) shows the results. Columns 1 and 2 use
 birth order of male respondents to predict female spouses' PSEA. Column
-1 runs the regression of birth order plus controls; column 2 adds
-university as a mediator. Columns 3 and 4 repeat the exercise for female
-respondents, using their birth order to predict male spouses' PSEA.
-Effect sizes are smaller for female respondents. This might be because
-social status is less advantageous to females in the marriage markets,
-or because females place less value on PSEA-related phenotypes in a
-spouse. Columns 5 and 6 use only couples with children. University
-attendance still seems to mediate the birth order effect.
+1 runs the regression of birth order; column 2 adds university
+attendance as a mediator (here, we focus on university attendance alone
+so as to keep our N large). Columns 3 and 4 repeat the exercise for
+female respondents, using their birth order to predict male spouses'
+PSEA. In these subsets, the coefficient on birth order is insignificant.
+However, the pattern of coefficient sizes is the same as in the main
+regression: university attendance is highly significant, and adding it
+reduces the absolute size of the birth order effect. Effect sizes are
+smaller for female respondents. This might be because social status is
+less advantageous to females in the marriage markets, or because females
+place less value on PSEA-related phenotypes in a spouse. Columns 5 and 6
+use only couples with children. Here, birth order is significant in the
+base specification; university attendance still seems to mediate the
+birth order effect.
 
 ```{r tbl-bo-subsets}
 
-mod_bo_males <- lapply(fml_bo_psea[c(2, 3)], fixest::feols, 
+mod_bo_males <- lapply(fml_bo_psea[1:2], fixest::feols, 
                  data = mf_pairs_reg %>% filter(x == "Male"),
                  notes = FALSE
                )
-mod_bo_females <- lapply(fml_bo_psea[c(2, 3)], fixest::feols, 
+mod_bo_females <- lapply(fml_bo_psea[1:2], fixest::feols, 
                  data = mf_pairs_reg %>% filter(x == "Female"),
                  notes = FALSE
                )
 
 mf_pairs_children <- mf_pairs_reg %>% 
                    filter(n_children.x > 0, n_children.y > 0)
-mod_bo_children <- lapply(fml_bo_psea[c(2, 3)], fixest::feols, 
+mod_bo_children <- lapply(fml_bo_psea[1:2], fixest::feols, 
                  data = mf_pairs_children,
                  notes = FALSE
                )
@@ -1501,8 +1533,8 @@ huxreg(reg_list,
          coefs = c(
             "Birth order"           = "birth_order.x", 
             "University"            = "university.xTRUE",
-            "Mother's age at birth" = "moth_age_birth.x",
             "Own PSEA"              = "EA3.x",
+            "Mother's age at birth" = "moth_age_birth.x",
             "Fluid IQ"              = "fluid_iq.x",
             "Height"                = "height.x"
           ),
@@ -1896,31 +1928,36 @@ correlation.
 
 Table \@ref(tab:tbl-bo-psea-no-moth-age) reruns our central regressions,
 dropping the control for mother's age at birth. Results show the same
-pattern as in the main text: the negative coefficient for birth order
-shrinks when controls are added, and then changes sign when university
-attendance is added as a potential mediator. However, the birth order
-effect is smaller overall, and is never significant.
+pattern as in the main text: the coefficient for birth order is
+negative, but changes sign when university attendance is added as a
+potential mediator. However, the birth order effect is smaller overall,
+and is never significant. We also ran regressions using father's age
+instead of mother's age; results are similar to those in the main text.
 
 Table \@ref(tab:tbl-bo-psea-dummies) reruns our central regressions but
 includes a separate coefficient for each position in the birth order
 (with firstborn as the baseline). The basic pattern of our main result
-holds: birth order coefficients are negative and increase going down the
-birth order; in column 2, adding controls reduces their size; in column
-3, adding university attendance reduces their size and significance
-still further. Results are slightly messier when we add income, probably
-because of the low N. Table \@ref(tab:tbl-bo-subset-dummies) runs the
-same exercise for different subsets: male respondents, female
-respondents, and couples with children.
+holds: birth order coefficients are generally negative; adding mediators
+causes them to increase towards zero or to change sign. Birth order
+effects appear largest for birth order 2-3. However, effects for later
+birth orders are also imprecisely estimated (since fewer respondents
+come from large families).
+
+Notably when we add income, dummies for birth order 5 and 6 become large
+and positive. This could be (for instance) because being the last born
+has advantages after effects on SES have been netted out. Table
+\@ref(tab:tbl-bo-subset-dummies) runs the same exercise for different
+subsets: male respondents, female respondents, and couples with
+children. The basic pattern that birth order coefficients shrink after
+adding mediators is quite robust. Note however that here, the estimates
+of effects for birth order 2-3 are larger for females.
 
 We also ran a specification with separate birth order dummies within
 each family size. Figure \@ref(fig:pic-bo-psea-interactions) shows 95%
 confidence intervals for the birth order coefficients, from the column 2
-specification including height and IQ controls but no mediators. Most
-birth order coefficients are negative (compared to the baseline for the
-firstborn) and become more negative as birth order increases. However,
-there is some suggestion of a positive "last born" effect. This could
-happen because last born children receive more attention after elder
-children have left home.
+specification including height and IQ controls but no mediators. Not
+surprisingly, coefficients are imprecisely estimated. But most birth
+order coefficients are negative compared to the baseline for firstborns.
 
 Table \@ref(tab:tbl-bo-psea-pgs) reruns our regressions controlling for
 several polygenic scores. Results are very close to those in the main
@@ -1941,7 +1978,7 @@ main text.
 
 
 age_table <- famhist %>% 
-      filter(n_sibs >=2, n_sibs <= 8, ! is.na(birth_order)) %>% 
+      filter(n_sibs >=2, n_sibs <= 6, ! is.na(birth_order)) %>% 
       group_by(n_sibs, birth_order) %>% 
       dplyr::summarize(
         N   = n(), 
@@ -1950,14 +1987,7 @@ age_table <- famhist %>%
         .groups = "drop"
       )
 
-mf_pairs_reg_big <- mf_pairs_twice %>% 
-                  filter(
-                    n_sibs.x >= 2, 
-                    n_sibs.x <= 8, 
-                    ! is.na(birth_order.x),
-                    ! is.na(university.x),
-                    ! is.na(first_job_pay.x)
-                  )
+mf_pairs_reg_big <- mf_pairs_reg
 
 fml_bo_no_moth_age <- lapply(fml_bo_psea, update, 
                      . ~ . - moth_age_birth.x, 
@@ -1972,7 +2002,7 @@ fml_bo_fath_age <- lapply(fml_bo_no_moth_age, update,
                      . ~ . + fath_age_birth.x, 
                      rhs = 1
                    )
-mod_bo_moth_age <- lapply(fml_bo_fath_age, fixest::feols,
+mod_bo_fath_age <- lapply(fml_bo_fath_age, fixest::feols,
                      data  = mf_pairs_reg_big, 
                      notes = FALSE
                    )
@@ -1990,9 +2020,9 @@ huxreg(mod_bo_no_moth_age,
          stars = my_stars,
          tidy_args = tidy_args
        ) %>% 
-       insert_row(after = 13, "Family size dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 14, "Birth month dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 15, "Birth year dummies", rep("Yes", 5)) %>% 
+       insert_row(after = 13, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 14, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 15, "Birth year dummies", rep("Yes", 4)) %>% 
        set_bottom_border(14:15, everywhere, 0) %>% 
        set_number_format(2:13, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, without controls for mother's age at respondent's birth")
@@ -2032,8 +2062,8 @@ huxreg_coefs <- c(
                    huxreg_coefs,
                    "University"  = "university.xTRUE", 
                    "Income"      = "first_job_pay.x",
-                   "Mother's age at birth" = "moth_age_birth.x",
-                   "Own EA3"     = "EA3.x"
+                   "Own PSEA"     = "EA3.x",
+                   "Mother's age at birth" = "moth_age_birth.x"
                  )
 
 huxtable::huxreg(mod_bo_psea_dummies, 
@@ -2043,11 +2073,11 @@ huxtable::huxreg(mod_bo_psea_dummies,
                    tidy_args = tidy_args
                  ) %>% 
        insert_row(after = 19, "Wald p-value, birth order", wald_pvals) %>%
-       insert_row(after = 24, "Family size dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 25, "Birth month dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 26, "Birth year dummies", rep("Yes", 5)) %>% 
+       insert_row(after = 24, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 25, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 26, "Birth year dummies", rep("Yes", 4)) %>% 
        insert_row(after = 27, "Controls (IQ, height)", 
-                    c("No", rep("Yes", 4))) %>% 
+                    c("No", rep("Yes", 3))) %>% 
        set_bottom_border(25:27, everywhere, 0) %>% 
        set_number_format(2:20, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, separate birth order coefficient dummies") %>% 
@@ -2061,13 +2091,13 @@ huxtable::huxreg(mod_bo_psea_dummies,
 fml_bo_psea_dummies <- fml_bo_psea %>% 
                          purrr::map(update_with_birth_order_dummies)
 
-mod_bo_males_dummies <- lapply(fml_bo_psea_dummies[c(2, 3)], 
+mod_bo_males_dummies <- lapply(fml_bo_psea_dummies[1:2], 
                                  fixest::feols, 
                                  data = mf_pairs_reg %>% 
                                    filter(x == "Male"),
                                  notes = FALSE
                         )
-mod_bo_females_dummies <- lapply(fml_bo_psea_dummies[c(2, 3)], 
+mod_bo_females_dummies <- lapply(fml_bo_psea_dummies[1:2], 
                                   fixest::feols, 
                                   data = mf_pairs_reg %>% 
                                     filter(x == "Female"),
@@ -2076,7 +2106,7 @@ mod_bo_females_dummies <- lapply(fml_bo_psea_dummies[c(2, 3)],
 
 mf_pairs_children <- mf_pairs_reg %>% 
                        filter(n_children.x > 0, n_children.y > 0)
-mod_bo_children_dummies <- lapply(fml_bo_psea_dummies[c(2, 3)], 
+mod_bo_children_dummies <- lapply(fml_bo_psea_dummies[1:2], 
                              fixest::feols, 
                              data = mf_pairs_children,
                              notes = FALSE
@@ -2104,8 +2134,8 @@ names(huxreg_coefs) <- gsub(".*(\\d).*$", "Birth order \\1",
 huxreg_coefs <- c(
                    huxreg_coefs,
                    "University"  = "university.xTRUE", 
-                   "Mother's age at birth" = "moth_age_birth.x",
-                   "Own PSEA"     = "EA3.x"
+                   "Own PSEA"     = "EA3.x",
+                   "Mother's age at birth" = "moth_age_birth.x"
                  )
 
 huxtable::huxreg(reg_list, 
@@ -2135,7 +2165,7 @@ mf_pairs_reg$BO5 <- 1 * (mf_pairs_reg$birth_order.x == 5)
 mf_pairs_reg$BO6 <- 1 * (mf_pairs_reg$birth_order.x == 6)
 mf_pairs_reg$nsf <- factor(mf_pairs_reg$n_sibs.x)
 
-fml_bo_psea_full <- update(fml_bo_psea[[2]], . ~ . - birth_order.x + 
+fml_bo_psea_full <- update(fml_bo_psea[[1]], . ~ . - birth_order.x + 
                              nsf:(BO2 + BO3 + BO4 + BO5 + BO6))
 
 mod_bo_psea_full <- fixest::feols(fml_bo_psea_full, mf_pairs_reg, 
@@ -2189,8 +2219,8 @@ huxreg(mod_bo_psea_pgs,
            "Birth order"           = "birth_order.x", 
            "University"            = "university.xTRUE", 
            "Income"                = "first_job_pay.x",
-           "Mother's age at birth" = "moth_age_birth.x",
            "Own PSEA"              = "EA3.x",
+           "Mother's age at birth" = "moth_age_birth.x",
            "Fluid IQ"              = "fluid_iq.x",
            "Height"                = "height.x"
          ),
@@ -2206,10 +2236,10 @@ huxreg(mod_bo_psea_pgs,
            cluster = list(mf_pairs_reg$f.54.0.0.x)
          )
        ) %>% 
-       insert_row(after = 15, "Family size dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 16, "Birth month dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 17, "Birth year dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 18, "Polygenic score controls", rep("Yes", 5)) %>% 
+       insert_row(after = 15, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 16, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 17, "Birth year dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 18, "Polygenic score controls", rep("Yes", 4)) %>% 
        set_top_border(17:19, everywhere, 0) %>% 
        set_number_format(2:15, -1, 4) %>% 
        set_width(1) %>% 
@@ -2219,7 +2249,7 @@ huxreg(mod_bo_psea_pgs,
 
 ```{r tbl-bo-psea-age-fte}
 
-fml_bo_psea_age_fte <- fml_bo_psea[c(2, 3, 5)]
+fml_bo_psea_age_fte <- fml_bo_psea[c(1, 2, 4)]
 fml_bo_psea_age_fte[2:3] <- lapply(fml_bo_psea_age_fte[2:3], 
                                 update, 
                                 . ~ . - university.x + age_fulltime_edu.x)
@@ -2274,9 +2304,9 @@ huxreg(mod_bo_psea_no3,
          stars = my_stars,
          tidy_args = tidy_args
        ) %>% 
-       insert_row(after = 15, "Family size dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 16, "Birth month dummies", rep("Yes", 5)) %>% 
-       insert_row(after = 17, "Birth year dummies", rep("Yes", 5)) %>% 
+       insert_row(after = 15, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 16, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 17, "Birth year dummies", rep("Yes", 4)) %>% 
        set_bottom_border(16:17, everywhere, 0) %>% 
        set_number_format(2:15, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, excluding family size 3")
