@@ -58,6 +58,7 @@ library(santoku)
 library(purrr)
 library(scales) # percent should override santoku
 
+set.seed(27101975)
 
 regression_subset <- function (data) {
   data %>% 
@@ -2031,28 +2032,26 @@ huxreg(mod_bo_no_moth_age,
 
 ```{r tbl-bo-psea-dummies}
 
-# we do this to avoid a collinear birth_order.x == 6, n_sibs.x == 6
-# pair of dummies
-fml_bo_psea_dummies <- fml_bo_psea %>% 
-                        purrr::map(update_with_birth_order_dummies) %>% 
-                        purrr::map(update, . ~ . - factor(birth_mon.x), rhs = 2)
+# we use standard lms because fixest::wald breaks sometimes
 
-mod_bo_psea_dummies <- purrr::map(fml_bo_psea_dummies, fixest::feols, 
-                         data = mf_pairs_reg,
-                         notes = FALSE
-                       )
-# vcovs <- purrr::map(mod_bo_psea_ix, vcov)
-# lhts <- purrr::map2(mod_bo_psea_ix, vcovs, 
-#                       ~ car::lht(.x, car::matchCoefs(.x, "birth_order"), 
-#                                    vcov. = .y)
-#                     )
+fml_bo_psea_dummies <- purrr::map(fml_bo_psea, formula, collapse = TRUE)
 
-wald_tests <- purrr::map(mod_bo_psea_dummies, fixest::wald, 
-                           keep    = "birth_order",
-                           se      = tidy_args$se,
-                           print   = FALSE
-                         )
-wald_pvals <- purrr::map_dbl(wald_tests, "p")
+fml_bo_psea_dummies <- purrr::map(fml_bo_psea_dummies, update, 
+                                    . ~ . - birth_order.x + 
+                                    factor(birth_order.x))
+
+# use a formula here to preserve the `data` argument
+mod_bo_psea_dummies <- purrr::map(fml_bo_psea_dummies, ~lm(.x, 
+                         data = mf_pairs_reg))
+
+mod_restricted <- purrr::map(mod_bo_psea_dummies, 
+                               ~update(.x, . ~ . - factor(birth_order.x)))
+
+my_vcov <- function (x) sandwich::vcovHC(x, type ="HC1")
+wald_tests <- purrr::map2(mod_bo_psea_dummies, mod_restricted,
+                          lmtest::waldtest, vcov = my_vcov)
+wald_pvals <- purrr::map_dbl(wald_tests, ~ pull(tidy(.x), p.value)[2])
+
 
 huxreg_coefs <- grep("factor\\(birth_order", names(coef(mod_bo_psea_dummies[[1]])),
                        value = TRUE)
@@ -2073,12 +2072,12 @@ huxtable::huxreg(mod_bo_psea_dummies,
                    tidy_args = tidy_args
                  ) %>% 
        insert_row(after = 19, "Wald p-value, birth order", wald_pvals) %>%
-       insert_row(after = 24, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 25, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 26, "Birth year dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 27, "Controls (IQ, height)", 
+       insert_row(after = 20, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 21, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 22, "Birth year dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 23, "Controls (IQ, height)", 
                     c("No", rep("Yes", 3))) %>% 
-       set_bottom_border(25:27, everywhere, 0) %>% 
+       set_bottom_border(21:23, everywhere, 0) %>% 
        set_number_format(2:20, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, separate birth order coefficient dummies") %>% 
        set_tb_padding(3) %>% 
@@ -2127,10 +2126,12 @@ wald_tests <- purrr::map(reg_list, fixest::wald,
                          )
 wald_pvals <- purrr::map_dbl(wald_tests, "p")
 
-huxreg_coefs <- grep("factor\\(birth_order", names(coef(mod_bo_males_dummies[[1]])),
+huxreg_coefs <- grep("factor\\(birth_order", 
+                       names(coef(mod_bo_males_dummies[[1]])),
                        value = TRUE)
 names(huxreg_coefs) <- gsub(".*(\\d).*$", "Birth order \\1",
                             huxreg_coefs)
+
 huxreg_coefs <- c(
                    huxreg_coefs,
                    "University"  = "university.xTRUE", 
@@ -2145,18 +2146,18 @@ huxtable::huxreg(reg_list,
                    tidy_args = tidy_args
                  ) %>% 
        insert_row(after = 17, c("Wald p-value, birth order", wald_pvals)) %>% 
-       insert_row(after = 22, "Family size dummies", rep("Yes", 6))   %>% 
-       insert_row(after = 23, "Birth month dummies", rep("Yes", 6))   %>% 
-       insert_row(after = 24, "Birth year dummies", rep("Yes", 6))    %>% 
-       insert_row(after = 25, "Controls (IQ, height)", rep("Yes", 6)) %>% 
-       set_bottom_border(23:25, everywhere, 0) %>% 
+       insert_row(after = 18, "Family size dummies", rep("Yes", 6))   %>% 
+       insert_row(after = 19, "Birth month dummies", rep("Yes", 6))   %>% 
+       insert_row(after = 20, "Birth year dummies", rep("Yes", 6))    %>% 
+       insert_row(after = 21, "Controls (IQ, height)", rep("Yes", 6)) %>% 
+       set_bottom_border(19:21, everywhere, 0) %>% 
        set_number_format(2:18, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, separate birth order coefficient dummies: subsets") %>% 
        set_tb_padding(3) %>% 
        set_font_size(10)
 ```
 
-```{r pic-bo-psea-interactions, fig.align = "center", fig.cap = "Regressions of spouse PSEA: birth order dummies within different family sizes. Labels show birth order. Lines are 95 per cent confidence intervals clustered by assessment centre. "}
+```{r pic-bo-psea-interactions, fig.align = "center", fig.cap = "Regressions of spouse PSEA: birth order dummies within different family sizes. Labels show birth order. Lines are 95 per cent confidence intervals."}
  
 mf_pairs_reg$BO2 <- 1 * (mf_pairs_reg$birth_order.x == 2)
 mf_pairs_reg$BO3 <- 1 * (mf_pairs_reg$birth_order.x == 3)
