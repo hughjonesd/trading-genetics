@@ -1407,66 +1407,83 @@ when we control for both university and income (column 4), again birth
 order's effect size is positive.
 
 Under the assumptions discussed above, we can estimate the proportion of
-the birth order effect that is mediated by these variables. XXX TODO
+the birth order effect that is mediated by these variables. Table
+\@ref(tab:tbl-mediation-prop) reports this for each model in columns
+2-4. Each estimate is the coefficient of birth order on the mediator,
+times the coefficient of the mediator on spouse PSEA, divided by the
+coefficient of birth order on spouse PSEA estimated from column 1, i.e.
+without mediators. Confidence intervals are estimated by 199 bootstraps.
 
-```{r calc-mediation-prop}
+```{r tbl-mediation-prop, cache = TRUE}
 
 # percent of main effect that is mediated by uni:
 # uni effect of BO (first stage) * PSEA effect of uni (column 2)
 # divided by PSEA effect of BO (column 1)
 
-mediation_pct <- function (mediator, mod_1st, mod_2nd, bootstrap = FALSE,
-                             mod_whole = mod_bo_psea[[1]]) {
-  # presumably must use same bootstrap for all 3
-  if (bootstrap) {
-    mf_pairs_tmp <- mf_pairs_reg[sample(nrow(mf_pairs_reg, replace = TRUE)),]
-    mod_1st <- update(mod_1st, data = mf_pairs_tmp)
-    mod_2nd <- update(mod_2nd, data = mf_pairs_tmp)
-    mod_whole <- update(mod_whole, data = mf_pairs_tmp)
+mediators <- c("university.xTRUE", "first_job_pay.x", "height.x",
+                 "fluid_iq.x")
+
+compute_mediation_effects <- function (resample = FALSE) {
+  mf_pairs_tmp <- mf_pairs_reg
+  if (resample) {
+    mf_pairs_tmp <- mf_pairs_tmp[sample(nrow(mf_pairs_tmp), replace = TRUE),]
   }
   
-  mediator_effect_bo <- tidy(mod_1st) %>% 
-                          filter(term == "birth_order.x") %>%
-                          pull(estimate)
-  psea_effect_mediator <- tidy(mod_2nd) %>% 
-                          filter(term == mediator) %>% 
-                          pull(estimate)
-  psea_effect_bo <- tidy(mod_bo_psea[[1]]) %>% 
-                     filter(term == "birth_order.x") %>% 
-                     pull(estimate)
+  mod_bo_1st_boot <- purrr::map(fml_bo_1st, fixest::feols, 
+                                  data = mf_pairs_tmp, notes = FALSE)
+  mod_bo_psea_boot <- purrr::map(fml_bo_psea, fixest::feols, 
+                                 data = mf_pairs_tmp, notes = FALSE)
   
-  mediator_effect_bo * psea_effect_mediator / psea_effect_bo
+  mediator_effect_bo <- purrr::map_dbl(mod_bo_1st_boot, 
+                                         ~coef(.x)["birth_order.x"])
+  
+  psea_effect_mediators <- purrr::map(mod_bo_psea_boot[-1],
+                                         ~coef(.x)[mediators])
+  psea_effect_mediators <- matrix(unlist(psea_effect_mediators), ncol = 4,
+                                  byrow = TRUE)
+  colnames(psea_effect_mediators) <- mediators
+  
+  psea_effect_bo <- coef(mod_bo_psea_boot[[1]])["birth_order.x"]
+  
+  effects_uni <- mediator_effect_bo["University"] * 
+    psea_effect_mediators[, "university.xTRUE"] / psea_effect_bo
+  effects_income <- mediator_effect_bo["Income"] * 
+    psea_effect_mediators[, "first_job_pay.x"] / psea_effect_bo
+  effects_height <- mediator_effect_bo["Height"] * 
+    psea_effect_mediators[, "height.x"] / psea_effect_bo
+  effects_fluid_iq <- mediator_effect_bo["Fluid IQ"] * 
+    psea_effect_mediators[, "fluid_iq.x"] / psea_effect_bo
+  
+  cbind(
+          University = effects_uni, 
+          Income     = effects_income, 
+          Height     = effects_height, 
+          `Fluid IQ` = effects_fluid_iq
+        )
 }
 
+# for each 1st stage model, run 100 bootstraps and gather coefs
+n_reps <- 199
+bootstraps <- replicate(n_reps, compute_mediation_effects(resample = TRUE))
+# bootstraps is now 3 x 4 x n_reps
+cis <- apply(bootstraps, 1:2, quantile, c(0.025, 0.975), na.rm = TRUE)
+estimates <- compute_mediation_effects(resample = FALSE)
 
-mod2_meds <- c(
-  University = mediation_pct("university.xTRUE", mod_bo_1st[["University"]], 
-                               mod_bo_psea[[2]]),
-  Height     = mediation_pct("height.x", mod_bo_1st[["Height"]],
-                               mod_bo_psea[[2]]),
-  `Fluid IQ` = mediation_pct("fluid_iq.x", mod_bo_1st[["Fluid IQ"]],
-                               mod_bo_psea[[2]])
-)
+format_est_ci <- function(coef, model) {
+  char <- glue::glue("{percent(estimates[model, coef], 0.1)} ({percent(cis[1, model, coef], 0.1)}, {percent(cis[2,model, coef], 0.1)})")
+  char[is.na(estimates[model, coef])] <- "-"
+  char
+}
 
-mod3_meds <- c(
-  Income     = mediation_pct("first_job_pay.x", mod_bo_1st[["Income"]], 
-                               mod_bo_psea[[3]]),
-  Height     = mediation_pct("height.x", mod_bo_1st[["Height"]],
-                               mod_bo_psea[[3]]),
-  `Fluid IQ` = mediation_pct("fluid_iq.x", mod_bo_1st[["Fluid IQ"]],
-                               mod_bo_psea[[3]])
-)
-
-mod4_meds <- c(
-  University = mediation_pct("university.xTRUE", mod_bo_1st[["University"]], 
-                               mod_bo_psea[[4]]),
-  Income     = mediation_pct("first_job_pay.x", mod_bo_1st[["Income"]], 
-                               mod_bo_psea[[4]]),
-  Height     = mediation_pct("height.x", mod_bo_1st[["Height"]],
-                               mod_bo_psea[[4]]),
-  `Fluid IQ` = mediation_pct("fluid_iq.x", mod_bo_1st[["Fluid IQ"]],
-                               mod_bo_psea[[4]])
-)
+med_matrix <- format_est_ci(c("University", "Income", "Fluid IQ", "Height"), 
+                              1:3)
+med_matrix <- matrix(med_matrix, ncol = 3, byrow = TRUE)
+rownames(med_matrix) <- c("University", "Income", "Fluid IQ", "Height")
+colnames(med_matrix) <- paste("Model", 2:4)
+as_huxtable(med_matrix, add_colnames = TRUE, add_rownames = "") %>% 
+      theme_article() %>% 
+      set_caption("Percent of birth order effects accounted for by mediators, models 2-4") %>% 
+      add_footnote("Bootstrap 95% confidence intervals in brackets") 
 
 ```
 
