@@ -97,6 +97,79 @@ my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
 Questions for Oana
 - Do we use first_job? Or use current_job and first_job as a robustness check?
   Or multiply impute?
+  
+* Maybe a simple chart: average PSEA of children among first/second/third
+born by family size
+
+mf_pairs_twice$kid_EA <- (mf_pairs_twice$EA3.x + mf_pairs_twice$EA3.y)/2
+mf_pairs_twice %>% 
+        filter(n_sibs.x <= 4, n_sibs.x >= 2, ! is.na(birth_order.x)) %>%
+        ggplot(aes(birth_order.x,kid_EA)) + 
+          stat_summary() + 
+          facet_wrap(vars(n_sibs.x))
+
+# * NB: why in mf_pairs_twice do we see differences in own EA3 with birth_order?
+#   - just chance? it's only true for families of size 3...
+
+
+# NOTES on economics literature
+# Areas/topics
+# * Econometrics of matching
+#   - Choo & Siow 2006
+#   - Chiappori et al 'fatter attraction'
+#     - Quite simple regressions as a result of their basic framework
+#     - Run regressions on each of the other person's characteristics;
+#       in the linear version of their framework, coefficients should all be
+#       proportional
+#   - I'm not sure these guys are our key targets though, more likely some
+#     people we might have to "appease"...!
+# * Inheritance of inequality
+# * Assortative mating
+#   - a mechanism for inequality
+#   - also related to family economics
+#   - this might be a good way to set up the paper:
+#   - "We bring together two explanations of persistent inequality. (1) Genetics
+#     and (2) assortative mating."
+#  * Getting comments from Greg Clark would be very useful.
+#  * Maybe from Samuel Bowles too?
+#  * They have a Science article on IG Wealth Transmission
+#  * This special issue of Current Anthropology is important:
+#    https://www.journals.uchicago.edu/toc/ca/2010/51/1
+#    - they distinguish "material", "somatic" (inc genetic, but also e.g.
+#      embodied knowledge), and "relational" wealth
+#    - In their response to comments, Mulder et al. acknowledge that maybe 
+#      one kind of wealth can help you acquire other kinds, and this is an
+#      important area of future research.
+#  * Fernandez et al. (Love and Money)
+#    - inequality increases marital sorting because it increases the benefits
+#      to matching with another skilled type;
+#    - they confirm the correlation cross-country
+#    - they also predict sorting lowers GDP (not sure how this works)
+#    - there is a link with macroeconomics and the demographic transition in
+#      this literature
+#  * Eika et al. 2019
+#    - Empirics of assortative mating in US from 1940s: it's increased at 
+#      the bottom but gone down at the top
+#    - Important for inequality but changes have led to little net increase
+#      in inequality. (A simple accounting framework when you compare "what
+#      if people had matched randomly into households")
+#    - The motivation "assortative mating is increasing inequality" is 
+#      a sufficient one, for this paper - it's a big issue.
+#  * Doepke and Tertilt "families in macroeconomics"
+#    - parents' fertility decisions are important for econ growth
+#    - as is skill formation
+#    - I think this is for another paper - e.g. what happens when the rich
+#      have more children?
+#  * Gould, Moav and Simhon 2008
+#    - to read 
+#    - relates end of polygyny to econ growth
+#    - as above, maybe for another paper
+#      
+# PEOPLE you could talk to
+# * Doepke
+# * Clark
+# * Fernandez
+# * Bowles
 ```
 
 
