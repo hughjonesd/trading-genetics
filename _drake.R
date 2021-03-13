@@ -40,7 +40,9 @@ make_parent_child <- function (relatedness, famhist_raw) {
                   left_join(fh_age, by = c(ID2 = "f.eid"), suffix = c("1", "2")) %>% 
                   mutate(
                     parent_id = ifelse(age1 > age2, ID1, ID2),
-                    child_id  = ifelse(age1 > age2, ID2, ID1)
+                    child_id  = ifelse(age1 > age2, ID2, ID1),
+                    eid.x     = parent_id, # duplicate columns so we can easily 
+                    eid.y     = child_id   # add pairs data
                   ) %>% 
                   filter(
                     abs(age1 - age2) > 10    # also removes 924 "parent-children"...
@@ -56,7 +58,8 @@ make_parent_child <- function (relatedness, famhist_raw) {
   parent_child %<>% 
                   mutate(
                     age_parent = ifelse(parent_id == ID1, age1, age2)
-                  )
+                  ) %>% 
+                  select(-ID1, -ID2)
   
   parent_child
 }
@@ -64,6 +67,7 @@ make_parent_child <- function (relatedness, famhist_raw) {
 
 make_parent_pairs <- function (parent_child, famhist, resid_scores) {
   two_parents <- parent_child %>% 
+                    select(parent_id, child_id) %>%  # remove parent-child data
                     left_join(parent_child, by = "child_id") %>% 
                     filter(
                       parent_id.x != parent_id.y,
@@ -231,7 +235,11 @@ plan <- drake_plan(
   
   resid_scores = subset_resid_scores(resid_scores_raw, famhist, score_names),
   
-  parent_child = make_parent_child(relatedness, famhist_raw),
+  parent_child = {
+    parent_child <- make_parent_child(relatedness, famhist_raw)
+    parent_child <- add_data_to_pairs(parent_child, famhist, resid_scores)
+    parent_child
+  },
   
   sib_groups = make_sib_groups(relatedness),
   
