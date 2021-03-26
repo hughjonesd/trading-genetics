@@ -57,6 +57,7 @@ library(fixest)
 library(santoku)
 library(purrr)
 library(scales) # percent should override santoku
+library(systemfit)
 
 set.seed(27101975)
 
@@ -143,7 +144,6 @@ tidy_args <- list(se = "hetero", conf.int = FALSE)
 my_note <- "{stars}. Standard errors: robust."
 
 
-```{r TODO, eval = FALSE}
 # * Why missing all the first job data? - because not everyone does the
 #   online followup. We could use "current job" which might be endogenous
 #   to your spouse; then do first job as a robustness check.
@@ -1469,14 +1469,6 @@ again becomes insignificant and the coefficient changes sign. Lastly,
 when we control for both university and income (column 4), again birth
 order's effect size is positive.
 
-Under the assumptions discussed above, we can estimate the proportion of
-the birth order effect that is mediated by these variables. Table
-\@ref(tab:tbl-mediation-prop) reports this for each model in columns
-2-4. Each estimate is the coefficient of birth order on the mediator,
-times the coefficient of the mediator on spouse PSEA, divided by the
-coefficient of birth order on spouse PSEA estimated from column 1, i.e.
-without mediators. Confidence intervals are estimated by 199 bootstraps.
-
 ```{r tbl-mediation-prop, cache = TRUE}
 
 # percent of main effect that is mediated by uni:
@@ -1495,41 +1487,57 @@ compute_mediation_effects <- function (resample = FALSE) {
   mod_bo_1st_boot <- purrr::map(fml_bo_1st, fixest::feols, 
                                   data = mf_pairs_tmp, notes = FALSE)
   mod_bo_psea_boot <- purrr::map(fml_bo_psea, fixest::feols, 
-                                 data = mf_pairs_tmp, notes = FALSE)
-  
+                                  data = mf_pairs_tmp, notes = FALSE)
+  mod_bo_overall_boot <- purrr::map(mod_bo_psea_boot[-1], ~{
+                                    removed <- .x$obsRemoved
+                                    # ensure we always use the same data
+                                    # for esetimating the "overall" coef.
+                                    data <- mf_pairs_tmp[-removed,]
+                                    fixest::feols(fml_bo_psea[[1]], 
+                                                    data = data, 
+                                                    notes = FALSE)
+                                  })
+
+  # grab out the birth_order.x coefficient:
   mediator_effect_bo <- purrr::map_dbl(mod_bo_1st_boot, 
-                                         ~coef(.x)["birth_order.x"])
-  
+                                         list(coef, "birth_order.x"))
+
   psea_effect_mediators <- purrr::map(mod_bo_psea_boot[-1],
                                          ~coef(.x)[mediators])
   psea_effect_mediators <- matrix(unlist(psea_effect_mediators), ncol = 4,
                                   byrow = TRUE)
   colnames(psea_effect_mediators) <- mediators
   
-  psea_effect_bo <- coef(mod_bo_psea_boot[[1]])["birth_order.x"]
-  
+  psea_effect_bo <- purrr::map_dbl(mod_bo_overall_boot, 
+                                     list(coef, "birth_order.x"))
+
   effects_uni <- mediator_effect_bo["University"] * 
-    psea_effect_mediators[, "university.xTRUE"] / psea_effect_bo
+    psea_effect_mediators[, "university.xTRUE"] 
   effects_income <- mediator_effect_bo["Income"] * 
-    psea_effect_mediators[, "first_job_pay.x"] / psea_effect_bo
+    psea_effect_mediators[, "first_job_pay.x"]
   effects_height <- mediator_effect_bo["Height"] * 
-    psea_effect_mediators[, "height.x"] / psea_effect_bo
+    psea_effect_mediators[, "height.x"] 
   effects_fluid_iq <- mediator_effect_bo["Fluid IQ"] * 
-    psea_effect_mediators[, "fluid_iq.x"] / psea_effect_bo
+    psea_effect_mediators[, "fluid_iq.x"]
   
-  cbind(
+  effects_pct <- cbind(
           University = effects_uni, 
           Income     = effects_income, 
           Height     = effects_height, 
           `Fluid IQ` = effects_fluid_iq
         )
+  # divide by overall effect re-estimated using data in each of models 2-4
+  effects_pct <- effects_pct / psea_effect_bo
+  
+  effects_pct
 }
 
-# for each 1st stage model, run 100 bootstraps and gather coefs
+
+# for each 1st stage model, run 199 bootstraps and gather coefs
 n_reps <- 199
 bootstraps <- replicate(n_reps, compute_mediation_effects(resample = TRUE))
 # bootstraps is now 3 x 4 x n_reps
-cis <- apply(bootstraps, 1:2, quantile, c(0.025, 0.975), na.rm = TRUE)
+cis <- apply(bootstraps, 1:2, quantile, c(0.05, 0.95), na.rm = TRUE)
 estimates <- compute_mediation_effects(resample = FALSE)
 
 format_est_ci <- function(coef, model) {
@@ -1546,9 +1554,18 @@ colnames(med_matrix) <- paste("Model", 2:4)
 as_huxtable(med_matrix, add_colnames = TRUE, add_rownames = "") %>% 
       theme_article() %>% 
       set_caption("Percent of birth order effects accounted for by mediators, models 2-4") %>% 
-      add_footnote("Bootstrap 95% confidence intervals in brackets") 
+      add_footnote("Bootstrap 90% confidence intervals in brackets") 
 
 ```
+
+Under the assumptions discussed above, we can estimate the proportion of
+the birth order effect that is mediated by these variables. Table
+\@ref(tab:tbl-mediation-prop) reports this for each model in columns
+2-4. Each estimate is the coefficient of birth order on the mediator,
+times the coefficient of the mediator on spouse PSEA, divided by the
+coefficient of birth order on spouse PSEA estimated from column 1, i.e.
+without mediators. 90% confidence intervals are estimated by `r n_reps`
+bootstraps.
 
 Our next regressions split up the data into subsets. Cultural
 stereotypes often assume that the link between status and genes is not
@@ -2469,6 +2486,141 @@ huxreg(mod_bo_psea_fake,
        set_number_format(2:7, -1, 4) %>% 
        set_width(0.8) %>% 
        set_caption("Regressions of PSEA on birth order: fake pairs")
+
+```
+
+@chiappori2012fatter write down a matching model in which a person's
+attractiveness is summarized by a single index. The linear version of the
+model can be tested by regressing one partner's characteristics on each of the
+other partner's characteristics in turn (using Seemingly Unrelated
+Regressions), and checking that the coefficients have the same proportions
+across each regression. We do this for birth order and PSEA. Table
+@ref(tab:tbl-sur) shows the results: we don't include year of birth dummies
+since they cause the estimation procedure to fail. 
+
+We also check proportionality of coefficients. We run 199 bootstraps.
+In each bootstrap, we compute the ratio of PSEA and birth order coefficents
+within each regression, and compute the difference between these ratios. 95%
+confidence intervals for this difference include zero for both males and
+females. Thus, we cannot reject the linear model.
+
+```{r tbl-sur}
+# Plan
+# - for men and women separately
+# - estimate table 2, last column with DVs of (a) spouse PSEA and (b)
+#   spouse birth order
+# - check that the coefficients have the same ratios, as in "Fatter Attrn"
+#   paper
+
+# we avoid YOB fixed effects as it makes the estimation fail
+fml_sur_psea <- EA3.y ~ birth_order.x + EA3.x + moth_age_birth.x + 
+                  factor(n_sibs.x) + factor(birth_mon.x)
+fml_sur_bo <- update(fml_sur_psea, birth_order.y ~ .)
+
+list_fml <- list(PSEA = fml_sur_psea, BO = fml_sur_bo)
+
+# systemfit doesn't like missing data
+mf_pairs_sf <- mf_pairs_reg %>% 
+                 filter(
+                   ! is.na(birth_order.y),
+                   ! is.na(EA3.y),
+                   ! is.na(birth_mon.x),
+                   ! is.na(EA3.x),
+                   ! is.na(moth_age_birth.x)
+                 )
+
+mod_sur <- list()
+mod_sur$females <- systemfit::systemfit(list_fml, 
+                                          data = mf_pairs_sf %>% 
+                                                   filter(female.x),
+                                          method = "SUR"
+                                        )
+mod_sur$males <- systemfit::systemfit(list_fml, 
+                                          data = mf_pairs_sf %>% 
+                                                   filter(! female.x),
+                                          method = "SUR"
+                                        )
+
+mod_sur_psea <- purrr::map(mod_sur, ~ huxtable::tidy_replace(.x,
+                                        tidied = 
+                                          broom::tidy(.x) %>% 
+                                          filter(grepl("^PSEA_", term)) %>%
+                                          mutate(
+                                           term = gsub("^PSEA_", "", term)
+                                          ),
+                                         glance = list(
+                                           nobs = sum(summary(.x)$eq[[1]]$df)
+                                         )
+                          ))
+mod_sur_bo <- purrr::map(mod_sur, ~ huxtable::tidy_replace(.x,
+                                        tidied = 
+                                          broom::tidy(.x) %>% 
+                                          filter(grepl("^BO_", term)) %>%
+                                          mutate(
+                                           term = gsub("^BO_", "", term)
+                                          ),
+                                         glance = list(
+                                           nobs = sum(summary(.x)$eq[[2]]$df)
+                                         )
+                          ))
+
+huxreg(
+        "Males: PSEA"          = mod_sur_psea$males, 
+        "Males: birth order"   = mod_sur_bo$males, 
+        "Females: PSEA"        = mod_sur_psea$females, 
+        "Females: birth order" = mod_sur_bo$females,
+        coefs = c("Birth order" = "birth_order.x", "PSEA" = "EA3.x"),
+        statistics = c(N = "nobs"),
+        stars = my_stars
+      ) %>% 
+        insert_row("Controls (mother's age)", rep("Yes", 4), after = 5) %>% 
+        insert_row("Family size dummies", rep("Yes", 4), after = 6) %>% 
+        insert_row("Birth month dummies", rep("Yes", 4), after = 7) %>% 
+        insert_row("Birth year dummies", rep("No", 4), after = 7) %>% 
+        set_bottom_border(6:8, everywhere, 0) %>% 
+        set_number_format(10, everywhere, 0) %>% 
+        merge_cells(10, 2:3) %>% 
+        merge_cells(10, 4:5) %>% 
+        set_caption(
+          "Seemingly Unrelated Regressions on spouse characteristics")
+
+boot_ratios <- replicate(199, {
+  mf_pairs_boot <- mf_pairs_sf %>% slice_sample(prop = 1, replace = TRUE)
+  mod_sur_females_boot <- systemfit::systemfit(list_fml, 
+                                          data = mf_pairs_boot %>% 
+                                                   filter(female.x),
+                                          method = "SUR"
+                                        )
+
+  mod_sur_males_boot <- systemfit::systemfit(list_fml, 
+                                          data = mf_pairs_boot %>% 
+                                                   filter(! female.x),
+                                          method = "SUR"
+                                        )
+
+  c(
+    females_PSEA = coef(mod_sur_females_boot)["PSEA_birth_order.x"]/
+                     coef(mod_sur_females_boot)["PSEA_EA3.x"],
+    females_BO   = coef(mod_sur_females_boot)["BO_birth_order.x"]/
+                     coef(mod_sur_females_boot)["BO_EA3.x"],
+    males_PSEA   = coef(mod_sur_males_boot)["PSEA_birth_order.x"]/
+                     coef(mod_sur_males_boot)["PSEA_EA3.x"],
+    males_BO     = coef(mod_sur_males_boot)["BO_birth_order.x"]/
+                     coef(mod_sur_males_boot)["BO_EA3.x"]
+  )
+})
+
+boot_ratios <- as.data.frame(t(boot_ratios))
+names(boot_ratios) <- c("females_PSEA", "females_BO", "males_PSEA", 
+                          "males_BO")
+boot_ratios$females_diff <- boot_ratios$females_PSEA - boot_ratios$females_BO
+boot_ratios$males_diff <- boot_ratios$males_PSEA - boot_ratios$males_BO
+
+boot_ratio_ci_females <- quantile(boot_ratios$females_diff, c(0.025, 0.975))
+boot_ratio_ci_males   <- quantile(boot_ratios$males_diff, c(0.025, 0.975))
+
+stopifnot(between(0, boot_ratio_ci_females[1], boot_ratio_ci_females[2]))
+stopifnot(between(0, boot_ratio_ci_males[1], boot_ratio_ci_males[2]))
 
 ```
 
