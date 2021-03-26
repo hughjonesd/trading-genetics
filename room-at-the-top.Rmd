@@ -2072,6 +2072,102 @@ Table \@ref(tab:tbl-bo-psea-no3) reruns Table \@ref(tab:tbl-bo-psea)
 excluding families of size 3. Results are very similar to those in the
 main text.
 
+
+```{r calc-sur-boot}
+
+# Plan
+# - for men and women separately
+# - estimate table 2, last column with DVs of (a) spouse PSEA and (b)
+#   spouse birth order
+# - check that the coefficients have the same ratios, as in "Fatter Attrn"
+#   paper
+
+# we avoid YOB fixed effects as it makes the estimation fail
+fml_sur_psea <- EA3.y ~ birth_order.x + EA3.x + moth_age_birth.x + 
+                  factor(n_sibs.x) + factor(birth_mon.x)
+fml_sur_bo <- update(fml_sur_psea, birth_order.y ~ .)
+
+list_fml <- list(PSEA = fml_sur_psea, BO = fml_sur_bo)
+
+# systemfit doesn't like missing data
+mf_pairs_sf <- mf_pairs_reg %>% 
+                 filter(
+                   ! is.na(birth_order.y),
+                   ! is.na(EA3.y),
+                   ! is.na(birth_mon.x),
+                   ! is.na(EA3.x),
+                   ! is.na(moth_age_birth.x)
+                 )
+
+mod_sur <- list()
+mod_sur$females <- systemfit::systemfit(list_fml, 
+                                          data = mf_pairs_sf %>% 
+                                                   filter(female.x),
+                                          method = "SUR"
+                                        )
+mod_sur$males <- systemfit::systemfit(list_fml, 
+                                          data = mf_pairs_sf %>% 
+                                                   filter(! female.x),
+                                          method = "SUR"
+                                        )
+
+boot_ratios <- replicate(199, {
+  mf_pairs_boot <- mf_pairs_sf %>% slice_sample(prop = 1, replace = TRUE)
+  mod_sur_females_boot <- systemfit::systemfit(list_fml, 
+                                          data = mf_pairs_boot %>% 
+                                                   filter(female.x),
+                                          method = "SUR"
+                                        )
+
+  mod_sur_males_boot <- systemfit::systemfit(list_fml, 
+                                          data = mf_pairs_boot %>% 
+                                                   filter(! female.x),
+                                          method = "SUR"
+                                        )
+
+  c(
+    females_PSEA = coef(mod_sur_females_boot)["PSEA_birth_order.x"]/
+                     coef(mod_sur_females_boot)["PSEA_EA3.x"],
+    females_BO   = coef(mod_sur_females_boot)["BO_birth_order.x"]/
+                     coef(mod_sur_females_boot)["BO_EA3.x"],
+    males_PSEA   = coef(mod_sur_males_boot)["PSEA_birth_order.x"]/
+                     coef(mod_sur_males_boot)["PSEA_EA3.x"],
+    males_BO     = coef(mod_sur_males_boot)["BO_birth_order.x"]/
+                     coef(mod_sur_males_boot)["BO_EA3.x"]
+  )
+})
+
+boot_ratios <- as.data.frame(t(boot_ratios))
+names(boot_ratios) <- c("females_PSEA", "females_BO", "males_PSEA", 
+                          "males_BO")
+boot_ratios$females_diff <- boot_ratios$females_PSEA - boot_ratios$females_BO
+boot_ratios$males_diff <- boot_ratios$males_PSEA - boot_ratios$males_BO
+
+boot_ratio_ci_females <- quantile(boot_ratios$females_diff, c(0.025, 0.975))
+boot_ratio_ci_males   <- quantile(boot_ratios$males_diff, c(0.025, 0.975))
+
+stopifnot(between(0, boot_ratio_ci_females[1], boot_ratio_ci_females[2]))
+stopifnot(between(0, boot_ratio_ci_males[1], boot_ratio_ci_males[2]))
+
+```
+
+
+@chiappori2012fatter write down a matching model in which a person's
+attractiveness is summarized by a single index. The linear version of the
+model can be tested by regressing one partner's characteristics on each of the
+other partner's characteristics in turn (using Seemingly Unrelated
+Regressions), and checking that the coefficients have the same proportions
+across each regression. We do this for birth order and PSEA. Table
+@ref(tab:tbl-sur) shows the results: we don't include year of birth dummies
+since they cause the estimation procedure to fail. 
+
+We also check proportionality of coefficients. We run 199 bootstraps.
+In each bootstrap, we compute the ratio of PSEA and birth order coefficents
+within each regression, and compute the difference between these ratios. 95%
+confidence intervals for this difference include zero for both males and
+females. Thus, we cannot reject the linear model.
+
+
 ```{r tbl-bo-psea-no-moth-age}
 
 
@@ -2410,6 +2506,63 @@ huxreg(mod_bo_psea_no3,
        set_caption("Regressions of spouse PSEA, excluding family size 3")
 ```
 
+
+```{r tbl-sur}
+
+mod_sur_psea <- purrr::map(mod_sur, ~ huxtable::tidy_replace(.x,
+                                        tidied = 
+                                          broom::tidy(.x) %>% 
+                                          filter(grepl("^PSEA_", term)) %>%
+                                          mutate(
+                                           term = gsub("^PSEA_", "", term)
+                                          ),
+                                         glance = list(
+                                           nobs = sum(summary(.x)$eq[[1]]$df)
+                                         )
+                          ))
+mod_sur_bo <- purrr::map(mod_sur, ~ huxtable::tidy_replace(.x,
+                                        tidied = 
+                                          broom::tidy(.x) %>% 
+                                          filter(grepl("^BO_", term)) %>%
+                                          mutate(
+                                           term = gsub("^BO_", "", term)
+                                          ),
+                                         glance = list(
+                                           nobs = sum(summary(.x)$eq[[2]]$df)
+                                         )
+                          ))
+
+# avoid warnings from glance() due to huxreg bug
+suppressWarnings(huxreg(
+        "PSEA"          = mod_sur_psea$males, 
+        "Birth order"   = mod_sur_bo$males, 
+        "PSEA"        = mod_sur_psea$females, 
+        "Birth order" = mod_sur_bo$females,
+        coefs                  = c(
+                                    "Birth order" = "birth_order.x", 
+                                    "PSEA"        = "EA3.x"
+                                 ),
+        statistics             = c(N = "nobs"),
+        stars                  = my_stars
+      )) %>% 
+        insert_row(c("", "Males", "Males", "Females", "Females"), 
+                     after = 0) %>%         
+        merge_cells(1, 2:3) %>% 
+        merge_cells(1, 4:5) %>% 
+        set_align(1, everywhere, "centre") %>% 
+        insert_row("Controls (mother's age)", rep("Yes", 4), after = 6) %>% 
+        insert_row("Family size dummies", rep("Yes", 4), after = 7) %>% 
+        insert_row("Birth month dummies", rep("Yes", 4), after = 8) %>% 
+        insert_row("Birth year dummies", rep("No", 4), after = 9) %>% 
+        set_bottom_border(7:9, everywhere, 0) %>% 
+        set_number_format(11, everywhere, 0) %>% 
+        # merge_cells(10, 2:3) %>% 
+        # merge_cells(10, 4:5) %>% 
+        # set_align(10, everywhere, "centre") %>% 
+        set_caption(
+          "Seemingly Unrelated Regressions on spouse characteristics")
+
+```
 \FloatBarrier
 
 \newpage
@@ -2489,140 +2642,6 @@ huxreg(mod_bo_psea_fake,
 
 ```
 
-@chiappori2012fatter write down a matching model in which a person's
-attractiveness is summarized by a single index. The linear version of the
-model can be tested by regressing one partner's characteristics on each of the
-other partner's characteristics in turn (using Seemingly Unrelated
-Regressions), and checking that the coefficients have the same proportions
-across each regression. We do this for birth order and PSEA. Table
-@ref(tab:tbl-sur) shows the results: we don't include year of birth dummies
-since they cause the estimation procedure to fail. 
-
-We also check proportionality of coefficients. We run 199 bootstraps.
-In each bootstrap, we compute the ratio of PSEA and birth order coefficents
-within each regression, and compute the difference between these ratios. 95%
-confidence intervals for this difference include zero for both males and
-females. Thus, we cannot reject the linear model.
-
-```{r tbl-sur}
-# Plan
-# - for men and women separately
-# - estimate table 2, last column with DVs of (a) spouse PSEA and (b)
-#   spouse birth order
-# - check that the coefficients have the same ratios, as in "Fatter Attrn"
-#   paper
-
-# we avoid YOB fixed effects as it makes the estimation fail
-fml_sur_psea <- EA3.y ~ birth_order.x + EA3.x + moth_age_birth.x + 
-                  factor(n_sibs.x) + factor(birth_mon.x)
-fml_sur_bo <- update(fml_sur_psea, birth_order.y ~ .)
-
-list_fml <- list(PSEA = fml_sur_psea, BO = fml_sur_bo)
-
-# systemfit doesn't like missing data
-mf_pairs_sf <- mf_pairs_reg %>% 
-                 filter(
-                   ! is.na(birth_order.y),
-                   ! is.na(EA3.y),
-                   ! is.na(birth_mon.x),
-                   ! is.na(EA3.x),
-                   ! is.na(moth_age_birth.x)
-                 )
-
-mod_sur <- list()
-mod_sur$females <- systemfit::systemfit(list_fml, 
-                                          data = mf_pairs_sf %>% 
-                                                   filter(female.x),
-                                          method = "SUR"
-                                        )
-mod_sur$males <- systemfit::systemfit(list_fml, 
-                                          data = mf_pairs_sf %>% 
-                                                   filter(! female.x),
-                                          method = "SUR"
-                                        )
-
-mod_sur_psea <- purrr::map(mod_sur, ~ huxtable::tidy_replace(.x,
-                                        tidied = 
-                                          broom::tidy(.x) %>% 
-                                          filter(grepl("^PSEA_", term)) %>%
-                                          mutate(
-                                           term = gsub("^PSEA_", "", term)
-                                          ),
-                                         glance = list(
-                                           nobs = sum(summary(.x)$eq[[1]]$df)
-                                         )
-                          ))
-mod_sur_bo <- purrr::map(mod_sur, ~ huxtable::tidy_replace(.x,
-                                        tidied = 
-                                          broom::tidy(.x) %>% 
-                                          filter(grepl("^BO_", term)) %>%
-                                          mutate(
-                                           term = gsub("^BO_", "", term)
-                                          ),
-                                         glance = list(
-                                           nobs = sum(summary(.x)$eq[[2]]$df)
-                                         )
-                          ))
-
-huxreg(
-        "Males: PSEA"          = mod_sur_psea$males, 
-        "Males: birth order"   = mod_sur_bo$males, 
-        "Females: PSEA"        = mod_sur_psea$females, 
-        "Females: birth order" = mod_sur_bo$females,
-        coefs = c("Birth order" = "birth_order.x", "PSEA" = "EA3.x"),
-        statistics = c(N = "nobs"),
-        stars = my_stars
-      ) %>% 
-        insert_row("Controls (mother's age)", rep("Yes", 4), after = 5) %>% 
-        insert_row("Family size dummies", rep("Yes", 4), after = 6) %>% 
-        insert_row("Birth month dummies", rep("Yes", 4), after = 7) %>% 
-        insert_row("Birth year dummies", rep("No", 4), after = 7) %>% 
-        set_bottom_border(6:8, everywhere, 0) %>% 
-        set_number_format(10, everywhere, 0) %>% 
-        merge_cells(10, 2:3) %>% 
-        merge_cells(10, 4:5) %>% 
-        set_caption(
-          "Seemingly Unrelated Regressions on spouse characteristics")
-
-boot_ratios <- replicate(199, {
-  mf_pairs_boot <- mf_pairs_sf %>% slice_sample(prop = 1, replace = TRUE)
-  mod_sur_females_boot <- systemfit::systemfit(list_fml, 
-                                          data = mf_pairs_boot %>% 
-                                                   filter(female.x),
-                                          method = "SUR"
-                                        )
-
-  mod_sur_males_boot <- systemfit::systemfit(list_fml, 
-                                          data = mf_pairs_boot %>% 
-                                                   filter(! female.x),
-                                          method = "SUR"
-                                        )
-
-  c(
-    females_PSEA = coef(mod_sur_females_boot)["PSEA_birth_order.x"]/
-                     coef(mod_sur_females_boot)["PSEA_EA3.x"],
-    females_BO   = coef(mod_sur_females_boot)["BO_birth_order.x"]/
-                     coef(mod_sur_females_boot)["BO_EA3.x"],
-    males_PSEA   = coef(mod_sur_males_boot)["PSEA_birth_order.x"]/
-                     coef(mod_sur_males_boot)["PSEA_EA3.x"],
-    males_BO     = coef(mod_sur_males_boot)["BO_birth_order.x"]/
-                     coef(mod_sur_males_boot)["BO_EA3.x"]
-  )
-})
-
-boot_ratios <- as.data.frame(t(boot_ratios))
-names(boot_ratios) <- c("females_PSEA", "females_BO", "males_PSEA", 
-                          "males_BO")
-boot_ratios$females_diff <- boot_ratios$females_PSEA - boot_ratios$females_BO
-boot_ratios$males_diff <- boot_ratios$males_PSEA - boot_ratios$males_BO
-
-boot_ratio_ci_females <- quantile(boot_ratios$females_diff, c(0.025, 0.975))
-boot_ratio_ci_males   <- quantile(boot_ratios$males_diff, c(0.025, 0.975))
-
-stopifnot(between(0, boot_ratio_ci_females[1], boot_ratio_ci_females[2]))
-stopifnot(between(0, boot_ratio_ci_males[1], boot_ratio_ci_males[2]))
-
-```
 
 \FloatBarrier
 

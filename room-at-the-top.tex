@@ -82,7 +82,7 @@
 \usepackage{caption}
 \usepackage{graphicx}
 \usepackage{siunitx}
-\usepackage{ulem}
+\usepackage[normalem]{ulem}
 \usepackage{colortbl}
 \usepackage{multirow}
 \usepackage{hhline}
@@ -91,6 +91,8 @@
 \usepackage{threeparttable}
 \usepackage{wrapfig}
 \usepackage{adjustbox}
+\usepackage{hyperref}
+\usepackage{ulem}
 \ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -942,10 +944,10 @@ about three-quarters of a centimetre.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.16\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.16\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Birth order\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.16\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.16\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -0.0842 ***\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.16\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.16\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -1.3010 **~\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.16\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.16\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -0.2993 ***\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.16\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.16\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -0.7681 ***\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+\multicolumn{1}{p{0.16\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.16\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.0842 ***\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.16\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.16\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$1.3010 **~\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.16\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.16\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.2993 ***\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.16\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.16\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.7681 ***\huxbpad{6pt}}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -1118,9 +1120,9 @@ birth order.\footnote{Note that parental age would not be a good independent var
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Birth order\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -0.0084~\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -0.0066~~~~\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -0.0325 *~~\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.0084~\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.0066~~~~\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.0325 *~~\huxbpad{6pt}}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -1261,8 +1263,8 @@ which would bias our results towards zero.\footnote{The appendix reports results
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} Birth order \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -0.0325 *~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -0.0040~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$0.0325 *~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$0.0040~~~~ \hspace{6pt}\huxbpad{6pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.0094~~~ \hspace{6pt}\huxbpad{6pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.0158~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
 
@@ -1451,10 +1453,10 @@ which would bias our results towards zero.\footnote{The appendix reports results
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} logLik \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -12561.372~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -12215.967~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -4118.480~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -4111.272~~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$12561.372~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$12215.967~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$4118.480~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$4111.272~~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -1641,12 +1643,12 @@ birth order effect.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth order}\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont -0.039~~~~}\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont -0.008~~~~}\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont -0.028~~~~}\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont -0.004~~~~}\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont -0.036 *~~}\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont -0.006~~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+\multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.039~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.008~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.028~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.004~~~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.036 *~~}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.006~~~~}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -2221,6 +2223,21 @@ Table \ref{tab:tbl-bo-psea-no3} reruns Table \ref{tab:tbl-bo-psea}
 excluding families of size 3. Results are very similar to those in the
 main text.
 
+Chiappori, Oreffice, and Quintana-Domeque (2012) write down a matching model in which a person's
+attractiveness is summarized by a single index. The linear version of the
+model can be tested by regressing one partner's characteristics on each of the
+other partner's characteristics in turn (using Seemingly Unrelated
+Regressions), and checking that the coefficients have the same proportions
+across each regression. We do this for birth order and PSEA. Table
+(\textbf{ref?})(tab:tbl-sur) shows the results: we don't include year of birth dummies
+since they cause the estimation procedure to fail.
+
+We also check proportionality of coefficients. We run 199 bootstraps.
+In each bootstrap, we compute the ratio of PSEA and birth order coefficents
+within each regression, and compute the difference between these ratios. 95\%
+confidence intervals for this difference include zero for both males and
+females. Thus, we cannot reject the linear model.
+
  
   \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
   \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
@@ -2250,9 +2267,9 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} Birth order \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -0.0066~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$0.0066~~~~ \hspace{6pt}\huxbpad{6pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.0026~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -0.0029~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$0.0029~~~~ \hspace{6pt}\huxbpad{6pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.0018~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
 
 
@@ -2420,10 +2437,10 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} logLik \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -34546.361~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -33311.976~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -10777.375~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -10737.107~~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$34546.361~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$33311.976~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$10777.375~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$10737.107~~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -2479,10 +2496,10 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedright \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont Birth order 2} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0573 *~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0239~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0389~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0379~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0573 *~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0239~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0389~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0379~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -2499,8 +2516,8 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedright \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont Birth order 3} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0841 *~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0264~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0841 *~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0264~~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.0008~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.0197~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
 
@@ -2519,7 +2536,7 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedright \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont Birth order 4} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0451~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0451~~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.0499~~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.0529~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.0728~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
@@ -2559,8 +2576,8 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedright \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont Birth order 6} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.2347~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.1572~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.2347~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.1572~~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.6275~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.6500~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
 
@@ -2729,10 +2746,10 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedright \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont logLik} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -12559.612~~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -12214.465~~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -4116.234~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -4108.854~~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$12559.612~~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$12214.465~~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$4116.234~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$4108.854~~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -2790,12 +2807,12 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedright \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont Birth order 2} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0425~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0057~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0698 *~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0426~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0617 *~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0281~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0425~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0057~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0698 *~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0426~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0617 *~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0281~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -2814,12 +2831,12 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedright \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont Birth order 3} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0491~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0491~~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.0041~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.1089 *~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0539~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0862 *~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0265~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.1089 *~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0539~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0862 *~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0265~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -2838,11 +2855,11 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedright \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont Birth order 4} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.1006~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.1006~~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.0095~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0056~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0056~~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.0753~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0499~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0499~~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.0457~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
 
 
@@ -2862,11 +2879,11 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedright \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont Birth order 5} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.2616~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.1439~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.2616~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.1439~~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.1700~~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.2074~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0880~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0880~~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.0023~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
 
 
@@ -2886,11 +2903,11 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedright \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont Birth order 6} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.5222 +~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.4184 +~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0445~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.5222 +~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.4184 +~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0445~~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.0170~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -0.0978~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$0.0978~~~~} \hspace{6pt}\huxbpad{3pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont 0.0003~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
 
 
@@ -3066,12 +3083,12 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedright \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont logLik} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -5752.671~~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -5597.747~~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -6780.108~~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -6589.496~~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -11209.236~~~~~} \hspace{6pt}\huxbpad{3pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont -10892.137~~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$5752.671~~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$5597.747~~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$6780.108~~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$6589.496~~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$11209.236~~~~~} \hspace{6pt}\huxbpad{3pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{3pt + 1em}\raggedleft \hspace{6pt} {\fontsize{10pt}{12pt}\selectfont $-$10892.137~~~~~} \hspace{6pt}\huxbpad{3pt}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -3138,8 +3155,8 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Birth order\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -0.0325 +~\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -0.0043~~~~\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.0325 +~\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.0043~~~~\huxbpad{6pt}}} &
 \multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.0080~~~\huxbpad{6pt}}} &
 \multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.0144~~~\huxbpad{6pt}}} \tabularnewline[-0.5pt]
 
@@ -3376,7 +3393,7 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Birth order\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -0.0325 *~~\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.0325 *~~\huxbpad{6pt}}} &
 \multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.0016~~~~\huxbpad{6pt}}} &
 \multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.0223~~~~\huxbpad{6pt}}} \tabularnewline[-0.5pt]
 
@@ -3547,9 +3564,9 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright logLik\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -12561.372~~~~~\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -12156.366~~~~~\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -4099.989~~~~~\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$12561.372~~~~~\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$12156.366~~~~~\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$4099.989~~~~~\huxbpad{6pt}}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -3604,8 +3621,8 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} Birth order \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -0.0363 *~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -0.0085~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$0.0363 *~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$0.0085~~~~ \hspace{6pt}\huxbpad{6pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.0005~ \hspace{6pt}\huxbpad{6pt}} &
 \multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.0026~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
 
@@ -3794,10 +3811,10 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} logLik \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -8519.039~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -8283.627~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -2756.450~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -2751.373~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$8519.039~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$8283.627~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$2756.450~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$2751.373~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -3814,6 +3831,143 @@ main text.
 \arrayrulecolor{black}
 
 \multicolumn{5}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt}  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. Standard errors: robust. \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+\end{tabular}
+\end{threeparttable}\par\end{centerbox}
+
+\end{table}
+ 
+
+ 
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[ht]
+\begin{centerbox}
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{\label{tab:tbl-sur} Seemingly Unrelated Regressions on spouse characteristics}
+ \setlength{\tabcolsep}{0pt}
+\begin{tabular}{l l l l l}
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\centering \hspace{6pt}  \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{2}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\centering \hspace{6pt} Males \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{2}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\centering \hspace{6pt} Females \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\centering \hspace{6pt}  \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\centering \hspace{6pt} PSEA \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\centering \hspace{6pt} Birth order \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\centering \hspace{6pt} PSEA \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\centering \hspace{6pt} Birth order \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} Birth order \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$0.051 *~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.068 * \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$0.027~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.086 *** \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt}  \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.024)~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.030)~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.021)~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.026)~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} PSEA \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.067 *** \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$0.041 * \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.060 *** \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} $-$0.027~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt}  \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.016)~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.020)~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.015)~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.018)~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} Controls (mother's age) \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} Family size dummies \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} Birth month dummies \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} Birth year dummies \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} No~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} No~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} No~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} No~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} N \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 3899~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 3899~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 4627~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
+\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 4627~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{5}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt}  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -3890,9 +4044,9 @@ results towards zero.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Birth order\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -0.0069~\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -0.0057~~~~\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft -0.0257 +~~\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.0069~\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.0057~~~~\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.0257 +~~\huxbpad{6pt}}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -3994,140 +4148,6 @@ results towards zero.
 \hhline{}
 \arrayrulecolor{black}
 \end{tabularx}
-\end{threeparttable}\par\end{centerbox}
-
-\end{table}
- 
-
-Chiappori, Oreffice, and Quintana-Domeque (2012) write down a matching model in which a person's
-attractiveness is summarized by a single index. The linear version of the
-model can be tested by regressing one partner's characteristics on each of the
-other partner's characteristics in turn (using Seemingly Unrelated
-Regressions), and checking that the coefficients have the same proportions
-across each regression. We do this for birth order and PSEA. Table
-(\textbf{ref?})(tab:tbl-sur) shows the results: we don't include year of birth dummies
-since they cause the estimation procedure to fail.
-
-We also check proportionality of coefficients. We run 199 bootstraps.
-In each bootstrap, we compute the ratio of PSEA and birth order coefficents
-within each regression, and compute the difference between these ratios. 95\%
-confidence intervals for this difference include zero for both males and
-females. Thus, we cannot reject the linear model.
-
- 
-  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
-  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
-  \providecommand{\huxtpad}[1]{\rule{0pt}{#1}}
-  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
-
-\begin{table}[ht]
-\begin{centerbox}
-\begin{threeparttable}
-\captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-sur} Seemingly Unrelated Regressions on spouse characteristics}
- \setlength{\tabcolsep}{0pt}
-\begin{tabular}{l l l l l}
-
-
-\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\centering \hspace{6pt}  \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\centering \hspace{6pt} Males: PSEA \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\centering \hspace{6pt} Males: birth order \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\centering \hspace{6pt} Females: PSEA \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{c!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\centering \hspace{6pt} Females: birth order \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
-
-
-\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} Birth order \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -0.051 *~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.068 * \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -0.027~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.086 *** \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
-
-
-\hhline{}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt}  \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.024)~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.030)~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.021)~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.026)~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
-
-
-\hhline{}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} PSEA \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.067 *** \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -0.041 * \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 0.060 *** \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} -0.027~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
-
-
-\hhline{}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt}  \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.016)~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.020)~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.015)~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} (0.018)~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
-
-
-\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} Controls (mother's age) \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
-
-
-\hhline{}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} Family size dummies \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
-
-
-\hhline{}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} Birth month dummies \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} Yes~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
-
-
-\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt} N \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 7798~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 7798~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 9254~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} &
-\multicolumn{1}{r!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedleft \hspace{6pt} 9254~~~~~~~~ \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
-
-
-\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
-\arrayrulecolor{black}
-
-\multicolumn{5}{!{\huxvb{0, 0, 0}{0}}l!{\huxvb{0, 0, 0}{0}}}{\huxtpad{6pt + 1em}\raggedright \hspace{6pt}  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. \hspace{6pt}\huxbpad{6pt}} \tabularnewline[-0.5pt]
-
-
-\hhline{}
-\arrayrulecolor{black}
-\end{tabular}
 \end{threeparttable}\par\end{centerbox}
 
 \end{table}
