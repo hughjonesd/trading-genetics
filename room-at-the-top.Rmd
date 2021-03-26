@@ -58,6 +58,7 @@ library(santoku)
 library(purrr)
 library(scales) # percent should override santoku
 library(systemfit)
+library(nlWaldTest)
 
 set.seed(27101975)
 
@@ -2073,7 +2074,7 @@ excluding families of size 3. Results are very similar to those in the
 main text.
 
 
-```{r calc-sur-boot}
+```{r calc-sur-ratios}
 
 # Plan
 # - for men and women separately
@@ -2106,48 +2107,17 @@ mod_sur$females <- systemfit::systemfit(list_fml,
                                           method = "SUR"
                                         )
 mod_sur$males <- systemfit::systemfit(list_fml, 
-                                          data = mf_pairs_sf %>% 
-                                                   filter(! female.x),
-                                          method = "SUR"
-                                        )
+                                        data = mf_pairs_sf %>% 
+                                                 filter(! female.x),
+                                        method = "SUR"
+                                      )
 
-boot_ratios <- replicate(199, {
-  mf_pairs_boot <- mf_pairs_sf %>% slice_sample(prop = 1, replace = TRUE)
-  mod_sur_females_boot <- systemfit::systemfit(list_fml, 
-                                          data = mf_pairs_boot %>% 
-                                                   filter(female.x),
-                                          method = "SUR"
-                                        )
+wald_eq_ratio <- purrr::map(mod_sur, 
+                              nlWaldTest::nlWaldtest,
+                              texts = "b[2] * b[22] = b[3] * b[21]",
+                              df2 = TRUE
+                            )
 
-  mod_sur_males_boot <- systemfit::systemfit(list_fml, 
-                                          data = mf_pairs_boot %>% 
-                                                   filter(! female.x),
-                                          method = "SUR"
-                                        )
-
-  c(
-    females_PSEA = coef(mod_sur_females_boot)["PSEA_birth_order.x"]/
-                     coef(mod_sur_females_boot)["PSEA_EA3.x"],
-    females_BO   = coef(mod_sur_females_boot)["BO_birth_order.x"]/
-                     coef(mod_sur_females_boot)["BO_EA3.x"],
-    males_PSEA   = coef(mod_sur_males_boot)["PSEA_birth_order.x"]/
-                     coef(mod_sur_males_boot)["PSEA_EA3.x"],
-    males_BO     = coef(mod_sur_males_boot)["BO_birth_order.x"]/
-                     coef(mod_sur_males_boot)["BO_EA3.x"]
-  )
-})
-
-boot_ratios <- as.data.frame(t(boot_ratios))
-names(boot_ratios) <- c("females_PSEA", "females_BO", "males_PSEA", 
-                          "males_BO")
-boot_ratios$females_diff <- boot_ratios$females_PSEA - boot_ratios$females_BO
-boot_ratios$males_diff <- boot_ratios$males_PSEA - boot_ratios$males_BO
-
-boot_ratio_ci_females <- quantile(boot_ratios$females_diff, c(0.025, 0.975))
-boot_ratio_ci_males   <- quantile(boot_ratios$males_diff, c(0.025, 0.975))
-
-stopifnot(between(0, boot_ratio_ci_females[1], boot_ratio_ci_females[2]))
-stopifnot(between(0, boot_ratio_ci_males[1], boot_ratio_ci_males[2]))
 
 ```
 
@@ -2158,15 +2128,21 @@ model can be tested by regressing one partner's characteristics on each of the
 other partner's characteristics in turn (using Seemingly Unrelated
 Regressions), and checking that the coefficients have the same proportions
 across each regression. We do this for birth order and PSEA. Table
-@ref(tab:tbl-sur) shows the results: we don't include year of birth dummies
+\@ref(tab:tbl-sur) shows the results. We exclude year of birth dummies,
 since they cause the estimation procedure to fail. 
 
-We also check proportionality of coefficients. We run 199 bootstraps.
-In each bootstrap, we compute the ratio of PSEA and birth order coefficents
-within each regression, and compute the difference between these ratios. 95%
-confidence intervals for this difference include zero for both males and
-females. Thus, we cannot reject the linear model.
+We also check the proportionality of coefficients. We run a Wald test that
 
+\[
+\frac{\beta^{PSEA}_{PSEA}}{\beta^{PSEA}_{BO}} =
+\frac{\beta^{BO}_{PSEA}}{\beta^{BO}_{BO}}
+\]
+
+where e.g. $\beta^{PSEA}_{BO}$ is the coefficient of birth order in the
+regression targeting PSEA. P values are $p$ = 
+`r pretty(wald_eq_ratio$males$p.value)` for males and $p$ = 
+`r pretty(wald_eq_ratio$females$p.value)` for females. So for females there
+is some evidence against this linear model.
 
 ```{r tbl-bo-psea-no-moth-age}
 

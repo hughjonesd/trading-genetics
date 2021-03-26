@@ -611,6 +611,13 @@
       "Repository": "CRAN",
       "Hash": "82d1edfb9366f42fb08d5eb0db9ca307"
     },
+    "nlWaldTest": {
+      "Package": "nlWaldTest",
+      "Version": "1.1.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1fb1a75f089c29c8af84b731bdc3ed07"
+    },
     "nlme": {
       "Package": "nlme",
       "Version": "3.1-148",

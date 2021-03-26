@@ -2229,14 +2229,21 @@ model can be tested by regressing one partner's characteristics on each of the
 other partner's characteristics in turn (using Seemingly Unrelated
 Regressions), and checking that the coefficients have the same proportions
 across each regression. We do this for birth order and PSEA. Table
-(\textbf{ref?})(tab:tbl-sur) shows the results: we don't include year of birth dummies
+\ref{tab:tbl-sur} shows the results. We exclude year of birth dummies,
 since they cause the estimation procedure to fail.
 
-We also check proportionality of coefficients. We run 199 bootstraps.
-In each bootstrap, we compute the ratio of PSEA and birth order coefficents
-within each regression, and compute the difference between these ratios. 95\%
-confidence intervals for this difference include zero for both males and
-females. Thus, we cannot reject the linear model.
+We also check the proportionality of coefficients. We run a Wald test that
+
+\[
+\frac{\beta^{PSEA}_{PSEA}}{\beta^{PSEA}_{BO}} =
+\frac{\beta^{BO}_{PSEA}}{\beta^{BO}_{BO}}
+\]
+
+where e.g.~\(\beta^{PSEA}_{BO}\) is the coefficient of birth order in the
+regression targeting PSEA. P values are \(p\) =
+0.37 for males and \(p\) =
+0.042 for females. So for females there
+is some evidence against this linear model.
 
  
   \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
