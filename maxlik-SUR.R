@@ -132,6 +132,19 @@ estimate_surs <- function (fml, data, restricted) {
   list_mod
 }
 
+
+compare_params <- function (list_mod) {
+  restricted <- attr(list_mod$restricted, "restricted")
+  
+  coef_full <- coef(list_mod$full)
+  data.frame(
+    restricted = restricted, 
+    restricted_over_EA3 = restricted / coef(list_mod$restricted)["bo_EA3.x"],
+    full = coef_full[names(restricted)],
+    full_over_EA3 = coef_full[names(restricted)]/coef_full["bo_EA3.x"]
+  )
+}
+
 mf_pairs_sf <- mf_pairs_reg %>% 
                  filter(
                    ! is.na(birth_order.y),
@@ -151,6 +164,7 @@ list_mod_male <- estimate_surs(fml, mf_pairs_sf %>% filter(! female.x),
 summary(list_mod_male$full)
 summary(list_mod_male$restricted)
 attr(list_mod_male$restricted, "restricted")
+compare_params(list_mod_male)
 lmtest::lrtest(list_mod_male$full, list_mod_male$restricted)
 
 
