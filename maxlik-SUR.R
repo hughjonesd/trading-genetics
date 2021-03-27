@@ -71,6 +71,9 @@ constraintsA[1, 39] <- 1
 constraintsA[2, 40] <- 1
 constraintsB <- matrix(0, 2, 1)
 
+parscale <- rep(1, length(start))
+parscale[2:3] <- 10
+parscale[21:22] <- 10
 
 f_psea <- EA3.y ~ EA3.x + birth_order.x + moth_age_birth.x + 
   factor(birth_mon.x) + factor(n_sibs.x)
@@ -80,38 +83,41 @@ m_rest <- list()
 for (females in c(TRUE, FALSE)) {
   sex <- if (females) "females" else "males"
 
-  mm <- mf_pairs_sf %>% filter(female.x == females)
-  mm <- model.matrix(f_psea, mm)
+  data <- mf_pairs_sf %>% filter(female.x == females)
+  mm <- model.matrix(f_psea, data)
   
   m[[sex]] <- maxLik::maxLik(
                         loglik_sur, 
-                        start  = start, 
-                        mm     = mm, 
-                        y_psea = data$EA3.y,
-                        y_bo   = data$birth_order.y,
+                        start       = start, 
+                        mm          = mm, 
+                        y_psea      = data$EA3.y,
+                        y_bo        = data$birth_order.y,
                         constraints = list(
-                          ineqA = constraintsA, 
-                          ineqB = constraintsB
-                        ),
-                        method = "BFGS"
+                                        ineqA = constraintsA, 
+                                        ineqB = constraintsB
+                                      ),
+                        method      = "BFGS",
+                        parscale    = parscale
                       )
   
   omit <- which(names(start) == "BO2")
   m_rest[[sex]] <- maxLik::maxLik(
                             loglik_sur, 
-                            start      = start[-omit], 
-                            mm         = mm, 
-                            y_psea     = data$EA3.y,
-                            y_bo       = data$birth_order.y,
-                            restricted = TRUE,
+                            start       = start[-omit], 
+                            mm          = mm, 
+                            y_psea      = data$EA3.y,
+                            y_bo        = data$birth_order.y,
+                            restricted  = TRUE,
                             constraints = list(
-                              ineqA = constraintsA[ , -omit], 
-                              ineqB = constraintsB
-                            ),
-                            method = "BFGS"
+                                            ineqA = constraintsA[ , -omit], 
+                                            ineqB = constraintsB
+                                          ),
+                            method      = "BFGS",
+                            parscale    = parscale[-omit]
                           )
-  BO2 <- coef(m_rest)["PSEA2"] * coef(m_rest)["BO1"] / coef(m_rest)["PSEA1"]
-  attr(m_rest[[sex]], "BO2") <- BO2
+  coefs <- coef(m_rest[[sex]])
+  BO2 <- coefs["PSEA2"] * coefs["BO1"] / coefs["PSEA1"]
+  attr(m_rest[[sex]], "BO2") <- setNames(BO2, "BO2")
 }
 
 summary(m$females)
