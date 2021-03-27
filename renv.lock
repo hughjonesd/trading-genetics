@@ -555,6 +555,13 @@
       "Repository": "CRAN",
       "Hash": "d16f18aeb023d7a80c090d9458fc75a6"
     },
+    "maxLik": {
+      "Package": "maxLik",
+      "Version": "1.4-8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "86dd402728e96ac53f6e3d28c210103b"
+    },
     "memoise": {
       "Package": "memoise",
       "Version": "1.1.0",
@@ -582,6 +589,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "eaee7d2a6f3ed4491df868611cb064cc"
+    },
+    "miscTools": {
+      "Package": "miscTools",
+      "Version": "0.6-26",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "340f0789cb2dcc816d9856d375c1df83"
     },
     "munsell": {
       "Package": "munsell",
@@ -820,6 +834,18 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "33a5b27a03da82ac4b1d43268f80088a"
+    },
+    "rumpel": {
+      "Package": "rumpel",
+      "Version": "0.0.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "hughjonesd",
+      "RemoteRepo": "rumpel",
+      "RemoteRef": "master",
+      "RemoteSha": "e4231748cf24faebfa1979083829da2e1f9ec71b",
+      "Hash": "f6d9f017bad05a278164d38278a0288d"
     },
     "sandwich": {
       "Package": "sandwich",

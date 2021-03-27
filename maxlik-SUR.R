@@ -1,54 +1,137 @@
+
 library(maxLik)
 library(mvtnorm)
+library(dplyr)
+library(rumpel) # just to play with it!
 
-# PSEA.y ~ a1 + PSEA1 * PSEA.x + BO1 * birth_order.x + BM1 * factor(birth_mon.x)
-#            + NS1 * factor(n_sibs.x) + e1
-# birth_order.y ~ a2 + b3 * PSEA.x + b4 * birth_order.x + BM2 * factor(birth_mon.x)
-#            + NS2 * factor(n_sibs.x) + e2
-#           
-# e1, e2 ~ bivariate normal(sigma1, sigma2, rho) 
-loglik_sur <- function (params, mm, y_psea, y_bo, restricted = FALSE) {
+
+loglik_sur <- function (params, mm, y_psea, y_bo, restricted = NULL) {
   
-  if (restricted) {
-    params["BO2"] <- params["PSEA2"] * params["BO1"] / params["PSEA1"]
-    if (params["PSEA1"] == 0) params["BO2"] <- 0
+  if (! is.null(restricted)) {
+    to_restrict <- paste("bo", restricted, sep = "_")
+    from_restrict <- paste("psea", restricted, sep = "_")
+    # params["bo_birth_order.x"] will be in 'fixed',
+    # so now we calculate it
+    params[to_restrict] <- params[from_restrict] * 
+                             params["bo_EA3.x"] / 
+                             params["psea_EA3.x"]
+    if (params["psea_EA3.x"] == 0) params[to_restrict] <- 0
   }
   
-  yhat_psea <- params["a1"] + 
-                  params["PSEA1"] * mm[, "EA3.x"] + 
-                  params["BO1"] * mm[, "birth_order.x"] + 
-                  params["MAB1"] * mm[, "moth_age_birth.x"] + 
-                  mm[, grepl("birth_mon", colnames(mm))] %*% 
-                    matrix(params[grepl("BM1", names(params))]) +
-                  mm[, grepl("n_sibs", colnames(mm))] %*% 
-                    matrix(params[grepl("NS1", names(params))])
-  
-  yhat_bo <- params["a2"] + 
-               params["PSEA2"] * mm[, "EA3.x"] + 
-               params["BO2"] * mm[, "birth_order.x"] + 
-               params["MAB2"] * mm[, "moth_age_birth.x"] + 
-               mm[, grepl("birth_mon", colnames(mm))] %*% 
-                 matrix(params[grepl("BM2", names(params))]) +
-               mm[, grepl("n_sibs", colnames(mm))] %*% 
-                 matrix(params[grepl("NS2", names(params))])
-  
+  psea_params <- params %>% named_starting("psea")
+  yhat_psea <- mm %*% matrix(psea_params)
+  bo_params <- params %>% named_starting("bo")
+  yhat_bo   <- mm %*% matrix(bo_params)
+
   ehat_psea <- yhat_psea - y_psea
   ehat_bo   <- yhat_bo   - y_bo
   
   cov_matrix <- matrix(
                   c(params["sigma1"], params["rho"], params["rho"], 
-                        params["sigma2"]), 
+                    params["sigma2"]), 
                   2, 2
                 )
-  ll <- mvtnorm::dmvnorm(cbind(ehat_psea, ehat_bo), sigma = cov_matrix, log = TRUE)
+  
+  ll <- mvtnorm::dmvnorm(
+          cbind(ehat_psea, ehat_bo), 
+          sigma = cov_matrix, 
+          log   = TRUE
+        )
   
   ll
 }
 
-# that's the log likelihood. What's the gradient?
-# also a question of whether standard errors are correct when we impose
-# the constraint
+
+#' Estimate full and restricted SUR regressions on spouse PSEA and birth order,
+#' using maximum likelihood
+#'
+#' @param fml One-sided formula of independent variables
+#' @param data Data frame
+#' @param restricted Character: regex. Matching independent variables will be
+#'   restricted.
+#' 
+#' In the restricted model, the coefficient of restricted variables 
+#' on birth order will not be estimated, rather calculated as "effect of
+#' X on PSEA * effect of PSEA on birth order / effect of PSEA on PSEA".
+#' 
+#' Estimation is done by [maxLik::maxLik()].
+#' 
+#' @return 
+#' A list of two models, "full" and "restricted". The "restricted"
+#' attribute of the "restricted" model contains calculated values for restricted
+#' coefficients.
+#'
+estimate_surs <- function (fml, data, restricted) {
   
+  mm <- model.matrix(fml, data)
+  
+  # Ensure EA3.y and birth_order.y stay in `data`:
+  fml_ext <- update(fml, ~ . + EA3.y + birth_order.y) 
+  # Get rid of NAs:
+  data <- model.frame(fml_ext, data)
+  
+  restricted <- grep(restricted, colnames(mm), value = TRUE)
+  
+  start <- rep(0, ncol(mm) * 2)
+  names(start) <- paste(
+                    rep(c("psea", "bo"), each = ncol(mm)),
+                    rep(colnames(mm), 2),
+                    sep = "_"
+                  )
+  start <- c(start, sigma1 = 1, sigma2 = 1, rho = 0)
+  
+  # constraints: sigma1 > 0, sigma2 > 0
+  constraintsA <- matrix(0, 2, length(start))
+  constraintsA[1, length(start) - 2] <- 1
+  constraintsA[2, length(start) - 1] <- 1
+  constraintsB <- matrix(0, 2, 1)
+  
+  parscale <- rep(1, length(start))
+  parscale[grepl("birth_order.x", names(start))] <- 10
+  parscale[grepl("EA3.x", names(start))] <- 10
+  
+  mod_full <- maxLik::maxLik(
+                loglik_sur, 
+                start       = start, 
+                mm          = mm, 
+                y_psea      = data$EA3.y,
+                y_bo        = data$birth_order.y,
+                constraints = list(
+                                ineqA = constraintsA, 
+                                ineqB = constraintsB
+                              ),
+                method      = "BFGS",
+                parscale    = parscale
+              )
+  
+  bo_restricted <- paste("bo", restricted, sep = "_")
+  fixed_index <- which(names(start) %in% bo_restricted)
+  mod_restricted <- maxLik::maxLik(
+                      loglik_sur, 
+                      start       = start, 
+                      mm          = mm, 
+                      y_psea      = data$EA3.y,
+                      y_bo        = data$birth_order.y,
+                      restricted  = restricted,
+                      constraints = list(
+                                      ineqA = constraintsA, 
+                                      ineqB = constraintsB
+                                    ),
+                      method      = "BFGS",
+                      parscale    = parscale,
+                      fixed       = fixed_index
+                    )
+  
+  coefs <- coef(mod_restricted)
+  psea_restricted <- paste("psea", restricted, sep = "_")
+  r_coefs <- coefs[psea_restricted] * coefs["bo_EA3.x"] / coefs["psea_EA3.x"]
+  attr(mod_restricted, "restricted") <- setNames(r_coefs, bo_restricted)
+  
+  list_mod <- list(full = mod_full, restricted = mod_restricted)
+  
+  list_mod
+}
+
 mf_pairs_sf <- mf_pairs_reg %>% 
                  filter(
                    ! is.na(birth_order.y),
@@ -59,73 +142,22 @@ mf_pairs_sf <- mf_pairs_reg %>%
                  )
 
 
-start <- c(rep(0, 38), 1, 1, 0)
-names(start) <- c("a1", "PSEA1", "BO1", "MAB1",
-                  paste0("BM1.", 2:12),  paste0("NS1.", 3:6),
-                  "a2", "PSEA2", "BO2", "MAB2",
-                  paste0("BM2.", 2:12),  paste0("NS2.", 3:6),
-                  "sigma1", "sigma2", "rho")
+fml <- ~ EA3.x + factor(birth_order.x) + moth_age_birth.x + factor(birth_mon.x) + 
+           factor(n_sibs.x) + university.x + fluid_iq.x + height.x
 
-constraintsA <- matrix(0, 2, 41)
-constraintsA[1, 39] <- 1
-constraintsA[2, 40] <- 1
-constraintsB <- matrix(0, 2, 1)
+list_mod_male <- estimate_surs(fml, mf_pairs_sf %>% filter(! female.x), 
+                                 restricted = "birth_order.x")
 
-parscale <- rep(1, length(start))
-parscale[2:3] <- 10
-parscale[21:22] <- 10
+summary(list_mod_male$full)
+summary(list_mod_male$restricted)
+attr(list_mod_male$restricted, "restricted")
+lmtest::lrtest(list_mod_male$full, list_mod_male$restricted)
 
-f_psea <- EA3.y ~ EA3.x + birth_order.x + moth_age_birth.x + 
-  factor(birth_mon.x) + factor(n_sibs.x)
 
-m <- list()
-m_rest <- list()
-for (females in c(TRUE, FALSE)) {
-  sex <- if (females) "females" else "males"
+list_mod_female <- estimate_surs(fml, mf_pairs_sf %>% filter(female.x), 
+                                 restricted = "birth_order.x")
 
-  data <- mf_pairs_sf %>% filter(female.x == females)
-  mm <- model.matrix(f_psea, data)
-  
-  m[[sex]] <- maxLik::maxLik(
-                        loglik_sur, 
-                        start       = start, 
-                        mm          = mm, 
-                        y_psea      = data$EA3.y,
-                        y_bo        = data$birth_order.y,
-                        constraints = list(
-                                        ineqA = constraintsA, 
-                                        ineqB = constraintsB
-                                      ),
-                        method      = "BFGS",
-                        parscale    = parscale
-                      )
-  
-  omit <- which(names(start) == "BO2")
-  m_rest[[sex]] <- maxLik::maxLik(
-                            loglik_sur, 
-                            start       = start[-omit], 
-                            mm          = mm, 
-                            y_psea      = data$EA3.y,
-                            y_bo        = data$birth_order.y,
-                            restricted  = TRUE,
-                            constraints = list(
-                                            ineqA = constraintsA[ , -omit], 
-                                            ineqB = constraintsB
-                                          ),
-                            method      = "BFGS",
-                            parscale    = parscale[-omit]
-                          )
-  coefs <- coef(m_rest[[sex]])
-  BO2 <- coefs["PSEA2"] * coefs["BO1"] / coefs["PSEA1"]
-  attr(m_rest[[sex]], "BO2") <- setNames(BO2, "BO2")
-}
-
-summary(m$females)
-summary(m_rest$females)
-attr(m_rest$females, "BO2")
-lrtest(m$females, m_rest$females)
-
-summary(m$males)
-summary(m_rest$males)
-attr(m_rest$males, "BO2")
-lrtest(m$males, m_rest$males)
+summary(list_mod_female$full)
+summary(list_mod_female$restricted)
+attr(list_mod_female$restricted, "restricted")
+lmtest::lrtest(list_mod_female$full, list_mod_female$restricted)
