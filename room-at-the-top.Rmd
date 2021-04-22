@@ -143,7 +143,28 @@ fml_bo_psea[-1] <- lapply(fml_bo_psea[-1], update,
 # tidy_args <- list(se = "cluster", cluster = "couple_id", conf.int = FALSE)
 tidy_args <- list(se = "hetero", conf.int = FALSE)
 my_note <- "{stars}. Standard errors: robust."
+```
 
+```{r TODO-NOTES, eval = FALSE}
+#TODO
+# Here:
+# Finally, our paper challenges the widespread assumption, in economics and beyond,
+#  that genetic endowment is ex- ogenous to economic characteristics. 
+# - Need to put some citations in. Maybe Plomin. See also below, though, for
+#   a very similar point:
+
+Nice chunk from earlier version:
+Under this mechanism, shocks to an individual’s social status may alter the identity of his or her spouse, and so be reflected in the genetics of his or her children. Thus, in contrast to a large body of research that treats genetic data as an independentvariableandtracesitseffectsonsocialandeconomicoutcomes,wemakethegeneticsendogenous.[^2]
+
+[^2]: Almost all research in behavioural genetics fits this pattern [see
+    e.g. @plomin2008behavioral]. For a review of relevant research in
+    economics, see @benjamin2011promises. Some more recent economics
+    papers use polygenic scores [@barth2020genetic;
+    @papageorge2020genes; @ronda2020family; @sias2020molecular].
+
+Bit for conclusion:
+  
+  More  generally, SGAM is likely to apply to a historically wide range of societies. Whilst a degree of meritocracy exists in modern capitalist economies, opportunities to earn status have been far more limited in most societies throughout history (Smelser and Lipset 1966). On the other hand, assortative mating is likely to be a cultural universal. Thus, SGAM predicts that genetic differences across social status are likely to be historically ancient.
 
 # * Why missing all the first job data? - because not everyone does the
 #   online followup. We could use "current job" which might be endogenous
@@ -252,53 +273,42 @@ my_note <- "{stars}. Standard errors: robust."
 
 # Introduction
 
-Inequality persists over generations, and this has important economic
-effects. Intergenerational mobility is correlated with
-(within-generation) inequality itself [@krueger2012rise;
-@becker2018theory], and it may also affect economic efficiency by
-changing the payoffs to talent and hard work [@corak2013income].
-Intergenerational absolute mobility has fallen in America
-[@chetty2017fading], although relative mobility has been stable
-[@chetty2014united].
+Inequality  persists over generations, and this has important economic effects.
+Intergenerational mobility is correlated with cross-sectional inequality
+[@becker2018theory; @krueger2012rise], which has risen dramatically in
+high-income countries [@western2008inequality].[^stats]  At the same time
+intergenerational absolute mobility has fallen [@chetty2017fading], although
+relative mobility has been stable [@chetty2014united]. Over the long run,
+inequality is surprisingly persistent across generations
+[@clark2015intergenerational; @solon2018we]. To explain inequality and its
+persistence, social scientists have analysed assortative mating (homogamy) in
+the marriage market [e.g. @breen2011educational; @greenwood2014marry] and
+increasing returns to human capital [e.g. @kaplan2013s; @becker2018theory]. It
+follows that how families are formed, and how they transmit traits and assets to
+their offspring, are critical for understanding inequality. These processes are
+traditionally separated into socio-economic and genetic. While educational
+homogamy is well established, genetic assortative mating has been demonstrated
+only recently [@hugh2016assortative]. Similarly, wealthy families pass on
+advantages to their children through both genetic inheritance and environmental
+influence [@Rimfeld_2018; @bjorklund2006origins].[^review]
 
-Families play a role in this story, because wealth, human capital and
-other traits are transmitted from parents to children. In particular,
-assortative mating (when similar people marry each other) can increase
-social inequality in income, wealth, social status or human capital,
-compared to the case where people pair at random. It is often thought
-that the degree of assortative mating has increased in recent
-generations, and that this could help to explain increasing levels of
-social inequality [@fernandez2005love; @schwartz2005trends;
-@greenwood2014marry; @eika2019educational].
+[^stats]: In the United Kingdom the Gini coefficient has increased from 26% to 34.6% between 1977 and 2020. The United States has seen a 10 percentage point rise up to 43.3% during 1962-2013.
 
-Another strand of research relates inequality to human genetics. Twin
-studies show that the heritability of occupational class and educational
-attainment, i.e. the proportion of variance explained by genetic
-differences between individuals, is around 50% [@Tambs_1989].
-Genome-wide Complex Trait Analysis (GCTA) shows that 2-year-old
-children's family socio-economic status (SES) can be predicted from
-their genes [@Trzaskowski_2014]. Polygenic scores for educational
-attainment predict occupational class [@Rimfeld_2018]. The current
-leading explanation for this *SES-genetics gradient* is that in
-meritocratic societies, individuals with genes associated with valuable
-skills and personality traits experience upward mobility. Their children
-will then inherit both their genes (via biology) and their increased
-social status (via social institutions).
+[^review]: See @sacerdote2011nature for a review of the behavioural genetics and
+economics literatures on the nature vs nurture debate; for a broader review of
+the studies on intergenerational transmission of income see @black2010recent.
 
-This paper links assortative mating to genetics in order to give a new
-explanation for the SES-genetics gradient. The mechanism is that both
-social status[^1] and genetics contribute to a person's attractiveness
-in marriage markets. For example, suppose that wealth and intelligence
-are both attractive qualities in a spouse. Then wealthy people will be
-more likely to marry intelligent people. Again, children of these
-marriages will then inherit both wealth, and genetic variants associated
-with intelligence. As a result, wealth and genes for intelligence will
-become associated in the next generation. More generally, whenever
-people in marriage markets trade social status for a genetically
-inherited characteristic, the two will become associated. We call this
-mechanism *Social-Genetic Assortative Mating* (SGAM).
 
-[^1]: *Social status* refers to characteristics that an individual
+This paper examines a plausible, but under-analysed, aspect of the spouse
+matching process: that both social status and genetics contribute to a person’s
+attractiveness in marriage markets.[^status-SES] As a result, genetics and
+inherited social status may become associated in subsequent generations. For
+example, suppose that wealth and intelligence are both attractive qualities in a
+spouse. Then wealthy people are more likely to marry intelligent people, and
+their children will inherit both wealth, and genetic variants associated with
+intelligence. We call this mechanism Social-Genetic Assortative Mating (SGAM).
+
+[^status-SES]: *Social status* refers to characteristics that an individual
     possesses in virtue of their social position. For example, my wealth
     is a fact about me that holds in virtue of my relationship to
     certain social institutions (bank deposits, title deeds et cetera.).
@@ -308,56 +318,198 @@ mechanism *Social-Genetic Assortative Mating* (SGAM).
     which refers to a combination of educational attainment,
     occupational class, income and wealth [e.g. @white1982relation].
 
-Under this mechanism, shocks to an individual's social status may alter
-the identity of his or her spouse, and so be reflected in the genetics
-of his or her children. Thus, in contrast to a large body of research
-that treats genetic data as an independent variable and traces its
-effects on social and economic outcomes, we make the genetics
-endogenous.[^2] Our mechanism gives a new explanation for the link
-between social status and genetics. This explanation is likely to apply
-to a wider range of societies than the alternative "meritocratic
-mobility" explanation. That is because, while widespread social mobility
-is relatively rare and historically recent, assortative mating is a
-human universal [@buss1989sex].
 
-[^2]: Almost all research in behavioural genetics fits this pattern [see
-    e.g. @plomin2008behavioral]. For a review of relevant research in
-    economics, see @benjamin2011promises. Some more recent economics
-    papers use polygenic scores [@barth2020genetic;
-    @papageorge2020genes; @ronda2020family; @sias2020molecular].
+SGAM may be an important channel for the transmission of inequality. It leads
+to a hidden dimension of advantage for privileged families – hidden because most
+social science datasets do not include genetic information. This dimension may
+help to explain the surprising long-run persistence of inequality
+[@clark2015intergenerational]. At the same time, this advantage is not an
+exogenous fact of biology, but endogenous to the social structure: under SGAM,
+shocks to an individual’s social status can be reflected in the genetics of his
+or her children.
 
-Below, after reviewing the literature, we develop a simple model of SGAM
-to show how parents' social status predicts children's genetics, and how
-this varies with a society's marriage market institutions. Surprisingly,
-there is a non-linear relationship between "egalitarianism" in marriage
-markets, and the strength of the association between social status and
-genetic variation. When marriage markets are fully egalitarian, or fully
-inegalitarian, SGAM does not cause any association. In between these
-extremes, there is a positive association. The intuition is that in a
-fully "egalitarian" marriage market, social status plays no role in
-determining attractiveness. As a result, people do not trade off social
-status against genetics. On the other hand, in a wholly "inegalitarian"
-marriage market, such as a caste society where mating across castes is
-forbidden, only social status determines attractiveness and genetics
-plays no role, so again people do not trade the two off. In between the
-two extremes, potential spouses trade social status for "good genes",
-and the two become associated.
+Below, we first outline a theoretical framework where attractiveness in the
+marriage market is a function of both socio-economic status (SES) and genes. We
+show that Social-Genetic Assortative Mating in one generation leads to increased
+correlation between social and genetic traits in the offspring generation   .
+This result provides a new explanation of the association between genetics and
+socio-economic status [@belsky2018genetic; @Rimfeld_2018;
+@bjorklund2006origins]. While existing explanations have focused on meritocratic
+social mobility (genes cause SES), under SGAM causality goes both ways, from
+genes to SES and vice versa.
 
-We then test for SGAM using contemporary data from the UK. Our dependent
-variable is the polygenic score for educational attainment (PSEA) of a
-person's spouse. PSEA is a measure, derived solely from an individual's
-DNA, predicting the number of years that person will spend in education
-[@lee2018gene]. To detect SGAM, and avoid the potential confound of pure
-genetic assortative mating, we use a causal antecedent of social status
-which is independent of individual genetics: birth order. Birth order is
-known to affect outcomes including income, occupational status and
-educational attainment [@black2005more; @booth2009birth]. We show that
-people born earlier within a sibling group marry spouses with different
-genetics, specifically, higher PSEA. We present evidence that this
-effect is mediated by measures of socio-economic status, including
-educational attainment and labour market income.
+Next, using novel data on matched spouses born between 1935 and 1970 from the UK
+Biobank, we empirically test the hypothesis that an individual’s higher social
+status attracts spouses with higher genetic potential for educational attainment. 
+Our genetic measure, the Polygenic Score for Educational Attainment (PSEA),
+derives from large-scale genome-wide association studies [@lee2018gene] and
+is causally related to educational attainment itself, as well as to intelligence
+and labour market outcomes. Humans also mate assortatively on PSEA, suggesting
+that it is relevant in marriage markets, presumably via its associated
+phenotypes [@hugh2016assortative]. We depart from the assumption that both
+socio-economic status and genetic traits can enhance the attractiveness of
+potential spouses, and are substitutable. This assumption has received support
+in recent economic studies of marriage markets, which suggest that people trade
+off physical characteristics for higher earnings [e.g. @chiappori2012fatter] or matching social class [@banerjee2013marry].
 
-# Related literature
+The endogeneity of social status is the main challenge in identifying the causal
+effect of social status on the spouse’s genetic endowment. For instance,
+individuals with high education qualifications tend to also have high
+educational attainment genes, and they may take partners based on genomic
+similarity [see e.g. @robinson2017genetic]. In order to isolate the causal link
+from own socio-economic status to partner genes, we use the “accident of birth”
+as a source of exogenous variation in socio-economics status. Specifically, we
+use the birth order of individuals in the sample as a “treatment” which affects
+their partner choice through a range of mechanisms, of which the most salient
+one is own socio-economic status. It is well documented that earlier-born
+children enjoy higher parental investment and have better life outcomes,
+including measures of socio-economic status such as educational attainment and
+occupational status [@black2011older; @booth2009birth; @Lindahl_2008]. At the
+same time, birth order is independent of siblings’ genetic endowments, a fact
+guaranteed by the biological mechanism involved (the “lottery of meiosis”).
+
+While birth order is plausibly independent of siblings’ genes, it cannot be used
+as a valid instrument for socio-economic status, because it may affect partner
+choice through alternative mechanisms. Hence, we steer away from a two-stage
+procedure and instead rely on a mediation analysis similar to
+@heckman2013understanding (henceforth HPS), who decompose the average treatment
+effect into effects of measured and unmeasured consequences of treatment.
+Specifically, we estimate a reduced-form model with spouse genes associated with
+educational attainment as the dependent variable, and own birth order as the
+main independent variable. We then estimate a model which further includes own
+socio-economic status. In the latter model, socio-economic status can be
+interpreted as the measurable component of the effect of birth order that
+impacts spouse genetics choice, under a set of assumptions. We also include
+controls to balance covariates across individuals with different birth orders in
+different cohorts and we control for own genetic traits for education
+attainment.
+
+We find that a higher own birth order significantly lowers the spouse’s genetic
+variants associated with educational attainment in the reduced-form regressions,
+at 0.1% significance level. When we include university attendance as a proxy for
+socio-economic status, birth order is no longer significant, while university
+attendance increases the spouse’s genetic endowment, again at 0.1% significance.
+A similar pattern holds when we proxy socio-economic status with a measure of
+income, although the sample is reduced and the coefficients are imprecisely
+estimated. The results are robust to the inclusion of several own phenotype
+traits and a rich set of own genetic traits.
+
+Our paper contributes to several literatures. Firstly, we highlight a novel
+mechanism of assortative mating. The economics literature on matching in
+marriage markets has typically focused on educational similarities 
+[e.g. @pencavel1998assortative] or social class or caste 
+[e.g. @abramitzky2011marrying; @banerjee2013marry], but also sorting based on age,
+physical traits and ethnicity [@hitsch2010matching]. Matching decisions on the
+marriage market have also been shown to follow multiple criteria, with some
+degree of substitutability between them.[^others] For instance, @chiappori2012fatter
+showed that individuals trade off BMI for partners’ income or education and that
+the marginal rate of substitution between these characteristics is different for
+males and females.  The genetics literature has focused on genetic assortative
+mating (GAM), the phenomenon that people with similar genes marry each other.
+Recent research has confirmed the long-standing conjecture that GAM takes place
+in contemporary human populations 
+[@howe2019genetic; @hugh2016assortative; @robinson2017genetic]. Geneticists have 
+also developed the concept of cross-trait assortative mating 
+[@Beauchamp_2010;@Sundet_2005], which refers to people with (genes for) e.g.
+height marrying people with (genes for) e.g. intelligence. As a result, the two
+types of variation become associated. In this paper we bring the two literatures
+together, extending the idea of cross-trait assortative mating to encompass both
+socially inherited status, and biologically inherited genetic variants. Our
+results confirm that individuals with higher social status are more likely to
+attract a spouse with higher innate cognitive ability.
+
+[^others]: @oreffice2010anthropometry show that height and BMI are associated with spouse earnings. @dupuy2014personality find spouse matching on multiple independent dimensions, including education, height, BMI and personality.
+
+
+Secondly, our findings have implications for understanding the sources of
+economic inequality. There are several ways assortative mating can affect
+inequality [@fernandez2001sorting]. The simplest is that if couples assort with
+respect to some characteristic, the resulting households will have more variance
+in that characteristic than if couples match randomly. For instance, if rich
+people only marry each other, then the wealth distribution of the resulting
+households will be more unequal than if they sometimes marry poor people. If the
+characteristic is inherited from parents to children, then this will carry over
+into higher inter-individual inequality in the next generation. Assortative
+mating on one dimension can also affect inequality in other dimensions. For
+example, if parents invest in their children’s human capital, and if households
+are credit-constrained, then assortative mating on income can increase
+inequality in children’s human capital [@fernandez2005love]. The mechanism is
+purely environmental, not genetic: some children are raised in a higher-quality
+environment (e.g. with more books and educational toys), and variance in these
+environments is increased by assortative mating. Research has shown that
+assortative mating is associated with higher inequality within generations,
+although there is no conclusive evidence that it underpins the inequality trend
+over time [@eika2019educational].
+
+A more likely driver of the rise in inequality is the increase in market returns
+to human capital [e.g. @kaplan2013s; @eika2019educational]. In this context, the
+distribution of human capital is a key contributor to inequality, in addition to
+inherited wealth.[^wealth] Of course, one part of human capital is acquired and
+the other is genetic. From twin studies, the heritability of occupational class
+and educational attainment, i.e. the proportion of variance explained by genetic
+differences between individuals, is around 50% [@Tambs_1989]. Genome-wide
+Complex Trait Analysis (GCTA) shows that 2-year-old children’s family
+socio-economic status can be predicted from their genes [@Trzaskowski_2014].
+Studies comparing parent-child income and education associations between
+adoptees and non-adoptees show that both post-birth environment and pre-birth
+conditions (genetics and to a lesser extent prenatal environment) contribute to
+the transmission of wealth and human capital [e.g. @bjorklund2006origins].
+Several channels shape the distribution of heritable ability. Parents with
+higher ability reap higher market returns, and more successful parents may then
+pass both higher socio-economic status and their genes to their children,
+leading to an association between the two [@belsky2018genetic]. This mechanism
+depends on the level of meritocracy in social institutions
+[@branigan2013variation; @Heath_1985]; in a society where social status was
+ascribed rather than earned, it could not take effect. Indeed, after the fall of
+communism in Estonia, the heritability of SES increased, presumably because
+post-communist society allowed higher returns to talent [@Rimfeld_2018].
+Social-genetic assortative mating provides a complementary explanation for the
+association between genes and SES, one which does not require social meritocracy.
+
+[^wealth]: See @adermon2018intergenerational, @mulder2009intergenerational.
+
+
+SGAM may also increase social inequality overall, if there are complementarities
+between genetic and environmental components of human capital. For example,
+higher-ability parents may make more productive investments in children’s human
+capital [@cunha2007technology; @cunha2010estimating; @heckman2014economics; @kong2018nature]. @becker2018theory demonstrated how inequality
+can arise in a model of intergenerational transmission of human capital where
+high-income and human capital parents are able to invest more in their
+children’s human capital than low-income parents. Thus, by bringing good genes
+and enriched environments together, SGAM may increase inequality in the next
+generation.
+
+Finally, our paper challenges the widespread assumption, in economics and
+beyond, that genetic endowment is exogenous to economic characteristics. While
+this may be tenable in within-generation studies, it ceases to hold in
+intergenerational models. Social-genetic assortative mating is a causal
+mechanism going from socio-economic status to genetic traits. Furthermore, our
+model shows that the strength of this mechanism varies with the structure of the
+society’s marriage market. When both genes and status are both relevant in
+marriage markets, then they become associated in the next generation. When
+social status is irrelevant and only good genes matter – or vice versa – then
+genes and status do not become associated. Social structure matters for the
+redistribution of genes, just as for other forms of capital.
+
+The observations behind SGAM are hardly new. That status and physical
+attractiveness assort in marriage markets is a commonplace and a perennial theme
+of literature. In the Iliad, powerful leaders fight over the beautiful
+slave-girl Bryseis. In Jane Austen’s novels, wealth, attractiveness and “virtue”
+all make a good match. @marx1844economic wrote “the effect of ugliness, its repelling
+power, is destroyed by money.” And Donald Trump claimed: “part of the beauty of
+me is that I am very rich.” The literature on mate preference from evolutionary
+psychology [@buss1986preferences; @buss1989sex; @buss2019mate] confirms
+that attractive mate characteristics include elements of social status (“high
+earning capacity,” “professional status”) as well as traits that are partly
+under genetic influence (“intelligent,” “tall,” “kind,” “physically
+attractive”). It is therefore surprising that papers in genetics and economics
+have not formalised the mechanism and consequences of SGAM.[^genetics-papers]
+
+[^genetics-papers]: @halsey1958genetics showed in a two-class model that social
+mobility combined with assortative mating might increase the association between
+genetics and social class. @belsky2018genetic offer three reasons for the
+association between education-linked genetics and SES, but do not consider SGAM.
+
 
 ```{r literature-notes, eval = FALSE}
 
@@ -391,133 +543,6 @@ educational attainment and labour market income.
 # Becker-Tomes 1979?
 ```
 
-There are several ways assortative mating can affect social inequality
-[@fernandez2001sorting]. The simplest is that if couples assort with
-respect to some characteristic, the resulting households will have more
-variance in that characteristic than if couples match randomly. For
-instance, if rich people only marry each other, then the wealth
-distribution of the resulting households will be more unequal than if
-they sometimes marry poor people. If the characteristic is inherited
-from parents to children, then this will carry over into higher
-inter*-individual* inequality in the next generation.
-
-Assortative mating on one dimension can also affect inequality in other
-dimensions. For example, if parents invest in their children's human
-capital, and if households are credit-constrained, then assortative
-mating on income can increase inequality in children's human capital
-[@fernandez2005love]. The mechanism is purely environmental, not
-genetic: some children are raised in a higher-quality environment (e.g.
-with more books and educational toys), and variance in these
-environments is increased by assortative mating.
-
-Empirically, it is often thought that assortative mating has increased
-since World War II in developed societies, and that this has helped to
-increase inequality over time. Several papers test these claims against
-US and international data [@fernandez2005love; @schwartz2005trends;
-@greenwood2014marry; @eika2019educational]. Overall, there is better
-evidence for a rise in assortative mating until the 1980s than
-afterwards, and the case that it has contributed to household inequality
-is not proven.
-
-Differences in human capital across socio-economic groups also have a
-genetic component [@Tambs_1989; \@Trzaskowski_2014; @Rimfeld_2018].
-While most human geneticists treat genetic endowments as an independent
-variable, there is also research into factors that shape the
-distribution of genetic variants. The best-known explanation for the
-association between SES and genetics is that in meritocratic societies,
-"good genes" lead to success in education and the labour market.
-Successful parents may then pass both SES and their genes to their
-children, leading to an association between the two
-[@belsky2018genetic]. This mechanism depends on the level of meritocracy
-in society's institutions [@Heath_1985; @branigan2013variation]. In a
-wholly non-meritocratic society, where social status was ascribed rather
-than earned, this mechanism could not take effect. Indeed, after the
-fall of communism in Estonia, the heritability of SES increased,
-presumably because post-communist society was more meritocratic
-[@Rimfeld_2018].
-
-Meritocratic mobility and SGAM are not competing explanations: both may
-operate in any specific setting. Both require that SES and genetics are
-inherited, which holds to varying degrees in all human societies. While
-mobility requires a degree of social openness, so that "good genes" can
-causally affect a person's social status, SGAM does not need this: even
-if social status is inherited from birth, and cannot be earned (as with
-e.g. titles of nobility, or caste), it will still become associated with
-attractive genetic variants, so long as there is assortative mating and
-people trade status off for genetics in marriage markets. By contrast,
-SGAM does require assortative mating (on a combination of SES and
-genetics), while meritocratic mobility does not. As a result, SGAM is
-likely to apply to a historically wider range of societies. Whilst a
-degree of meritocracy exists in modern capitalist economies,
-opportunities to earn status have been far more limited in most
-societies throughout history [@smelser1966social]. On the other hand,
-assortative mating is likely to be a cultural universal, and SGAM has
-probably existed in all societies with inherited status, i.e. all
-societies other than egalitarian hunter-gatherers [@fried1967evolution].
-Thus, SGAM predicts that genetic differences across social status are
-likely to be historically ancient.
-
-Another difference is in the chain of causality. In meritocratic
-mobility, genetic variants cause an increase in social status, and both
-genetics and status may then be inherited. In SGAM, causality may go
-from social status to genetics. A shock to one individual's status
-causes their spouse to have different genetic variants; again, both
-genetics and status are then inherited. As a result, shocks to social
-status may be encoded in the genetics of subsequent generations.
-
-Another factor affecting the distribution of genetic endowments is
-genetic assortative mating (GAM), the phenomenon that people with
-similar genes marry each other. Just as assortative mating can increase
-inequality in income or wealth, GAM can increase genetic inequality,
-i.e. the population variance of genetic endowments. Recent research has
-confirmed the long-standing conjecture that GAM takes place in
-contemporary human populations [@hugh2016assortative;
-@robinson2017genetic; @howe2019genetic]. Geneticists have also developed
-the concept of cross-trait assortative mating [@Sundet_2005;
-@Beauchamp_2010], which refers to people with (genes for) e.g. height
-marrying people with (genes for) e.g. intelligence. As a result, the two
-kinds of variation become associated.
-
-To sum up, there are two parallel research traditions on the inheritance
-of inequality within families. Each has explored the effects of
-assortative mating on different kinds of inequality, and each has
-developed theories in which different dimensions of inequality interact.
-It seems natural to bring the two literatures together. Here, we do
-that, extending the idea of cross-trait assortative mating to encompass
-both socially inherited status, and biologically inherited genetic
-variants. This leads to a new explanation of the link between
-socio-economic status and genetics.
-
-The underlying observations behind SGAM are hardly new. That status and
-physical attractiveness tend to assort in marriage markets is a
-commonplace, as well as a perennial theme of literature. In the Iliad,
-powerful leaders fight over the beautiful slave-girl Bryseis. In Jane
-Austen's novels, wealth, attractiveness and "virtue" all make a good
-match. @marx1844economic wrote "the effect of ugliness, its repelling
-power, is destroyed by money". And Donald Trump claimed: "part of the
-beauty of me is that I am very rich". There is also a rich literature on
-mate preference from evolutionary psychology [@buss1989sex;
-@buss1986preferences; @buss2019mate]. Attractive mate characteristics
-include elements of social status ("high earning capacity",
-"professional status") as well as traits that are partly under genetic
-influence ("intelligent", "tall", "kind", "physically attractive").
-
-Despite this, surprisingly few papers have analysed the consequences of
-SGAM, either within genetics or economics. In economics, several
-empirical papers examine cross-trait matching in marriage markets.
-@chiappori2012fatter show empirically that body mass index and SES
-(specifically, earnings and education) are both valued in a match.
-@oreffice2010anthropometry show that height and BMI are associated with
-spouse earnings. @dupuy2014personality find spouse matching on multiple
-independent dimensions, including education, height, BMI and
-personality; see also @chiappori2018bidimensional. However, these papers
-do not use genetic data, and do not attempt to disentangle genetic and
-environmental contributions to attractiveness. They also do not theorize
-the consequences of SGAM. Within genetics, @halsey1958genetics showed in
-a two-class model that social mobility combined with assortative mating
-might increase the association between genetics and social class.
-@belsky2018genetic offer three reasons for the association between
-education-linked genetics and SES, but do not consider SGAM.
 
 # Model
 
