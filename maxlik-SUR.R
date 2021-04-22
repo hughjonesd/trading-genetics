@@ -4,7 +4,10 @@ library(mvtnorm)
 library(dplyr)
 library(rumpel) # just to play with it!
 
-
+# idea: could we maximize the (negative) sum of squares
+# and use this as the gradient?
+# could still calculate the log likelihood afterwards (once!) for the lrtest
+# 
 loglik_sur <- function (params, mm, y_psea, y_bo, restricted = NULL) {
   
   if (! is.null(restricted)) {
@@ -71,6 +74,7 @@ estimate_surs <- function (fml, data, restricted) {
   data <- model.frame(fml_ext, data)
   
   restricted <- grep(restricted, colnames(mm), value = TRUE)
+  bo_restricted <- paste("bo", restricted, sep = "_")
   
   start <- rep(0, ncol(mm) * 2)
   names(start) <- paste(
@@ -87,7 +91,7 @@ estimate_surs <- function (fml, data, restricted) {
   constraintsB <- matrix(0, 2, 1)
   
   parscale <- rep(1, length(start))
-  parscale[grepl("birth_order.x", names(start))] <- 10
+  parscale[names(start) %in% bo_restricted] <- 10
   parscale[grepl("EA3.x", names(start))] <- 10
   
   mod_full <- maxLik::maxLik(
@@ -104,7 +108,7 @@ estimate_surs <- function (fml, data, restricted) {
                 parscale    = parscale
               )
   
-  bo_restricted <- paste("bo", restricted, sep = "_")
+  
   fixed_index <- which(names(start) %in% bo_restricted)
   mod_restricted <- maxLik::maxLik(
                       loglik_sur, 
@@ -138,10 +142,10 @@ compare_params <- function (list_mod) {
   
   coef_full <- coef(list_mod$full)
   data.frame(
-    restricted = restricted, 
+    restricted          = restricted, 
     restricted_over_EA3 = restricted / coef(list_mod$restricted)["bo_EA3.x"],
-    full = coef_full[names(restricted)],
-    full_over_EA3 = coef_full[names(restricted)]/coef_full["bo_EA3.x"]
+    full                = coef_full[names(restricted)],
+    full_over_EA3       = coef_full[names(restricted)]/coef_full["bo_EA3.x"]
   )
 }
 
@@ -155,23 +159,24 @@ mf_pairs_sf <- mf_pairs_reg %>%
                  )
 
 
-fml <- ~ EA3.x + factor(birth_order.x) + moth_age_birth.x + factor(birth_mon.x) + 
+fml <- ~ EA3.x + birth_order.x + moth_age_birth.x + factor(birth_mon.x) + 
            factor(n_sibs.x) + university.x + fluid_iq.x + height.x
 
+restricted <- "birth_order.x|university.x|fluid_iq.x|height.x|moth_age_birth.x"
+
 list_mod_male <- estimate_surs(fml, mf_pairs_sf %>% filter(! female.x), 
-                                 restricted = "birth_order.x")
+                                 restricted = restricted)
 
 summary(list_mod_male$full)
 summary(list_mod_male$restricted)
-attr(list_mod_male$restricted, "restricted")
 compare_params(list_mod_male)
 lmtest::lrtest(list_mod_male$full, list_mod_male$restricted)
 
 
 list_mod_female <- estimate_surs(fml, mf_pairs_sf %>% filter(female.x), 
-                                 restricted = "birth_order.x")
+                                 restricted = restricted)
 
 summary(list_mod_female$full)
 summary(list_mod_female$restricted)
-attr(list_mod_female$restricted, "restricted")
+compare_params(list_mod_female)
 lmtest::lrtest(list_mod_female$full, list_mod_female$restricted)
