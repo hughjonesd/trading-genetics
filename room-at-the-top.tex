@@ -335,17 +335,27 @@ children's human capital than low-income parents. Thus, by bringing good genes
 and enriched environments together, SGAM may increase inequality in the next
 generation.
 
+Thirdly, we contribute to a literature in economics that examines
+the relationship between genetic and economic variables. Benjamin et al. (2011)
+is an early review. Several more recent papers use polygenic scores,
+in particular polygenic scores for educational attainment
+(Barth, Papageorge, and Thom 2020; Papageorge and Thom 2020; Ronda et al. 2020).
+
 Finally, our paper challenges the widespread assumption, in economics and
-beyond, that genetic endowment is exogenous to economic characteristics. While
-this may be tenable in within-generation studies, it ceases to hold in
-intergenerational models. Social-genetic assortative mating is a causal
-mechanism going from socio-economic status to genetic traits. Furthermore, our
-model shows that the strength of this mechanism varies with the structure of the
-society's marriage market. When both genes and status are both relevant in
-marriage markets, then they become associated in the next generation. When
-social status is irrelevant and only good genes matter -- or vice versa -- then
-genes and status do not become associated. Social structure matters for the
-redistribution of genes, just as for other forms of capital.
+beyond, that genetic endowment is exogenous to economic
+characteristics.\footnote{A small literature in economics examines
+  the relationship between genetic and economic variables. Benjamin et al. (2011)
+  is an early review. Several recent papers use polygenic scores,
+  in particular polygenic scores for educational attainment
+  (Barth, Papageorge, and Thom 2020; Papageorge and Thom 2020; Ronda et al. 2020).} While this may be tenable in within-generation
+studies, it ceases to hold in intergenerational models. Social-genetic
+assortative mating is a causal mechanism going from socio-economic status to
+genetic traits. Furthermore, our model shows that the strength of this mechanism
+varies with the structure of the society's marriage market. When both genes and
+status are both relevant in marriage markets, then they become associated in the
+next generation. When social status is irrelevant and only good genes matter --
+or vice versa -- then genes and status do not become associated. Social structure
+matters for the redistribution of genes, just as for other forms of capital.
 
 The observations behind SGAM are hardly new. That status and physical
 attractiveness assort in marriage markets is a commonplace and a perennial theme
@@ -626,7 +636,7 @@ categorize respondents as pairs if they:
 \begin{itemize}
 \tightlist
 \item
-  had the same home postcode on at least one occasion;\footnote{Typically a UK postcode contains about 15 properties.}
+  had the same home postcode on at least one occasion;\footnote{A typical UK postcode contains about 15 properties.}
 \item
   both reported the same homeownership/renting status, length of time
   at the address, and number of children;
@@ -639,7 +649,7 @@ categorize respondents as pairs if they:
 \end{itemize}
 
 We also eliminate all pairs where either spouse appeared more than once
-in the data. This leaves a total of 35682 pairs. Some of
+in the data. This leaves a total of 35,682 pairs. Some of
 these could be false positives, i.e.~people who are not each others'
 spouse but simply live in the same postcode. To validate the accuracy of
 our measures, we use genetic relationships. Some respondents in the
@@ -655,49 +665,67 @@ presumed partner in our data. As a point of comparison, 11\% of families
 with dependent children included a stepchild in England and Wales in
 2011 (National Statistics 2014).
 
-It is still possible that some pairs in our data may not be actual
-spouses. In the appendix, to sign any possible bias in our estimates
-resulting from this, we use a dataset of known ``fake pairs.'' We show
-that estimated coefficients of interest are closer to zero among these
-fake pairs than among our ``real pairs.'' Because of this, any fake pairs
-remaining in our data are likely to bias our coefficients towards zero.
+It is still possible that some pairs in our data may not be actual spouses. In
+the appendix, to sign any possible bias in our estimates resulting from this, we
+use a dataset of ``known fake'' pairs. We show that estimated coefficients of
+interest are closer to zero among these fake pairs than among our candidate
+``real pairs.'' Because of this, any fake pairs remaining in our data are likely
+to bias our coefficients towards zero.
 
 Our key dependent variable is spouse's \emph{Polygenic Score for Educational
 Attainment} (PSEA). A polygenic score is a DNA-derived summary measure
 of genetic risk or propensity for a particular outcome, created from
 summing small effects of many common genetic variants, known as Single
-Nucleotide Polymorphisms (SNPs). We focus on PSEA, rather than other
-polygenic scores, because educational attainment plays a key role in
+Nucleotide Polymorphisms (SNPs). We focus on PSEA rather than other
+polygenic scores for two reasons. First, educational attainment plays a key role in
 human mate search. People are attracted to educated potential partners
 (Buss and Barnes 1986; Belot and Francesconi 2013); spouse pairs often have
 similar levels of educational attainment, as well as similar PSEA
-(Vandenberg 1972; Schwartz and Mare 2005; Greenwood et al. 2014; Hugh-Jones et al. 2016). We use per-SNP summary statistics from
-(Lee et al. 2018), re-estimated excluding UK Biobank participants, to
-calculate PSEA.\footnote{PSEA was computed by summing the alleles across \textasciitilde1.3 million
+(Vandenberg 1972; Schwartz and Mare 2005; Greenwood et al. 2014; Hugh-Jones et al. 2016). Second, PSEA predicts a set of important socioeconomic
+variables, including not only education but also social and geographic mobility,
+IQ, future income and wealth (Belsky et al. 2016; Barth, Papageorge, and Thom 2020; Papageorge and Thom 2020).{[}\^{}discuss{]}
+
+{[}\^{}discuss{]} See Papageorge and Thom (2020) for a detailed discussion of polygenic
+scores, aimed at economists.
+
+We calculate PSEA using per-SNP summary statistics from (Lee et al. 2018),
+re-estimated excluding UK Biobank participants.\footnote{PSEA was computed by summing the alleles across \textasciitilde1.3 million
   genetic variants weighted by their effect sizes as estimated in
   genome-wide association studies (GWASs) that excluded UK Biobank.
   PSEA was then residualized on the first 100 principal components of
   the SNP array data. Further details can be found in
-  @abdellaoui2019genetic.} We normalize the score to have mean 0 and variance
-1.
+  Abdellaoui et al. (2019).} We normalize the score to
+have mean 0 and variance 1. Because polygenic scores are created from estimates
+of many presumably tiny effects, they contain a large amount of noise relative
+to the true best estimator that could be derived from genetic data. For
+instance, PSEA explains only 11--13\% of variance in educational attainment {[}out
+of sample; Lee et al. (2018){]}, whereas the true proportion explained by genetic
+variation - the heritability - is estimated from twin studies to be about 40\%
+(Branigan, McCallum, and Freese 2013). In addition, polygenic scores are no more guaranteed
+to be causal than any other independent variable. For example, social
+stratification by descent may lead genes to be associated with educational
+attainment even while playing no causal role (Selzam et al. 2019).
 
-PSEA is known to correlate with measures of education, including
-university attendance and years of full-time education; from
-within-siblings regressions, where PSEA is randomly assigned by the
-``lottery of meiosis,'' we know that this correlation is at least partly
-causal. We recheck these facts within the UK Biobank sample. In a simple
-linear regression (N = 408,524) of university attendance
-on PSEA, a one-standard-deviation increase in PSEA was associated with a
-9.23\% increase in the probability of
-university attendance (p \textless{} 2e-16). In a within-siblings regression
-among genetic full siblings (N = 36,748), the
-increase was 4.46\% (p \textless{} 2e-16). This
-suggests that about half of the raw correlation of PSEA with university
-attendance is down to confounds like good environments or parental
-nurture, while the remainder is causal.
+Despite these points, PSEA has non-trivial estimated effects on educational
+attainment. PSEA correlates with measures of education, including university
+attendance and years of full-time education; within-siblings regressions, where
+PSEA is randomly assigned by the ``lottery of meiosis,'' confirm this correlation
+is at least partly causal (Lee et al. 2018). We recheck these facts within the UK
+Biobank sample. In a simple linear regression (N = 408,524) of
+university attendance on PSEA, a one-standard-deviation increase in PSEA was
+associated with a 9.2 percentage point increase in the
+probability of university attendance (\(p < 2 \times 10^{-16}\)). In a
+within-siblings regression among genetic full siblings (N =
+36,748), the increase was
+4.5 (\(p < 2 \times 10^{-16}\)). This suggests
+that about half of the raw correlation of PSEA with university attendance is
+down to confounds like good environments or parental nurture, while the
+remainder is causal. Nevertheless, the causal effect remains substantial: for a
+rough comparison, the (ITT) effect on college attendance of the Moving To
+Opportunity experiment in the US was 2.5 percentage points (Chetty, Hendren, and Katz 2016).
 
 Figures \ref{fig:pic-basic-corr-uni} and
-\ref{fig:pic-basic-corr-income} illustrate the possible consequences of
+\ref{fig:pic-basic-corr-income} illustrate the core idea of
 SGAM. The X axis shows a measure of one partner's socio-economic status:
 university attendance (Figure \ref{fig:pic-basic-corr-uni}) or income
 (Figure \ref{fig:pic-basic-corr-income}). The Y axis plots the other
@@ -707,11 +735,11 @@ Since DNA is inherited, these people's children will also have higher
 PSEA.
 
 \begin{figure}
-\subfloat[Female PSEA by male educational attainment\label{fig:pic-basic-corr-uni-1}]{\includegraphics{room-at-the-top_files/figure-latex/pic-basic-corr-uni-1} }\subfloat[Male PSEA by female educational attainment\label{fig:pic-basic-corr-uni-2}]{\includegraphics{room-at-the-top_files/figure-latex/pic-basic-corr-uni-2} }\caption{Social and genetic advantage among spouse pairs in UK Biobank}\label{fig:pic-basic-corr-uni}
+\subfloat[Female PSEA by male educational attainment\label{fig:pic-basic-corr-uni-1}]{\includegraphics{room-at-the-top_files/figure-latex/pic-basic-corr-uni-1} }\subfloat[Male PSEA by female educational attainment\label{fig:pic-basic-corr-uni-2}]{\includegraphics{room-at-the-top_files/figure-latex/pic-basic-corr-uni-2} }\caption{Spouse PSEA against own university attendance. Lines show 95\% confidence intervals}\label{fig:pic-basic-corr-uni}
 \end{figure}
 
 \begin{figure}
-\subfloat[Female EA3 by male income\label{fig:pic-basic-corr-income-1}]{\includegraphics{room-at-the-top_files/figure-latex/pic-basic-corr-income-1} }\subfloat[Male EA3 by female income\label{fig:pic-basic-corr-income-2}]{\includegraphics{room-at-the-top_files/figure-latex/pic-basic-corr-income-2} }\caption{Social and genetic advantage among spouse pairs in UK Biobank}\label{fig:pic-basic-corr-income}
+\subfloat[Female EA3 by male income\label{fig:pic-basic-corr-income-1}]{\includegraphics{room-at-the-top_files/figure-latex/pic-basic-corr-income-1} }\subfloat[Male EA3 by female income\label{fig:pic-basic-corr-income-2}]{\includegraphics{room-at-the-top_files/figure-latex/pic-basic-corr-income-2} }\caption{Spouse PSEA against own estimated income in first job. Lines show 95\% confidence intervals}\label{fig:pic-basic-corr-income}
 \end{figure}
 
 These figures do not prove that SGAM is taking place. Since an
@@ -720,10 +748,10 @@ and their income, both figures could be a result of genetic assortative
 mating (GAM) alone (Hugh-Jones et al. 2016). To demonstrate SGAM, we need
 a source of social status which is exogenous to genetics. Also, the link
 between social status and spouse genetics is likely to be noisy, for
-three reasons: first, polygenic scores contain a large amount of error;
-second, causal mechanisms behind variation in social status are likely
-to be noisy; third, to paraphrase Shakespeare (1595), the spouse
-matching process is notoriously unpredictable. So, we need a large N to
+three reasons: first, polygenic scores contain a large amount of error, as
+discussed above; second, causal mechanisms behind variation in social status
+are likely to be noisy; third, to paraphrase Shakespeare (1595), the
+spouse matching process is notoriously unpredictable. So, we need a large N to
 give us sufficient power. This rules out time-limited shocks such as
 changes to the school leaving age (Davies et al. 2018).
 
@@ -4233,6 +4261,9 @@ Adermon, Adrian, Mikael Lindahl, and Daniel Waldenström. 2018. {``Intergenerati
 \leavevmode\hypertarget{ref-banerjee2013marry}{}%
 Banerjee, Abhijit, Esther Duflo, Maitreesh Ghatak, and Jeanne Lafortune. 2013. {``Marry for What? Caste and Mate Selection in Modern India.''} \emph{American Economic Journal: Microeconomics} 5 (2): 33--72.
 
+\leavevmode\hypertarget{ref-barth2020genetic}{}%
+Barth, Daniel, Nicholas W Papageorge, and Kevin Thom. 2020. {``Genetic Endowments and Wealth Inequality.''} \emph{Journal of Political Economy} 128 (4): 1474--1522.
+
 \leavevmode\hypertarget{ref-Beauchamp_2010}{}%
 Beauchamp, Jonathan P., David Cesarini, Magnus Johannesson, Erik Lindqvist, and Coren Apicella. 2010. {``On the Sources of the Height-Intelligence Correlation: New Insights from a Bivariate {ACE} Model with Assortative Mating.''} \emph{Behavior Genetics} 41 (2): 242--52. \url{https://doi.org/10.1007/s10519-010-9376-7}.
 
@@ -4247,6 +4278,12 @@ Belot, Michèle, and Marco Francesconi. 2013. {``Dating Preferences and Meeting 
 
 \leavevmode\hypertarget{ref-belsky2018genetic}{}%
 Belsky, Daniel W, Benjamin W Domingue, Robbee Wedow, Louise Arseneault, Jason D Boardman, Avshalom Caspi, Dalton Conley, et al. 2018. {``Genetic Analysis of Social-Class Mobility in Five Longitudinal Studies.''} \emph{Proceedings of the National Academy of Sciences} 115 (31): E7275--84.
+
+\leavevmode\hypertarget{ref-belsky2016genetics}{}%
+Belsky, Daniel W, Terrie E Moffitt, David L Corcoran, Benjamin Domingue, HonaLee Harrington, Sean Hogan, Renate Houts, et al. 2016. {``The Genetics of Success: How Single-Nucleotide Polymorphisms Associated with Educational Attainment Relate to Life-Course Development.''} \emph{Psychological Science} 27 (7): 957--72.
+
+\leavevmode\hypertarget{ref-benjamin2011promises}{}%
+Benjamin, Daniel J, David Cesarini, Christopher F Chabris, Edward L Glaeser, David I Laibson, Gene Age, Vilmundur Gunason, et al. 2011. {``The Promises and Pitfalls of Genoeconomics.''}
 
 \leavevmode\hypertarget{ref-bjorklund2006origins}{}%
 Björklund, Anders, Mikael Lindahl, and Erik Plug. 2006. {``The Origins of Intergenerational Associations: Lessons from Swedish Adoption Data.''} \emph{The Quarterly Journal of Economics} 121 (3): 999--1028.
@@ -4283,6 +4320,9 @@ Chakravarti, Aravinda, and Peter Little. 2003. {``Nature, Nurture and Human Dise
 
 \leavevmode\hypertarget{ref-chetty2017fading}{}%
 Chetty, Raj, David Grusky, Maximilian Hell, Nathaniel Hendren, Robert Manduca, and Jimmy Narang. 2017. {``The Fading American Dream: Trends in Absolute Income Mobility Since 1940.''} \emph{Science} 356 (6336): 398--406.
+
+\leavevmode\hypertarget{ref-chetty2016effects}{}%
+Chetty, Raj, Nathaniel Hendren, and Lawrence F Katz. 2016. {``The Effects of Exposure to Better Neighborhoods on Children: New Evidence from the Moving to Opportunity Experiment.''} \emph{American Economic Review} 106 (4): 855--902.
 
 \leavevmode\hypertarget{ref-chetty2014united}{}%
 Chetty, Raj, Nathaniel Hendren, Patrick Kline, Emmanuel Saez, and Nicholas Turner. 2014. {``Is the United States Still a Land of Opportunity? Recent Trends in Intergenerational Mobility.''} \emph{American Economic Review} 104 (5): 141--47.
@@ -4383,6 +4423,9 @@ National Statistics, Office for. 2014. {``Stepfamilies in 2011.''} 2014. \url{ht
 \leavevmode\hypertarget{ref-oreffice2010anthropometry}{}%
 Oreffice, Sonia, and Climent Quintana-Domeque. 2010. {``Anthropometry and Socioeconomics Among Couples: Evidence in the United States.''} \emph{Economics \& Human Biology} 8 (3): 373--84.
 
+\leavevmode\hypertarget{ref-papageorge2020genes}{}%
+Papageorge, Nicholas W, and Kevin Thom. 2020. {``Genes, Education, and Labor Market Outcomes: Evidence from the Health and Retirement Study.''} \emph{Journal of the European Economic Association} 18 (3): 1351--99.
+
 \leavevmode\hypertarget{ref-pencavel1998assortative}{}%
 Pencavel, John. 1998. {``Assortative Mating by Schooling and the Work Behavior of Wives and Husbands.''} \emph{The American Economic Review} 88 (2): 326--29.
 
@@ -4395,6 +4438,9 @@ Rimfeld, Kaili, Eva Krapohl, Maciej Trzaskowski, Jonathan R. I. Coleman, Saskia 
 \leavevmode\hypertarget{ref-robinson2017genetic}{}%
 Robinson, Matthew R, Aaron Kleinman, Mariaelisa Graff, Anna AE Vinkhuyzen, David Couper, Michael B Miller, Wouter J Peyrot, et al. 2017. {``Genetic Evidence of Assortative Mating in Humans.''} \emph{Nature Human Behaviour} 1 (1): 1--13.
 
+\leavevmode\hypertarget{ref-ronda2020family}{}%
+Ronda, Victor, Esben Agerbo, Dorthe Bleses, Preben Bo Mortensen, Anders Børglum, David M Hougaard, Ole Mors, Merete Nordentoft, Thomas Werge, and Michael Rosholm. 2020. {``Family Disadvantage, Gender and the Returns to Genetic Human Capital.''} Institute of Labor Economics (IZA).
+
 \leavevmode\hypertarget{ref-sacerdote2011nature}{}%
 Sacerdote, Bruce. 2011. {``Nature and Nurture Effects on Children's Outcomes: What Have We Learned from Studies of Twins and Adoptees?''} In \emph{Handbook of Social Economics}, 1:1--30. Elsevier.
 
@@ -4403,6 +4449,9 @@ Schwartz, Christine R, and Robert D Mare. 2005. {``Trends in Educational Assorta
 
 \leavevmode\hypertarget{ref-schwartz2005trends}{}%
 ---------. 2005. {``Trends in Educational Assortative Marriage from 1940 to 2003.''} \emph{Demography} 42 (4): 621--46.
+
+\leavevmode\hypertarget{ref-selzam2019comparing}{}%
+Selzam, Saskia, Stuart J Ritchie, Jean-Baptiste Pingault, Chandra A Reynolds, Paul F O'Reilly, and Robert Plomin. 2019. {``Comparing Within-and Between-Family Polygenic Score Prediction.''} \emph{The American Journal of Human Genetics} 105 (2): 351--63.
 
 \leavevmode\hypertarget{ref-shakespeare1595midsummer}{}%
 Shakespeare, William. 1595. \emph{A Midsummer Night's Dream}.

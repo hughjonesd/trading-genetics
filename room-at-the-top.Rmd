@@ -476,17 +476,29 @@ children’s human capital than low-income parents. Thus, by bringing good genes
 and enriched environments together, SGAM may increase inequality in the next
 generation.
 
+Thirdly, we contribute to a literature in economics that examines
+the relationship between genetic and economic variables. @benjamin2011promises
+is an early review. Several more recent papers use polygenic scores,
+in particular polygenic scores for educational attainment 
+[@barth2020genetic; @papageorge2020genes; @ronda2020family].
+
 Finally, our paper challenges the widespread assumption, in economics and
-beyond, that genetic endowment is exogenous to economic characteristics. While
-this may be tenable in within-generation studies, it ceases to hold in
-intergenerational models. Social-genetic assortative mating is a causal
-mechanism going from socio-economic status to genetic traits. Furthermore, our
-model shows that the strength of this mechanism varies with the structure of the
-society’s marriage market. When both genes and status are both relevant in
-marriage markets, then they become associated in the next generation. When
-social status is irrelevant and only good genes matter – or vice versa – then
-genes and status do not become associated. Social structure matters for the
-redistribution of genes, just as for other forms of capital.
+beyond, that genetic endowment is exogenous to economic
+characteristics.[^papers] While this may be tenable in within-generation
+studies, it ceases to hold in intergenerational models. Social-genetic
+assortative mating is a causal mechanism going from socio-economic status to
+genetic traits. Furthermore, our model shows that the strength of this mechanism
+varies with the structure of the society’s marriage market. When both genes and
+status are both relevant in marriage markets, then they become associated in the
+next generation. When social status is irrelevant and only good genes matter –
+or vice versa – then genes and status do not become associated. Social structure
+matters for the redistribution of genes, just as for other forms of capital.
+
+[^papers]: A small literature in economics examines
+the relationship between genetic and economic variables. @benjamin2011promises
+is an early review. Several recent papers use polygenic scores,
+in particular polygenic scores for educational attainment 
+[@barth2020genetic; @papageorge2020genes; @ronda2020family].
 
 The observations behind SGAM are hardly new. That status and physical
 attractiveness assort in marriage markets is a commonplace and a perennial theme
@@ -911,7 +923,7 @@ categorize respondents as pairs if they:
 -   both reported living with their spouse ("husband, wife or partner");
 -   consisted of one male and one female.
 
-[^4]: Typically a UK postcode contains about 15 properties.
+[^4]: A typical UK postcode contains about 15 properties.
 
 ```{r estimate-false-positives, eval = FALSE}
 # We can use the number of duplicates to estimate our "false positive"
@@ -980,7 +992,7 @@ estimated_false_pos <- observed_dupe_prop/sample_prop_per_coord
 ```
 
 We also eliminate all pairs where either spouse appeared more than once
-in the data. This leaves a total of `r nrow(mf_pairs)` pairs. Some of
+in the data. This leaves a total of `r pretty(nrow(mf_pairs))` pairs. Some of
 these could be false positives, i.e. people who are not each others'
 spouse but simply live in the same postcode. To validate the accuracy of
 our measures, we use genetic relationships. Some respondents in the
@@ -996,34 +1008,29 @@ presumed partner in our data. As a point of comparison, 11% of families
 with dependent children included a stepchild in England and Wales in
 2011 [@ons2011stepfamilies].
 
-It is still possible that some pairs in our data may not be actual
-spouses. In the appendix, to sign any possible bias in our estimates
-resulting from this, we use a dataset of known "fake pairs". We show
-that estimated coefficients of interest are closer to zero among these
-fake pairs than among our "real pairs". Because of this, any fake pairs
-remaining in our data are likely to bias our coefficients towards zero.
+It is still possible that some pairs in our data may not be actual spouses. In
+the appendix, to sign any possible bias in our estimates resulting from this, we
+use a dataset of "known fake" pairs. We show that estimated coefficients of
+interest are closer to zero among these fake pairs than among our candidate
+"real pairs". Because of this, any fake pairs remaining in our data are likely
+to bias our coefficients towards zero.
 
 Our key dependent variable is spouse's *Polygenic Score for Educational
 Attainment* (PSEA). A polygenic score is a DNA-derived summary measure
 of genetic risk or propensity for a particular outcome, created from
 summing small effects of many common genetic variants, known as Single
-Nucleotide Polymorphisms (SNPs). We focus on PSEA, rather than other
-polygenic scores, because educational attainment plays a key role in
+Nucleotide Polymorphisms (SNPs). We focus on PSEA rather than other
+polygenic scores for two reasons. First, educational attainment plays a key role in
 human mate search. People are attracted to educated potential partners
 [@buss1986preferences; @belot2013dating]; spouse pairs often have
 similar levels of educational attainment, as well as similar PSEA
 [@vandenberg1972assortative; @schwartz2005trends; @greenwood2014marry;
-@hugh2016assortative]. We use per-SNP summary statistics from
-[@lee2018gene], re-estimated excluding UK Biobank participants, to
-calculate PSEA.[^5] We normalize the score to have mean 0 and variance
-1.
+@hugh2016assortative]. Second, PSEA predicts a set of important socioeconomic
+variables, including not only education but also social and geographic mobility, 
+IQ, future income and wealth [@belsky2016genetics; @barth2020genetic; @papageorge2020genes].[^discuss]
 
-[^5]: PSEA was computed by summing the alleles across \~1.3 million
-    genetic variants weighted by their effect sizes as estimated in
-    genome-wide association studies (GWASs) that excluded UK Biobank.
-    PSEA was then residualized on the first 100 principal components of
-    the SNP array data. Further details can be found in
-    \@abdellaoui2019genetic.
+[^discuss] See @papageorge2020genes for a detailed discussion of polygenic 
+scores, aimed at economists.
 
 ```{r calc-psea-check}
 
@@ -1047,23 +1054,46 @@ stopifnot(pval_own_psea < 2e-16)
 stopifnot(pval_own_psea_within < 2e-16)
 ```
 
-PSEA is known to correlate with measures of education, including
-university attendance and years of full-time education; from
-within-siblings regressions, where PSEA is randomly assigned by the
-"lottery of meiosis", we know that this correlation is at least partly
-causal. We recheck these facts within the UK Biobank sample. In a simple
-linear regression (N = `r pretty(n_own_psea)`) of university attendance
-on PSEA, a one-standard-deviation increase in PSEA was associated with a
-`r percent(eff_own_psea, 0.01)` increase in the probability of
-university attendance (p \< 2e-16). In a within-siblings regression
-among genetic full siblings (N = `r pretty(n_own_psea_within)`), the
-increase was `r percent(eff_own_psea_within, 0.01)` (p \< 2e-16). This
-suggests that about half of the raw correlation of PSEA with university
-attendance is down to confounds like good environments or parental
-nurture, while the remainder is causal.
+We calculate PSEA using per-SNP summary statistics from [@lee2018gene],
+re-estimated excluding UK Biobank participants.[^5] We normalize the score to
+have mean 0 and variance 1. Because polygenic scores are created from estimates
+of many presumably tiny effects, they contain a large amount of noise relative
+to the true best estimator that could be derived from genetic data. For
+instance, PSEA explains only 11–13% of variance in educational attainment [out
+of sample; @lee2018gene], whereas the true proportion explained by genetic
+variation - the heritability - is estimated from twin studies to be about 40%
+[@branigan2013variation]. In addition, polygenic scores are no more guaranteed
+to be causal than any other independent variable. For example, social
+stratification by descent may lead genes to be associated with educational
+attainment even while playing no causal role [@selzam2019comparing].
+
+[^5]: PSEA was computed by summing the alleles across \~1.3 million
+    genetic variants weighted by their effect sizes as estimated in
+    genome-wide association studies (GWASs) that excluded UK Biobank.
+    PSEA was then residualized on the first 100 principal components of
+    the SNP array data. Further details can be found in
+    @abdellaoui2019genetic.
+
+Despite these points, PSEA has non-trivial estimated effects on educational
+attainment. PSEA correlates with measures of education, including university
+attendance and years of full-time education; within-siblings regressions, where
+PSEA is randomly assigned by the "lottery of meiosis", confirm this correlation
+is at least partly causal [@lee2018gene]. We recheck these facts within the UK
+Biobank sample. In a simple linear regression (N = `r pretty(n_own_psea)`) of
+university attendance on PSEA, a one-standard-deviation increase in PSEA was
+associated with a `r pretty(eff_own_psea*100)` percentage point increase in the
+probability of university attendance ($p < 2 \times 10^{-16}$). In a
+within-siblings regression among genetic full siblings (N = 
+`r pretty(n_own_psea_within)`), the increase was 
+`r pretty(eff_own_psea_within * 100)` ($p < 2 \times 10^{-16}$). This suggests 
+that about half of the raw correlation of PSEA with university attendance is
+down to confounds like good environments or parental nurture, while the
+remainder is causal. Nevertheless, the causal effect remains substantial: for a
+rough comparison, the (ITT) effect on college attendance of the Moving To
+Opportunity experiment in the US was 2.5 percentage points [@chetty2016effects].
 
 Figures \@ref(fig:pic-basic-corr-uni) and
-\@ref(fig:pic-basic-corr-income) illustrate the possible consequences of
+\@ref(fig:pic-basic-corr-income) illustrate the core idea of
 SGAM. The X axis shows a measure of one partner's socio-economic status:
 university attendance (Figure \@ref(fig:pic-basic-corr-uni)) or income
 (Figure \@ref(fig:pic-basic-corr-income)). The Y axis plots the other
@@ -1072,28 +1102,31 @@ spouses with higher PSEA. So did males and females with higher income.
 Since DNA is inherited, these people's children will also have higher
 PSEA.
 
-```{r pic-basic-corr-uni, fig.subcap = c("Female PSEA by male educational attainment", "Male PSEA by female educational attainment"), fig.cap = "Social and genetic advantage among spouse pairs in UK Biobank", fig.width = 3, fig.height = 3}
+```{r pic-basic-corr-uni, fig.subcap = c("Female PSEA by male educational attainment", "Male PSEA by female educational attainment"), fig.cap = "Spouse PSEA against own university attendance. Lines show 95\\% confidence intervals", fig.width = 3, fig.height = 3}
 
 pic_ss <- stat_summary(fun.data = mean_cl_normal, na.rm = TRUE)
 pic_cc <- coord_cartesian(ylim = c(-0.15, 0.25))
 
 mf_pairs %>% 
       filter(! is.na(university.m)) %>% 
-      ggplot(aes(university.m, EA3.f)) + 
+      mutate(University = ifelse(university.m, "Yes", "No")) %>% 
+      ggplot(aes(University, EA3.f)) + 
         pic_ss + 
         pic_cc +
         labs(x = "Male university attendance", y = "Female PSEA")
 
 mf_pairs %>% 
       filter(! is.na(university.f)) %>% 
-      ggplot(aes(university.f, EA3.m)) + 
+      mutate(University = ifelse(university.f, "Yes", "No")) %>% 
+
+      ggplot(aes(University, EA3.m)) + 
         pic_ss + 
         pic_cc +
         labs(x = "Female university attendance", y = "Male PSEA")
         
 ```
 
-```{r pic-basic-corr-income, fig.subcap = c("Female EA3 by male income", "Male EA3 by female income"), fig.cap = "Social and genetic advantage among spouse pairs in UK Biobank", fig.width = 3, fig.height = 3}
+```{r pic-basic-corr-income, fig.subcap = c("Female EA3 by male income", "Male EA3 by female income"), fig.cap = "Spouse PSEA against own estimated income in first job. Lines show 95\\% confidence intervals", fig.width = 3, fig.height = 3}
 
 pic_ss <- stat_summary(
             fun.data = mean_se, 
@@ -1126,10 +1159,10 @@ and their income, both figures could be a result of genetic assortative
 mating (GAM) alone [@hugh2016assortative]. To demonstrate SGAM, we need
 a source of social status which is exogenous to genetics. Also, the link
 between social status and spouse genetics is likely to be noisy, for
-three reasons: first, polygenic scores contain a large amount of error;
-second, causal mechanisms behind variation in social status are likely
-to be noisy; third, to paraphrase @shakespeare1595midsummer, the spouse
-matching process is notoriously unpredictable. So, we need a large N to
+three reasons: first, polygenic scores contain a large amount of error, as
+discussed above; second, causal mechanisms behind variation in social status 
+are likely to be noisy; third, to paraphrase @shakespeare1595midsummer, the 
+spouse matching process is notoriously unpredictable. So, we need a large N to
 give us sufficient power. This rules out time-limited shocks such as
 changes to the school leaving age [@Davies_2018].
 
@@ -1140,7 +1173,7 @@ SES such as educational attainment and occupational status
 all full siblings have the same *ex ante* expected genetic endowment
 from their parents, irrespective of their birth order. For example,
 siblings' expected polygenic score is equal to the mean of their
-parents' polygenic scores. [^6] We can therefore use birth order as a
+parents' polygenic scores.[^6] We can therefore use birth order as a
 "shock" to social status. We do not claim that birth order is exogenous
 to all other variables. For example, it naturally correlates with
 parental age, and it may also relate to the family's economic position
