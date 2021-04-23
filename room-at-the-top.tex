@@ -76,8 +76,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{placeins}
-\newtheorem{prop}{\protect\propositionname}
-\providecommand{\propositionname}{Proposition}
+\newtheorem{prop}{Proposition}
 \usepackage{array}
 \usepackage{caption}
 \usepackage{graphicx}
@@ -125,18 +124,19 @@
 \maketitle
 \begin{abstract}
 If social status and genetics are both attractive in marriage markets, then
-they will become associated over time. This process provides a new explanation
-for the surprising persistence of inequality across generations, and for
-observed genetic differences across socio-economic status. We model
+they will become associated in subsequent generations. This process provides a
+new explanation for the surprising persistence of inequality across generations,
+and for observed genetic differences across socio-economic status. We model
 Social-Genetic Assortative Mating (SGAM) and test for its existence in a large
-biomedical database. We compare spouses of individuals with different birth
-order, which is known to affect socio-economic status and which is
-exogenous to own genetic endowments (among siblings). Spouses of
-earlier-born siblings have higher polygenic scores for educational
-attainment. We provide evidence that this effect is mediated by own
-educational attainment. Thus, environmental shocks to socio-economic status
-are reflected in the DNA of subsequent generations. SGAM reveals a new aspect
-of the inheritance of inequality in contemporary and historical societies.
+genetically-informed survey. We compare spouses of individuals with different
+birth order, which is known to affect socio-economic status and which is
+exogenous to own genetic endowments among siblings. Spouses of
+earlier-born siblings have more genetic variants that predict educational
+attainment. We provide evidence that this effect is mediated by individuals'
+own educational attainment and income. Thus, environmental shocks to
+socio-economic status are reflected in the DNA of subsequent generations.
+SGAM reveals a new aspect of the inheritance of inequality in contemporary and
+historical societies.
 \end{abstract}
 
 \normalem
@@ -1908,88 +1908,88 @@ us more confident that birth order is indeed exogenous to genetics.
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
 
-Our empirical analysis shows that in a modern Western democracy,
+Our empirical analysis shows that in a contemporary developed society,
 earlier-born children had spouses with higher PSEA. We also provide
-evidence that these effects are mediated by social status: income and
-education.
+evidence that these effects are mediated by socio-economic status, specifically
+income and education.
 
-Inequality gets transmitted within families by multiple mechanisms, from
-bequests to investment in children's human capital. Our analysis shows
-that genetics are another mechanism. Socio-economic status in one
-generation translates into the next generation's genetic endowments, via
-marriage markets. This may be one reason why inequality between families
-is surprisingly persistent in the long-run. Because our measures of PSEA
-are so noisy, it is hard to make confident estimates of the effect size
-of the genetic channel. This will be an important research topic as
-polygenic scores become more accurate.
+There are multiple mechanisms by which advantage is transmitted across
+generations. High-income parents may invest more in their children's human
+capital, transfer wealth via gifts and bequests, model valuable skills, or
+provide them with advantageous social networks. They may also pass on causally
+relevant genetic variants. This channel has been proposed as a reason for the
+surprising persistence of inequality over generations
+(Clark and Cummins 2015; Clark 2021). One problem with this theory is
+that in the absence of assortative mating, genetic variation regresses swiftly
+to the mean, with coefficient \(r = 0.5\) per generation. Thus to explain long-run
+persistence, the genetic theory seems to require very high levels of genetic
+assortative mating. SGAM may help to solve this puzzle. Persistence will be
+increased if, in addition to genetic assortative mating, high SES itself
+attracts ``good genes.'' At the same time, SGAM changes the interpretation of
+genetics. Genetic variation is not an exogenous input into the social system,
+but an endogenous outcome of the structure of the marriage market, as our
+theoretical model shows.
 
-Our explanation for the genes-SES gradient applies to a wider range of
-societies than the leading alternative explanation. If this mechanism
-has operated, then we would expect the gradient to be widespread or
-universal among all stratified societies. In fact, people in many
-societies have believed that innate traits do vary across social
-classes. The ancient Greeks described the social elite as \emph{kaloi
-kagathoi} (``fine and good''), while the Roman nobility were the
-\emph{optimates} (``best'').\footnote{The appendix contains a selection of relevant historical
-  quotations.} This belief has been explained by the
-psychological tendency to believe in a just world (Furnham 1993), or
-as an ideology promoted by the dominant class (e.g. Gramsci 1971). However, it may also simply have been a
-recognition of (social) reality. In other words, the belief that elites
-are taller, stronger, better-looking, etc. is not much different from
-the belief that elites are richer and more powerful, and is likely to be
-held for fairly similar reasons. In any case, our prediction may be
-directly testable, for example by using ancient DNA samples.
+SGAM also provides a new explanation for the observed association of genes with
+SES. Unlike meritocratic social mobility, the leading alternative explanation,
+SGAM may apply to a historically wide range of societies. Whilst a
+degree of meritocracy exists in modern capitalist economies, opportunities to
+earn status have been far more limited in most societies throughout history
+(Smelser and Lipset 1966). On the other hand, assortative mating is likely to be a
+cultural universal (Buss 1989). Thus, SGAM predicts that genetic differences
+across social status should exist in all stratified societies. In fact, people
+in many societies have believed that innate traits do vary by social
+status. The ancient Greeks described the social elite as \emph{καλοί κἀγαθοί} (``fine
+and good''), while the Roman nobility were the \emph{optimates} (``best'').\footnote{The appendix contains a selection of relevant historical
+  quotations.} This
+belief has been explained by the tendency to believe in a just world
+(Furnham 1993), or as an ideology promoted by the dominant class (e.g. Gramsci 1971). However, it may also simply have been a recognition of
+(social) reality. In other words, the belief that elites are taller, stronger,
+better-looking, etc. is not much different from the belief that elites are
+richer and more powerful, and may be held for similar reasons. In future, it
+may be possible to directly test for genetic differences across social status
+in ancient DNA samples.
 
-Our analysis also has implications for the practice of controlling
-polygenic scores by residualizing on principal components of genetic
-data. This is done so as to avoid confounding the effects of genetic
-variation with social stratification. However, insofar as the
-geneticists' concept of stratification (mating which is non-random with
-respect to genetics) overlaps with the sociological concept of
-stratification (a hierarchical ranking of social status), SGAM predicts
-that stratification will be associated with causally relevant genetic
-variants. For this reason, we would expect principal components to
-contain real information about causally relevant variants. So, it is an
-empirical question whether controlling for principal components improves
-or weakens the predictive power of polygenic scores. Within-family
-analyses could resolve this question.
+Our empirical analysis has focused on significance rather than effect size. This
+is by necessity: even the latest estimates of PSEA contain substantial noise
+compared to the ``true'' polygenic score. As polygenic scores become more accurate,
+we will be better able to gauge the true effect size of SGAM on both the
+inheritance of inequality and the genes-SES gradient. We expect this to be
+an increasingly important research topic.
 
-In our model, the association between social status and genetic
-variation depends on the structure of the society's marriage market. The
-association is weaker when marriage markets are very socially
-egalitarian, with marriage pairing driven only by genetics, or very
-inegalitarian, with pairings driven only by status. This logic is
-different from the standard reason for association between genes and
-SES. There, more meritocratic societies allow a greater role for genetic
-variants linked to labour market success, and thus lead to monotonically
-stronger gene-environment correlations (rGE) with SES. Here, the
-relationship is non-monotonic: rGE is strongest at intermediate levels
-of ``meritocracy'' in marriage markets. Comparing rGE across societies or
-over time is beyond our scope here, but we see it as a good area for
-future work. Marriage markets may play an important role in explaining
-how social inequality varies across different societies.
+In our model, the association between social status and genetic variation
+depends on the society's marriage market. The association is weaker when
+marriage markets are very socially egalitarian, with spouse matching driven only
+by genetics, or very inegalitarian, with matching driven only by status. Thus,
+there is a non-monotonic relationship between ``meritocracy'' in marriage markets,
+and the gene-environment correlation (``rGE'') between genes and SES. This logic
+is different from the standard mechanism, in which more meritocratic societies
+give genetic variants a greater role in causing labour market success, so that
+the relationship between social meritocracy and rGE is monotonic. Comparing rGE
+across societies or over time is beyond our scope here, but we see it as a good
+area for future theory and empirics. Marriage markets may play an important role
+in explaining how inequality and intergenerational mobility vary across
+different societies.
 
-Marriage markets are likely to respond to other features of the economy.
-For instance, a society's level of redistribution could affect the
-relative weight of social status in the attractiveness function. If so,
-then part of the effect of large-scale policy changes may take place
-over the very long run, by altering marriage markets and thus affecting
-the genes-status gradient. Intuitively one would expect that a more
-``egalitarian'' society and marriage market would lead to a weaker
-genes-status gradient. But in our model, the covariance between genes
-\(G\) and status \(S\) is non-monotonic in the marriage market parameter
-\(k\), so this intuition may not always hold true. A natural extension of
-our theory would be to endogenize the marriage market to investigate
-further. In any case, the potential for economic changes to have such
-long-run effects suggests the potential for hysteresis, with initial
-policy differences cumulating over time via their effect on genetic
-inequality.
+Marriage markets are likely to respond to other features of the economy. For
+instance, a society's level of redistribution could affect the relative weight
+of social status in the attractiveness function. If so, then part of the effect
+of large-scale social changes may take place over the very long run, by altering
+marriage markets and thus affecting the genes-SES gradient and intergenerational
+mobility. Intuitively one would expect that a more ``egalitarian'' society and
+marriage market would lead to a weaker genes-SES gradient. But in our model, the
+covariance between genes \(G\) and status \(S\) is non-monotonic in the weight of
+status in marriage markets \(k\), so this intuition may not always hold true. A
+natural extension of our theory would be to endogenize the marriage market to
+investigate further. In any case, the potential for economic changes to have
+such long-run effects suggests the potential for hysteresis, with initial social
+differences cumulating over time via their effect on genetic inequality.
 
 The broadest message of this paper is that \emph{genetics are a social
 outcome}. Both popular and scientific discourse often parse genetics as
-``nature,'' in opposition to ``nurture'' or ``society'' (e.g. Plomin 1994; Chakravarti and Little 2003). This idea expresses the
+``nature,'' in opposition to ``nurture'' or ``environment'' (e.g. Chakravarti and Little 2003; Plomin 2019). This idea expresses the
 fact that our genetic endowment is fixed at birth and cannot be
-influenced by our social environment (though genes may interact with the
+influenced by our social environment (though genes \emph{always} interact with the
 environment to cause individual outcomes). But the idea that human
 genetics are natural can be highly misleading. Humans inherit their
 genes from their parents, along with other forms of inheritance such as
@@ -4290,6 +4290,9 @@ Chetty, Raj, Nathaniel Hendren, Patrick Kline, Emmanuel Saez, and Nicholas Turne
 \leavevmode\hypertarget{ref-chiappori2012fatter}{}%
 Chiappori, Pierre-André, Sonia Oreffice, and Climent Quintana-Domeque. 2012. {``Fatter Attraction: Anthropometric and Socioeconomic Matching on the Marriage Market.''} \emph{Journal of Political Economy} 120 (4): 659--95.
 
+\leavevmode\hypertarget{ref-clark2021bell}{}%
+Clark, Gregory. 2021. {``For Whom the Bell Curve Tolls: A Lineage of 400,000 English Individuals 1750-2020 Shows Genetics Determines Most Social Outcomes.''} Working Paper. \url{http://faculty.econ.ucdavis.edu/faculty/gclark/ClarkGlasgow2021.pdf}.
+
 \leavevmode\hypertarget{ref-clark2015intergenerational}{}%
 Clark, Gregory, and Neil Cummins. 2015. {``Intergenerational Wealth Mobility in England, 1858--2012: Surnames and Social Mobility.''} \emph{The Economic Journal} 125 (582): 61--85.
 
@@ -4383,8 +4386,8 @@ Oreffice, Sonia, and Climent Quintana-Domeque. 2010. {``Anthropometry and Socioe
 \leavevmode\hypertarget{ref-pencavel1998assortative}{}%
 Pencavel, John. 1998. {``Assortative Mating by Schooling and the Work Behavior of Wives and Husbands.''} \emph{The American Economic Review} 88 (2): 326--29.
 
-\leavevmode\hypertarget{ref-plomin1994genetics}{}%
-Plomin, Robert. 1994. \emph{Genetics and Experience: The Interplay Between Nature and Nurture.} Sage Publications, Inc.
+\leavevmode\hypertarget{ref-plomin2019blueprint}{}%
+Plomin, Robert. 2019. \emph{Blueprint: How DNA Makes Us Who We Are}. Mit Press.
 
 \leavevmode\hypertarget{ref-Rimfeld_2018}{}%
 Rimfeld, Kaili, Eva Krapohl, Maciej Trzaskowski, Jonathan R. I. Coleman, Saskia Selzam, Philip S. Dale, Tonu Esko, Andres Metspalu, and Robert Plomin. 2018. {``Genetic Influence on Social Outcomes During and After the Soviet Era in Estonia.''} \emph{Nature Human Behaviour} 2 (4): 269--75. \url{https://doi.org/10.1038/s41562-018-0332-5}.
@@ -4403,6 +4406,9 @@ Schwartz, Christine R, and Robert D Mare. 2005. {``Trends in Educational Assorta
 
 \leavevmode\hypertarget{ref-shakespeare1595midsummer}{}%
 Shakespeare, William. 1595. \emph{A Midsummer Night's Dream}.
+
+\leavevmode\hypertarget{ref-smelser1966social}{}%
+Smelser, Neil J, and Seymour Martin Lipset. 1966. \emph{Social Structure and Mobility in Economic Development}. Transaction Publishers.
 
 \leavevmode\hypertarget{ref-solon2018we}{}%
 Solon, Gary. 2018. {``What Do We Know so Far about Multigenerational Mobility?''} \emph{The Economic Journal} 128 (612): F340--52.
