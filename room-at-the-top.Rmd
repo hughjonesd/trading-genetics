@@ -369,7 +369,7 @@ While birth order is plausibly independent of siblings’ genes, it cannot be us
 as a valid instrument for socio-economic status, because it may affect partner
 choice through alternative mechanisms. Hence, we steer away from a two-stage
 procedure and instead rely on a mediation analysis similar to
-@heckman2013understanding (henceforth HPS), who decompose the average treatment
+@heckman2013understanding, who decompose the average treatment
 effect into effects of measured and unmeasured consequences of treatment.
 Specifically, we estimate a reduced-form model with spouse genes associated with
 educational attainment as the dependent variable, and own birth order as the
@@ -1166,19 +1166,18 @@ spouse matching process is notoriously unpredictable. So, we need a large N to
 give us sufficient power. This rules out time-limited shocks such as
 changes to the school leaving age [@Davies_2018].
 
-We use *birth order*. It is known that earlier-born children receive
-more parental care and have better life outcomes, including measures of
-SES such as educational attainment and occupational status
-[@Lindahl_2008; @booth2009birth; @black2011older]. On the other hand,
-all full siblings have the same *ex ante* expected genetic endowment
-from their parents, irrespective of their birth order. For example,
-siblings' expected polygenic score is equal to the mean of their
-parents' polygenic scores.[^6] We can therefore use birth order as a
-"shock" to social status. We do not claim that birth order is exogenous
-to all other variables. For example, it naturally correlates with
-parental age, and it may also relate to the family's economic position
-at the time of birth. We only claim that birth order is exogenous to
-genetic variation.
+We use *birth order*. It is known that earlier-born children receive more
+parental care and have better life outcomes, including measures of SES such as
+educational attainment and occupational status [@Lindahl_2008; @booth2009birth;
+@black2011older]. On the other hand, all full siblings have the same *ex ante*
+expected genetic endowment from their parents, irrespective of their birth
+order. For example, siblings' expected polygenic score is equal to the mean of
+their parents' polygenic scores.[^6] We can therefore use birth order as a
+"shock" to social status. Despite this language, we do not claim that birth
+order is exogenous to all other variables. For example, it naturally correlates
+with parental age, and it may also be related to the family's economic position at
+the time of birth. We only claim that birth order is exogenous to genetic
+variation.
 
 [^6]: Although genetic variation is randomly assigned to children at
     birth, genetics and birth order could be dependent if parents'
@@ -1187,26 +1186,34 @@ genetic variation.
 
 Our main independent variable is respondents' birth order, i.e. their
 number of elder siblings plus one. For controls we use family size, i.e.
-their total number of siblings including themselves; month of birth; age
-at interview; respondents' own PSEA; their father's and/or mother's age
+respondents' total number of siblings including themselves; month of birth; age
+at interview; respondents' own PSEA; and their father's and/or mother's age
 at their birth (calculated from parent's current age, only available if
 the parent was still alive). For most regressions, we use only
 respondents with between 1 and 5 siblings, i.e. with a family size of
-2-6. To test whether birth order effects are mediated by SES, we use two
-measures: income, and university attendance. Current income is a direct
-measure of SES, while university attendance is a predictor of income
-over the entire life course.
+2-6. 
 
-Ideally, we might prefer to use birth order as an instrument for SES.
-However, our measures of social status are noisy and incomplete. For
-example, we know whether subjects went to university, but not which
-university they went to, and we only have rough categorical data on
-household income. Birth order likely affects both these measures, and
-other, unmeasured dimensions of SES. So, an instrumental variables
-approach would probably fall foul of the exclusion restriction.
+To test whether birth order effects are mediated by SES, we use two measures:
+income, and university attendance. Income is a direct measure of SES, while
+university attendance is a predictor of income over the entire life course. The
+UK Biobank data only contains a direct measure of current household income,
+which is inappropriate for our purposes because it includes income from both
+spouses. Instead, we estimate income in the respondent's first job, from the
+job's Standard Occupational Classification (SOC) code. We match this with
+information on average earnings by SOC from the Annual Survey of Hours and
+Earnings 2007 [@ONS2007ASHE]. This data is only available for a subset of
+respondents.
+
+## Decomposing the birth order effect on spouse genetics
+
+Ideally, we might prefer to use birth order as an instrument for SES. However,
+our measures of social status are noisy and incomplete. For example, we know
+whether subjects attended university, but not which university. Birth order
+likely affects both measured and unmeasured aspects of SES. So, an instrumental
+variables approach would be likely to fall foul of the exclusion restriction.
 
 Instead, we conduct a mediation analysis, following the strategy of
-[@heckman2013understanding]. We first confirm statistically that birth
+@heckman2013understanding. We first confirm statistically that birth
 order affects our measures of respondents' SES (income and education).
 Then, we regress spouse's PSEA on birth order, with and without
 controlling for SES. Under the assumption that birth order is exogenous
@@ -1216,7 +1223,6 @@ status and spouse's genetics. Also, if the estimated effect of birth
 order on spouse's PSEA changes when SES is controlled for, that is
 evidence that SES mediates the effect of birth order.
 
-## Decomposing the birth order effect on spouse genetics
 
 Linearizing our model so that $A(g, s) = (1-k)g + ks$ and applying
 \@ref(eq:same-A) shows that:
@@ -1226,14 +1232,15 @@ Linearizing our model so that $A(g, s) = (1-k)g + ks$ and applying
 \frac{d A(g_{p(i)}, s_{p(i)})}{d s_i} = k
 \]
 ```
+
 We wish to test whether $k \in (0, 1)$, i.e. whether SGAM is taking
 place. If $k > 0$ then an increase in $i$'s social status $s_i$ will
 increase $i$'s attractiveness $A$; if $k < 1$ then an increase in $A$
 will be associated (in expectation) with an increase in $i$'s partner's
 genetic endowment $g_{p(i)}$. We therefore wish to estimate the effect
 of $i$'s status on their partner's genetics, while controlling for $i$'s
-own genetics $g_i$. Since our measures of genetic endowment (e.g. PSEA)
-are noisy and incomplete, it is not enough to include them in the
+own genetics $g_i$. Since measures of genetic endowment, such as PSEA,
+are noisy and incomplete, it is not enough to include them as controls in the
 regression. Instead, we use birth order as a source of variation in
 $s_i$ which is orthogonal to $g_i$.
 
@@ -1310,11 +1317,11 @@ Estimating the above by OLS will generate unbiased estimates of
 $\alpha^j$ if $\theta^j$ is measured without error and is uncorrelated
 with the error term $\varepsilon$. Since $\varepsilon$ contains both
 individual disturbances and differences in unmeasured investments due to
-birth order, the identifying assumptions that need to hold for unbiased
-OLS estimates are (a) the measured investments (specifically SES) should
+birth order, there are two identifying assumptions that need to hold for unbiased
+OLS estimates. First, the measured investments (specifically SES) should
 be independent of unmeasured investments generated by birth order.
 Failing this, the estimates of $\alpha^j$ will be conflated with the
-effects of unmeasured investments. (b) The measured investments should
+effects of unmeasured investments. Second, the measured investments should
 be uncorrelated with other shocks $\tilde{\varepsilon}_b$. The overall
 treatment effect (relative to birth order $b = 1$) can then be
 decomposed as follows:
@@ -1342,17 +1349,6 @@ is an indicator for university (income).
 
 # Results
 
-We first regress our measures of socio-economic status, university
-attendance and income from first job, on birth order in our sample. We
-also do the same for two non-SES controls that could be affected by
-birth order: fluid IQ and height. We control for respondent's own PSEA
-and mother's age at birth (see below). Table
-\@ref(tab:tbl-bo-first-stage) shows that birth order strongly predicts
-both university attendance and logged income. Effect sizes are quite
-substantial: a single extra elder sibling reduces the chance of
-attending university by about 8 percentage points, log income by about
-0.05, fluid IQ by about 0.3 points on a 13 point test, and height by
-about three-quarters of a centimetre.
 
 ```{r tbl-bo-first-stage}
 fml_bo_1st <- list()
@@ -1362,6 +1358,11 @@ fml_bo_1st[["Fluid IQ"]] <- update(fml_bo_psea[[1]], fluid_iq.x ~ . )
 fml_bo_1st[["Height"]] <- update(fml_bo_psea[[1]], height.x ~ .)
 mod_bo_1st <- purrr::map(fml_bo_1st, fixest::feols, data = mf_pairs_reg, 
                            notes = FALSE)
+
+coef_bo <- purrr::map(mod_bo_1st, tidy) %>%
+             purrr::map(filter, term == "birth_order.x") %>% 
+             purrr::map_dbl("estimate")
+
 huxreg(mod_bo_1st, 
          coefs = c(
            "Birth order" = "birth_order.x", 
@@ -1382,18 +1383,31 @@ huxreg(mod_bo_1st,
        set_bottom_border(8:9, everywhere, 0) %>% 
        set_number_format(2:7, -1, 4) %>% 
        set_width(0.8) %>% 
-       set_caption("Regressions of socio-economic status variables on birth order")
+       set_caption("Regressions of variables on birth order")
        
 ```
+
+
+We first regress our measures of socio-economic status, university attendance
+and income from first job, on birth order in our sample. We also do the same for
+two non-SES controls that could be affected by birth order: fluid IQ and height.
+We control for respondent's own PSEA and mother's age at birth (see below).
+Table \@ref(tab:tbl-bo-first-stage) shows that birth order significantly
+predicts all these variables. Effect sizes are quite substantial: a single extra
+elder sibling reduces the chance of attending university by about 
+`r percent(coef_bo["University"], 1)` percentage points, income by about 
+£`r pretty(coef_bo["Income"] * 1000)`, fluid IQ by about 
+`r pretty(coef_bo["Fluid IQ"])` points on a 13 point test, and height by about 
+`r pretty(coef_bo["Height"])` centimeters.
 
 Next we run regressions of spouse PSEA on birth order, within our
 dataset of spouse pairs. Table \@ref(tab:tbl-bo-psea-basic) reports the
 results. Column 1 controls only for family size (using dummies). As
 expected, higher birth order is negatively associated with spouse's
-PSEA, though the estimated effect size is small. Column 2 includes the
-respondent's own PSEA, as well as dummies for birth year to control for
-cohort effects, and dummies for birth month to control for seasonality
-effects. The effect size of birth order is not much changed.
+PSEA, though the estimated effect size is small and insignificant. 
+Column 2 includes the respondent's own PSEA, as well as dummies for birth year 
+to control for cohort effects, and dummies for birth month to control for 
+seasonality effects. The effect size of birth order is not much changed.
 
 Column 3 includes mother's age at birth. Within a family, later children
 have older parents by definition. Older parents have more life
@@ -1402,13 +1416,13 @@ children. [^7] Including mother's age means we can separate the effect
 of mother's age from birth order. This reduces the N by a lot, since
 only respondents with live mothers reported the necessary data. However,
 the effect of birth order jumps in size. Meanwhile, mother's age has a
-positive effect. This suggests that the previous estimates mixed two
+positive effect. This suggests that estimates in columns 1-2 mixed two
 opposite-signed effects: having older parents versus being later in
 birth order.[^8]
 
-[^7]: There are also potential genetic effects, though\
+[^7]: There are also potential genetic effects, though
     recent research has rejected these in favour of "social"
-    explanations [@kristensen2007explaining; @black2011older].\
+    explanations [@kristensen2007explaining; @black2011older].
     @cochran2013paternal report that mutational load is approximately
     linear in father's age, while it is constant in mothers' age. We
     observe very similar results if we control for father's age at
@@ -1464,10 +1478,10 @@ huxreg(mod_bo_psea_base,
 
 Having tested that birth order affects spouse's PSEA, we now look for
 potential mediators of this effect. Despite the lower N, we continue to
-control for respondents' fathers' age, since this removes a confound
+control for respondents' mothers' age, since this removes a confound
 which would bias our results towards zero.[^9]
 
-[^9]: The appendix reports results without controlling for father's age.
+[^9]: The appendix reports results without controlling for mother's age.
 
 ```{r tbl-bo-psea}
 
@@ -1503,19 +1517,18 @@ huxreg(mod_bo_psea,
        insert_row(after = 17, "Birth year dummies", rep("Yes", 4)) %>% 
        set_bottom_border(16:17, everywhere, 0) %>% 
        set_number_format(2:15, -1, 4) %>% 
+       set_tb_padding(3) %>% 
        set_caption("Regressions of spouse PSEA on birth order and potential mediators")
 ```
 
 Table \@ref(tab:tbl-bo-psea) shows the results. Column 1 shows the
 effect of birth order, using the same specification as column 3 of the
-previous table. (We exclude respondents without data on income or
-university attendance, to make comparison easier across the columns:
-this reduces the N.) The remaining columns add potential mediators of
+previous table. The remaining columns add potential mediators of
 birth order effects. Column 2 includes our first measure of
 socio-economic status: university attendance. As controls, we also
 include fluid IQ and height, both of which could be affected by birth
 order and affect spouse matching. Column 3 adds our second measure of
-socio-economic status, income. Column 4 includes both.
+socio-economic status, income in first job. Column 4 includes both.
 
 When we add university attendance (column 2), the effect of birth order
 drops and becomes insignificant, while the coefficient for university is
@@ -1591,13 +1604,14 @@ compute_mediation_effects <- function (resample = FALSE) {
 
 # for each 1st stage model, run 199 bootstraps and gather coefs
 n_reps <- 199
-bootstraps <- replicate(n_reps, compute_mediation_effects(resample = TRUE))
+
 # bootstraps is now 3 x 4 x n_reps
-cis <- apply(bootstraps, 1:2, quantile, c(0.05, 0.95), na.rm = TRUE)
+# cis <- apply(bootstraps, 1:2, quantile, c(0.05, 0.95), na.rm = TRUE)
 estimates <- compute_mediation_effects(resample = FALSE)
 
 format_est_ci <- function(coef, model) {
-  char <- glue::glue("{percent(estimates[model, coef], 0.1)} ({percent(cis[1, model, coef], 0.1)}, {percent(cis[2,model, coef], 0.1)})")
+  # char <- glue::glue("{percent(estimates[model, coef], 0.1)} ({percent(cis[1, model, coef], 0.1)}, {percent(cis[2,model, coef], 0.1)})")
+  char <- percent(estimates[model, coef], 0.1)
   char[is.na(estimates[model, coef])] <- "-"
   char
 }
@@ -1609,8 +1623,8 @@ rownames(med_matrix) <- c("University", "Income", "Fluid IQ", "Height")
 colnames(med_matrix) <- paste("Model", 2:4)
 as_huxtable(med_matrix, add_colnames = TRUE, add_rownames = "") %>% 
       theme_article() %>% 
-      set_caption("Percent of birth order effects accounted for by mediators, models 2-4") %>% 
-      add_footnote("Bootstrap 90% confidence intervals in brackets") 
+      set_caption("Percent of birth order effects accounted for by mediators, models 2-4")  
+      # add_footnote("Bootstrap 90% confidence intervals in brackets") 
 
 ```
 
@@ -1620,8 +1634,7 @@ the birth order effect that is mediated by these variables. Table
 2-4. Each estimate is the coefficient of birth order on the mediator,
 times the coefficient of the mediator on spouse PSEA, divided by the
 coefficient of birth order on spouse PSEA estimated from column 1, i.e.
-without mediators. 90% confidence intervals are estimated by `r n_reps`
-bootstraps.
+without mediators. 
 
 Our next regressions split up the data into subsets. Cultural
 stereotypes often assume that the link between status and genes is not
@@ -1633,22 +1646,18 @@ subset of individuals who had children. A significant result here will
 confirm that the association between status and genetics is carried over
 into the next generation.
 
-Table \@ref(tab:tbl-bo-subsets) shows the results. Columns 1 and 2 use
-birth order of male respondents to predict female spouses' PSEA. Column
-1 runs the regression of birth order; column 2 adds university
-attendance as a mediator (here, we focus on university attendance alone
-so as to keep our N large). Columns 3 and 4 repeat the exercise for
-female respondents, using their birth order to predict male spouses'
-PSEA. In these subsets, the coefficient on birth order is insignificant.
-However, the pattern of coefficient sizes is the same as in the main
-regression: university attendance is highly significant, and adding it
-reduces the absolute size of the birth order effect. Effect sizes are
-smaller for female respondents. This might be because social status is
-less advantageous to females in the marriage markets, or because females
-place less value on PSEA-related phenotypes in a spouse. Columns 5 and 6
-use only couples with children. Here, birth order is significant in the
-base specification; university attendance still seems to mediate the
-birth order effect.
+Table \@ref(tab:tbl-bo-subsets) shows the results. Columns 1 and 2 use birth
+order of male respondents to predict female spouses' PSEA. Column 1 runs the
+regression of birth order; column 2 adds university attendance as a mediator
+(here, we focus on university attendance alone so as to keep our N large).
+Columns 3 and 4 repeat the exercise for female respondents, using their birth
+order to predict male spouses' PSEA. In both male and female subsets, the
+coefficient on birth order is insignificant, even without adding mediators.
+However, the pattern of coefficient sizes is the same as in the main regression:
+university attendance is highly significant, and adding it reduces the absolute
+size of the birth order effect.  Columns 5 and 6 use only couples with children. 
+Here, birth order is significant in the base specification, and again, 
+university attendance still seems to mediate the birth order effect.
 
 ```{r tbl-bo-subsets}
 
@@ -1703,6 +1712,7 @@ huxreg(reg_list,
        set_bottom_border(16:17, everywhere, 0) %>% 
        set_font_size(10) %>% 
        set_width(1) %>% 
+       set_tb_padding(3) %>% 
        set_caption("Regressions of spouse PSEA on birth order: subsets")
 
 ```
@@ -1779,23 +1789,21 @@ stopifnot(pval_own_psea_3 < 0.05)
 
 ```
 
-To check for the latter two problems, we run balance tests on 33
-different polygenic scores, standardized to have mean zero and unit
-variance.[^10] We regress each score on own birth order, controlling for
-family size. No scores were significant at $p < 0.10/33$. Five scores
-were significant at $p < 0.10$, all with coefficients less than 0.02.
-Table \@ref(tab:tbl-bo-psea-pgs) in the appendix reruns our regressions
-controlling for these scores. Results are almost unchanged. To test
-whether polygenic scores might vary across birth orders within a
-particular family size, we also regress each score on a full set of
-birth order dummies, interacted with a full set of family size dummies.
-None of the `r n_within_coefs` birth order coefficients were significant
-at $p < 0.001$. However, among families of size 3, there is a
-significant positive correlation of birth order with own PSEA (effect
-size `r pretty(coef_own_psea_3, 3)`, $p =$
-`r pretty(pval_own_psea_3, 2)`) . Table \@ref(tab:tbl-bo-psea-no3) in
-the appendix therefore reruns our regressions with families of size 3
-excluded. Results are substantially unchanged.
+To check for the latter two problems, we run balance tests on 33 different
+polygenic scores.[^10] We regress each score on own birth order, controlling for
+family size. No scores were significant at $p < 0.10/33$. Five scores were
+significant at $p < 0.10$, all with effect sizes of less than 0.02 per standard
+deviation. Table \@ref(tab:tbl-bo-psea-pgs) in the appendix reruns our
+regressions controlling for these scores. Results are almost unchanged. To test
+whether polygenic scores might vary across birth orders within a particular
+family size, we also regress each score on a full set of birth order dummies,
+interacted with a full set of family size dummies. None of the `r
+n_within_coefs` birth order coefficients were significant at $p < 0.001$.
+However, among families of size 3, there is a significant positive correlation
+of birth order with own PSEA (effect size `r pretty(coef_own_psea_3, 3)`, 
+$p = `r pretty(pval_own_psea_3, 2)`$) . Table \@ref(tab:tbl-bo-psea-no3) in the
+appendix therefore reruns our regressions with families of size 3 excluded.
+Results are substantially unchanged.
 
 [^10]: Polygenic scores were residualized on the first 100 principal
     components of the genetic data. Scores were for: ADHD, age at
