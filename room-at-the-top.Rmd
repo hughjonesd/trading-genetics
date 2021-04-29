@@ -1,6 +1,12 @@
 ---
 title: "Trading social status for genetics in marriage markets: evidence from UK Biobank"
-author: David Hugh-Jones, Oana Borcan & Abdel Abdellaoui
+author: |
+  Abdel Abdellaoui \thanks{Department of Psychiatry, Amsterdam UMC, University 
+  of Amsterdam, Amsterdam, The Netherlands. Email: a.abdellaoui@amsterdamumc.nl},
+  Oana Borcan \thanks{School of Economics, University of East Anglia, Norwich, 
+  UK. Email: O.Borcan@uea.ac.uk} & 
+  David Hugh-Jones \thanks{Corresponding author. School of Economics, 
+  University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}
 abstract: |
   If social status and genetics are both attractive in marriage markets, then 
   they will become associated in subsequent generations. This process provides a 
@@ -130,7 +136,7 @@ fml_bo_psea <- lapply(fml_bo_psea, Formula::as.Formula)
 
 # common controls
 fml_bo_psea <- lapply(fml_bo_psea, update, 
-                        . ~ . + EA3.x + moth_age_birth.x)
+                        . ~ . + EA3.x + par_age_birth.x)
 fml_bo_psea <- lapply(fml_bo_psea, update, 
                         . ~ . | . + factor(YOB.x) + factor(birth_mon.x))
 
@@ -512,12 +518,12 @@ that attractive mate characteristics include elements of social status (“high
 earning capacity,” “professional status”) as well as traits that are partly
 under genetic influence (“intelligent,” “tall,” “kind,” “physically
 attractive”). It is therefore surprising that papers in genetics and economics
-have not formalised the mechanism and consequences of SGAM.[^genetics-papers]
-
-[^genetics-papers]: @halsey1958genetics showed in a two-class model that social
+have not formalised the mechanism and consequences of SGAM. @halsey1958genetics showed in a two-class model that social
 mobility combined with assortative mating might increase the association between
 genetics and social class. @belsky2018genetic offer three reasons for the
 association between education-linked genetics and SES, but do not consider SGAM.
+
+
 
 
 ```{r literature-notes, eval = FALSE}
@@ -919,7 +925,7 @@ categorize respondents as pairs if they:
 -   had the same home postcode on at least one occasion;[^4]
 -   both reported the same homeownership/renting status, length of time
     at the address, and number of children;
--   attended the same UK Biobank assessment centre on the same day;
+-   attended the same UK Biobank assessment center on the same day;
 -   both reported living with their spouse ("husband, wife or partner");
 -   consisted of one male and one female.
 
@@ -970,7 +976,7 @@ mf_pairs_tmp %<>% filter(
                 f.699.0.0.f  == f.699.0.0.m,  # same length of time in hh
                 f.709.0.0.f  == f.709.0.0.m,  # same n occupants of hh
                 n_children.f == n_children.m, # same n kids
-                f.54.0.0.f   == f.54.0.0.m,   # same assessment centre 
+                f.54.0.0.f   == f.54.0.0.m,   # same assessment center 
                 f.53.0.0.f   == f.53.0.0.m,   # attended assessment same day
                 f.6141.0.0.f == 1,            # both living with spouse
                 f.6141.0.0.m == 1,            #   "     "     "    "
@@ -1029,7 +1035,7 @@ similar levels of educational attainment, as well as similar PSEA
 variables, including not only education but also social and geographic mobility, 
 IQ, future income and wealth [@belsky2016genetics; @barth2020genetic; @papageorge2020genes].[^discuss]
 
-[^discuss] See @papageorge2020genes for a detailed discussion of polygenic 
+[^discuss]: See @papageorge2020genes for a detailed discussion of polygenic 
 scores, aimed at economists.
 
 ```{r calc-psea-check}
@@ -1367,7 +1373,7 @@ huxreg(mod_bo_1st,
          coefs = c(
            "Birth order" = "birth_order.x", 
            "PSEA" = "EA3.x",
-           "Mother's age at birth" = "moth_age_birth.x"
+           "Parents' age at birth" = "par_age_birth.x"
          ),
          statistics = c(
            "N"  = "nobs", 
@@ -1381,6 +1387,7 @@ huxreg(mod_bo_1st,
        insert_row(after = 8, "Birth month dummies", rep("Yes", 4)) %>% 
        insert_row(after = 9, "Birth year dummies", rep("Yes", 4)) %>% 
        set_bottom_border(8:9, everywhere, 0) %>% 
+       set_align(8:10, -1, "center") %>% 
        set_number_format(2:7, -1, 4) %>% 
        set_width(0.8) %>% 
        set_caption("Regressions of variables on birth order")
@@ -1390,15 +1397,15 @@ huxreg(mod_bo_1st,
 
 We first regress our measures of socio-economic status, university attendance
 and income from first job, on birth order in our sample. We also do the same for
-two non-SES controls that could be affected by birth order: fluid IQ and height.
-We control for respondent's own PSEA and mother's age at birth (see below).
+two non-SES mediators that could be affected by birth order: fluid IQ and height.
+We control for respondent's own PSEA and their parents' age at birth (see below).
 Table \@ref(tab:tbl-bo-first-stage) shows that birth order significantly
 predicts all these variables. Effect sizes are quite substantial: a single extra
 elder sibling reduces the chance of attending university by about 
-`r percent(coef_bo["University"], 1)` percentage points, income by about 
-£`r pretty(coef_bo["Income"] * 1000)`, fluid IQ by about 
-`r pretty(coef_bo["Fluid IQ"])` points on a 13 point test, and height by about 
-`r pretty(coef_bo["Height"])` centimeters.
+`r pretty(-coef_bo["University"] * 100)` percentage points, income by about 
+£`r pretty(-coef_bo["Income"] * 1000, format = "d")`, fluid IQ by about 
+`r pretty(-coef_bo["Fluid IQ"])` points on a 13 point test, and height by about 
+`r pretty(-coef_bo["Height"])` centimeters.
 
 Next we run regressions of spouse PSEA on birth order, within our
 dataset of spouse pairs. Table \@ref(tab:tbl-bo-psea-basic) reports the
@@ -1409,28 +1416,27 @@ Column 2 includes the respondent's own PSEA, as well as dummies for birth year
 to control for cohort effects, and dummies for birth month to control for 
 seasonality effects. The effect size of birth order is not much changed.
 
-Column 3 includes mother's age at birth. Within a family, later children
+Column 3 includes parents' age at birth. Within a family, later children
 have older parents by definition. Older parents have more life
 experience and may have higher income, which would presumably help later
-children. [^7] Including mother's age means we can separate the effect
-of mother's age from birth order. This reduces the N by a lot, since
-only respondents with live mothers reported the necessary data. However,
-the effect of birth order jumps in size. Meanwhile, mother's age has a
+children.[^7] Including parents' age means we can separate the effect
+of parental age from birth order. This reduces the N by a lot, since
+only respondents with a live parent reported the necessary data. However,
+the effect of birth order jumps in size and becomes significant at the 5 per
+cent level. Meanwhile, parents' age has a
 positive effect. This suggests that estimates in columns 1-2 mixed two
 opposite-signed effects: having older parents versus being later in
-birth order.[^8]
+birth order.
 
-[^7]: There are also potential genetic effects, though
-    recent research has rejected these in favour of "social"
-    explanations [@kristensen2007explaining; @black2011older].
-    @cochran2013paternal report that mutational load is approximately
-    linear in father's age, while it is constant in mothers' age. We
-    observe very similar results if we control for father's age at
-    respondent's birth.
+[^7]: We often only have data only for one parent. We use this, or take the mean
+  if we have both. There are also potential 
+  genetic effects from parental age, though recent research has rejected these 
+  in favour of "social" explanations [@kristensen2007explaining; @black2011older].
+  @cochran2013paternal report that mutational load is approximately
+  linear in father's age, while it is constant in mother's age. We
+  observe very similar results if we control only for father's age at
+  respondent's birth.
 
-[^8]: Note that parental age would not be a good independent variable
-    for testing genetic encoding of social advantage, since it is likely
-    to correlate with parents' genetics.
 
 ```{r tbl-bo-psea-basic}
 
@@ -1441,7 +1447,7 @@ fml_bo_psea_base[[2]] <- EA3.y ~ birth_order.x + EA3.x + factor(birth_mon.x) |
                             factor(n_sibs.x) + factor(YOB.x)
   
 fml_bo_psea_base[[3]] <- EA3.y ~ birth_order.x + EA3.x + factor(birth_mon.x) +
-                            moth_age_birth.x | factor(n_sibs.x) + factor(YOB.x)
+                            par_age_birth.x | factor(n_sibs.x) + factor(YOB.x)
 
 fml_bo_psea_base <- lapply(fml_bo_psea_base, Formula::as.Formula)
 
@@ -1455,7 +1461,7 @@ huxreg(mod_bo_psea_base,
          coefs = c(
            "Birth order"           = "birth_order.x", 
            "Own PSEA"              = "EA3.x",
-           "Mother's age at birth" = "moth_age_birth.x"
+           "Parents' age at birth" = "par_age_birth.x"
          ),
          statistics = c(
            "N"  = "nobs", 
@@ -1469,6 +1475,7 @@ huxreg(mod_bo_psea_base,
        insert_row(after = 8, "Birth month dummies", "No", "Yes", "Yes") %>% 
        insert_row(after = 9, "Birth year dummies", "No", "Yes", "Yes") %>% 
        set_bottom_border(8:9, everywhere, 0) %>% 
+       set_align(8:10, -1, "center") %>% 
        set_number_format(2:7, -1, 4) %>% 
        set_width(0.8) %>% 
        set_caption("Regressions of spouse PSEA on birth order")
@@ -1478,20 +1485,13 @@ huxreg(mod_bo_psea_base,
 
 Having tested that birth order affects spouse's PSEA, we now look for
 potential mediators of this effect. Despite the lower N, we continue to
-control for respondents' mothers' age, since this removes a confound
+control for respondents' parents' age, since this removes a confound
 which would bias our results towards zero.[^9]
 
-[^9]: The appendix reports results without controlling for mother's age.
+[^9]: The appendix reports results without controlling for parents' age.
 
 ```{r tbl-bo-psea}
 
-# 
-# mf_pairs_reg2 <- mf_pairs_reg %>% 
-#                   filter(
-#                     ! is.na(university.x),
-#                     ! is.na(first_job_pay.x),
-#                     ! is.na(moth_age_birth.x)
-#                   )
 
 mod_bo_psea <- lapply(fml_bo_psea, fixest::feols, 
                  data = mf_pairs_reg,
@@ -1504,7 +1504,7 @@ huxreg(mod_bo_psea,
           "University"            = "university.xTRUE", 
           "Income"                = "first_job_pay.x",
           "Own PSEA"              = "EA3.x",
-          "Mother's age at birth" = "moth_age_birth.x",
+          "Parents' age at birth" = "par_age_birth.x",
           "Fluid IQ"              = "fluid_iq.x",
           "Height"                = "height.x"
         ),
@@ -1516,6 +1516,7 @@ huxreg(mod_bo_psea,
        insert_row(after = 16, "Birth month dummies", rep("Yes", 4)) %>% 
        insert_row(after = 17, "Birth year dummies", rep("Yes", 4)) %>% 
        set_bottom_border(16:17, everywhere, 0) %>% 
+       set_align(16:18, -1, "center") %>% 
        set_number_format(2:15, -1, 4) %>% 
        set_tb_padding(3) %>% 
        set_caption("Regressions of spouse PSEA on birth order and potential mediators")
@@ -1533,10 +1534,10 @@ socio-economic status, income in first job. Column 4 includes both.
 When we add university attendance (column 2), the effect of birth order
 drops and becomes insignificant, while the coefficient for university is
 positive and highly significant. Fluid IQ and height are also positive
-and significant. Controlling for income alone (column 3), birth order
-again becomes insignificant and the coefficient changes sign. Lastly,
-when we control for both university and income (column 4), again birth
-order's effect size is positive.
+and significant. Controlling for income alone (column 3), again the effect of
+birth order shrinks and becomes insignificant, while income has a positive and
+highly significant effect. Lastly, the same pattern holds when we 
+control for both university and income (column 4).
 
 ```{r tbl-mediation-prop, cache = TRUE}
 
@@ -1651,13 +1652,20 @@ order of male respondents to predict female spouses' PSEA. Column 1 runs the
 regression of birth order; column 2 adds university attendance as a mediator
 (here, we focus on university attendance alone so as to keep our N large).
 Columns 3 and 4 repeat the exercise for female respondents, using their birth
-order to predict male spouses' PSEA. In both male and female subsets, the
-coefficient on birth order is insignificant, even without adding mediators.
+order to predict male spouses' PSEA. Significance drops below 5% in these subsets.
 However, the pattern of coefficient sizes is the same as in the main regression:
 university attendance is highly significant, and adding it reduces the absolute
 size of the birth order effect.  Columns 5 and 6 use only couples with children. 
 Here, birth order is significant in the base specification, and again, 
 university attendance still seems to mediate the birth order effect.
+
+Spouse matching is strictly a single process in which neither side is an
+"independent variable". In Appendix Table \@ref(tab:tbl-sur), we estimate a
+matching model in the style of @chiappori2012fatter, estimating the effects of 
+birth order (and PSEA) on both spouse's PSEA and spouse's birth order, and
+testing for proportionality of coefficients across the dependent variables. 
+For women only we reject proportionality of coefficients, suggesting that there
+may be some assortative matching separately on each dimension.
 
 ```{r tbl-bo-subsets}
 
@@ -1697,7 +1705,7 @@ huxreg(reg_list,
             "Birth order"           = "birth_order.x", 
             "University"            = "university.xTRUE",
             "Own PSEA"              = "EA3.x",
-            "Mother's age at birth" = "moth_age_birth.x",
+            "Parents' age at birth" = "par_age_birth.x",
             "Fluid IQ"              = "fluid_iq.x",
             "Height"                = "height.x"
           ),
@@ -1706,13 +1714,15 @@ huxreg(reg_list,
          stars = my_stars,
          tidy_args = tidy_args
        ) %>% 
-       insert_row(after = 15, "Family size dummies", rep("Yes", 6)) %>% 
-       insert_row(after = 16, "Birth month dummies", rep("Yes", 6)) %>% 
-       insert_row(after = 17, "Birth year dummies", rep("Yes", 6)) %>% 
-       set_bottom_border(16:17, everywhere, 0) %>% 
+       insert_row(after = 13, "Family size dummies", rep("Yes", 6)) %>% 
+       insert_row(after = 14, "Birth month dummies", rep("Yes", 6)) %>% 
+       insert_row(after = 15, "Birth year dummies", rep("Yes", 6)) %>% 
+       set_bottom_border(14:15, everywhere, 0) %>% 
+       set_align(14:16, -1, "center") %>% 
        set_font_size(10) %>% 
        set_width(1) %>% 
        set_tb_padding(3) %>% 
+       set_lr_padding(3) %>% 
        set_caption("Regressions of spouse PSEA on birth order: subsets")
 
 ```
@@ -1797,13 +1807,17 @@ deviation. Table \@ref(tab:tbl-bo-psea-pgs) in the appendix reruns our
 regressions controlling for these scores. Results are almost unchanged. To test
 whether polygenic scores might vary across birth orders within a particular
 family size, we also regress each score on a full set of birth order dummies,
-interacted with a full set of family size dummies. None of the `r
-n_within_coefs` birth order coefficients were significant at $p < 0.001$.
+interacted with a full set of family size dummies. None of the 
+`r n_within_coefs` birth order coefficients were significant at $p < 0.001$.
 However, among families of size 3, there is a significant positive correlation
 of birth order with own PSEA (effect size `r pretty(coef_own_psea_3, 3)`, 
-$p = `r pretty(pval_own_psea_3, 2)`$) . Table \@ref(tab:tbl-bo-psea-no3) in the
+$p = `r pretty(pval_own_psea_3, 2)`$). Table \@ref(tab:tbl-bo-psea-no3) in the
 appendix therefore reruns our regressions with families of size 3 excluded.
-Results are substantially unchanged.
+Results are substantially unchanged. Of course, there could still be 
+unmeasured genetic variants which correlate with birth order in our sample.
+Nevertheless, a wide set of polygenic scores shows no large or significant
+correlation. This makes us more confident that birth order is indeed exogenous
+to genetics.
 
 [^10]: Polygenic scores were residualized on the first 100 principal
     components of the genetic data. Scores were for: ADHD, age at
@@ -1817,10 +1831,9 @@ Results are substantially unchanged.
     smoking cessation, schizophrenia, smoking initiation, waist
     circumference, and waist-to-hip ratio.
 
-Of course, there could still be unmeasured genetic variants which
-correlate with birth order in our sample. Nevertheless, a wide set of
-polygenic scores shows no large or significant correlation. This makes
-us more confident that birth order is indeed exogenous to genetics.
+The appendix reports other robustness checks, including a specification with
+separate dummies for each value of birth order, and replacing university attendance
+with age of leaving full-time education.
 
 # Conclusion
 
@@ -2089,13 +2102,13 @@ correlation.
 
 ## Robustness checks
 
-Table \@ref(tab:tbl-bo-psea-no-moth-age) reruns our central regressions,
-dropping the control for mother's age at birth. Results show the same
+Table \@ref(tab:tbl-bo-psea-no-par-age) reruns our central regressions,
+dropping the control for parents' age at birth. Results show the same
 pattern as in the main text: the coefficient for birth order is
 negative, but changes sign when university attendance is added as a
 potential mediator. However, the birth order effect is smaller overall,
 and is never significant. We also ran regressions using father's age
-instead of mother's age; results are similar to those in the main text.
+only; results are similar to those in the main text.
 
 Table \@ref(tab:tbl-bo-psea-dummies) reruns our central regressions but
 includes a separate coefficient for each position in the birth order
@@ -2148,7 +2161,7 @@ main text.
 #   paper
 
 # we avoid YOB fixed effects as it makes the estimation fail
-fml_sur_psea <- EA3.y ~ birth_order.x + EA3.x + moth_age_birth.x + 
+fml_sur_psea <- EA3.y ~ birth_order.x + EA3.x + par_age_birth.x + 
                   factor(n_sibs.x) + factor(birth_mon.x)
 fml_sur_bo <- update(fml_sur_psea, birth_order.y ~ .)
 
@@ -2161,7 +2174,7 @@ mf_pairs_sf <- mf_pairs_reg %>%
                    ! is.na(EA3.y),
                    ! is.na(birth_mon.x),
                    ! is.na(EA3.x),
-                   ! is.na(moth_age_birth.x)
+                   ! is.na(par_age_birth.x)
                  )
 
 mod_sur <- list()
@@ -2208,7 +2221,7 @@ regression targeting PSEA. P values are $p$ =
 `r pretty(wald_eq_ratio$females$p.value)` for females. So for females there
 is some evidence against this linear model.
 
-```{r tbl-bo-psea-no-moth-age}
+```{r tbl-bo-psea-no-par-age}
 
 
 age_table <- famhist %>% 
@@ -2221,27 +2234,25 @@ age_table <- famhist %>%
         .groups = "drop"
       )
 
-mf_pairs_reg_big <- mf_pairs_reg
-
-fml_bo_no_moth_age <- lapply(fml_bo_psea, update, 
-                     . ~ . - moth_age_birth.x, 
+fml_bo_no_par_age <- lapply(fml_bo_psea, update, 
+                     . ~ . - par_age_birth.x, 
                      rhs = 1
                    )
-mod_bo_no_moth_age <- lapply(fml_bo_no_moth_age, fixest::feols,
-                     data  = mf_pairs_reg_big, 
+mod_bo_no_par_age <- lapply(fml_bo_no_par_age, fixest::feols,
+                     data  = mf_pairs_reg, 
                      notes = FALSE
                    )
 
-fml_bo_fath_age <- lapply(fml_bo_no_moth_age, update, 
+fml_bo_fath_age <- lapply(fml_bo_no_par_age, update, 
                      . ~ . + fath_age_birth.x, 
                      rhs = 1
                    )
 mod_bo_fath_age <- lapply(fml_bo_fath_age, fixest::feols,
-                     data  = mf_pairs_reg_big, 
+                     data  = mf_pairs_reg, 
                      notes = FALSE
                    )
 
-huxreg(mod_bo_no_moth_age, 
+huxreg(mod_bo_no_par_age, 
         coefs = c(
           "Birth order"           = "birth_order.x", 
           "University"            = "university.xTRUE", 
@@ -2258,8 +2269,9 @@ huxreg(mod_bo_no_moth_age,
        insert_row(after = 14, "Birth month dummies", rep("Yes", 4)) %>% 
        insert_row(after = 15, "Birth year dummies", rep("Yes", 4)) %>% 
        set_bottom_border(14:15, everywhere, 0) %>% 
+       set_align(14:16, -1, "center") %>% 
        set_number_format(2:13, -1, 4) %>% 
-       set_caption("Regressions of spouse PSEA, without controls for mother's age at respondent's birth")
+       set_caption("Regressions of spouse PSEA, without controls for parents' age at respondent's birth")
 
 ```
 
@@ -2295,7 +2307,7 @@ huxreg_coefs <- c(
                    "University"  = "university.xTRUE", 
                    "Income"      = "first_job_pay.x",
                    "Own PSEA"     = "EA3.x",
-                   "Mother's age at birth" = "moth_age_birth.x"
+                   "Parents' age at birth" = "par_age_birth.x"
                  )
 
 huxtable::huxreg(mod_bo_psea_dummies, 
@@ -2311,6 +2323,7 @@ huxtable::huxreg(mod_bo_psea_dummies,
        insert_row(after = 23, "Controls (IQ, height)", 
                     c("No", rep("Yes", 3))) %>% 
        set_bottom_border(21:23, everywhere, 0) %>% 
+       set_align(21:24, -1, "center") %>% 
        set_number_format(2:20, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, separate birth order coefficient dummies") %>% 
        set_tb_padding(3) %>% 
@@ -2369,7 +2382,7 @@ huxreg_coefs <- c(
                    huxreg_coefs,
                    "University"  = "university.xTRUE", 
                    "Own PSEA"     = "EA3.x",
-                   "Mother's age at birth" = "moth_age_birth.x"
+                   "Parents' age at birth" = "par_age_birth.x"
                  )
 
 huxtable::huxreg(reg_list, 
@@ -2383,11 +2396,13 @@ huxtable::huxreg(reg_list,
        insert_row(after = 19, "Birth month dummies", rep("Yes", 6))   %>% 
        insert_row(after = 20, "Birth year dummies", rep("Yes", 6))    %>% 
        insert_row(after = 21, "Controls (IQ, height)", rep("Yes", 6)) %>% 
-       set_bottom_border(19:21, everywhere, 0) %>% 
+       set_bottom_border(19:21, everywhere, 0) %>%
+       set_align(19:22, -1, "center") %>% 
        set_number_format(2:18, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, separate birth order coefficient dummies: subsets") %>% 
        set_tb_padding(3) %>% 
-       set_font_size(10)
+       set_lr_padding(2) %>% 
+       set_font_size(9)
 ```
 
 ```{r pic-bo-psea-interactions, fig.align = "center", fig.cap = "Regressions of spouse PSEA: birth order dummies within different family sizes. Labels show birth order. Lines are 95 per cent confidence intervals."}
@@ -2420,8 +2435,8 @@ suppressWarnings({
   gg <- ggplot(coefs, aes(estimate, `Family size`, colour = `Birth order`)) + 
           scale_color_continuous(type = "viridis", name = "Birth order") + 
           geom_vline(xintercept = 0, linetype = 2) +
-          geom_linerange(aes(xmin = conf.low, xmax = conf.high), 
-                         alpha = 0.7, size = 1.15, 
+          geom_pointrange(aes(xmin = conf.low, xmax = conf.high), 
+                         alpha = 0.7, size = 1.15, fatten = 1,
                          position = position_dodge2(width = 0.15)) + 
           geom_text(aes(label = `Birth order`), nudge_y = 0.2, size = 5) + 
           guides(colour = "none") +
@@ -2454,7 +2469,7 @@ huxreg(mod_bo_psea_pgs,
            "University"            = "university.xTRUE", 
            "Income"                = "first_job_pay.x",
            "Own PSEA"              = "EA3.x",
-           "Mother's age at birth" = "moth_age_birth.x",
+           "Parents' age at birth" = "par_age_birth.x",
            "Fluid IQ"              = "fluid_iq.x",
            "Height"                = "height.x"
          ),
@@ -2474,7 +2489,8 @@ huxreg(mod_bo_psea_pgs,
        insert_row(after = 16, "Birth month dummies", rep("Yes", 4)) %>% 
        insert_row(after = 17, "Birth year dummies", rep("Yes", 4)) %>% 
        insert_row(after = 18, "Polygenic score controls", rep("Yes", 4)) %>% 
-       set_top_border(17:19, everywhere, 0) %>% 
+       set_bottom_border(16:18, everywhere, 0) %>% 
+       set_align(16:19, -1, "center") %>% 
        set_number_format(2:15, -1, 4) %>% 
        set_width(1) %>% 
        set_wrap(final(1), everywhere, TRUE) %>% 
@@ -2498,7 +2514,7 @@ huxreg(mod_bo_psea_age_fte,
           "Birth order"           = "birth_order.x", 
           "Age left full-time educ." = "age_fulltime_edu.x", 
           "Income"                = "first_job_pay.x",
-          "Mother's age at birth" = "moth_age_birth.x",
+          "Parents' age at birth" = "par_age_birth.x",
           "Own PSEA"              = "EA3.x",
           "Fluid IQ"              = "fluid_iq.x",
           "Height"                = "height.x"
@@ -2511,6 +2527,7 @@ huxreg(mod_bo_psea_age_fte,
        insert_row(after = 16, "Birth month dummies", rep("Yes", 3)) %>% 
        insert_row(after = 17, "Birth year dummies", rep("Yes", 3)) %>% 
        set_bottom_border(16:17, everywhere, 0) %>% 
+       set_align(16:18, -1, "center") %>% 
        set_number_format(2:15, -1, 4) %>% 
        set_width(0.8) %>% 
        set_caption("Regressions of spouse PSEA using age of leaving full-time education")
@@ -2529,7 +2546,7 @@ huxreg(mod_bo_psea_no3,
           "Birth order"           = "birth_order.x", 
           "University"            = "university.xTRUE", 
           "Income"                = "first_job_pay.x",
-          "Mother's age at birth" = "moth_age_birth.x",
+          "Parents' age at birth" = "par_age_birth.x",
           "Own PSEA"              = "EA3.x",
           "Fluid IQ"              = "fluid_iq.x",
           "Height"                = "height.x"
@@ -2542,6 +2559,7 @@ huxreg(mod_bo_psea_no3,
        insert_row(after = 16, "Birth month dummies", rep("Yes", 4)) %>% 
        insert_row(after = 17, "Birth year dummies", rep("Yes", 4)) %>% 
        set_bottom_border(16:17, everywhere, 0) %>% 
+       set_align(16:18, -1, "center") %>% 
        set_number_format(2:15, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, excluding family size 3")
 ```
@@ -2574,10 +2592,10 @@ mod_sur_bo <- purrr::map(mod_sur, ~ huxtable::tidy_replace(.x,
 
 # avoid warnings from glance() due to huxreg bug
 suppressWarnings(huxreg(
-        "PSEA"          = mod_sur_psea$males, 
-        "Birth order"   = mod_sur_bo$males, 
-        "PSEA"        = mod_sur_psea$females, 
-        "Birth order" = mod_sur_bo$females,
+        "Spouse PSEA"          = mod_sur_psea$males, 
+        "Spouse birth order"   = mod_sur_bo$males, 
+        "Spouse PSEA"        = mod_sur_psea$females, 
+        "Spouse birth order" = mod_sur_bo$females,
         coefs                  = c(
                                     "Birth order" = "birth_order.x", 
                                     "PSEA"        = "EA3.x"
@@ -2589,16 +2607,17 @@ suppressWarnings(huxreg(
                      after = 0) %>%         
         merge_cells(1, 2:3) %>% 
         merge_cells(1, 4:5) %>% 
-        set_align(1, everywhere, "centre") %>% 
-        insert_row("Controls (mother's age)", rep("Yes", 4), after = 6) %>% 
+        set_align(1, everywhere, "center") %>% 
+        insert_row("Controls (parents' age)", rep("Yes", 4), after = 6) %>% 
         insert_row("Family size dummies", rep("Yes", 4), after = 7) %>% 
         insert_row("Birth month dummies", rep("Yes", 4), after = 8) %>% 
         insert_row("Birth year dummies", rep("No", 4), after = 9) %>% 
         set_bottom_border(7:9, everywhere, 0) %>% 
+        set_align(7:10, -1, "center") %>% 
         set_number_format(11, everywhere, 0) %>% 
         # merge_cells(10, 2:3) %>% 
         # merge_cells(10, 4:5) %>% 
-        # set_align(10, everywhere, "centre") %>% 
+        # set_align(10, everywhere, "center") %>% 
         set_caption(
           "Seemingly Unrelated Regressions on spouse characteristics")
 
@@ -2624,7 +2643,7 @@ opposite-sexed pairs who live in the same postcode, but do not share all
 the characteristics listed for the real pairs. Specifically, from the
 list of characteristics used to create our real pairs (same
 homeownership status, same length of time at address, same number of
-children, attended same assessment centre, attended on same day, husband
+children, attended same assessment center, attended on same day, husband
 reported living with spouse, wife reported living with spouse) the fake
 pairs ticked exactly 5 out of 7 boxes.
 
@@ -2643,9 +2662,9 @@ fakes". Out of `r n_one` genetic children of the fake pairs, only
 fake pairs do not appear to be spouses. Table
 \@ref(tab:tbl-bo-psea-fake) reruns the regressions of Table
 \@ref(tab:tbl-bo-psea-basic) using the fake pairs. Although the
-coefficients on birth order are always negative, they are never
-significant, and they are always absolutely smaller than the
-corresponding coefficient in the main text. This strongly suggests that
+coefficients on birth order are always negative, and significant
+when controlling for parent's age, they are always absolutely smaller than the
+corresponding coefficient in the main text. This suggests that
 any fake pairs remaining in our data will have the effect of biasing our
 results towards zero.
 
@@ -2662,7 +2681,7 @@ huxreg(mod_bo_psea_fake,
          coefs = c(
            "Birth order"           = "birth_order.x", 
            "Own PSEA"              = "EA3.x",
-           "Mother's age at birth" = "moth_age_birth.x"
+           "Parents' age at birth" = "par_age_birth.x"
          ),
          statistics = c(
            "N"  = "nobs", 
@@ -2676,6 +2695,7 @@ huxreg(mod_bo_psea_fake,
        insert_row(after = 8, "Birth month dummies", "No", "Yes", "Yes") %>% 
        insert_row(after = 9, "Birth year dummies", "No", "Yes", "Yes") %>% 
        set_bottom_border(8:9, everywhere, 0) %>% 
+       set_align(8:10, -1, "center") %>% 
        set_number_format(2:7, -1, 4) %>% 
        set_width(0.8) %>% 
        set_caption("Regressions of PSEA on birth order: fake pairs")
@@ -2685,7 +2705,7 @@ huxreg(mod_bo_psea_fake,
 
 \FloatBarrier
 
-\newpage
+\clearpage
 
 ## Quotations on natural inequality
 

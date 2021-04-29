@@ -155,14 +155,14 @@ mf_pairs_sf <- mf_pairs_reg %>%
                    ! is.na(EA3.y),
                    ! is.na(birth_mon.x),
                    ! is.na(EA3.x),
-                   ! is.na(moth_age_birth.x)
+                   ! is.na(par_age_birth.x)
                  )
 
 
-fml <- ~ EA3.x + birth_order.x + moth_age_birth.x + factor(birth_mon.x) + 
+fml <- ~ EA3.x + birth_order.x + par_age_birth.x + factor(birth_mon.x) + 
            factor(n_sibs.x) + university.x + fluid_iq.x + height.x
 
-restricted <- "birth_order.x|university.x|fluid_iq.x|height.x|moth_age_birth.x"
+restricted <- "birth_order.x|university.x|fluid_iq.x|height.x|par_age_birth.x"
 
 list_mod_male <- estimate_surs(fml, mf_pairs_sf %>% filter(! female.x), 
                                  restricted = restricted)
