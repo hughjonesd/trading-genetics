@@ -1528,7 +1528,7 @@ birth order shrinks and becomes insignificant, while income has a positive and
 highly significant effect. Lastly, the same pattern holds when we 
 control for both university and income (column 4).
 
-```{r tbl-mediation-prop, cache = TRUE}
+```{r tbl-mediation-prop, cache = FALSE}
 
 # percent of main effect that is mediated by uni:
 # uni effect of BO (first stage) * PSEA effect of uni (column 2)
