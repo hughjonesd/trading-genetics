@@ -37,6 +37,7 @@ editor_options:
 bibliography: bibliography.bib
 spacing: double
 mainfont: Times
+linkcolor: blue
 header-includes:
   - \usepackage{subfig}
   - \usepackage{setspace}\doublespacing
@@ -1358,6 +1359,15 @@ coef_bo <- purrr::map(mod_bo_1st, tidy) %>%
              purrr::map(filter, term == "birth_order.x") %>% 
              purrr::map_dbl("estimate")
 
+tbl_note <- paste("Estimates from OLS regressions with the ",
+"mediators (university attendance, income, fluid IQ and height) as dependent",
+"variables, and own birth order as the main independent variable. PSEA is the",
+"polygenic score for educational attainment, which is normalized with mean 0 and",
+"standard deviation 1. We include parents' age at birth (the mean of parents'", 
+"ages) and further controls to ensure the balance of covariates across birth", 
+"order. All data is from the UK Biobank for a sample of UK individuals born", 
+"between 1935 and 1970.", my_note)
+
 huxreg(mod_bo_1st, 
          coefs = c(
            "Birth order" = "birth_order.x", 
@@ -1368,7 +1378,7 @@ huxreg(mod_bo_1st,
            "N"  = "nobs", 
            "R2" = "r.squared"
           ),
-         note = my_note,
+         note = tbl_note,
          stars = my_stars,
          tidy_args = tidy_args
        ) %>% 
@@ -1378,7 +1388,7 @@ huxreg(mod_bo_1st,
        set_bottom_border(8:9, everywhere, 0) %>% 
        set_align(8:10, -1, "center") %>% 
        set_number_format(2:7, -1, 4) %>% 
-       set_width(0.8) %>% 
+       set_width(0.9) %>% 
        set_caption("Regressions of variables on birth order")
        
 ```
@@ -1446,6 +1456,14 @@ mod_bo_psea_base <- lapply(fml_bo_psea_base, fixest::feols,
                  notes = FALSE
                )
 
+tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent",
+"variable, and own birth order as the main independent variable. PSEA is the",
+"polygenic score for educational attainment, which is normalized with mean 0 and",
+"standard deviation 1. We include parents' age at birth (the mean of parents'",
+"ages), and further controls in column 3 to ensure the balance of covariates",
+"across birth order. All data is from the UK Biobank for a sample of UK",
+"individuals born between 1935 and 1970.", my_note)
+
 huxreg(mod_bo_psea_base, 
          coefs = c(
            "Birth order"           = "birth_order.x", 
@@ -1456,7 +1474,7 @@ huxreg(mod_bo_psea_base,
            "N"  = "nobs", 
            "R2" = "r.squared"
           ),
-         note = my_note,
+         note = tbl_note,
          stars = my_stars,
          tidy_args = tidy_args
        ) %>% 
@@ -1487,6 +1505,14 @@ mod_bo_psea <- lapply(fml_bo_psea, fixest::feols,
                  notes = FALSE
                )
 
+tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent",
+"variable, and own Birth Order and mediators (university attendance and income)",
+"as the main independent variables. Columns 2-4 correspond to model 7. PSEA is", 
+"the polygenic score for educational attainment, which is normalized with mean 0",
+"and standard deviation 1. We include parents’ age at birth (the mean of",
+"parent’s ages) and further controls in column 3 to ensure the balance of",
+"covariates across birth order. All data is from the UK Biobank for a sample of", "UK individuals born between 1935 and 1970.", my_note)
+
 huxreg(mod_bo_psea, 
         coefs = c(
           "Birth order"           = "birth_order.x", 
@@ -1497,7 +1523,7 @@ huxreg(mod_bo_psea,
           "Fluid IQ"              = "fluid_iq.x",
           "Height"                = "height.x"
         ),
-         note = my_note,
+         note = tbl_note,
          stars = my_stars,
          tidy_args = tidy_args
        ) %>% 
@@ -1508,6 +1534,7 @@ huxreg(mod_bo_psea,
        set_align(16:18, -1, "center") %>% 
        set_number_format(2:15, -1, 4) %>% 
        set_tb_padding(3) %>% 
+       set_width(0.9) %>% 
        set_caption("Regressions of spouse PSEA on birth order and potential mediators")
 ```
 
@@ -1606,10 +1633,19 @@ med_matrix <- format_est_ci(c("University", "Income", "Fluid IQ", "Height"),
 med_matrix <- matrix(med_matrix, ncol = 3, byrow = TRUE)
 rownames(med_matrix) <- c("University", "Income", "Fluid IQ", "Height")
 colnames(med_matrix) <- paste("Model", 2:4)
+
+tbl_note <- paste("Percentage of the effects of birth order in Table", 
+"\\ref{tab:tbl-bo-psea}, columns 2 to 4, that are explained by mediators",
+"(university attendance, income in first job, fluid IQ and height).")
+
 as_huxtable(med_matrix, add_colnames = TRUE, add_rownames = "") %>% 
       theme_article() %>% 
-      set_caption("Percent of birth order effects accounted for by mediators, models 2-4")  
-      # add_footnote("Bootstrap 90% confidence intervals in brackets") 
+      add_footnote(tbl_note) %>% 
+      set_escape_contents(final(1), everywhere, FALSE) %>% 
+      set_width(0.7) %>% 
+      set_caption(
+        "Percent of birth order effects accounted for by mediators, models 2-4"
+      )  
 
 ```
 
@@ -1684,6 +1720,16 @@ reg_list <- list(
         "With children"        = mod_bo_children[[2]]
       )
 
+tbl_note <- paste("Estimates from OLS regressions corresponding to",
+"columns 1 and 2 in Table \\ref{{tab:tbl-bo-psea}}, separately for males, females",
+"and respondents with children. Spouse PSEA is the dependent variable, and own",
+"birth order and university attendance are the main independent variables. PSEA",
+"is the polygenic score for educational attainment, which is normalized with",
+"mean 0 and standard deviation 1. We include parents’ age at birth (the mean of",
+"parent’s ages) and further controls in column 3 to ensure the balance of", 
+"covariates across birth order. All data is from the UK Biobank for a sample of", 
+"UK individuals born between 1935 and 1970.", my_note)
+
 huxreg(reg_list,
          coefs = c(
             "Birth order"           = "birth_order.x", 
@@ -1694,10 +1740,11 @@ huxreg(reg_list,
             "Height"                = "height.x"
           ),
          statistics = c("N" = "nobs", "R2" = "r.squared"),
-         note = my_note,
-         stars = my_stars,
-         tidy_args = tidy_args
+         note       = tbl_note,
+         stars      = my_stars,
+         tidy_args  = tidy_args
        ) %>% 
+       set_escape_contents(final(1), everywhere, FALSE) %>% 
        insert_row(after = 13, "Family size dummies", rep("Yes", 6)) %>% 
        insert_row(after = 14, "Birth month dummies", rep("Yes", 6)) %>% 
        insert_row(after = 15, "Birth year dummies", rep("Yes", 6)) %>% 
@@ -1902,8 +1949,8 @@ investigate further. In any case, the potential for economic changes to have
 such long-run effects suggests the potential for hysteresis, with initial social
 differences cumulating over time via their effect on genetic inequality.
 
-The broadest message of this paper is that *genetics are a social
-outcome*. Both popular and scientific discourse often parse genetics as
+The broadest message of this paper is that genetics are a social
+outcome. Both popular and scientific discourse often parse genetics as
 "nature", in opposition to "nurture" or "environment" [e.g.
 @chakravarti2003nature; @plomin2019blueprint]. This idea expresses the
 fact that our genetic endowment is fixed at birth and cannot be
