@@ -221,10 +221,10 @@
     },
     "cluster": {
       "Package": "cluster",
-      "Version": "2.1.0",
+      "Version": "2.1.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "db63a44aab5aadcb6bf2f129751d129a"
+      "Hash": "ce49bfe5bc0b3ecd43a01fe1b01c2243"
     },
     "colorspace": {
       "Package": "colorspace",
@@ -445,10 +445,10 @@
     },
     "huxtable": {
       "Package": "huxtable",
-      "Version": "5.2.0",
+      "Version": "5.3.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "be37eec356a71f62f209dd04d94122ed"
+      "Hash": "9b2436cddd6d187043b7efae5fb0c085"
     },
     "igraph": {
       "Package": "igraph",

@@ -1954,7 +1954,7 @@ outcome. Both popular and scientific discourse often parse genetics as
 "nature", in opposition to "nurture" or "environment" [e.g.
 @chakravarti2003nature; @plomin2019blueprint]. This idea expresses the
 fact that our genetic endowment is fixed at birth and cannot be
-influenced by our social environment (though genes *always* interact with the
+influenced by our social environment (though genes always interact with the
 environment to cause individual outcomes). But the idea that human
 genetics are natural can be highly misleading. Humans inherit their
 genes from their parents, along with other forms of inheritance such as
