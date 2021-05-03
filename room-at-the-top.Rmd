@@ -74,7 +74,12 @@ regression_subset <- function (data) {
          filter(
            n_sibs.x >= 2, 
            n_sibs.x <= 6, 
-           ! is.na(birth_order.x)
+           ! is.na(birth_order.x),
+           ! is.na(height.x),
+           ! is.na(fluid_iq.x),
+           ! is.na(university.x)
+           # we don't demand first_job_pay.x is not NA, that would 
+           # shrink the N by a lot
          )
 }
 
@@ -386,7 +391,7 @@ We find that a higher own birth order significantly lowers the spouse’s
 polygenic score for educational attainment in the reduced-form regressions. When
 we include university attendance as a proxy for socio-economic status, birth
 order is no longer significant, while university attendance increases the
-spouse’s genetic endowment, again at 0.1% significance. A similar pattern holds
+spouse’s genetic endowment at 0.1% significance. A similar pattern holds
 when we proxy socio-economic status with a measure of income, although the
 sample is reduced. Thus, birth order appears to affect spouse genetics via the
 mediator of SES. The results are robust to the inclusion of several own
@@ -1826,7 +1831,8 @@ mod_bo_own_psea <- lm(EA3.x ~ birth_order.x,
                       subset = n_sibs.x==3)
 coef_own_psea_3 <- tidy(mod_bo_own_psea)[[2, "estimate"]]
 pval_own_psea_3 <- tidy(mod_bo_own_psea)[[2, "p.value"]]
-stopifnot(pval_own_psea_3 < 0.05)
+stopifnot(pval_own_psea_3 < 0.1)
+stopifnot(pval_own_psea_3 > 0.05)
 
 ```
 
@@ -1840,15 +1846,15 @@ whether polygenic scores might vary across birth orders within a particular
 family size, we also regress each score on a full set of birth order dummies,
 interacted with a full set of family size dummies. None of the 
 `r n_within_coefs` birth order coefficients were significant at $p < 0.001$.
-However, among families of size 3, there is a significant positive correlation
-of birth order with own PSEA (effect size `r pretty(coef_own_psea_3, 3)`, 
-$p = `r pretty(pval_own_psea_3, 2)`$). Table \@ref(tab:tbl-bo-psea-no3) in the
-appendix therefore reruns our regressions with families of size 3 excluded.
-Results are substantially unchanged. Of course, there could still be 
-unmeasured genetic variants which correlate with birth order in our sample.
-Nevertheless, a wide set of polygenic scores shows no large or significant
-correlation. This makes us more confident that birth order is indeed exogenous
-to genetics.
+However, among families of size 3, there is a marginally significant positive
+correlation of birth order with own PSEA (effect size 
+`r pretty(coef_own_psea_3, 3)`, $p = `r pretty(pval_own_psea_3, 2)`$). Table
+\@ref(tab:tbl-bo-psea-no3) in the appendix therefore reruns our regressions with
+families of size 3 excluded. Results are substantially unchanged. Of course,
+there could still be unmeasured genetic variants which correlate with birth
+order in our sample. Nevertheless, a wide set of polygenic scores shows no large
+or significant correlation. This makes us more confident that birth order is
+indeed exogenous to genetics.
 
 [^10]: Polygenic scores were residualized on the first 100 principal
     components of the genetic data. Scores were for: ADHD, age at
