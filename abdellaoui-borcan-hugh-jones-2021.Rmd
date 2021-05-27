@@ -566,18 +566,11 @@ of his or her position in society, rather than as a natural fact. Caste
 and class are kinds of social status; so are wealth, income, education
 and employment.
 
-Without loss of generality, $EG = ES = 0$ and $Var(G) = Var(S) = 1$.[^3]
+Without loss of generality, $EG = ES = 0$ and $Var(G) = Var(S) = 1$.
 People pair according to an attractiveness function
-
-[^3]: Continuous distribution is not strictly required. All that is
-    needed is for a set of pairs of positive measure to have different
-    values of $G$ and $S$, along a set of attractiveness curves of
-    positive measure.
-
 $$
 A(g_{i},s_{i}) = f((1-k)g_{i},ks_{i})
 $$
-
 where $f$ is smooth and strictly increasing in both its arguments, and
 $0 \le k \le 1$. Our sole condition on $G$ and $S$ is that a positive
 measure of the population has attractiveness $A$ where the distribution
@@ -856,8 +849,8 @@ particular at the top. One suggested reason for this is that unmeasured
 family characteristics persist along with measured wealth
 [@clark2015intergenerational]. Our model captures this idea. For
 simplicity, assume the original model with no noise in children's values
-of $g$ or $s$ (condition (\@ref(eq:children-average))), and let
-condition (\@ref(eq:linearity)) hold. Consider a regression of
+of $g$ or $s$ (condition \@ref(eq:children-average)), and let
+condition \@ref(eq:linearity) hold. Consider a regression of
 children's social status on parent's social status:
 
 $$
