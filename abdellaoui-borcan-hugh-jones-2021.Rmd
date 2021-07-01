@@ -1188,7 +1188,9 @@ variation.
 [^6]: Although genetic variation is randomly assigned to children at
     birth, genetics and birth order could be dependent if parents'
     choice of whether to have more children is endogenous to the genetic
-    endowment of their earlier children. We check for this below.
+    endowment of their earlier children. We check for this below. 
+    @isungset2021birth also find that birth order differences in education are
+    not genetic.
 
 Our main independent variable is respondents' birth order, i.e. their
 number of elder siblings plus one. For controls we use family size, i.e.
