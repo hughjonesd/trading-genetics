@@ -12,11 +12,11 @@ abstract: |
   then the two will become associated in spouse pairs, and will be passed on to 
   subsequent generations together. This process provides a 
   new explanation for the surprising persistence of inequality across generations,
-  and for observed genetic differences across socio-economic status. We model 
-  Social-Genetic Assortative Mating (SGAM) and test for its existence in a large
-  genetically-informed survey. We compare spouses of individuals with different 
-  birth order, which is known to affect socio-economic status and which is 
-  exogenous to own genetic endowments among siblings. Spouses of 
+  and for observed genetic differences across the distribution of socio-economic 
+  status. We model Social-Genetic Assortative Mating (SGAM) and test for its 
+  existence in a large genetically-informed survey. We compare spouses of 
+  individuals with different birth order, which is known to affect socio-economic 
+  status and which is exogenous to own genetic endowments among siblings. Spouses of 
   earlier-born siblings have more genetic variants that predict educational 
   attainment. We provide evidence that this effect is mediated by individuals' 
   own educational attainment and income. Thus, environmental shocks to 
@@ -289,9 +289,9 @@ follows that how families are formed, and how they transmit traits and assets to
 their offspring, are critical for understanding inequality. These processes have
 been studied from both socio-economic and genetic angles. While educational
 homogamy is well established, genetic assortative mating has been demonstrated
-only recently [@hugh2016assortative]. Similarly, wealthy families pass on
-advantages to their children through both genetic inheritance and environmental
-influence [@Rimfeld_2018; @bjorklund2006origins].[^review]
+only recently [@hugh2016assortative; @robinson2017genetic]. Similarly, wealthy 
+families pass on advantages to their children through both genetic inheritance 
+and environmental influence [@Rimfeld_2018; @bjorklund2006origins].[^review]
 
 [^stats]: Though relative mobility has been stable [@chetty2014united]. In the 
 United Kingdom the Gini coefficient has increased from 26% to 34.6% between 1977 
@@ -315,10 +315,11 @@ Mating (SGAM). SGAM may be an important channel for the transmission of
 inequality. It leads to a hidden dimension of advantage for privileged families
 – hidden because most social science datasets do not include genetic
 information. This dimension may help to explain the surprising long-run
-persistence of inequality [@clark2015intergenerational]. At the same time, this
-advantage is not an exogenous fact of biology, but endogenous to the social
-structure. Indeed, under SGAM, environmental shocks to an individual’s social 
-status may be reflected in the genetics of his or her children.
+persistence of inequality [@clark2015intergenerational; @solon2018we]. At the
+same time, this advantage is not an exogenous fact of biology, but endogenous to
+the social structure. Indeed, under SGAM, environmental shocks to an
+individual’s social status may be reflected in the genetics of his or her
+children.
 
 [^status-SES]: *Social status* refers to characteristics that an individual
   possesses in virtue of their social position. For example, my wealth
@@ -354,7 +355,7 @@ both socio-economic status and genetic traits can enhance the attractiveness of
 potential spouses, and are substitutable. This assumption has received support
 in recent economic studies of marriage markets, which suggest that people trade
 off physical characteristics for higher earnings [e.g. @chiappori2012fatter] or
-matching social class [@banerjee2013marry].
+matching social status [@banerjee2013marry].
 
 The endogeneity of social status is the main challenge in identifying the causal
 effect of social status on the spouse’s genetic endowment. For instance,
@@ -520,8 +521,9 @@ that attractive mate characteristics include aspects of social status (“high
 earning capacity,” “professional status”) as well as traits that are partly
 under genetic influence (“intelligent,” “tall,” “kind,” “physically
 attractive”). Despite this, we have found almost no previous work in genetics or
-economics that analyses SGAM or its consequences.
-@halsey1958genetics showed in a two-class model that social mobility combined
+economics that analyses SGAM or its consequences.[^prev-work]
+
+[^prev-work]: @halsey1958genetics showed in a two-class model that social mobility combined
 with assortative mating might increase the association between genetics and
 social class. @belsky2018genetic offer three reasons for the association between
 education-linked genetics and SES, but do not consider SGAM.
@@ -2349,7 +2351,7 @@ huxtable::huxreg(mod_bo_psea_dummies,
        set_bottom_border(21:23, everywhere, 0) %>% 
        set_align(21:24, -1, "center") %>% 
        set_number_format(2:20, -1, 4) %>% 
-       set_caption("Regressions of spouse PSEA, separate birth order coefficient dummies") %>% 
+       set_caption("Regressions of spouse PSEA, separate birth order dummies") %>% 
        set_tb_padding(3) %>% 
        set_font_size(10)
 
@@ -2423,7 +2425,7 @@ huxtable::huxreg(reg_list,
        set_bottom_border(19:21, everywhere, 0) %>%
        set_align(19:22, -1, "center") %>% 
        set_number_format(2:18, -1, 4) %>% 
-       set_caption("Regressions of spouse PSEA, separate birth order coefficient dummies: subsets") %>% 
+       set_caption("Regressions of spouse PSEA, separate birth order dummies: subsets") %>% 
        set_tb_padding(3) %>% 
        set_lr_padding(2) %>% 
        set_font_size(9)
