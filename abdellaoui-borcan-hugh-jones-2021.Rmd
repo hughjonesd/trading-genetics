@@ -1257,103 +1257,105 @@ effect into components due to observed and unobserved proximate channels
 affected by the treatment. Our aim is to estimate the effect of SES (as
 an effect of birth order) on spouse PSEA.
 
-Assume $B$ is a variable indicating birth order. The observed outcome
-(spouse PSEA) is
+Assume $B$ is a multivalued variable indicating birth order. Let $Y_b$ be
+the counterfactual outcome (spouse PSEA) for the first-born, second-born etc.
+Given $b$, spouse PSEA is assumed to be independent across observations
+conditional on some predetermined controls which are assumed not to be affected
+by $B$.
 
-```{=tex}
-\begin{align}
-\label{eq:Y}
-Y = \sum_{b \in B}Y_b\delta_b
-\end{align}
-```
-where $Y_1, Y_2$ etc. are counterfactual outcomes for the first-born,
-second-born etc. and $\delta_b$ is a dummy variable which is 1 if birth
-order equals $b$. Given $b$, spouse PSEA is assumed to be independent
-across observations conditional on some predetermined controls which are
-assumed to be unaffected by $b$.
+Let $\theta_{b}$ be a set of mediators, i.e. proximate outcomes
+determined by $b$, which account (at least in part) for the $b$
+treatment effect on spouse PSEA. We can think of $\theta_{b}$ as all
+the effects on attractiveness, such as increments to SES, health,
+cognitive and non-cognitive skills, that individuals receive due to
+their birth rank. We can split the mediators in $\theta_b$ into a set $J_m$ of
+measured mediators, including measures of SES, and a set $J_u$ of
+mediators that we cannot measure. We are mainly interested in estimating the effect of
+SES on spouse PSEA.
 
-Let $\theta_b$ be a set of mediators, i.e. proximate outcomes determined
-by $b$, which account (at least in part) for the $b$ treatment effect on
-spouse PSEA. We can think of $\theta_b$ as all the effects on
-attractiveness, such as increments to SES, health, cognitive and
-non-cognitive skills, that individuals receive due to their birth rank.
+Our linear model is:
 
-Our linear model is
+\begin{equation}
+\label{eq:linear-model}
+Y_b = \kappa_b + \sum_{j \in J_m} \alpha_b^j \theta^j_b+\sum_{j \in J_u} \alpha_b^j \theta^j_b + \mathbf{X'} \mathbf{\beta}_b + \tilde{\varepsilon}_b = \tau_b + \sum_{j \in J_m} \alpha_b^j \theta^j_b + \mathbf{X'} \mathbf{\beta}_b + \varepsilon_b 
+\end{equation}
 
-```{=tex}
-\begin{align}
-\label{eq:Yb}
-Y_b = \kappa_b + \alpha_b\theta_b + \beta_b \cdot \mathbf{X} + \tilde{\varepsilon}_b
-\end{align}
-```
-where $\tilde{\varepsilon}_b$ is a mean-zero residual assumed
-independent of $\theta_b$ and $\mathbf{X}$. We simplify by assuming that
-$\beta_b = \beta$ and $\alpha_b = \alpha$ for all $b$, i.e. that the
-effects of $\mathbf{X}$ and $\theta_b$ don't differ by birth order.
-
-We can split the mediators in $\theta_b$ into a set $J_m$ of measured
-mediators, including measures of SES, and a set $J_u$ of mediators that
-we cannot measure. Write
-
-```{=tex}
-\begin{align}
-\label{eq:Yb2}
-Y_b = \tau_b + \sum_{j \in J_m} \alpha^j \theta^j_b + \beta \cdot \mathbf{X} + \varepsilon_b
-\end{align}
-```
-where $\tau_b = \kappa_b + \sum_{j \in J_u} \alpha^j E(\theta^j_b)$ and
+where $\tilde{\varepsilon}_b$ is a mean-zero residual assumed independent of
+$\theta_b$ and $\mathbf{X}$; 
+$\tau_b = \kappa_b + \sum_{j \in J_u} \alpha_b^j E(\theta^j_b)$; and 
 $\varepsilon_b = \tilde{\varepsilon}_b + \sum_{j \in J_u} (\theta^j_b - E(\theta^j_b))$.
-We assume differences in unmeasured investments due to $b$ are
-independent of $\mathbf{X}$.
+We simplify by assuming that $\beta_b = \beta$
+and $\alpha_b = \alpha$ for all $b$, i.e.~that the effects of $\mathbf{X}$ and
+$\theta_B$ don't differ by birth order.[^assumptions] We assume differences in
+unmeasured investments due to $b$ are independent of $\mathbf{X}$.
 
-With the assumptions above and substituting \@ref(eq:Yb2) into
-\@ref(eq:Y) we obtain:
+[^assumptions]:Under the assumption that measured and unmeasured mediators are
+uncorrelated, we can test these assumptions by running an OLS regression of an
+extended model \@ref(eq:model-to-estimate) where we interact the measured
+mediators and controls with the treatment $B$, and test the significance of the
+coefficients on the interaction terms ($\mathbf{\alpha}_b=0$ and
+$\mathbf{\beta_b}=0$). See @heckman2013understanding and @fagereng2021wealthy 
+for details and different applications.
 
-```{=tex}
-\begin{align}
-\label{eq:Ynew}
-Y = \tau_1+\sum_{b \in B\backslash\{1\}} \delta_b(\tau_b-\tau_1) + \sum_{j \in J_m} \alpha^j \theta^j  +   \beta \cdot \mathbf{X} + \varepsilon
-\end{align}
-```
-where $\theta^j = \sum_{b \in B}\theta^j_b\delta_b$ and
-$\varepsilon = \sum_{b \in B}\varepsilon_b\delta_b$; $\tau_b-\tau_1$
-measures the contribution of unmeasured variables to the average
-treatment effect of birth order $b$, relative to birth order 1; and
-$\theta^j, j \in J_m$ denote the observed mediators that we can measure.
+We use a linear model for each observed mediator variable:
+\begin{equation}
+\label{eq:mediator-model}
+\theta^j_b=\mu_{0,j}+\textbf{X'}\mathbf{\mu_{1,j}}+\mu_{2,j}\cdot b+\eta_j, j \in J_m  
+\end{equation}
+where \(\eta_j\) is a mean-zero residual. We also assume the treatment-specific intercepts are linear in $b$:
+\begin{equation}
+\label{eq:linear-intercept}
+\tau_b=\tau_{0}+\tau b.  
+\end{equation}
+
+With the simplifying assumptions above and substituting \@ref(eq:mediator-model)-
+\@ref(eq:linear-intercept) into \@ref(eq:linear-model) we obtain:
+\begin{equation}
+\label{eq:simplified-model}
+Y_b = \tau_0+\tau b + \sum_{j \in J_m} \alpha^j (\mu_{0,j}+\textbf{X'}\mathbf{\mu_{1,j}}+\mu_{2,j}\cdot b+\eta_j) + \mathbf{X'} \mathbf{\beta} + \varepsilon_b 
+\end{equation}
+
+Using equation \@ref(eq:simplified-model), we can decompose the average treatment 
+effect of $B$ (birth order $b'$ instead of $b$) into the effect of measured mediators $\theta^j$ and unmeasured mediators on the outcome:
+
+\begin{equation}
+\label{eq:decomposition}
+E(Y_b' - Y_b) = \tau(b' - b) + \sum_{j \in J_m} \alpha^j E(\theta^j_{b'} - \theta^j_b) \\
+=\underbrace{\tau(b' - b)}_{\text{Effect of unmeasured mediators}} + \underbrace{\sum_{j \in J_m} \alpha^j \mu_{2,j} (b' - b)}_{\text{Effect of measured mediators}}
+\end{equation}
+
+We are primarily interested in estimating the effect of SES on spouse PSEA,
+amongst the measured mediators, and furthermore we would like to measure the
+relative importance of SES compared to other factors in predicting spouse PSEA.
+
+We therefore estimate: 
+\begin{equation}
+\label{eq:model-to-estimate}
+Y = \tau_0 + \tau B + \sum_{j \in J_m} \alpha^j \theta^j_b + \mathbf{X'} \mathbf{\beta} + \varepsilon
+\end{equation}
+
 
 Estimating the above by OLS will generate unbiased estimates of
-$\alpha^j$ if $\theta^j$ is measured without error and is uncorrelated
-with the error term $\varepsilon$. Since $\varepsilon$ contains both
-individual disturbances and differences in unmeasured investments due to
-birth order, there are two identifying assumptions that need to hold for unbiased
-OLS estimates. First, the measured investments (specifically SES) should
-be independent of unmeasured investments generated by birth order.
-Failing this, the estimates of $\alpha^j$ will be conflated with the
-effects of unmeasured investments. Second, the measured investments should
-be uncorrelated with other shocks $\tilde{\varepsilon}_b$. The overall
-treatment effect (relative to birth order $b = 1$) can then be
-decomposed as follows:
+$\alpha^j$ if $\theta^j$ is measured without error and is
+uncorrelated with the error term $\varepsilon$. Since
+$\varepsilon$ contains both individual disturbances and differences
+in unmeasured investments due to birth order, there are two identifying assumptions that need to hold for unbiased OLS estimates: (a) the measured investments
+(specifically SES) should be independent of unmeasured investments
+generated by birth order. Failing this, the estimates of $\alpha^j$ will be
+conflated with the effects of unmeasured investments. Second, (b) the measured
+investments should be uncorrelated with other shocks $\tilde{\varepsilon}_b$.
 
-```{=tex}
-\begin{align}
-\label{eq:YbY1}
-E(Y_b - Y_1) = \tau_b - \tau_1 + \sum_{j \in J_m} \alpha^j E(\theta^j_b - \theta^j_1)
-\end{align}
-```
-where $\tau_b - \tau_1$ is the unmeasured component of the treatment
-effect, and $\sum_{j \in J_m} \alpha^j E(\theta^j_b - \theta^j_1)$ is
-the treatment effect due to measured investments.
-
-By running a least square regression of \@ref(eq:YbY1), we can estimate
-$\tau_b - \tau_1$ . If assumption (a) above holds, the part of the birth
-order treatment effect on spouse PSEA that is due to measured mediators,
-including SES, can be constructed using the estimated $\alpha^j$ and the
-effects of birth order on measured investments. Specifically, the part
-of the birth order effect that is due to university education (or
-income) on spouse PSEA will be the coefficient of university (income) in
-the regression of spouse PSEA in equation \@ref(eq:Ynew), multiplied by
-the coefficient of birth order from a model where the dependent variable
-is an indicator for university (income).
+By running a least square regression of \@ref(eq:model-to-estimate), we can
+estimate $\tau$ and $\alpha^j$. If assumption (a) holds, the part of the
+birth order treatment effect on spouse PSEA that is due to measured mediators,
+including SES, can be constructed using the estimated $\alpha^j$ and the effects
+of birth order on measured mediators. We can estimate these effects in a second
+step, from OLS regressions based on equation \@ref(eq:mediator-model) for each
+measured mediator (in particular university attendance and income) on $X$ and
+$B$. The part of the birth order effect that is due to university attendance (or
+income) on spouse PSEA will be the coefficient of university (income) in the
+regression of spouse PSEA in equation \@ref(eq:model-to-estimate) multiplied by
+the coefficient of birth order from equation \@ref(eq:mediator-model).
 
 # Results
 

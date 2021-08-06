@@ -5,14 +5,13 @@
 %
 \documentclass[
 ]{article}
+\usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{amsmath}
 \usepackage{ifxetex,ifluatex}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
-  \usepackage{amssymb}
 \else % if luatex or xetex
   \usepackage{unicode-math}
   \defaultfontfeatures{Scale=MatchLowercase}
@@ -48,7 +47,7 @@
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
 \usepackage{etoolbox}
@@ -126,7 +125,7 @@ Oana Borcan\thanks{School of Economics, University of East Anglia, Norwich,
 UK. Email: O.Borcan@uea.ac.uk} \&
 David Hugh-Jones\thanks{Corresponding author. School of Economics, 
 University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}}
-\date{2021-05-28}
+\date{2021-08-06}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -152,11 +151,11 @@ If social status and genetic variants are both assets in marriage markets,
 then the two will become associated in spouse pairs, and will be passed on to
 subsequent generations together. This process provides a
 new explanation for the surprising persistence of inequality across generations,
-and for observed genetic differences across socio-economic status. We model
-Social-Genetic Assortative Mating (SGAM) and test for its existence in a large
-genetically-informed survey. We compare spouses of individuals with different
-birth order, which is known to affect socio-economic status and which is
-exogenous to own genetic endowments among siblings. Spouses of
+and for observed genetic differences across the distribution of socio-economic
+status. We model Social-Genetic Assortative Mating (SGAM) and test for its
+existence in a large genetically-informed survey. We compare spouses of
+individuals with different birth order, which is known to affect socio-economic
+status and which is exogenous to own genetic endowments among siblings. Spouses of
 earlier-born siblings have more genetic variants that predict educational
 attainment. We provide evidence that this effect is mediated by individuals'
 own educational attainment and income. Thus, environmental shocks to
@@ -185,9 +184,9 @@ follows that how families are formed, and how they transmit traits and assets to
 their offspring, are critical for understanding inequality. These processes have
 been studied from both socio-economic and genetic angles. While educational
 homogamy is well established, genetic assortative mating has been demonstrated
-only recently (Hugh-Jones et al. 2016). Similarly, wealthy families pass on
-advantages to their children through both genetic inheritance and environmental
-influence (Rimfeld et al. 2018; Björklund, Lindahl, and Plug 2006).\footnote{See Sacerdote (2011) for a review of the behavioural genetics and
+only recently (Hugh-Jones et al. 2016; Robinson et al. 2017). Similarly, wealthy
+families pass on advantages to their children through both genetic inheritance
+and environmental influence (Rimfeld et al. 2018; Björklund, Lindahl, and Plug 2006).\footnote{See Sacerdote (2011) for a review of the behavioural genetics and
   economics literatures on the nature vs nurture debate; for a broader review of
   the studies on intergenerational transmission of income see Black and Devereux (2010).}
 
@@ -211,10 +210,11 @@ Mating (SGAM). SGAM may be an important channel for the transmission of
 inequality. It leads to a hidden dimension of advantage for privileged families
 -- hidden because most social science datasets do not include genetic
 information. This dimension may help to explain the surprising long-run
-persistence of inequality (Clark and Cummins 2015). At the same time, this
-advantage is not an exogenous fact of biology, but endogenous to the social
-structure. Indeed, under SGAM, environmental shocks to an individual's social
-status may be reflected in the genetics of his or her children.
+persistence of inequality (Clark and Cummins 2015; Solon 2018). At the
+same time, this advantage is not an exogenous fact of biology, but endogenous to
+the social structure. Indeed, under SGAM, environmental shocks to an
+individual's social status may be reflected in the genetics of his or her
+children.
 
 Below, we first outline a theoretical framework where attractiveness in the
 marriage market is a function of both socio-economic status (SES) and genetic
@@ -238,7 +238,7 @@ both socio-economic status and genetic traits can enhance the attractiveness of
 potential spouses, and are substitutable. This assumption has received support
 in recent economic studies of marriage markets, which suggest that people trade
 off physical characteristics for higher earnings (e.g. Chiappori, Oreffice, and Quintana-Domeque 2012) or
-matching social class (Banerjee et al. 2013).
+matching social status (Banerjee et al. 2013).
 
 The endogeneity of social status is the main challenge in identifying the causal
 effect of social status on the spouse's genetic endowment. For instance,
@@ -396,11 +396,10 @@ that attractive mate characteristics include aspects of social status (``high
 earning capacity,'' ``professional status'') as well as traits that are partly
 under genetic influence (``intelligent,'' ``tall,'' ``kind,'' ``physically
 attractive''). Despite this, we have found almost no previous work in genetics or
-economics that formalises the mechanism and consequences of SGAM.
-Halsey (1958) showed in a two-class model that social mobility combined
-with assortative mating might increase the association between genetics and
-social class. Belsky et al. (2018) offer three reasons for the association between
-education-linked genetics and SES, but do not consider SGAM.
+economics that analyses SGAM or its consequences.\footnote{Halsey (1958) showed in a two-class model that social mobility combined
+  with assortative mating might increase the association between genetics and
+  social class. Belsky et al. (2018) offer three reasons for the association between
+  education-linked genetics and SES, but do not consider SGAM.}
 
 \hypertarget{model}{%
 \section{Model}\label{model}}
@@ -788,7 +787,9 @@ order. For example, siblings' expected polygenic score is equal to the mean of
 their parents' polygenic scores.\footnote{Although genetic variation is randomly assigned to children at
   birth, genetics and birth order could be dependent if parents'
   choice of whether to have more children is endogenous to the genetic
-  endowment of their earlier children. We check for this below.} We can therefore use birth order as a
+  endowment of their earlier children. We check for this below.
+  Isungset et al. (2021) also find that birth order differences in education are
+  not genetic.} We can therefore use birth order as a
 ``shock'' to social status. Despite this language, we do not claim that birth
 order is exogenous to all other variables. For example, it naturally correlates
 with parental age, and it may also be related to the family's economic position at
@@ -858,98 +859,102 @@ effect into components due to observed and unobserved proximate channels
 affected by the treatment. Our aim is to estimate the effect of SES (as
 an effect of birth order) on spouse PSEA.
 
-Assume \(B\) is a variable indicating birth order. The observed outcome
-(spouse PSEA) is
+Assume \(B\) is a multivalued variable indicating birth order. Let \(Y_b\) be
+the counterfactual outcome (spouse PSEA) for the first-born, second-born etc.
+Given \(b\), spouse PSEA is assumed to be independent across observations
+conditional on some predetermined controls which are assumed not to be affected
+by \(B\).
 
-\begin{align}
-\label{eq:Y}
-Y = \sum_{b \in B}Y_b\delta_b
-\end{align}
+Let \(\theta_{b}\) be a set of mediators, i.e.~proximate outcomes
+determined by \(b\), which account (at least in part) for the \(b\)
+treatment effect on spouse PSEA. We can think of \(\theta_{b}\) as all
+the effects on attractiveness, such as increments to SES, health,
+cognitive and non-cognitive skills, that individuals receive due to
+their birth rank. We can split the mediators in \(\theta_b\) into a set \(J_m\) of
+measured mediators, including measures of SES, and a set \(J_u\) of
+mediators that we cannot measure. We are mainly interested in estimating the effect of
+SES on spouse PSEA.
 
-where \(Y_1, Y_2\) etc. are counterfactual outcomes for the first-born,
-second-born etc. and \(\delta_b\) is a dummy variable which is 1 if birth
-order equals \(b\). Given \(b\), spouse PSEA is assumed to be independent
-across observations conditional on some predetermined controls which are
-assumed to be unaffected by \(b\).
+Our linear model is:
 
-Let \(\theta_b\) be a set of mediators, i.e.~proximate outcomes determined
-by \(b\), which account (at least in part) for the \(b\) treatment effect on
-spouse PSEA. We can think of \(\theta_b\) as all the effects on
-attractiveness, such as increments to SES, health, cognitive and
-non-cognitive skills, that individuals receive due to their birth rank.
+\begin{equation}
+\label{eq:linear-model}
+Y_b = \kappa_b + \sum_{j \in J_m} \alpha_b^j \theta^j_b+\sum_{j \in J_u} \alpha_b^j \theta^j_b + \mathbf{X'} \mathbf{\beta}_b + \tilde{\varepsilon}_b = \tau_b + \sum_{j \in J_m} \alpha_b^j \theta^j_b + \mathbf{X'} \mathbf{\beta}_b + \varepsilon_b 
+\end{equation}
 
-Our linear model is
-
-\begin{align}
-\label{eq:Yb}
-Y_b = \kappa_b + \alpha_b\theta_b + \beta_b \cdot \mathbf{X} + \tilde{\varepsilon}_b
-\end{align}
-
-where \(\tilde{\varepsilon}_b\) is a mean-zero residual assumed
-independent of \(\theta_b\) and \(\mathbf{X}\). We simplify by assuming that
-\(\beta_b = \beta\) and \(\alpha_b = \alpha\) for all \(b\), i.e.~that the
-effects of \(\mathbf{X}\) and \(\theta_b\) don't differ by birth order.
-
-We can split the mediators in \(\theta_b\) into a set \(J_m\) of measured
-mediators, including measures of SES, and a set \(J_u\) of mediators that
-we cannot measure. Write
-
-\begin{align}
-\label{eq:Yb2}
-Y_b = \tau_b + \sum_{j \in J_m} \alpha^j \theta^j_b + \beta \cdot \mathbf{X} + \varepsilon_b
-\end{align}
-
-where \(\tau_b = \kappa_b + \sum_{j \in J_u} \alpha^j E(\theta^j_b)\) and
+where \(\tilde{\varepsilon}_b\) is a mean-zero residual assumed independent of
+\(\theta_b\) and \(\mathbf{X}\);
+\(\tau_b = \kappa_b + \sum_{j \in J_u} \alpha_b^j E(\theta^j_b)\); and
 \(\varepsilon_b = \tilde{\varepsilon}_b + \sum_{j \in J_u} (\theta^j_b - E(\theta^j_b))\).
-We assume differences in unmeasured investments due to \(b\) are
-independent of \(\mathbf{X}\).
+We simplify by assuming that \(\beta_b = \beta\)
+and \(\alpha_b = \alpha\) for all \(b\), i.e.\textasciitilde that the effects of \(\mathbf{X}\) and
+\(\theta_B\) don't differ by birth order.\footnote{Under the assumption that measured and unmeasured mediators are
+  uncorrelated, we can test these assumptions by running an OLS regression of an
+  extended model \eqref{eq:model-to-estimate} where we interact the measured
+  mediators and controls with the treatment \(B\), and test the significance of the
+  coefficients on the interaction terms (\(\mathbf{\alpha}_b=0\) and
+  \(\mathbf{\beta_b}=0\)). See Heckman, Pinto, and Savelyev (2013) and Fagereng, Mogstad, and Rønning (2021)
+  for details and different applications.} We assume differences in
+unmeasured investments due to \(b\) are independent of \(\mathbf{X}\).
 
-With the assumptions above and substituting \eqref{eq:Yb2} into
-\eqref{eq:Y} we obtain:
+We use a linear model for each observed mediator variable:
+\begin{equation}
+\label{eq:mediator-model}
+\theta^j_b=\mu_{0,j}+\textbf{X'}\mathbf{\mu_{1,j}}+\mu_{2,j}\cdot b+\eta_j, j \in J_m  
+\end{equation}
+where \(\eta_j\) is a mean-zero residual. We also assume the treatment-specific intercepts are linear in \(b\):
+\begin{equation}
+\label{eq:linear-intercept}
+\tau_b=\tau_{0}+\tau b.  
+\end{equation}
 
-\begin{align}
-\label{eq:Ynew}
-Y = \tau_1+\sum_{b \in B\backslash\{1\}} \delta_b(\tau_b-\tau_1) + \sum_{j \in J_m} \alpha^j \theta^j  +   \beta \cdot \mathbf{X} + \varepsilon
-\end{align}
+With the simplifying assumptions above and substituting \eqref{eq:mediator-model}-
+\eqref{eq:linear-intercept} into \eqref{eq:linear-model} we obtain:
+\begin{equation}
+\label{eq:simplified-model}
+Y_b = \tau_0+\tau b + \sum_{j \in J_m} \alpha^j (\mu_{0,j}+\textbf{X'}\mathbf{\mu_{1,j}}+\mu_{2,j}\cdot b+\eta_j) + \mathbf{X'} \mathbf{\beta} + \varepsilon_b 
+\end{equation}
 
-where \(\theta^j = \sum_{b \in B}\theta^j_b\delta_b\) and
-\(\varepsilon = \sum_{b \in B}\varepsilon_b\delta_b\); \(\tau_b-\tau_1\)
-measures the contribution of unmeasured variables to the average
-treatment effect of birth order \(b\), relative to birth order 1; and
-\(\theta^j, j \in J_m\) denote the observed mediators that we can measure.
+Using equation \eqref{eq:simplified-model}, we can decompose the average treatment
+effect of \(B\) (birth order \(b'\) instead of \(b\)) into the effect of measured mediators \(\theta^j\) and unmeasured mediators on the outcome:
+
+\begin{equation}
+\label{eq:decomposition}
+E(Y_b' - Y_b) = \tau(b' - b) + \sum_{j \in J_m} \alpha^j E(\theta^j_{b'} - \theta^j_b) \\
+=\underbrace{\tau(b' - b)}_{\text{Effect of unmeasured mediators}} + \underbrace{\sum_{j \in J_m} \alpha^j \mu_{2,j} (b' - b)}_{\text{Effect of measured mediators}}
+\end{equation}
+
+We are primarily interested in estimating the effect of SES on spouse PSEA,
+amongst the measured mediators, and furthermore we would like to measure the
+relative importance of SES compared to other factors in predicting spouse PSEA.
+
+We therefore estimate:
+\begin{equation}
+\label{eq:model-to-estimate}
+Y = \tau_0 + \tau B + \sum_{j \in J_m} \alpha^j \theta^j_b + \mathbf{X'} \mathbf{\beta} + \varepsilon
+\end{equation}
 
 Estimating the above by OLS will generate unbiased estimates of
-\(\alpha^j\) if \(\theta^j\) is measured without error and is uncorrelated
-with the error term \(\varepsilon\). Since \(\varepsilon\) contains both
-individual disturbances and differences in unmeasured investments due to
-birth order, there are two identifying assumptions that need to hold for unbiased
-OLS estimates. First, the measured investments (specifically SES) should
-be independent of unmeasured investments generated by birth order.
-Failing this, the estimates of \(\alpha^j\) will be conflated with the
-effects of unmeasured investments. Second, the measured investments should
-be uncorrelated with other shocks \(\tilde{\varepsilon}_b\). The overall
-treatment effect (relative to birth order \(b = 1\)) can then be
-decomposed as follows:
+\(\alpha^j\) if \(\theta^j\) is measured without error and is
+uncorrelated with the error term \(\varepsilon\). Since
+\(\varepsilon\) contains both individual disturbances and differences
+in unmeasured investments due to birth order, there are two identifying assumptions that need to hold for unbiased OLS estimates: (a) the measured investments
+(specifically SES) should be independent of unmeasured investments
+generated by birth order. Failing this, the estimates of \(\alpha^j\) will be
+conflated with the effects of unmeasured investments. Second, (b) the measured
+investments should be uncorrelated with other shocks \(\tilde{\varepsilon}_b\).
 
-\begin{align}
-\label{eq:YbY1}
-E(Y_b - Y_1) = \tau_b - \tau_1 + \sum_{j \in J_m} \alpha^j E(\theta^j_b - \theta^j_1)
-\end{align}
-
-where \(\tau_b - \tau_1\) is the unmeasured component of the treatment
-effect, and \(\sum_{j \in J_m} \alpha^j E(\theta^j_b - \theta^j_1)\) is
-the treatment effect due to measured investments.
-
-By running a least square regression of \eqref{eq:YbY1}, we can estimate
-\(\tau_b - \tau_1\) . If assumption (a) above holds, the part of the birth
-order treatment effect on spouse PSEA that is due to measured mediators,
-including SES, can be constructed using the estimated \(\alpha^j\) and the
-effects of birth order on measured investments. Specifically, the part
-of the birth order effect that is due to university education (or
-income) on spouse PSEA will be the coefficient of university (income) in
-the regression of spouse PSEA in equation \eqref{eq:Ynew}, multiplied by
-the coefficient of birth order from a model where the dependent variable
-is an indicator for university (income).
+By running a least square regression of \eqref{eq:model-to-estimate}, we can
+estimate \(\tau\) and \(\alpha^j\). If assumption (a) holds, the part of the
+birth order treatment effect on spouse PSEA that is due to measured mediators,
+including SES, can be constructed using the estimated \(\alpha^j\) and the effects
+of birth order on measured mediators. We can estimate these effects in a second
+step, from OLS regressions based on equation \eqref{eq:mediator-model} for each
+measured mediator (in particular university attendance and income) on \(X\) and
+\(B\). The part of the birth order effect that is due to university attendance (or
+income) on spouse PSEA will be the coefficient of university (income) in the
+regression of spouse PSEA in equation \eqref{eq:model-to-estimate} multiplied by
+the coefficient of birth order from equation \eqref{eq:mediator-model}.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -2520,7 +2525,7 @@ is some evidence against this linear model.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-psea-dummies} Regressions of spouse PSEA, separate birth order coefficient dummies}
+\caption{\label{tab:tbl-bo-psea-dummies} Regressions of spouse PSEA, separate birth order dummies}
  \setlength{\tabcolsep}{0pt}
 \begin{tabular}{l l l l l}
 
@@ -2829,7 +2834,7 @@ is some evidence against this linear model.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-subset-dummies} Regressions of spouse PSEA, separate birth order coefficient dummies: subsets}
+\caption{\label{tab:tbl-bo-subset-dummies} Regressions of spouse PSEA, separate birth order dummies: subsets}
  \setlength{\tabcolsep}{0pt}
 \begin{tabular}{l l l l l l l}
 
@@ -4323,9 +4328,6 @@ Buss, David M. 1989. {``Sex Differences in Human Mate Preferences: Evolutionary 
 \leavevmode\hypertarget{ref-buss1986preferences}{}%
 Buss, David M, and Michael Barnes. 1986. {``Preferences in Human Mate Selection.''} \emph{Journal of Personality and Social Psychology} 50 (3): 559.
 
-\leavevmode\hypertarget{ref-buss1986preferences}{}%
----------. 1986. {``Preferences in Human Mate Selection.''} \emph{Journal of Personality and Social Psychology} 50 (3): 559.
-
 \leavevmode\hypertarget{ref-buss2019mate}{}%
 Buss, David M, and David P Schmitt. 2019. {``Mate Preferences and Their Behavioral Manifestations.''} \emph{Annual Review of Psychology} 70: 77--110.
 
@@ -4368,6 +4370,9 @@ Dupuy, Arnaud, and Alfred Galichon. 2014. {``Personality Traits and the Marriage
 \leavevmode\hypertarget{ref-eika2019educational}{}%
 Eika, Lasse, Magne Mogstad, and Basit Zafar. 2019. {``Educational Assortative Mating and Household Income Inequality.''} \emph{Journal of Political Economy} 127 (6): 2795--835.
 
+\leavevmode\hypertarget{ref-fagereng2021wealthy}{}%
+Fagereng, Andreas, Magne Mogstad, and Marte Rønning. 2021. {``Why Do Wealthy Parents Have Wealthy Children?''} \emph{Journal of Political Economy} 129 (3): 703--56.
+
 \leavevmode\hypertarget{ref-fernandez2005love}{}%
 Fernandez, Raquel, Nezih Guner, and John Knowles. 2005. {``Love and Money: A Theoretical and Empirical Analysis of Household Sorting and Inequality.''} \emph{The Quarterly Journal of Economics} 120 (1): 273--344.
 
@@ -4409,6 +4414,9 @@ Howe, Laurence J, Michel G Nivard, Tim T Morris, Ailin F Hansen, Humaira Rasheed
 
 \leavevmode\hypertarget{ref-hugh2016assortative}{}%
 Hugh-Jones, David, Karin JH Verweij, Beate St Pourcain, and Abdel Abdellaoui. 2016. {``Assortative Mating on Educational Attainment Leads to Genetic Spousal Resemblance for Polygenic Scores.''} \emph{Intelligence} 59: 103--8.
+
+\leavevmode\hypertarget{ref-isungset2021birth}{}%
+Isungset, Martin Arstad, Jeremy Freese, Ole Andreassen, and Torkild Hovde Lyngstad. 2021. {``Birth Order Differences in Education Are Environmental in Origin.''} \emph{bioRxiv}.
 
 \leavevmode\hypertarget{ref-kaplan2013s}{}%
 Kaplan, Steven N, and Joshua Rauh. 2013. {``It's the Market: The Broad-Based Rise in the Return to Top Talent.''} \emph{Journal of Economic Perspectives} 27 (3): 35--56.
