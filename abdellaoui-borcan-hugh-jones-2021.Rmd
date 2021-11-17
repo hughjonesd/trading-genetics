@@ -1277,7 +1277,7 @@ Our linear model is:
 
 \begin{equation}
 \label{eq:linear-model}
-Y_b = \kappa_b + \sum_{j \in J_m} \alpha_b^j \theta^j_b+\sum_{j \in J_u} \alpha_b^j \theta^j_b + \mathbf{X'} \mathbf{\beta}_b + \tilde{\varepsilon}_b = \tau_b + \sum_{j \in J_m} \alpha_b^j \theta^j_b + \mathbf{X'} \mathbf{\beta}_b + \varepsilon_b 
+Y_b = \kappa_b + \sum_{j \in J_m} \alpha_b^j \theta^j_b+\sum_{j \in J_u} \alpha_b^j \theta^j_b + \mathbf{X'} \symbf{\beta_b} + \tilde{\varepsilon}_b = \tau_b + \sum_{j \in J_m} \alpha_b^j \theta^j_b + \mathbf{X'} \symbf{\beta_b} + \varepsilon_b 
 \end{equation}
 
 where $\tilde{\varepsilon}_b$ is a mean-zero residual assumed independent of
@@ -1293,14 +1293,14 @@ unmeasured investments due to $b$ are independent of $\mathbf{X}$.
 uncorrelated, we can test these assumptions by running an OLS regression of an
 extended model \@ref(eq:model-to-estimate) where we interact the measured
 mediators and controls with the treatment $B$, and test the significance of the
-coefficients on the interaction terms ($\mathbf{\alpha}_b=0$ and
-$\mathbf{\beta_b}=0$). See @heckman2013understanding and @fagereng2021wealthy 
+coefficients on the interaction terms ($\symbf{\alpha_b}=0$ and
+$\symbf{\beta_b}=0$). See @heckman2013understanding and @fagereng2021wealthy 
 for details and different applications.
 
 We use a linear model for each observed mediator variable:
 \begin{equation}
 \label{eq:mediator-model}
-\theta^j_b=\mu_{0,j}+\textbf{X'}\mathbf{\mu_{1,j}}+\mu_{2,j}\cdot b+\eta_j, j \in J_m  
+\theta^j_b=\mu_{0,j}+\textbf{X'}\symbf{\mu_{1,j}}+\mu_{2,j}\cdot b+\eta_j, j \in J_m  
 \end{equation}
 where \(\eta_j\) is a mean-zero residual. We also assume the treatment-specific intercepts are linear in $b$:
 \begin{equation}
@@ -1312,7 +1312,7 @@ With the simplifying assumptions above and substituting \@ref(eq:mediator-model)
 \@ref(eq:linear-intercept) into \@ref(eq:linear-model) we obtain:
 \begin{equation}
 \label{eq:simplified-model}
-Y_b = \tau_0+\tau b + \sum_{j \in J_m} \alpha^j (\mu_{0,j}+\textbf{X'}\mathbf{\mu_{1,j}}+\mu_{2,j}\cdot b+\eta_j) + \mathbf{X'} \mathbf{\beta} + \varepsilon_b 
+Y_b = \tau_0+\tau b + \sum_{j \in J_m} \alpha^j (\mu_{0,j}+\textbf{X'}\symbf{\mu_{1,j}}+\mu_{2,j}\cdot b+\eta_j) + \mathbf{X'} \symbf{\beta} + \varepsilon_b 
 \end{equation}
 
 Using equation \@ref(eq:simplified-model), we can decompose the average treatment 
@@ -1331,7 +1331,7 @@ relative importance of SES compared to other factors in predicting spouse PSEA.
 We therefore estimate: 
 \begin{equation}
 \label{eq:model-to-estimate}
-Y = \tau_0 + \tau B + \sum_{j \in J_m} \alpha^j \theta^j_b + \mathbf{X'} \mathbf{\beta} + \varepsilon
+Y = \tau_0 + \tau B + \sum_{j \in J_m} \alpha^j \theta^j_b + \mathbf{X'} \symbf{\beta} + \varepsilon
 \end{equation}
 
 
