@@ -564,98 +564,326 @@ education-linked genetics and SES, but do not consider SGAM.
 
 # Model
 
-There is a large population, whose members have a single genetic trait
-$g_{i}$ and a single social trait $s_{i}$, drawn from distributions $G$
-and $S$. The genetic trait could be, for instance, a polygenic score,
-which summarizes the effects of many alleles (genetic variants) at
-different loci. The social trait is a measure of social status. Broadly
-conceived, this means any trait that an individual possesses in virtue
-of his or her position in society, rather than as a fact of his or her
-biology. Caste and class are kinds of social status; so are wealth, income, 
-education and formal employment.
+Individuals have two traits $(x_1, x_2)$, where trait 1 is genetic, and trait
+2 is a measure of social status, such as income. The traits contribute to each individual's attractiveness, which for men is given by
 
-Without loss of generality, $EG = ES = 0$ and $Var(G) = Var(S) = 1$.
-People pair according to an attractiveness function
-$$
-A(g_{i},s_{i}) = f((1-k)g_{i},ks_{i})
-$$
-where $f$ is smooth and strictly increasing in both its arguments, and
-$0 \le k \le 1$. Our sole condition on $G$ and $S$ is that a positive
-measure of the population has attractiveness $A$ where the distribution
-of $(G, S)|A$ is non-degenerate, i.e. not everybody with attractiveness
-$A$ is both genetically and socially identical. We assume that people
-marry at random within their attractiveness isoquant. One
-microfoundation is that $A$ measures the utility a person provides as a
-spouse, and the marriage market works via a Gale-Shapley
-[-@gale1962college] matching mechanism. Or, $A$ could represent inputs
-into a household production function where male and female inputs are
-complementary [@becker1973theory]. Other, non-individualistic interpretations 
-are possible: for instance, different values of $A$ could represent segmented 
-marriage markets, like different schools or workplaces.
+\[
+i(x) = ax_1 + (1-a)x_2.
+\]
 
-The key parameter is $k$. This describes the working of the society's
-marriage market. If $k = 0$, only genetics $G$ are relevant in marriage
-markets, and social status $S$ has no effect. That is, the marriage
-market is highly egalitarian. Conversely, if $k = 1$, only social status
-matters, to the complete exclusion of genetics. This is the equivalent
-of a marriage market driven only by "caste" or "class". Realistic
-societies are between these extremes.
+Here $a$ measures the relative importance of genetics against social status
+in the marriage market. For now we assume that women's attractiveness is the same:
 
-Figure \@ref(fig:pic-intuition) shows the intuition behind our theory.
-The top row shows a *caste marriage market* with $k = 1$. A typical pair
-is shown: children have intermediate values of $G$ and $S$ between their
-two parents (hollow circle). In this society pairs match only by social
-status; genetics plays no role. As a result, while the variance of $G$
-shrinks within each status group, genetics remain uncorrelated with
-social status in the children's population distribution, shown on the
-right. The next row shows a pure *egalitarian marriage market* with
-$k = 0$. Parents match only by genetics and ignore social status. Again,
-as a result there is no correlation between genetics and social status
-in the children's generation. The bottom row shows a (more realistic)
-intermediate society, with an intermediate value of $k$. Because both
-genetics and social status contribute to attractiveness, matched spouses
-typically trade them off against each other. As a result, the
-distribution is squeezed along the gradient of $k$, and $G$ and $S$ are
-correlated in the children's generation. We next prove this formally.
+\[
+j(y) = ay_1 + (1-a)y_2
+\]
 
-If $k = 0$, "indifference curves" of attractiveness are vertical lines
-in $(G, S)$ space. If $k = 1$, they are horizontal lines. If
-$k \in (0,1)$ they are downward sloping curves. Write $p(i)$ for $i$'s partner. 
-Pairs always have the same attractiveness:
+A large population of equal numbers of males and females matches in a marriage
+market with transferable utility where the surplus function $S(i(x), j(y))$ is
+supermodular, i.e. $\partial^2S/\partial i \partial j > 0$. As a result there
+is positive assortative mating on indices $i, j$. For simplicity we assume that
+$(x_1, x_2)$ is bivariate normal: 
 
-```{=tex}
-\begin{equation}
-A(g_{i},s_{i}) = A(g_{p(i)},s_{p(i)}),
-\label{eq:same-A}
-\end{equation}
-```
-Each pair has two children. We assume that both children $c(d)$ of
-parents $d, p(d)$ have
+\[
+(x_1, x_2) ~
+\mathcal{N}
+\left( 
+\begin{array}{c}
+0 \\ 
+0%
+\end{array}%
+,%
+\begin{array}{cc}
+s^{2} & \sigma \\ 
+\sigma & S^{2}%
+\end{array}%
+\right) 
+\]
 
-```{=tex}
-\begin{align}
-g_{c(d)} & =\frac{g_{d}+g_{p(d)}}{2};\label{eq:children-average}\\
-s_{c(d)} & =\frac{s_{d}+s_{p(d)}}{2}.\nonumber 
-\end{align}
-```
-This is a strong simplifying assumption; we relax it below. For real
-world examples approximated by the model, $S$ could be wealth which is
-equally divided between the children; $G$ could be a highly polygenic
-trait with many small effects. Write $G_{p}, S_{p}$ to denote the
-population variables in the parents' generation; $G_{c}, S_{c}$ for the
-children's generation.
 
-```{=tex}
-\begin{prop}
-\label{prop:prop1}
-(i) $Cov(G_{c}, S_{c}) \ge Cov(G_{p},S_{p})$, with strict inequality
-if and only if $0 < k < 1$. 
+Therefore $i$ and $j$ are distributed
 
-(ii) If $corr(G_{p}, S_{p}) \ge 0$, then $corr(G_{c},S_{c}) \ge corr(G_{p},S_{p})$,
-with strict inequality if and only if $0 < k < 1$ \uline{or} 
-$corr(G_{p}, S_{p}) > 0$.
-\end{prop}
-```
+\[
+\mathcal{N}(0,\sigma_{i}^{2}) 
+\]
+
+, where
+
+\[
+\sigma_{i}^{2} = a^{2}s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right)
+\sigma 
+\]
+
+As a benchmark, we consider random matching.
+
+
+\begin{proposition}
+Under random matching, the distribution of couples' characteristics is normal
+with mean 0 and covariance matrix:
+
+\[
+\mathbb{C}\left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2} \\ 
+y_{1} \\ 
+y_{2}%
+\end{array}%
+\right) =\allowbreak \left( 
+\begin{array}{cccc}
+s^{2} & \sigma  & 0 & 0 \\ 
+\sigma  & S^{2} & 0 & 0 \\ 
+0 & 0 & s^{2} & \sigma  \\ 
+0 & 0 & \sigma  & S^{2}%
+\end{array}%
+\right) \allowbreak 
+\]
+\end{proposition}
+
+
+\begin{proposition}
+Under positive assortative mating, the distribution of couples' characteristics is normal, with mean 0 and covariance matrix
+
+\[
+\mathbb{C}\left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2} \\ 
+y_{1} \\ 
+y_{2}%
+\end{array}%
+\right) =\allowbreak \left( 
+\begin{array}{cccc}
+s^{2} & \sigma & A^{2} & AC \\ 
+\sigma & S^{2} & AC & C^{2} \\ 
+A^{2} & AC & s^{2} & \sigma \\ 
+AC & C^{2} & \sigma & S^{2}%
+\end{array}%
+\right) \allowbreak 
+\]
+
+where:
+
+\begin{eqnarray*}
+A &=&\frac{as^{2}+\left( 1-a\right) \sigma }{\sqrt{a^{2}s^{2}+\left(
+1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma }}\text{ \ and} \\
+C &=&\frac{a\sigma +\left( 1-a\right) S^{2}}{\sqrt{a^{2}s^{2}+\left(
+1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma }},
+\end{eqnarray*}
+\end{proposition}
+
+In particular, the distribution of total household income has variance
+
+\[
+V\left( x_{2}+y_{2}\right) =2S^{2}+2C^{2}>2S^{2} 
+\]
+
+so that assortative mating increases cross-sectional inequality compared to
+random mating. Note, however, that 
+
+\[
+V\left( x_{2}+y_{2}\right) \leq 4S^{2} 
+\]
+
+which would be reached only if $a = 0$, i.e. people only match on income.
+
+## Children
+
+We next specify how children inherit traits $x_1$ and $x_2$ from their parents.
+For child traits $x'$, with parental traits $x$ and $y$, we assume:
+
+\begin{eqnarray}
+x_{1}^{\prime } &=&\frac{x_{1}+y_{1}}{4}+\varepsilon  \\
+x_{2}^{\prime } &=&\gamma \left( \frac{x_{1}+y_{1}}{2}+\varepsilon \right) +%
+\frac{x_{2}+y_{2}}{4}+\eta   \nonumber
+\end{eqnarray}
+
+where $\varepsilon ~ N(0, 1)$ and $\eta ~ N(0, 1)$ are independent shocks.
+
+XXX we probably want $x'_1 = (1-\varepsilon)(x_1+y_1)/2$ again.
+
+Thus, genetics are inherited from parents equally, but with some regression to 
+the mean imposed by mutation and/or selection.... Children's income is allowed to
+depend on both their own genetics, and on their parents' income. The parameter
+$\gamma$ represents "meritocracy", in the sense that it lets talented individuals
+increase their income.
+
+## Benchmark: random matching
+
+Under random matching, the distribution of couples' characteristics is normal, 
+with mean 0 and covariance matrix
+
+\[
+\mathbb{C}\left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2} \\ 
+y_{1} \\ 
+y_{2}%
+\end{array}%
+\right) =\allowbreak \left( 
+\begin{array}{cccc}
+s^{2} & \sigma  & 0 & 0 \\ 
+\sigma  & S^{2} & 0 & 0 \\ 
+0 & 0 & s^{2} & \sigma  \\ 
+0 & 0 & \sigma  & S^{2}%
+\end{array}%
+\right) \allowbreak 
+\]%
+
+Therefore%
+\begin{eqnarray}
+x_{1}^{\prime } &=&\frac{x_{1}+y_{1}}{4}+\varepsilon  \\
+x_{2}^{\prime } &=&\gamma \left( \frac{x_{1}+y_{1}}{2}+\varepsilon \right) +%
+\frac{x_{2}+y_{2}}{4}+\eta   \nonumber
+\end{eqnarray}%
+gives the covariance matrix for children:%
+\begin{eqnarray*}
+\mathbb{C} &=&\left( 
+\begin{array}{cc}
+1 & \gamma  \\ 
+\gamma  & 1+\gamma ^{2}%
+\end{array}%
+\right) +\left( 
+\begin{array}{cccc}
+\frac{1}{4} & 0 & \frac{1}{4} & 0 \\ 
+\frac{\gamma }{2} & \frac{1}{4} & \frac{\gamma }{2} & \frac{1}{4}%
+\end{array}%
+\right) \allowbreak \allowbreak \left( 
+\begin{array}{cccc}
+s^{2} & \sigma  & 0 & 0 \\ 
+\sigma  & S^{2} & 0 & 0 \\ 
+0 & 0 & s^{2} & \sigma  \\ 
+0 & 0 & \sigma  & S^{2}%
+\end{array}%
+\right) \allowbreak \left( 
+\begin{array}{cc}
+\frac{1}{4} & \frac{1}{2}\gamma  \\ 
+0 & \frac{1}{4} \\ 
+\frac{1}{4} & \frac{1}{2}\gamma  \\ 
+0 & \frac{1}{4}%
+\end{array}%
+\right)  \\
+&=&\left( 
+\begin{array}{cc}
+\frac{1}{8}s^{2}+1 & \frac{1}{4}\gamma s^{2}+\frac{1}{8}\sigma +\gamma  \\ 
+\frac{1}{4}\gamma s^{2}+\frac{1}{8}\sigma +\gamma  & \frac{1}{8}S^{2}+\frac{1%
+}{2}s^{2}\gamma ^{2}+\gamma ^{2}+\frac{1}{2}\sigma \gamma +1%
+\end{array}%
+\right) \allowbreak 
+\end{eqnarray*}
+
+## Assortative matching
+
+Under assortative matching: 
+
+\begin{eqnarray}
+x_{1}^{\prime } &=&\frac{x_{1}+y_{1}}{4}+\varepsilon  \\
+x_{2}^{\prime } &=&\gamma \left( \frac{x_{1}+y_{1}}{2}+\varepsilon \right) +%
+\frac{x_{2}+y_{2}}{4}+\eta   \nonumber \\
+&=&\gamma \frac{x_{1}+y_{1}}{2}+\frac{x_{2}+y_{2}}{4}+\eta +\gamma
+\varepsilon 
+\end{eqnarray}%
+
+then 
+
+\[
+\left( 
+\begin{array}{c}
+.5\frac{x_{1}+y_{1}}{2} \\ 
+\gamma \frac{x_{1}+y_{1}}{2}+.5\frac{x_{2}+y_{2}}{2}%
+\end{array}%
+\right) =\left( 
+\begin{array}{cccc}
+\frac{1}{4} & 0 & \frac{1}{4} & 0 \\ 
+\frac{\gamma }{2} & \frac{1}{4} & \frac{\gamma }{2} & \frac{1}{4}%
+\end{array}%
+\right) \allowbreak \left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2} \\ 
+y_{1} \\ 
+y_{2}%
+\end{array}%
+\right) 
+\]
+
+hence the covariance matrix for children:
+
+\begin{eqnarray*}
+\mathbb{C} &=&\left( 
+\begin{array}{cc}
+1 & \gamma \\ 
+\gamma & 1+\gamma ^{2}%
+\end{array}%
+\right) +\left( 
+\begin{array}{cccc}
+\frac{1}{4} & 0 & \frac{1}{4} & 0 \\ 
+\frac{\gamma }{2} & \frac{1}{4} & \frac{\gamma }{2} & \frac{1}{4}%
+\end{array}%
+\right) \allowbreak \left( 
+\begin{array}{cccc}
+s^{2} & \sigma & A^{2} & AC \\ 
+\sigma & S^{2} & AC & C^{2} \\ 
+A^{2} & AC & s^{2} & \sigma \\ 
+AC & C^{2} & \sigma & S^{2}%
+\end{array}%
+\right) \allowbreak \left( 
+\begin{array}{cc}
+\frac{1}{4} & \frac{1}{2}\gamma \\ 
+0 & \frac{1}{4} \\ 
+\frac{1}{4} & \frac{1}{2}\gamma \\ 
+0 & \frac{1}{4}%
+\end{array}%
+\right) \\
+&=&\left( 
+\begin{array}{cc}
+\frac{1}{8}A^{2}+\frac{1}{8}s^{2}+1 & \frac{1}{4}\gamma A^{2}+\frac{1}{8}CA+%
+\frac{1}{4}\gamma s^{2}+\frac{1}{8}\sigma +\gamma \\ 
+\frac{1}{4}\gamma A^{2}+\frac{1}{8}CA+\frac{1}{4}\gamma s^{2}+\frac{1}{8}%
+\sigma +\gamma & \frac{1}{2}A^{2}\gamma ^{2}+\frac{1}{2}AC\gamma +\frac{1}{8}%
+C^{2}+\frac{1}{8}S^{2}+\frac{1}{2}s^{2}\gamma ^{2}+\gamma ^{2}+\frac{1}{2}%
+\sigma \gamma +1%
+\end{array}%
+\right) \allowbreak
+\end{eqnarray*}
+
+In particular, the covariance between children's $x'_1$ and $x'_2$ is positive
+even when $\gamma = \sigma = 0$. In other words, socio-genetic assortative mating
+creates a genes-income gradient, even in non-meritocratic societies.
+
+## Asymptotics
+
+We also examine asymptotic convergence to stable distributions, where
+$\mathbb{C}(x_1, x_2) = \mathbb{C}(x'_1, x'_2)$. Under the random matching
+benchmark, the condition
+
+\[
+\left( 
+\begin{array}{cc}
+s^{2} & \sigma  \\ 
+\sigma  & S^{2}%
+\end{array}%
+\right) =\left( 
+\begin{array}{cc}
+\frac{1}{8}s^{2}+1 & \frac{1}{4}\gamma s^{2}+\frac{1}{8}\sigma +\gamma  \\ 
+\frac{1}{4}\gamma s^{2}+\frac{1}{8}\sigma +\gamma  & \frac{1}{8}S^{2}+\frac{1%
+}{2}s^{2}\gamma ^{2}+\gamma ^{2}+\frac{1}{2}\sigma \gamma +1%
+\end{array}%
+\right) \allowbreak 
+\]
+
+gives
+
+\begin{eqnarray*}
+s^{2} &=&\frac{8}{7} \\
+\sigma  &=&\frac{72}{49}\gamma  \\
+S^{2} &=&\frac{904}{343}\gamma ^{2}+\frac{8}{7}.
+\end{eqnarray*}
+
+Under positive assortative mating
+
+
 ```{r pic-intuition, fig.subcap = c("Caste society ($k = 1$): parents", "Caste society: children", "Egalitarian society ($k = 0$): parents", "Egalitarian society: children", "Intermediate society ($0 < k < 1$): parents", "Intermediate society: children"), fig.cap = "Theory: shaded area is the population distribution. Dotted lines are attractiveness isoquants. Solid dots are example parents, transparent dots are example children. The right hand side shows the children's generation.", fig.ncol = 2, fig.width = 2.75, fig.height = 2.4, fig.align='center'}
 
 
@@ -756,47 +984,8 @@ invisible(draw_dist(matrix(c(1, .4, .4, .8), nrow = 2)))
 
 ```
 
-We view $k = 0$ and $k = 1$ as theoretical "ideal types". Proposition
-\ref{prop:prop1} therefore shows that in almost any realistic society,
-social status will become correlated with genetic traits which are
-considered attractive in marriage markets.
+## Leftovers
 
-We now relax the condition that children are exactly at the mean of
-their parents' values for $G$ and $S$. Let
-
-```{=tex}
-\begin{align*}
-g_{c(i)} & = \bar{g}_{i}+\varepsilon_{i}^{G} \\
-s_{c(i)} & = \bar{s}_{i}+\varepsilon_{i}^{S}
-\end{align*}
-```
-where
-
-$$
-\bar{g}_{i} = \frac{g_{i} + g_{p(i)}}{2}; \bar{s}_{i} = \frac{s_{i} + s_{p(i)}}{2};
-$$
-
-$\varepsilon^{G}$ has mean 0 and variance $\sigma_{G}^{2}$; and
-$\varepsilon^{S}$ has mean 0 and variance $\sigma_{S}^{2}$.
-
-```{=tex}
-\begin{prop}
-\label{prop:robustness}
-
-\begin{enumerate}
-
-\item If $\sigma_{G}^{2}$ and $\sigma_{S}^{2}$ are small enough and $corr(G_{p},S_{p}) \ge 0$,
-then $corr(G_{c},S_{c}) > corr(G_{p},S_{p})$ for $k \in (0,1)$.
-
-\item If $\varepsilon^{G}$ and $\varepsilon^{S}$ are uncorrelated with
-each other and with $\bar{G}$ and $\bar{S}$; and if $G_{p}$ and
-$S_{p}$ are uncorrelated, then $corr(G_{c},S_{c}) \ge 0$, with strict
-inequality if and only if $0<k<1$.
-
-\end{enumerate}
-
-\end{prop}
-```
 The conditions in Proposition \ref{prop:robustness} are quite plausible. For
 $G$, they require that variance in siblings' scores, on a genetic summary
 statistic capturing variation in attractiveness, is either not too large, or
@@ -812,24 +1001,6 @@ these conditions. For example, suppose that parents' combined wealth is
 inherited by the child with the lowest value of $g_{c(i)}$. This creates
 a negative correlation between $s_{c(i)}$ and $g_{c(i)}$.
 
-In the model, intermediate values of $k$ drive increased covariance
-between genetics and social status. That naturally raises the question
-whether the change in covariance and/or correlation is increasing in $k$
-towards some maximum value in $(0,1)$, then decreasing, i.e., whether it
-is quasiconcave in $k$. In general the answer is no, even on the
-assumption that
-
-```{=tex}
-\begin{equation}
-A(g_{i},s_{i}) = (1-k)g_{i} + ks_{i}
-\label{eq:linearity}
-\end{equation}
-```
-i.e. that indifference curves are straight lines in $(G, S)$ space.
-However, quasiconcavity in $k$ does hold when indifference curves are
-straight and $(G, S)$ are jointly normally distributed. We conjecture
-that it also holds whenever the distribution $(G, S)$ is log-concave or
-even quasiconcave.
 
 ## Discussion
 

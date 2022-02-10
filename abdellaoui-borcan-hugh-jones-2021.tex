@@ -1,14 +1,23 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
 %
 \documentclass[
 ]{article}
+\title{Trading social status for genetics in marriage markets: evidence from UK Biobank}
+\author{Abdel Abdellaoui\thanks{Department of Psychiatry, Amsterdam UMC, University 
+of Amsterdam, Amsterdam, The Netherlands. Email: a.abdellaoui@amsterdamumc.nl},
+Oana Borcan\thanks{School of Economics, University of East Anglia, Norwich, 
+UK. Email: O.Borcan@uea.ac.uk} \&
+David Hugh-Jones\thanks{Corresponding author. School of Economics, 
+University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}}
+\date{2021-11-17}
+
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
-\usepackage{ifxetex,ifluatex}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage{iftex}
+\ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -40,10 +49,10 @@
 \hypersetup{
   pdftitle={Trading social status for genetics in marriage markets: evidence from UK Biobank},
   colorlinks=true,
-  linkcolor=blue,
-  filecolor=Maroon,
-  citecolor=Blue,
-  urlcolor=Blue,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
@@ -74,6 +83,29 @@
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \usepackage{subfig}
 \usepackage{setspace}\doublespacing
 \usepackage{amsmath}
@@ -94,38 +126,9 @@
 \usepackage{wrapfig}
 \usepackage{adjustbox}
 \usepackage{hyperref}
-\ifluatex
+\ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
-\newlength{\csllabelwidth}
-\setlength{\csllabelwidth}{3em}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
-  % turn on hanging indent if param 1 is 1
-  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
-  % set entry spacing
-  \ifnum #2 > 0
-  \setlength{\parskip}{#2\baselineskip}
-  \fi
- }%
- {}
-\usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
-\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-
-\title{Trading social status for genetics in marriage markets: evidence from UK Biobank}
-\author{Abdel Abdellaoui\thanks{Department of Psychiatry, Amsterdam UMC, University 
-of Amsterdam, Amsterdam, The Netherlands. Email: a.abdellaoui@amsterdamumc.nl},
-Oana Borcan\thanks{School of Economics, University of East Anglia, Norwich, 
-UK. Email: O.Borcan@uea.ac.uk} \&
-David Hugh-Jones\thanks{Corresponding author. School of Economics, 
-University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}}
-\date{2021-08-06}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -404,94 +407,109 @@ economics that analyses SGAM or its consequences.\footnote{Halsey (1958) showed 
 \hypertarget{model}{%
 \section{Model}\label{model}}
 
-There is a large population, whose members have a single genetic trait
-\(g_{i}\) and a single social trait \(s_{i}\), drawn from distributions \(G\)
-and \(S\). The genetic trait could be, for instance, a polygenic score,
-which summarizes the effects of many alleles (genetic variants) at
-different loci. The social trait is a measure of social status. Broadly
-conceived, this means any trait that an individual possesses in virtue
-of his or her position in society, rather than as a fact of his or her
-biology. Caste and class are kinds of social status; so are wealth, income,
-education and formal employment.
+Individuals have two traits \((x_1, x_2)\), where trait 1 is genetic, and trait
+2 reflects social status. The traits contribute to each individual's attractiveness,
+which for men is given by
 
-Without loss of generality, \(EG = ES = 0\) and \(Var(G) = Var(S) = 1\).
-People pair according to an attractiveness function
 \[
-A(g_{i},s_{i}) = f((1-k)g_{i},ks_{i})
+i(x) = ax_1 + (1-a)x_2.
 \]
-where \(f\) is smooth and strictly increasing in both its arguments, and
-\(0 \le k \le 1\). Our sole condition on \(G\) and \(S\) is that a positive
-measure of the population has attractiveness \(A\) where the distribution
-of \((G, S)|A\) is non-degenerate, i.e.~not everybody with attractiveness
-\(A\) is both genetically and socially identical. We assume that people
-marry at random within their attractiveness isoquant. One
-microfoundation is that \(A\) measures the utility a person provides as a
-spouse, and the marriage market works via a Gale-Shapley
-(1962) matching mechanism. Or, \(A\) could represent inputs
-into a household production function where male and female inputs are
-complementary (Becker 1973). Other, non-individualistic interpretations
-are possible: for instance, different values of \(A\) could represent segmented
-marriage markets, like different schools or workplaces.
 
-The key parameter is \(k\). This describes the working of the society's
-marriage market. If \(k = 0\), only genetics \(G\) are relevant in marriage
-markets, and social status \(S\) has no effect. That is, the marriage
-market is highly egalitarian. Conversely, if \(k = 1\), only social status
-matters, to the complete exclusion of genetics. This is the equivalent
-of a marriage market driven only by ``caste'' or ``class.'' Realistic
-societies are between these extremes.
+For now we assume that womens' attractiveness is the same:
 
-Figure \ref{fig:pic-intuition} shows the intuition behind our theory.
-The top row shows a \emph{caste marriage market} with \(k = 1\). A typical pair
-is shown: children have intermediate values of \(G\) and \(S\) between their
-two parents (hollow circle). In this society pairs match only by social
-status; genetics plays no role. As a result, while the variance of \(G\)
-shrinks within each status group, genetics remain uncorrelated with
-social status in the children's population distribution, shown on the
-right. The next row shows a pure \emph{egalitarian marriage market} with
-\(k = 0\). Parents match only by genetics and ignore social status. Again,
-as a result there is no correlation between genetics and social status
-in the children's generation. The bottom row shows a (more realistic)
-intermediate society, with an intermediate value of \(k\). Because both
-genetics and social status contribute to attractiveness, matched spouses
-typically trade them off against each other. As a result, the
-distribution is squeezed along the gradient of \(k\), and \(G\) and \(S\) are
-correlated in the children's generation. We next prove this formally.
+\[
+j(y) = ay_1 + (1-a)y_2
+\]
 
-If \(k = 0\), ``indifference curves'' of attractiveness are vertical lines
-in \((G, S)\) space. If \(k = 1\), they are horizontal lines. If
-\(k \in (0,1)\) they are downward sloping curves. Write \(p(i)\) for \(i\)'s partner.
-Pairs always have the same attractiveness:
+A large population of equal numbers of males and females matches in a marriage
+market with transferable utility where the surplus function \(S(i(x), j(y))\) is
+supermodular, i.e.~\(\partial^2S/\partial i \partial j > 0\). As a result there
+is positive assortative mating on indices \(i, j\). For simplicity we assume that
+\((x_1, x_2)\) is bivariate normal:
 
-\begin{equation}
-A(g_{i},s_{i}) = A(g_{p(i)},s_{p(i)}),
-\label{eq:same-A}
-\end{equation}
+\[
+(x_1, x_2) ~
+\mathcal{N}
+\left( 
+\begin{array}{c}
+0 \\ 
+0%
+\end{array}%
+,%
+\begin{array}{cc}
+s^{2} & \sigma \\ 
+\sigma & S^{2}%
+\end{array}%
+\right) 
+\]
 
-Each pair has two children. We assume that both children \(c(d)\) of
-parents \(d, p(d)\) have
+Therefore \(i\) and \(j\) are distributed 
+\[
+\mathcal{N}(0,\sigma_{i}^{2}) 
+\]
 
-\begin{align}
-g_{c(d)} & =\frac{g_{d}+g_{p(d)}}{2};\label{eq:children-average}\\
-s_{c(d)} & =\frac{s_{d}+s_{p(d)}}{2}.\nonumber 
-\end{align}
+, where
 
-This is a strong simplifying assumption; we relax it below. For real
-world examples approximated by the model, \(S\) could be wealth which is
-equally divided between the children; \(G\) could be a highly polygenic
-trait with many small effects. Write \(G_{p}, S_{p}\) to denote the
-population variables in the parents' generation; \(G_{c}, S_{c}\) for the
-children's generation.
+\[
+\sigma_{i}^{2} = a^{2}s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right)
+\sigma 
+\]
 
-\begin{prop}
-\label{prop:prop1}
-(i) $Cov(G_{c}, S_{c}) \ge Cov(G_{p},S_{p})$, with strict inequality
-if and only if $0 < k < 1$. 
+As a benchmark, we consider random matching.
 
-(ii) If $corr(G_{p}, S_{p}) \ge 0$, then $corr(G_{c},S_{c}) \ge corr(G_{p},S_{p})$,
-with strict inequality if and only if $0 < k < 1$ \uline{or} 
-$corr(G_{p}, S_{p}) > 0$.
-\end{prop}
+\begin{proposition}
+Under random matching, the distribution of couples' characteristics is normal
+with mean 0 and covariance matrix:
+
+\[
+\mathbb{C}\left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2} \\ 
+y_{1} \\ 
+y_{2}%
+\end{array}%
+\right) =\allowbreak \left( 
+\begin{array}{cccc}
+s^{2} & \sigma  & 0 & 0 \\ 
+\sigma  & S^{2} & 0 & 0 \\ 
+0 & 0 & s^{2} & \sigma  \\ 
+0 & 0 & \sigma  & S^{2}%
+\end{array}%
+\right) \allowbreak 
+\]
+\end{proposition}
+
+\begin{proposition}
+Under positive assortative mating, the distribution of couples' characteristics is normal, with mean 0 and covariance matrix
+
+\[
+\mathbb{C}\left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2} \\ 
+y_{1} \\ 
+y_{2}%
+\end{array}%
+\right) =\allowbreak \left( 
+\begin{array}{cccc}
+s^{2} & \sigma & A^{2} & AC \\ 
+\sigma & S^{2} & AC & C^{2} \\ 
+A^{2} & AC & s^{2} & \sigma \\ 
+AC & C^{2} & \sigma & S^{2}%
+\end{array}%
+\right) \allowbreak 
+\]
+
+where:
+
+\begin{eqnarray*}
+A &=&\frac{as^{2}+\left( 1-a\right) \sigma }{\sqrt{a^{2}s^{2}+\left(
+1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma }}\text{ \ and} \\
+C &=&\frac{a\sigma +\left( 1-a\right) S^{2}}{\sqrt{a^{2}s^{2}+\left(
+1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma }},
+\end{eqnarray*}
+\end{proposition}
 
 \begin{figure}
 
@@ -502,44 +520,8 @@ $corr(G_{p}, S_{p}) > 0$.
 \caption{Theory: shaded area is the population distribution. Dotted lines are attractiveness isoquants. Solid dots are example parents, transparent dots are example children. The right hand side shows the children's generation.}\label{fig:pic-intuition}
 \end{figure}
 
-We view \(k = 0\) and \(k = 1\) as theoretical ``ideal types.'' Proposition
-\ref{prop:prop1} therefore shows that in almost any realistic society,
-social status will become correlated with genetic traits which are
-considered attractive in marriage markets.
-
-We now relax the condition that children are exactly at the mean of
-their parents' values for \(G\) and \(S\). Let
-
-\begin{align*}
-g_{c(i)} & = \bar{g}_{i}+\varepsilon_{i}^{G} \\
-s_{c(i)} & = \bar{s}_{i}+\varepsilon_{i}^{S}
-\end{align*}
-
-where
-
-\[
-\bar{g}_{i} = \frac{g_{i} + g_{p(i)}}{2}; \bar{s}_{i} = \frac{s_{i} + s_{p(i)}}{2};
-\]
-
-\(\varepsilon^{G}\) has mean 0 and variance \(\sigma_{G}^{2}\); and
-\(\varepsilon^{S}\) has mean 0 and variance \(\sigma_{S}^{2}\).
-
-\begin{prop}
-\label{prop:robustness}
-
-\begin{enumerate}
-
-\item If $\sigma_{G}^{2}$ and $\sigma_{S}^{2}$ are small enough and $corr(G_{p},S_{p}) \ge 0$,
-then $corr(G_{c},S_{c}) > corr(G_{p},S_{p})$ for $k \in (0,1)$.
-
-\item If $\varepsilon^{G}$ and $\varepsilon^{S}$ are uncorrelated with
-each other and with $\bar{G}$ and $\bar{S}$; and if $G_{p}$ and
-$S_{p}$ are uncorrelated, then $corr(G_{c},S_{c}) \ge 0$, with strict
-inequality if and only if $0<k<1$.
-
-\end{enumerate}
-
-\end{prop}
+\hypertarget{leftovers}{%
+\subsection{Leftovers}\label{leftovers}}
 
 The conditions in Proposition \ref{prop:robustness} are quite plausible. For
 \(G\), they require that variance in siblings' scores, on a genetic summary
@@ -555,24 +537,6 @@ It is worth considering what kind of social arrangements would \emph{violate}
 these conditions. For example, suppose that parents' combined wealth is
 inherited by the child with the lowest value of \(g_{c(i)}\). This creates
 a negative correlation between \(s_{c(i)}\) and \(g_{c(i)}\).
-
-In the model, intermediate values of \(k\) drive increased covariance
-between genetics and social status. That naturally raises the question
-whether the change in covariance and/or correlation is increasing in \(k\)
-towards some maximum value in \((0,1)\), then decreasing, i.e., whether it
-is quasiconcave in \(k\). In general the answer is no, even on the
-assumption that
-
-\begin{equation}
-A(g_{i},s_{i}) = (1-k)g_{i} + ks_{i}
-\label{eq:linearity}
-\end{equation}
-
-i.e.~that indifference curves are straight lines in \((G, S)\) space.
-However, quasiconcavity in \(k\) does hold when indifference curves are
-straight and \((G, S)\) are jointly normally distributed. We conjecture
-that it also holds whenever the distribution \((G, S)\) is log-concave or
-even quasiconcave.
 
 \hypertarget{discussion}{%
 \subsection{Discussion}\label{discussion}}
@@ -4268,244 +4232,238 @@ is the Aristocracy of the natural Talent of Beauty.
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
-\leavevmode\hypertarget{ref-abdellaoui2019genetic}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-abdellaoui2019genetic}{}}%
 Abdellaoui, Abdel, David Hugh-Jones, Loı̈c Yengo, Kathryn E Kemper, Michel G Nivard, Laura Veul, Yan Holtz, et al. 2019. {``Genetic Correlates of Social Stratification in Great Britain.''} \emph{Nature Human Behaviour} 3 (12): 1332--42.
 
-\leavevmode\hypertarget{ref-abramitzky2011marrying}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-abramitzky2011marrying}{}}%
 Abramitzky, Ran, Adeline Delavande, and Luis Vasconcelos. 2011. {``Marrying up: The Role of Sex Ratio in Assortative Matching.''} \emph{American Economic Journal: Applied Economics} 3 (3): 124--57.
 
-\leavevmode\hypertarget{ref-adermon2018intergenerational}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-adermon2018intergenerational}{}}%
 Adermon, Adrian, Mikael Lindahl, and Daniel Waldenström. 2018. {``Intergenerational Wealth Mobility and the Role of Inheritance: Evidence from Multiple Generations.''} \emph{The Economic Journal} 128 (612): F482--513.
 
-\leavevmode\hypertarget{ref-banerjee2013marry}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-banerjee2013marry}{}}%
 Banerjee, Abhijit, Esther Duflo, Maitreesh Ghatak, and Jeanne Lafortune. 2013. {``Marry for What? Caste and Mate Selection in Modern India.''} \emph{American Economic Journal: Microeconomics} 5 (2): 33--72.
 
-\leavevmode\hypertarget{ref-barth2020genetic}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-barth2020genetic}{}}%
 Barth, Daniel, Nicholas W Papageorge, and Kevin Thom. 2020. {``Genetic Endowments and Wealth Inequality.''} \emph{Journal of Political Economy} 128 (4): 1474--1522.
 
-\leavevmode\hypertarget{ref-Beauchamp_2010}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Beauchamp_2010}{}}%
 Beauchamp, Jonathan P., David Cesarini, Magnus Johannesson, Erik Lindqvist, and Coren Apicella. 2010. {``On the Sources of the Height-Intelligence Correlation: New Insights from a Bivariate {ACE} Model with Assortative Mating.''} \emph{Behavior Genetics} 41 (2): 242--52. \url{https://doi.org/10.1007/s10519-010-9376-7}.
 
-\leavevmode\hypertarget{ref-becker1973theory}{}%
-Becker, Gary S. 1973. {``A Theory of Marriage: Part i.''} \emph{Journal of Political Economy} 81 (4): 813--46.
-
-\leavevmode\hypertarget{ref-becker2018theory}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-becker2018theory}{}}%
 Becker, Gary S, Scott Duke Kominers, Kevin M Murphy, and Jörg L Spenkuch. 2018. {``A Theory of Intergenerational Mobility.''} \emph{Journal of Political Economy} 126 (S1): S7--25.
 
-\leavevmode\hypertarget{ref-belot2013dating}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-belot2013dating}{}}%
 Belot, Michèle, and Marco Francesconi. 2013. {``Dating Preferences and Meeting Opportunities in Mate Choice Decisions.''} \emph{Journal of Human Resources} 48 (2): 474--508.
 
-\leavevmode\hypertarget{ref-belsky2018genetic}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-belsky2018genetic}{}}%
 Belsky, Daniel W, Benjamin W Domingue, Robbee Wedow, Louise Arseneault, Jason D Boardman, Avshalom Caspi, Dalton Conley, et al. 2018. {``Genetic Analysis of Social-Class Mobility in Five Longitudinal Studies.''} \emph{Proceedings of the National Academy of Sciences} 115 (31): E7275--84.
 
-\leavevmode\hypertarget{ref-belsky2016genetics}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-belsky2016genetics}{}}%
 Belsky, Daniel W, Terrie E Moffitt, David L Corcoran, Benjamin Domingue, HonaLee Harrington, Sean Hogan, Renate Houts, et al. 2016. {``The Genetics of Success: How Single-Nucleotide Polymorphisms Associated with Educational Attainment Relate to Life-Course Development.''} \emph{Psychological Science} 27 (7): 957--72.
 
-\leavevmode\hypertarget{ref-benjamin2011promises}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-benjamin2011promises}{}}%
 Benjamin, Daniel J, David Cesarini, Christopher F Chabris, Edward L Glaeser, David I Laibson, Gene Age, Vilmundur Gunason, et al. 2011. {``The Promises and Pitfalls of Genoeconomics.''}
 
-\leavevmode\hypertarget{ref-bjorklund2006origins}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-bjorklund2006origins}{}}%
 Björklund, Anders, Mikael Lindahl, and Erik Plug. 2006. {``The Origins of Intergenerational Associations: Lessons from Swedish Adoption Data.''} \emph{The Quarterly Journal of Economics} 121 (3): 999--1028.
 
-\leavevmode\hypertarget{ref-black2010recent}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-black2010recent}{}}%
 Black, Sandra E, and Paul J Devereux. 2010. {``Recent Developments in Intergenerational Mobility.''} National Bureau of Economic Research.
 
-\leavevmode\hypertarget{ref-black2011older}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-black2011older}{}}%
 Black, Sandra E, Paul J Devereux, and Kjell G Salvanes. 2011. {``Older and Wiser? Birth Order and IQ of Young Men.''} \emph{CESifo Economic Studies} 57 (1): 103--20.
 
-\leavevmode\hypertarget{ref-booth2009birth}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-booth2009birth}{}}%
 Booth, Alison L, and Hiau Joo Kee. 2009. {``Birth Order Matters: The Effect of Family Size and Birth Order on Educational Attainment.''} \emph{Journal of Population Economics} 22 (2): 367--97.
 
-\leavevmode\hypertarget{ref-branigan2013variation}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-branigan2013variation}{}}%
 Branigan, Amelia R, Kenneth J McCallum, and Jeremy Freese. 2013. {``Variation in the Heritability of Educational Attainment: An International Meta-Analysis.''} \emph{Social Forces} 92 (1): 109--40.
 
-\leavevmode\hypertarget{ref-breen2011educational}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-breen2011educational}{}}%
 Breen, Richard, and Leire Salazar. 2011. {``Educational Assortative Mating and Earnings Inequality in the United States.''} \emph{American Journal of Sociology} 117 (3): 808--43.
 
-\leavevmode\hypertarget{ref-buss1989sex}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-buss1989sex}{}}%
 Buss, David M. 1989. {``Sex Differences in Human Mate Preferences: Evolutionary Hypotheses Tested in 37 Cultures.''} \emph{Behavioral and Brain Sciences} 12 (1): 1--14.
 
-\leavevmode\hypertarget{ref-buss1986preferences}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-buss1986preferences}{}}%
 Buss, David M, and Michael Barnes. 1986. {``Preferences in Human Mate Selection.''} \emph{Journal of Personality and Social Psychology} 50 (3): 559.
 
-\leavevmode\hypertarget{ref-buss2019mate}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-buss2019mate}{}}%
 Buss, David M, and David P Schmitt. 2019. {``Mate Preferences and Their Behavioral Manifestations.''} \emph{Annual Review of Psychology} 70: 77--110.
 
-\leavevmode\hypertarget{ref-chakravarti2003nature}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-chakravarti2003nature}{}}%
 Chakravarti, Aravinda, and Peter Little. 2003. {``Nature, Nurture and Human Disease.''} \emph{Nature} 421 (6921): 412--14.
 
-\leavevmode\hypertarget{ref-chetty2017fading}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-chetty2017fading}{}}%
 Chetty, Raj, David Grusky, Maximilian Hell, Nathaniel Hendren, Robert Manduca, and Jimmy Narang. 2017. {``The Fading American Dream: Trends in Absolute Income Mobility Since 1940.''} \emph{Science} 356 (6336): 398--406.
 
-\leavevmode\hypertarget{ref-chetty2016effects}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-chetty2016effects}{}}%
 Chetty, Raj, Nathaniel Hendren, and Lawrence F Katz. 2016. {``The Effects of Exposure to Better Neighborhoods on Children: New Evidence from the Moving to Opportunity Experiment.''} \emph{American Economic Review} 106 (4): 855--902.
 
-\leavevmode\hypertarget{ref-chetty2014united}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-chetty2014united}{}}%
 Chetty, Raj, Nathaniel Hendren, Patrick Kline, Emmanuel Saez, and Nicholas Turner. 2014. {``Is the United States Still a Land of Opportunity? Recent Trends in Intergenerational Mobility.''} \emph{American Economic Review} 104 (5): 141--47.
 
-\leavevmode\hypertarget{ref-chiappori2012fatter}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-chiappori2012fatter}{}}%
 Chiappori, Pierre-André, Sonia Oreffice, and Climent Quintana-Domeque. 2012. {``Fatter Attraction: Anthropometric and Socioeconomic Matching on the Marriage Market.''} \emph{Journal of Political Economy} 120 (4): 659--95.
 
-\leavevmode\hypertarget{ref-clark2021bell}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-clark2021bell}{}}%
 Clark, Gregory. 2021. {``For Whom the Bell Curve Tolls: A Lineage of 400,000 English Individuals 1750-2020 Shows Genetics Determines Most Social Outcomes.''} Working Paper. \url{http://faculty.econ.ucdavis.edu/faculty/gclark/ClarkGlasgow2021.pdf}.
 
-\leavevmode\hypertarget{ref-clark2015intergenerational}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-clark2015intergenerational}{}}%
 Clark, Gregory, and Neil Cummins. 2015. {``Intergenerational Wealth Mobility in England, 1858--2012: Surnames and Social Mobility.''} \emph{The Economic Journal} 125 (582): 61--85.
 
-\leavevmode\hypertarget{ref-cochran2013paternal}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-cochran2013paternal}{}}%
 Cochran, Gregory, and Henry Harpending. 2013. {``Paternal Age and Genetic Load.''} \emph{Human Biology} 85 (4): 515--28.
 
-\leavevmode\hypertarget{ref-cunha2007technology}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-cunha2007technology}{}}%
 Cunha, Flavio, and James Heckman. 2007. {``The Technology of Skill Formation.''} \emph{American Economic Review} 97 (2): 31--47.
 
-\leavevmode\hypertarget{ref-cunha2010estimating}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-cunha2010estimating}{}}%
 Cunha, Flavio, James Heckman, and Susanne M Schennach. 2010. {``Estimating the Technology of Cognitive and Noncognitive Skill Formation.''} \emph{Econometrica} 78 (3): 883--931.
 
-\leavevmode\hypertarget{ref-Davies_2018}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Davies_2018}{}}%
 Davies, Neil M., Matt Dickson, George Davey Smith, Gerard J. van den Berg, and Frank Windmeijer. 2018. {``The Causal Effects of Education on Health Outcomes in the {UK} Biobank.''} \emph{Nature Human Behaviour} 2 (2): 117--25. \url{https://doi.org/10.1038/s41562-017-0279-y}.
 
-\leavevmode\hypertarget{ref-dupuy2014personality}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-dupuy2014personality}{}}%
 Dupuy, Arnaud, and Alfred Galichon. 2014. {``Personality Traits and the Marriage Market.''} \emph{Journal of Political Economy} 122 (6): 1271--1319.
 
-\leavevmode\hypertarget{ref-eika2019educational}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-eika2019educational}{}}%
 Eika, Lasse, Magne Mogstad, and Basit Zafar. 2019. {``Educational Assortative Mating and Household Income Inequality.''} \emph{Journal of Political Economy} 127 (6): 2795--835.
 
-\leavevmode\hypertarget{ref-fagereng2021wealthy}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-fagereng2021wealthy}{}}%
 Fagereng, Andreas, Magne Mogstad, and Marte Rønning. 2021. {``Why Do Wealthy Parents Have Wealthy Children?''} \emph{Journal of Political Economy} 129 (3): 703--56.
 
-\leavevmode\hypertarget{ref-fernandez2005love}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-fernandez2005love}{}}%
 Fernandez, Raquel, Nezih Guner, and John Knowles. 2005. {``Love and Money: A Theoretical and Empirical Analysis of Household Sorting and Inequality.''} \emph{The Quarterly Journal of Economics} 120 (1): 273--344.
 
-\leavevmode\hypertarget{ref-fernandez2001sorting}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-fernandez2001sorting}{}}%
 Fernández, Raquel, and Richard Rogerson. 2001. {``Sorting and Long-Run Inequality.''} \emph{The Quarterly Journal of Economics} 116 (4): 1305--41.
 
-\leavevmode\hypertarget{ref-furnham1993just}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-furnham1993just}{}}%
 Furnham, Adrian. 1993. {``Just World Beliefs in Twelve Societies.''} \emph{The Journal of Social Psychology} 133 (3): 317--29.
 
-\leavevmode\hypertarget{ref-gale1962college}{}%
-Gale, David, and Lloyd S Shapley. 1962. {``College Admissions and the Stability of Marriage.''} \emph{The American Mathematical Monthly} 69 (1): 9--15.
-
-\leavevmode\hypertarget{ref-gramsci1971selections}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-gramsci1971selections}{}}%
 Gramsci, Antonio. 1971. \emph{Selections from the Prison Notebooks}. Lawrence; Wishart London.
 
-\leavevmode\hypertarget{ref-greenwood2014marry}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-greenwood2014marry}{}}%
 Greenwood, Jeremy, Nezih Guner, Georgi Kocharkov, and Cezar Santos. 2014. {``Marry Your Like: Assortative Mating and Income Inequality.''} \emph{American Economic Review} 104 (5): 348--53.
 
-\leavevmode\hypertarget{ref-halsey1958genetics}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-halsey1958genetics}{}}%
 Halsey, AH. 1958. {``Genetics, Social Structure and Intelligence.''} \emph{The British Journal of Sociology} 9 (1): 15--28.
 
-\leavevmode\hypertarget{ref-Heath_1985}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Heath_1985}{}}%
 Heath, A. C., K. Berg, L. J. Eaves, M. H. Solaas, L. A. Corey, J. Sundet, P. Magnus, and W. E. Nance. 1985. {``Education Policy and the Heritability of Educational Attainment.''} \emph{Nature} 314 (6013): 734--36. \url{https://doi.org/10.1038/314734a0}.
 
-\leavevmode\hypertarget{ref-heckman2014economics}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-heckman2014economics}{}}%
 Heckman, James, and Stefano Mosso. 2014. {``The Economics of Human Development and Social Mobility.''} \emph{Annu. Rev. Econ.} 6 (1): 689--733.
 
-\leavevmode\hypertarget{ref-heckman2013understanding}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-heckman2013understanding}{}}%
 Heckman, James, Rodrigo Pinto, and Peter Savelyev. 2013. {``Understanding the Mechanisms Through Which an Influential Early Childhood Program Boosted Adult Outcomes.''} \emph{American Economic Review} 103 (6): 2052--86.
 
-\leavevmode\hypertarget{ref-hitsch2010matching}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-hitsch2010matching}{}}%
 Hitsch, Gunter J, Ali Hortaçsu, and Dan Ariely. 2010. {``Matching and Sorting in Online Dating.''} \emph{American Economic Review} 100 (1): 130--63.
 
-\leavevmode\hypertarget{ref-howe2019genetic}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-howe2019genetic}{}}%
 Howe, Laurence J, Daniel J Lawson, Neil M Davies, Beate St Pourcain, Sarah J Lewis, George Davey Smith, and Gibran Hemani. 2019. {``Genetic Evidence for Assortative Mating on Alcohol Consumption in the UK Biobank.''} \emph{Nature Communications} 10 (1): 1--10.
 
-\leavevmode\hypertarget{ref-howe2021within}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-howe2021within}{}}%
 Howe, Laurence J, Michel G Nivard, Tim T Morris, Ailin F Hansen, Humaira Rasheed, Yoonsu Cho, Geetha Chittoor, et al. 2021. {``Within-Sibship GWAS Improve Estimates of Direct Genetic Effects.''} \emph{bioRxiv}. \url{https://doi.org/10.1101/2021.03.05.433935}.
 
-\leavevmode\hypertarget{ref-hugh2016assortative}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-hugh2016assortative}{}}%
 Hugh-Jones, David, Karin JH Verweij, Beate St Pourcain, and Abdel Abdellaoui. 2016. {``Assortative Mating on Educational Attainment Leads to Genetic Spousal Resemblance for Polygenic Scores.''} \emph{Intelligence} 59: 103--8.
 
-\leavevmode\hypertarget{ref-isungset2021birth}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-isungset2021birth}{}}%
 Isungset, Martin Arstad, Jeremy Freese, Ole Andreassen, and Torkild Hovde Lyngstad. 2021. {``Birth Order Differences in Education Are Environmental in Origin.''} \emph{bioRxiv}.
 
-\leavevmode\hypertarget{ref-kaplan2013s}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-kaplan2013s}{}}%
 Kaplan, Steven N, and Joshua Rauh. 2013. {``It's the Market: The Broad-Based Rise in the Return to Top Talent.''} \emph{Journal of Economic Perspectives} 27 (3): 35--56.
 
-\leavevmode\hypertarget{ref-kong2018nature}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-kong2018nature}{}}%
 Kong, Augustine, Gudmar Thorleifsson, Michael L Frigge, Bjarni J Vilhjalmsson, Alexander I Young, Thorgeir E Thorgeirsson, Stefania Benonisdottir, et al. 2018. {``The Nature of Nurture: Effects of Parental Genotypes.''} \emph{Science} 359 (6374): 424--28.
 
-\leavevmode\hypertarget{ref-kristensen2007explaining}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-kristensen2007explaining}{}}%
 Kristensen, Petter, and Tor Bjerkedal. 2007. {``Explaining the Relation Between Birth Order and Intelligence.''} \emph{Science} 316 (5832): 1717--17.
 
-\leavevmode\hypertarget{ref-krueger2012rise}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-krueger2012rise}{}}%
 Krueger, Alan. 2012. {``The Rise and Consequences of Inequality.''} \emph{Presentation Made to the Center for American Progress, January 12th}.
 
-\leavevmode\hypertarget{ref-lee2018gene}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-lee2018gene}{}}%
 Lee, James J, Robbee Wedow, Aysu Okbay, Edward Kong, Omeed Maghzian, Meghan Zacher, Tuan Anh Nguyen-Viet, et al. 2018. {``Gene Discovery and Polygenic Prediction from a Genome-Wide Association Study of Educational Attainment in 1.1 Million Individuals.''} \emph{Nature Genetics} 50 (8): 1112--21.
 
-\leavevmode\hypertarget{ref-Lindahl_2008}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Lindahl_2008}{}}%
 Lindahl, Lena. 2008. {``Do Birth Order and Family Size Matter for Intergenerational Income Mobility? Evidence from Sweden.''} \emph{Applied Economics} 40 (17): 2239--57. \url{https://doi.org/10.1080/00036840600949421}.
 
-\leavevmode\hypertarget{ref-marx1844economic}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-marx1844economic}{}}%
 Marx, Karl. 1844. {``Economic and Philosophical Manuscripts.''} \emph{Early Writings} 333.
 
-\leavevmode\hypertarget{ref-mulder2009intergenerational}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-mulder2009intergenerational}{}}%
 Mulder, Monique Borgerhoff, Samuel Bowles, Tom Hertz, Adrian Bell, Jan Beise, Greg Clark, Ila Fazzio, et al. 2009. {``Intergenerational Wealth Transmission and the Dynamics of Inequality in Small-Scale Societies.''} \emph{Science} 326 (5953): 682--88.
 
-\leavevmode\hypertarget{ref-ONS2007ASHE}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-ONS2007ASHE}{}}%
 National Statistics, Office for. 2007. {``Annual Survey of Hours and Earnings.''} \url{https://webarchive.nationalarchives.gov.uk/20160108022706/http://www.ons.gov.uk/ons/rel/ashe/annual-survey-of-hours-and-earnings/2007-results/index.html}.
 
-\leavevmode\hypertarget{ref-ons2011stepfamilies}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-ons2011stepfamilies}{}}%
 ---------. 2014. {``Stepfamilies in 2011.''} 2014. \url{https://webarchive.nationalarchives.gov.uk/20160105222243/http://www.ons.gov.uk/ons/rel/family-demography/stepfamilies/2011/stepfamilies-rpt.html}.
 
-\leavevmode\hypertarget{ref-oreffice2010anthropometry}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-oreffice2010anthropometry}{}}%
 Oreffice, Sonia, and Climent Quintana-Domeque. 2010. {``Anthropometry and Socioeconomics Among Couples: Evidence in the United States.''} \emph{Economics \& Human Biology} 8 (3): 373--84.
 
-\leavevmode\hypertarget{ref-papageorge2020genes}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-papageorge2020genes}{}}%
 Papageorge, Nicholas W, and Kevin Thom. 2020. {``Genes, Education, and Labor Market Outcomes: Evidence from the Health and Retirement Study.''} \emph{Journal of the European Economic Association} 18 (3): 1351--99.
 
-\leavevmode\hypertarget{ref-pencavel1998assortative}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-pencavel1998assortative}{}}%
 Pencavel, John. 1998. {``Assortative Mating by Schooling and the Work Behavior of Wives and Husbands.''} \emph{The American Economic Review} 88 (2): 326--29.
 
-\leavevmode\hypertarget{ref-plomin2019blueprint}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-plomin2019blueprint}{}}%
 Plomin, Robert. 2019. \emph{Blueprint: How DNA Makes Us Who We Are}. Mit Press.
 
-\leavevmode\hypertarget{ref-plomin2008behavioral}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-plomin2008behavioral}{}}%
 Plomin, Robert, John C DeFries, and Gerald E McClearn. 2008. \emph{Behavioral Genetics}. Macmillan.
 
-\leavevmode\hypertarget{ref-Rimfeld_2018}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Rimfeld_2018}{}}%
 Rimfeld, Kaili, Eva Krapohl, Maciej Trzaskowski, Jonathan R. I. Coleman, Saskia Selzam, Philip S. Dale, Tonu Esko, Andres Metspalu, and Robert Plomin. 2018. {``Genetic Influence on Social Outcomes During and After the Soviet Era in Estonia.''} \emph{Nature Human Behaviour} 2 (4): 269--75. \url{https://doi.org/10.1038/s41562-018-0332-5}.
 
-\leavevmode\hypertarget{ref-robinson2017genetic}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-robinson2017genetic}{}}%
 Robinson, Matthew R, Aaron Kleinman, Mariaelisa Graff, Anna AE Vinkhuyzen, David Couper, Michael B Miller, Wouter J Peyrot, et al. 2017. {``Genetic Evidence of Assortative Mating in Humans.''} \emph{Nature Human Behaviour} 1 (1): 1--13.
 
-\leavevmode\hypertarget{ref-ronda2020family}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-ronda2020family}{}}%
 Ronda, Victor, Esben Agerbo, Dorthe Bleses, Preben Bo Mortensen, Anders Børglum, David M Hougaard, Ole Mors, Merete Nordentoft, Thomas Werge, and Michael Rosholm. 2020. {``Family Disadvantage, Gender and the Returns to Genetic Human Capital.''} Institute of Labor Economics (IZA).
 
-\leavevmode\hypertarget{ref-sacerdote2011nature}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-sacerdote2011nature}{}}%
 Sacerdote, Bruce. 2011. {``Nature and Nurture Effects on Children's Outcomes: What Have We Learned from Studies of Twins and Adoptees?''} In \emph{Handbook of Social Economics}, 1:1--30. Elsevier.
 
-\leavevmode\hypertarget{ref-schwartz2005trends}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-schwartz2005trends}{}}%
 Schwartz, Christine R, and Robert D Mare. 2005. {``Trends in Educational Assortative Marriage from 1940 to 2003.''} \emph{Demography} 42 (4): 621--46.
 
-\leavevmode\hypertarget{ref-selzam2019comparing}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-selzam2019comparing}{}}%
 Selzam, Saskia, Stuart J Ritchie, Jean-Baptiste Pingault, Chandra A Reynolds, Paul F O'Reilly, and Robert Plomin. 2019. {``Comparing Within-and Between-Family Polygenic Score Prediction.''} \emph{The American Journal of Human Genetics} 105 (2): 351--63.
 
-\leavevmode\hypertarget{ref-shakespeare1595midsummer}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-shakespeare1595midsummer}{}}%
 Shakespeare, William. 1595. \emph{A Midsummer Night's Dream}.
 
-\leavevmode\hypertarget{ref-smelser1966social}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-smelser1966social}{}}%
 Smelser, Neil J, and Seymour Martin Lipset. 1966. \emph{Social Structure and Mobility in Economic Development}. Transaction Publishers.
 
-\leavevmode\hypertarget{ref-solon2018we}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-solon2018we}{}}%
 Solon, Gary. 2018. {``What Do We Know so Far about Multigenerational Mobility?''} \emph{The Economic Journal} 128 (612): F340--52.
 
-\leavevmode\hypertarget{ref-Sundet_2005}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Sundet_2005}{}}%
 Sundet, Jon Martin, Kristian Tambs, Jennifer R. Harris, Per Magnus, and Tore M. Torjussen. 2005. {``Resolving the Genetic and Environmental Sources of the Correlation Between Height and Intelligence: A Study of Nearly 2600 Norwegian Male Twin Pairs.''} \emph{Twin Research and Human Genetics} 8 (4): 307--11. \url{https://doi.org/10.1375/twin.8.4.307}.
 
-\leavevmode\hypertarget{ref-Tambs_1989}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-Tambs_1989}{}}%
 Tambs, Kristian, Jon Martin Sundet, Per Magnus, and K�re Berg. 1989. {``Genetic and Environmental Contributions to the Covariance Between Occupational Status, Educational Attainment, and {IQ}: A Study of Twins.''} \emph{Behavior Genetics} 19 (2): 209--22. \url{https://doi.org/10.1007/bf01065905}.
 
-\leavevmode\hypertarget{ref-Trzaskowski_2014}{}%
-Trzaskowski, Maciej, Nicole Harlaar, Rosalind Arden, Eva Krapohl, Kaili Rimfeld, Andrew McMillan, Philip S. Dale, and Robert Plomin. 2014. {``Genetic Influence on Family Socioeconomic Status and Children{{}}s Intelligence.''} \emph{Intelligence} 42 (January): 83--88. \url{https://doi.org/10.1016/j.intell.2013.11.002}.
+\leavevmode\vadjust pre{\hypertarget{ref-Trzaskowski_2014}{}}%
+Trzaskowski, Maciej, Nicole Harlaar, Rosalind Arden, Eva Krapohl, Kaili Rimfeld, Andrew McMillan, Philip S. Dale, and Robert Plomin. 2014. {``Genetic Influence on Family Socioeconomic Status and Children{\textquotesingle}s Intelligence.''} \emph{Intelligence} 42 (January): 83--88. \url{https://doi.org/10.1016/j.intell.2013.11.002}.
 
-\leavevmode\hypertarget{ref-vandenberg1972assortative}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-vandenberg1972assortative}{}}%
 Vandenberg, Steven G. 1972. {``Assortative Mating, or Who Marries Whom?''} \emph{Behavior Genetics} 2 (2-3): 127--57.
 
-\leavevmode\hypertarget{ref-western2008inequality}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-western2008inequality}{}}%
 Western, Bruce, Deirdre Bloome, and Christine Percheski. 2008. {``Inequality Among American Families with Children, 1975 to 2005.''} \emph{American Sociological Review} 73 (6): 903--20.
 
-\leavevmode\hypertarget{ref-white1982relation}{}%
+\leavevmode\vadjust pre{\hypertarget{ref-white1982relation}{}}%
 White, Karl R. 1982. {``The Relation Between Socioeconomic Status and Academic Achievement.''} \emph{Psychological Bulletin} 91 (3): 461.
 
 \end{CSLReferences}
