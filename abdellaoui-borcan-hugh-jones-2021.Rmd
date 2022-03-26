@@ -4,7 +4,8 @@ author: |
   Abdel Abdellaoui\thanks{Department of Psychiatry, Amsterdam UMC, University 
   of Amsterdam, Amsterdam, The Netherlands. Email: a.abdellaoui@amsterdamumc.nl},
   Oana Borcan\thanks{School of Economics, University of East Anglia, Norwich, 
-  UK. Email: O.Borcan@uea.ac.uk} & 
+  UK. Email: O.Borcan@uea.ac.uk}, 
+  Pierre Chiappori\thanks{Department of Economics, University of Columbia, New York. Email: pc2167@columbia.edu} &
   David Hugh-Jones\thanks{Corresponding author. School of Economics, 
   University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}
 abstract: |
