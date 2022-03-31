@@ -1,0 +1,512 @@
+---
+title: "Model proofs"
+output: 
+  bookdown::pdf_document2:
+    toc: false
+    latex_engine: xelatex
+    number_sections: false
+    keep_tex: true
+header-includes:
+  - \usepackage{subfig}
+  - \usepackage{setspace}\doublespacing
+  - \usepackage{amsmath}
+  - \usepackage{amsfonts}
+  - \usepackage{amsthm}
+  - \usepackage{mitpress}
+  - \newtheorem{prop}{Proposition}
+  - \newtheorem{claim}{Claim}
+---
+
+\begin{proof}[Proof of Proposition \ref{prop-couples-SGAM}]
+
+By a change of variable, rewrite:
+
+\[
+\left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2}%
+\end{array}%
+\right) \rightarrow \left( 
+\begin{array}{c}
+x_{1} \\ 
+u%
+\end{array}%
+\right) \text{ where }u=\frac{ax_{1}+\left( 1-a\right) x_{2}}{\sqrt{%
+a^{2}s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma }}=
+\frac{ax_{1}+\left( 1-a\right) x_{2}}{\sigma_I}
+\]
+is the attractiveness rescaled to $\mathcal{N}(0, 1)$. Thus,
+\[
+\left( 
+\begin{array}{c}
+x_{1} \\ 
+u
+\end{array}
+\right) = \left( 
+\begin{array}{cc}
+1 & 0 \\ 
+a/\sigma_I & (1-a)/\sigma_I%
+\end{array}%
+\right) \left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2}%
+\end{array}%
+\right). 
+\]
+
+
+Note that the means are still zero, but the covariance of $(x_1,u)$ is:
+
+\begin{eqnarray*}
+C\left( 
+\begin{array}{c}
+x_{1} \\ 
+u
+\end{array}
+\right) &=&\left( 
+\begin{array}{cc}
+1 & 0 \\ 
+a/\sigma_I & \left( 1-a\right)/\sigma_I%
+\end{array}%
+\right) \left( 
+\begin{array}{cc}
+s^{2} & \sigma \\ 
+\sigma & S^{2}%
+\end{array}%
+\right) \left( 
+\begin{array}{cc}
+1 & a/\sigma_I \\ 
+0 & \left( 1-a\right)/\sigma_I%
+\end{array}%
+\right) \\
+&=&\left( 
+\begin{array}{cc}
+s^{2} &  \left( as^{2}+\sigma \left( 1-a\right) \right)/\sigma_I \\ 
+\left( as^{2}+\sigma \left( 1-a\right) \right)/\sigma_I & 1%
+\end{array}%
+\right) \allowbreak 
+\end{eqnarray*}
+
+
+Under SGAM, individual $\left( 
+\begin{array}{c}
+x_{1} \\ 
+u
+\end{array} 
+\right)$ is matched with $\left( 
+\begin{array}{c}
+y_{1} \\ 
+v%
+\end{array}%
+\right)$ such that $u = v = t$.
+
+The distribution of $t$ is 
+$\mathcal{N}\left( 0,1\right)$. Therefore the vector $\left( 
+\begin{array}{c}
+x_{1} \\ 
+y_{1} \\ 
+t%
+\end{array}%
+\right)$ is normally distributed, with mean 0, and covariance
+\[
+\Sigma =\left( 
+\begin{array}{ccc}
+s^{2} & d^{2} & d \\ 
+d^{2} & s^{2} & d \\ 
+d & d & 1%
+\end{array}%
+\right) \allowbreak 
+\]
+where
+\[
+d=\frac{as^{2}+\left( 1-a\right) \sigma }{\sqrt{S^{2}\left( a-1\right)
+^{2}+a^{2}s^{2}-2a\sigma \left( a-1\right) }} = 
+\frac{as^{2}+\left( 1-a\right) \sigma }{\sigma_I}
+\]
+
+Finally, we are interested in 
+\[
+\left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2} \\ 
+y_{1} \\ 
+y_{2}%
+\end{array}%
+\right) =\left( 
+\begin{array}{ccc}
+1 & 0 & 0 \\ 
+-\frac{a}{1-a} & 0 & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
+^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a} \\ 
+0 & 1 & 0 \\ 
+0 & -\frac{a}{1-a} & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
+^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a}%
+\end{array}%
+\right) \left( 
+\begin{array}{c}
+x_{1} \\ 
+y_{1} \\ 
+t%
+\end{array}%
+\right) 
+\]%
+therefore again the means are 0 and 
+\begin{eqnarray*}
+\mathbb{C}\left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2} \\ 
+y_{1} \\ 
+y_{2}%
+\end{array}%
+\right) &=&\left( 
+\begin{array}{ccc}
+1 & 0 & 0 \\ 
+-\frac{a}{1-a} & 0 & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
+^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a} \\ 
+0 & 1 & 0 \\ 
+0 & -\frac{a}{1-a} & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
+^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a}%
+\end{array}%
+\right) \Sigma \left( 
+\begin{array}{ccc}
+1 & 0 & 0 \\ 
+-\frac{a}{1-a} & 0 & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
+^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a} \\ 
+0 & 1 & 0 \\ 
+0 & -\frac{a}{1-a} & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
+^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a}%
+\end{array}%
+\right) ^{T} \\
+&=&\allowbreak \left( 
+\begin{array}{cccc}
+s^{2} & \sigma & A^{2} & AC \\ 
+\sigma & S^{2} & AC & C^{2} \\ 
+A^{2} & AC & s^{2} & \sigma \\ 
+AC & C^{2} & \sigma & S^{2}%
+\end{array}%
+\right) \allowbreak
+\end{eqnarray*}%
+where:%
+\begin{eqnarray*}
+A &=&\frac{as^{2}+\left( 1-a\right) \sigma }{\sqrt{a^{2}s^{2}+\left(
+1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma }}\text{ \ and} \\
+C &=&\frac{a\sigma +\left( 1-a\right) S^{2}}{\sqrt{a^{2}s^{2}+\left(
+1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma }}.
+\end{eqnarray*}
+
+
+
+\end{proof}
+
+
+
+\begin{proof}[Proof of Claim \ref{claim-E-children-RM}]
+
+
+Under RM, the joint distribution of $\left( \frac{\tau }{2}\left(
+x_{1}+y_{1}\right) +\varepsilon ,x_{2},y_{2}\right) $ is normal with mean $%
+\left( 0,0,0\right) $ and covariance$\allowbreak $%
+\[
+C=\left( 
+\begin{array}{lcr}
+\frac{\tau ^{2}}{2}\left( s^{2}+\sigma \right) +1 & \frac{\tau }{2}\sigma  & 
+\frac{\tau }{2}\sigma  \\ 
+\frac{\tau }{2}\sigma  & S^{2} & 0 \\ 
+\frac{\tau }{2}\sigma  & 0 & S^{2}%
+\end{array}%
+\right) 
+\]%
+Therefore%
+\begin{eqnarray*}
+\mathbb{E}\left[ \frac{\tau }{2}\left( x_{1}+y_{1}\right) +\varepsilon \mid
+x_{2}=v,y_{2}=w\right]  &=&\left( 
+\begin{array}{rr}
+\frac{\tau }{2}\sigma  & \frac{\tau }{2}\sigma 
+\end{array}%
+\right) \left( 
+\begin{array}{rr}
+S^{2} & 0 \\ 
+0 & S^{2}%
+\end{array}%
+\right) ^{-1}\left( 
+\begin{array}{r}
+v \\ 
+w%
+\end{array}%
+\right)  \\
+&=&\frac{\sigma \tau }{2S^{2}}\left( v+w\right) 
+\end{eqnarray*}
+
+In particular, if $\sigma =0$, this expectation is equal to 0.
+\end{proof}
+
+
+\begin{proof}[Proof of Claim \ref{claim-E-children-SGAM}]
+
+From \eqref{cov-children-SGAM}, the joint distribution of $\left( \frac{\tau }{2}\left(
+x_{1}+y_{1}\right) +\varepsilon ,x_{2},y_{2}\right) $ is normal with mean $%
+\left( 0,0,0\right) $ and covariance$\allowbreak $%
+\[
+\Sigma =\left( 
+\begin{array}{rrr}
+\frac{1}{2}\tau ^{2}\left( A^{2}+s^{2}\right) +1 & \frac{\tau }{2}\left(
+\sigma +AC\right)  & \frac{\tau }{2}\left( \sigma +AC\right)  \\ 
+\frac{\tau }{2}\left( \sigma +AC\right)  & S^{2} & C^{2} \\ 
+\frac{\tau }{2}\left( \sigma +AC\right)  & C^{2} & S^{2}%
+\end{array}%
+\right) 
+\]%
+Therefore
+\begin{eqnarray}
+\mathbb{E}\left[ \frac{\tau }{2}\left( x_{1}+y_{1}\right) +\varepsilon \mid
+x_{2}=v,y_{2}=w\right]  &=&\left( 
+\begin{array}{rr}
+\frac{\tau }{2}\left( \sigma +AC\right)  & \frac{\tau }{2}\left( \sigma
++AC\right) 
+\end{array}%
+\right) \left( 
+\begin{array}{rr}
+S^{2} & C^{2} \\ 
+C^{2} & S^{2}%
+\end{array}%
+\right) ^{-1}\left( 
+\begin{array}{r}
+v \\ 
+w%
+\end{array}%
+\right)   \nonumber \\
+&=&\frac{1}{2}\tau \frac{\sigma +AC}{C^{2}+S^{2}}\left( v+w\right) 
+\label{P1}
+\end{eqnarray}%
+In particular, if $\sigma =0$, we have%
+\begin{eqnarray*}
+A &=&\frac{as^{2}}{\sqrt{a^{2}s^{2}+\left( 1-a\right) ^{2}S^{2}}}\textrm{ \ and%
+} \\
+C &=&\frac{\left( 1-a\right) S^{2}}{\sqrt{a^{2}s^{2}+\left( 1-a\right)
+^{2}S^{2}}},
+\end{eqnarray*}%
+and (\ref{P1}) becomes 
+\begin{eqnarray*}
+\mathbb{E}\left[ \frac{\tau }{2}\left( x_{1}+y_{1}\right) +\varepsilon \mid
+x_{2}=v,y_{2}=w\right]  &=&\frac{1}{2}\tau \frac{a\left( 1-a\right) s^{2}}{%
+a^{2}s^{2}+2\left( 1-a\right) ^{2}S^{2}}\left( v+w\right)  \\
+&=&\frac{1}{2}\tau \frac{a\left( 1-a\right) \lambda }{a^{2}\lambda +2\left(
+1-a\right) ^{2}}\left( v+w\right) 
+\end{eqnarray*}
+where $\lambda =s^{2}/S^{2}$ is the ratio of genetic variance to wealth variance.
+The coefficient $\frac{a\left( 1-a\right) \lambda }{a^{2}\lambda +2\left(
+1-a\right) ^{2}}$ is increasing, then decreasing in $a$ and is 0 for $a =  0$ or $a = 1$.
+\end{proof}
+
+
+
+\begin{proof}[Proof of Claim \ref{claim-corr-children-RM}]
+
+Under RM, the correlation matrix for children's characteristics is:%
+\begin{eqnarray*}
+\mathbb{C} &=&\left( 
+\begin{array}{cc}
+1 & 0 \\ 
+0 & 1%
+\end{array}%
+\right) +\left( 
+\begin{array}{cccc}
+\frac{\tau }{2} & 0 & \frac{\tau }{2} & 0 \\ 
+0 & \frac{\theta }{2} & 0 & \frac{\theta }{2}%
+\end{array}%
+\right) \allowbreak \left( 
+\begin{array}{cccc}
+s^{2} & \sigma & 0 & 0 \\ 
+\sigma & S^{2} & 0 & 0 \\ 
+0 & 0 & s^{2} & \sigma \\ 
+0 & 0 & \sigma & S^{2}%
+\end{array}%
+\right) \allowbreak \left( 
+\begin{array}{cc}
+\frac{1}{2}\tau & 0 \\ 
+0 & \frac{1}{2}\theta \\ 
+\frac{1}{2}\tau & 0 \\ 
+0 & \frac{1}{2}\theta%
+\end{array}%
+\right) \\
+&=&\left( 
+\begin{array}{cc}
+\frac{1}{2}s^{2}\tau ^{2}+1 & \frac{1}{2}\theta \sigma \tau \\ 
+\frac{1}{2}\theta \sigma \tau & \frac{1}{2}S^{2}\theta ^{2}+1%
+\end{array}%
+\right)
+\end{eqnarray*}%
+so that the correlation between characteristics for children is: 
+\[
+Corr\left( x_{1}^{\prime },x_{2}^{\prime }\right) =\frac{\frac{1}{2}\theta
+\sigma \tau }{\sqrt{\frac{1}{2}\tau ^{2}s^{2}+1}\sqrt{\frac{1}{2}\theta
+^{2}S^{2}+1}} 
+\]
+
+Note that $\sigma =0$ gives a zero correlation for children as well. 
+Also, because $\theta < 1$ and $\tau < 1$, the correlation is less than the 
+parents' correlation of $\sigma/sS$.
+
+\end{proof}
+
+
+\begin{proof}[Proof of Claim \ref{claim-corr-children-SGAM}]
+
+Again applying \eqref{cov-children-SGAM}, under SGAM, the correlation between 
+children's traits is:
+\[
+Corr\left( x_{1}^{\prime },x_{2}^{\prime }\right) =\frac{\frac{1}{2}\theta
+\tau \left( \sigma +AC\right) }{\sqrt{\frac{1}{2}\tau ^{2}\left(
+A^{2}+s^{2}\right) +1}\sqrt{\frac{1}{2}\theta ^{2}\left( C^{2}+S^{2}\right)
++1}} 
+\]
+This is positive if $\sigma = 0$ so long as $AC > 0$ i.e. $0 < a < 1$, and
+linear in $\theta$.
+
+\end{proof}
+
+
+\begin{proof}[Proof of Proposition \ref{prop-asymptotics-RM}]
+
+The fixed point condition on the covariance matrix is
+\[
+\left( 
+\begin{array}{cc}
+s^{2} & \sigma  \\ 
+\sigma  & S^{2}%
+\end{array}%
+\right) =\left( 
+\begin{array}{cc}
+\frac{1}{2}s^{2}\tau ^{2}+1 & \frac{1}{2}\theta \sigma \tau  \\ 
+\frac{1}{2}\theta \sigma \tau  & \frac{1}{2}S^{2}\theta ^{2}+1%
+\end{array}%
+\right) 
+\]
+which gives
+\[
+s^{2}=\frac{2}{2-\tau ^{2}},S^{2}=\frac{2}{2-\theta ^{2}},\sigma =0.
+\]
+
+The asymptotic conditional expectation of children's genetics given parental SES is:
+
+\[
+\mathbb{E}\left[ \frac{\tau }{2}\left( x_{1}+y_{1}\right) +\varepsilon \mid
+x_{2}=v,y_{2}=w\right] =0
+\]%
+
+since the traits $x_1,x_2,y_1,y_2$ are uncorrelated.
+
+\end{proof}
+
+
+\begin{proof}[Proof of Proposition \ref{prop-asymptotics-SGAM}]
+Start by characterizing the invariant distribution. This must satisfy:%
+\[
+\left( 
+\begin{array}{cc}
+\bar{s}^{2} & \bar{\sigma} \\ 
+\bar{\sigma} & \bar{S}^{2}%
+\end{array}%
+\right) =\left( 
+\begin{array}{cc}
+\frac{1}{2}\tau ^{2}\left( \bar{A}^{2}+\bar{s}^{2}\right) +1 & \frac{1}{2}%
+\theta \tau \left( \bar{\sigma}+\bar{A}\bar{C}\right)  \\ 
+\frac{1}{2}\theta \tau \left( \bar{\sigma}+\bar{A}\bar{C}\right)  & \frac{1}{%
+2}\theta ^{2}\left( \bar{C}^{2}+\bar{S}^{2}\right) +1%
+\end{array}%
+\right) \allowbreak 
+\]%
+where%
+\begin{eqnarray*}
+\bar{A} &=&\frac{a\bar{s}^{2}+\left( 1-a\right) \bar{\sigma}}{\sqrt{a^{2}%
+\bar{s}^{2}+\left( 1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma%
+}}}\textrm{ \ and} \\
+\bar{C} &=&\frac{a\bar{\sigma}+\left( 1-a\right) \bar{S}^{2}}{\sqrt{a^{2}%
+\bar{s}^{2}+\left( 1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma%
+}}},
+\end{eqnarray*}%
+Therefore%
+\begin{eqnarray}
+\bar{s}^{2} &=&\frac{1}{2}\tau ^{2}\left( \frac{\left( a\bar{s}^{2}+\left(
+1-a\right) \bar{\sigma}\right) ^{2}}{a^{2}\bar{s}^{2}+\left( 1-a\right) ^{2}%
+\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma}}+\bar{s}^{2}\right) +1 
+\nonumber \\
+\bar{S}^{2} &=&\frac{1}{2}\theta ^{2}\left( \frac{\left( a\bar{\sigma}%
++\left( 1-a\right) \bar{S}^{2}\right) ^{2}}{a^{2}\bar{s}^{2}+\left(
+1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma}}+\bar{S}%
+^{2}\right) +1  \label{FP} \\
+\left( 1-\frac{1}{2}\theta \tau \right) \bar{\sigma} &=&\frac{1}{2}\theta
+\tau \frac{\left( a\bar{\sigma}+\left( 1-a\right) \bar{S}^{2}\right) \left( a%
+\bar{s}^{2}+\left( 1-a\right) \bar{\sigma}\right) }{a^{2}\bar{s}^{2}+\left(
+1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma}}  \nonumber
+\end{eqnarray}%
+Define%
+\[
+\lambda =\bar{s}^{2}/\bar{S}^{2}\textrm{ and }\mu =\bar{\sigma}/\bar{S}^{2}
+\]%
+The last equation gives%
+\[
+\left( 1-\frac{1}{2}\theta \tau \right) \mu =\frac{1}{2}\theta \tau \frac{%
+\left( a\mu +\left( 1-a\right) \right) \left( a\lambda +\left( 1-a\right)
+\mu \right) }{a^{2}\lambda +\left( 1-a\right) ^{2}+2a\left( 1-a\right) \mu }
+\]%
+which is linear in $\lambda $; therefore%
+\begin{equation}
+\lambda =\frac{\mu \left( \frac{1}{2}\theta \tau -1\right) \left( \left(
+a-1\right) ^{2}-2a\mu \left( a-1\right) \right) -\frac{1}{2}\theta \tau \mu
+\left( a-1\right) \left( -a+a\mu +1\right) }{a^{2}\mu \left( 1-\frac{1}{2}%
+\theta \tau \right) -\frac{1}{2}a\theta \tau \left( 1-a+a\mu \right) }
+\label{Lamb}
+\end{equation}
+
+The first two give:%
+\begin{align*}
+& 1-\frac{1}{2}\theta ^{2}\left( \frac{\left( a\mu +\left( 1-a\right) \right)
+^{2}}{a^{2}\bar{s}^{2}+\left( 1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) 
+\bar{\sigma}}+1\right) \\
+= & \lambda -\frac{1}{2}\tau ^{2}\left( \frac{\left(
+a\lambda +\left( 1-a\right) \mu \right) ^{2}}{a^{2}\bar{s}^{2}+\left(
+1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma}}+\lambda \right) 
+\end{align*}
+
+where $\lambda $ is given by (\ref{Lamb}). This is equivalent to $F(\mu) =0$, 
+where 
+
+\begin{align*}
+F\left( \mu \right) =& \lambda - \frac{1}{2}\tau ^{2}\left( \frac{\left(
+a\lambda +\left( 1-a\right) \mu \right) ^{2}}{a^{2}\lambda +\left(
+1-a\right) ^{2}+2a\left( 1-a\right) \mu }+\lambda \right) - \\
+& \left( 1-\frac{1}{%
+2}\theta ^{2}\left( \frac{\left( a\mu +\left( 1-a\right) \right) ^{2}}{%
+a^{2}\lambda +\left( 1-a\right) ^{2}+2a\left( 1-a\right) \mu }+1\right)
+\right)
+\end{align*}
+
+This equation is quadratic in $\mu $; thus it has two closed form solutions,
+of which one, denoted $\phi \left( a,\theta ,\tau \right) $, is positive.
+Then
+\begin{align*}
+\lambda =& \psi \left( a,\theta ,\tau \right) \\
+ =& \frac{\phi \left( a,\theta
+,\tau \right) \left( \frac{1}{2}\theta \tau -1\right) \left( \left(
+a-1\right) ^{2}-2a\phi \left( a,\theta ,\tau \right) \left( a-1\right)
+\right) -\frac{1}{2}\theta \tau \phi \left( a,\theta ,\tau \right) \left(
+a-1\right) \left( -a+a\phi \left( a,\theta ,\tau \right) +1\right) }{%
+a^{2}\phi \left( a,\theta ,\tau \right) \left( 1-\frac{1}{2}\theta \tau
+\right) -\frac{1}{2}a\theta \tau \left( 1-a+a\phi \left( a,\theta ,\tau
+\right) \right) } 
+\end{align*}
+
+Finally, the second equation in (\ref{FP}) gives
+\[
+1=\frac{1}{2}\theta ^{2}\left( \frac{\left( a\phi \left( a,\theta ,\tau
+\right) +\left( 1-a\right) \right) ^{2}}{a^{2}\psi \left( a,\theta ,\tau
+\right) +\left( 1-a\right) ^{2}+2a\left( 1-a\right) \phi \left( a,\theta
+,\tau \right) }+1\right) +\frac{1}{\bar{S}^{2}}
+\]%
+which gives $\bar{S}^{2}$, then $\bar{s}^{2}$ and $\bar{\sigma}$ follow.
+\end{proof}
+

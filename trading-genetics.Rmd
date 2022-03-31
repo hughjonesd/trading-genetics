@@ -46,6 +46,7 @@ header-includes:
   - \usepackage{amsthm}
   - \usepackage{placeins}
   - \newtheorem{prop}{Proposition}
+  - \newtheorem{claim}{Claim}
 ---
 
 
@@ -565,7 +566,7 @@ education-linked genetics and SES, but do not consider SGAM.
 
 # Model
 
-```{r model, child="model.tex"}
+```{r model-section, child="model-section.Rmd"}
 
 ```
 
@@ -1732,7 +1733,16 @@ geneticists.
 
 # Appendix
 
+## Proofs
+
+```{r proofs, child = "proofs.Rmd"}
+
+```
+
+
 ## Proof of Proposition \@ref(prop:prop1)
+
+XXX rewrite
 
 ```{=tex}
 \begin{proof}
