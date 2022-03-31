@@ -510,3 +510,68 @@ Finally, the second equation in (\ref{FP}) gives
 which gives $\bar{S}^{2}$, then $\bar{s}^{2}$ and $\bar{\sigma}$ follow.
 \end{proof}
 
+
+\begin{proof}[Proof of Proposition \ref{prop-non-normal}]
+The correlation is signed by the covariance. Write $C$ for the set of couples
+in the parents' generation with typical member $c = (x,y)$. Without loss of generality
+let $x_1 \ge y_1$. Then, since the iso-attractiveness curves defined by 
+$f$ are downward-sloping, $x_2 \le y_2$.
+
+Since $Ex = Ey = 0$, the covariance among the parents' generation is
+
+\[
+\int_C (x_1x_2 + y_1y_2)/2 \ dc
+\]
+
+Write
+
+\begin{align*}
+x^\prime_1 =& \tau x^*_1 + \varepsilon & \textrm{where } x^*_1 =& (x_1+y_1)/2  \\
+x^\prime_2 =& \theta x^*_2 + \eta & \textrm{where } x^*_2 =& (x_2+y_2)/2  
+\end{align*}
+
+and write the children's covariance as
+\[
+Cov(x^\prime_1, x^\prime_2) = Cov(\tau x^*_1, \theta x^*_2) + Cov(\tau x^*_1, \eta) + 
+  Cov(\varepsilon, \theta x^*_2) + Cov(\varepsilon, \eta).
+\]
+By independence of the shocks, the last 3 terms are zero. So we need to
+show that
+\[
+Cov(\tau x^*_1, \theta x^*_2) = \tau^2\theta^2 Cov(x^*_1, x^*_2) > 0
+\]
+
+Write
+\[
+Cov(x^*_1, x^*_2) = \int_C x^*_1 x^*_2 \ dc
+\]
+using that $Ex^*_1 = Ex^*_2 = 0$. 
+
+Take a typical parent, and write
+\begin{align*}
+x_1x_2 = (x^*_1 - \Delta_1)(x^*_2 - \Delta_2) \\
+y_1y_2 = (x^*_1 + \Delta_1)(x^*_2 + \Delta_2)
+\end{align*}
+where 
+\[
+\Delta_1 = (x_1 - y_1)/2;\ \Delta_2 = (x_2 - y_2)/2.
+\]
+By assumption $\Delta_1 \ge 0$ and $\Delta_2 \le 0$. Furthermore, if $a \in (0,1)$, then
+for a set of positive measure, $\Delta_1 > 0$ and $\Delta_2 < 0$, by our assumption 
+that not all matching couples are identical.
+
+Taking the average of the parents gives
+\[
+(x_1x_2 + y_1y_2)/2 = x^*_1x^*_2 + \Delta_1\Delta_2
+\]
+and if $a \in (0,1)$, this is strictly less than $x^*_1x^*_2$ for a set of 
+positive measure. Plugging this into the integral gives
+
+\[
+Cov(x_1,x_2) \le Cov(x^*_1, x^*_2) = \int_C x^*_1 x^*_2 \ dc
+\]
+with strict inequality if $a \in (0,1)$. Since the parental covariance was 0
+by assumption, this completes the proof.
+
+\end{proof}
+

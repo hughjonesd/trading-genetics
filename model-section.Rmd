@@ -345,13 +345,92 @@ a,\theta ,\tau \right) }{\sqrt{\psi \left( a,\theta ,\tau \right) }}
 and the conditional expectation
 of genetics given wealth is proportional to wealth, coefficient:
 
-XXX find this again
+(XXX graph omitted)
 
 Note that both $\bar{S}^{2}$ and $\bar{\sigma}$, as well as the correlation
 between characteristics and the conditional expectation of genetics given
 wealth, are increasing in $\theta$, i.e. decreasing in the tax rate. Higher
 taxation reduces the asymptotic variance of wealth (not surprisingly), but
-also the correlation between genetic and wealth. I.e., the correlation
-should be smaller in Sweden than in the US ...
+also the correlation between genetic and wealth. 
+
+## Extensions
+
+We consider robustness in two dimensions. First, the weight of $x_1$ and
+$x_2$ might differ for men and women, for example if SES is more important for
+men's attractiveness. Suppose that men's and women's attractiveness are given by
+\begin{align*}
+i(x) = ax_1 + (1-a)x_2; \\
+j(y) = by_1 + (1-b)y_2
+\end{align*}
+respectively. Then Claims \ref{claim-E-children-SGAM} and 
+\ref{claim-corr-children-SGAM} continue to hold.
+
+XXX put proof in appendix
+
+Second, we consider non-normal distributions of $x_1$ and $x_2$, and
+non-linear attractiveness functions. Suppose
+\begin{equation}
+i(x) = f(ax_1, (1-a)x_2) \label{non-linear-f}
+\end{equation}
+with $f$ strictly increasing in both its arguments. Our sole condition on $x$ is 
+that a positive measure of the population has attractiveness $i(x) = i$ where 
+the distribution of $(x_1, x_2)|i$ is non-degenerate, i.e. not
+everybody with attractiveness $i$ is both genetically and socially identical. 
+
+\begin{proposition}\label{prop-non-normal}
+Let attractiveness be given by \eqref{non-linear-f}. If the correlation 
+between $x_1$ and $x_2$ is 0, then the 
+correlation among children between $x^\prime_1$ and $x^\prime_2$ is non-negative,
+and strictly positive if $0 < a < 1$.
+\end{proposition}
+
+
+## Discussion
+
+The "marriage market" here is a reduced form mechanism, encompassing
+everything that makes a difference to partner choice. For example, if
+earned income affects attractiveness in the marriage market, then
+society's level of meritocracy in the labour market will correlate with
+the value of $a$: a more meritocratic labour market will allow people
+with low social status but high human capital (genetically determined in
+part) to earn more, and therefore to match with more attractive
+partners.
+
+The meanings of both social status, and "good genes" in the
+marriage market, are likely to vary across societies. Social status could
+encompass variables like social class or caste; ethnic identity in
+"ranked" ethnic systems; or in modern societies, SES. Regarding genetics,
+standards of physical attractiveness, and other characteristics which
+make someone a "good match", vary across societies and over time.
+
+Recent empirical work shows high persistence of SES over time, in particular at
+the top. XXX insert stuff about grandchild-control here.
+
+The converse also holds: regressions of children's characteristics on their
+genetics alone risk overestimating the effect of genetics, by confounding it
+with the effects of correlated socio-economic status. Recent work in genetics
+has shown just this. Polygenic scores for educational attainment have smaller
+effects in between-sibling regressions, where between-family variation in SES is
+partialled out and where genes are guaranteed to be randomly allocated, than in
+regressions which pool the whole sample [@howe2021within]. Parents' genetic
+variants which are *not* passed on to children predict children's
+characteristics, via environmental effects [@kong2018nature].
+
+The model predicts variation in the strength of SGAM. In particular, in
+"caste societies" where there is complete endogamy within social status
+groups, there is no scope for SGAM, because marriage partners do not
+trade off genetics for social status. Also, SGAM is increased by $\theta$. This
+implies that policy has long-run effects on the social structure: reducing
+$\theta$ not only increases intergenerational mobility, but reduces
+the correlation of genes with SES, and hence the unfairness of what has been
+called the "genetic lottery" [@harden2021genetic].
+
+In modern societies, both SGAM and meritocratic mobility are likely to
+be at play. Genetic variants that cause (e.g.) higher income and wealth
+will be inherited along with components of social status such as
+inherited wealth. At the same time, higher social status and "good
+genes" will assort in the marriage market, even if that higher social
+status is caused by purely environmental variation. Our empirical
+analysis shows this latter process at work. (XXX needs model it with gamma)
 
 
