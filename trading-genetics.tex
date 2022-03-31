@@ -281,7 +281,8 @@ we include university attendance as a measure of socio-economic status, birth
 order is no longer significant, while university attendance increases the
 spouse's genetic endowment at 0.1\% significance. A similar pattern holds
 when we proxy socio-economic status with a measure of income, although the
-sample is reduced. Thus, SES appears to mediate the effect of birth order on spouse genetics. The results are robust to the inclusion of several own
+sample is reduced. Thus, SES appears to mediate the effect of birth order on
+spouse genetics. The results are robust to the inclusion of several own
 phenotype traits and a rich set of own genetic traits.
 
 Our paper contributes to several literatures. Firstly, we highlight a novel
@@ -291,7 +292,9 @@ marriage markets has typically focused on educational similarities
 (e.g. Abramitzky, Delavande, and Vasconcelos 2011; Banerjee et al. 2013), but also sorting based on age,
 physical traits and ethnicity (Hitsch, Hortaçsu, and Ariely 2010). Matching decisions on the
 marriage market have also been shown to follow multiple criteria, with some
-degree of substitutability between them.\footnote{Oreffice and Quintana-Domeque (2010) show that height and BMI are associated with spouse earnings. Dupuy and Galichon (2014) find spouse matching on multiple independent dimensions, including education, height, BMI and personality.} For instance, Chiappori, Oreffice, and Quintana-Domeque (2012)
+degree of substitutability between them.\footnote{Oreffice and Quintana-Domeque (2010) show that height and BMI are associated
+  with spouse earnings. Dupuy and Galichon (2014) find spouse matching on multiple
+  independent dimensions, including education, height, BMI and personality.} For instance, Chiappori, Oreffice, and Quintana-Domeque (2012)
 showed that individuals trade off BMI for partners' income or education and that
 the marginal rate of substitution between these characteristics is different for
 males and females. The genetics literature has focused on genetic assortative
@@ -731,14 +734,45 @@ a,\theta ,\tau \right) }{\sqrt{\psi \left( a,\theta ,\tau \right) }}
 and the conditional expectation
 of genetics given wealth is proportional to wealth, coefficient:
 
-XXX find this again
+(XXX graph omitted)
 
 Note that both \(\bar{S}^{2}\) and \(\bar{\sigma}\), as well as the correlation
 between characteristics and the conditional expectation of genetics given
 wealth, are increasing in \(\theta\), i.e.~decreasing in the tax rate. Higher
 taxation reduces the asymptotic variance of wealth (not surprisingly), but
-also the correlation between genetic and wealth. I.e., the correlation
-should be smaller in Sweden than in the US \ldots{}
+also the correlation between genetic and wealth.
+
+\hypertarget{extensions}{%
+\subsection{Extensions}\label{extensions}}
+
+We consider robustness in two dimensions. First, the weight of \(x_1\) and
+\(x_2\) might differ for men and women, for example if SES is more important for
+men's attractiveness. Suppose that men's and women's attractiveness are given by
+\begin{align*}
+i(x) = ax_1 + (1-a)x_2; \\
+j(y) = by_1 + (1-b)y_2
+\end{align*}
+respectively. Then Claims \ref{claim-E-children-SGAM} and
+\ref{claim-corr-children-SGAM} continue to hold.
+
+XXX put proof in appendix
+
+Second, we consider non-normal distributions of \(x_1\) and \(x_2\), and
+non-linear attractiveness functions. Suppose
+\begin{equation}
+i(x) = f(ax_1, (1-a)x_2) \label{non-linear-f}
+\end{equation}
+with \(f\) strictly increasing in both its arguments. Our sole condition on \(x\) is
+that a positive measure of the population has attractiveness \(i(x) = i\) where
+the distribution of \((x_1, x_2)|i\) is non-degenerate, i.e.~not
+everybody with attractiveness \(i\) is both genetically and socially identical.
+
+\begin{proposition}\label{prop-non-normal}
+Let attractiveness be given by \eqref{non-linear-f}. If the correlation 
+between $x_1$ and $x_2$ is 0, then the 
+correlation among children between $x^\prime_1$ and $x^\prime_2$ is non-negative,
+and strictly positive if $0 < a < 1$.
+\end{proposition}
 
 \hypertarget{discussion}{%
 \subsection{Discussion}\label{discussion}}
@@ -747,45 +781,20 @@ The ``marriage market'' here is a reduced form mechanism, encompassing
 everything that makes a difference to partner choice. For example, if
 earned income affects attractiveness in the marriage market, then
 society's level of meritocracy in the labour market will correlate with
-the value of \(k\): a more meritocratic labour market will allow people
+the value of \(a\): a more meritocratic labour market will allow people
 with low social status but high human capital (genetically determined in
 part) to earn more, and therefore to match with more attractive
 partners.
 
-The contents of both \(S\), social status, and \(G\) -- ``good genes'' in the
-marriage market -- are likely to vary across societies. \(S\) could
+The meanings of both social status, and ``good genes'' in the
+marriage market, are likely to vary across societies. Social status could
 encompass variables like social class or caste; ethnic identity in
-``ranked'' ethnic systems; or in modern societies, SES. Regarding \(G\),
+``ranked'' ethnic systems; or in modern societies, SES. Regarding genetics,
 standards of physical attractiveness, and other characteristics which
-make someone a ``good match'', vary both across societies and within a
-society over time.
+make someone a ``good match'', vary across societies and over time.
 
 Recent empirical work shows high persistence of SES over time, in particular at
-the top. One suggested reason for this is that unmeasured family characteristics
-persist along with measured wealth (Clark and Cummins 2015). Our model
-captures this idea. For simplicity, let condition \eqref{eq:linearity} hold.
-Consider a regression of children's social status on parent's social status:
-
-\[
-s_{c(i)} = \alpha + \beta_S s_i + \varepsilon_{c(i)}.
-\]
-
-The value of \(\beta_S\) will be less than one, since parents match on
-downward sloping isoattractiveness curves: within each curve, relatively
-wealthy individuals match with less wealthy individuals on average. Now
-consider a regression of child on parent ``attractiveness'' \(A\):
-
-\[
-A_{c(i)} = \alpha + \beta_A A_i + \varepsilon_{c(i)}.
-\]
-
-Since children are on the same attractiveness curve as both their
-parents, \(\beta_A = 1\). Thus, regressions on measured components of
-social status will underestimate true persistence over time, embodied in
-genetic variation. Indeed, grandparents' social status will
-independently predict grandchildren's social status, even after
-controlling for parents' social status, because of the unmeasured
-pathway via parents' genetics.
+the top. XXX insert stuff about grandchild-control here.
 
 The converse also holds: regressions of children's characteristics on their
 genetics alone risk overestimating the effect of genetics, by confounding it
@@ -800,12 +809,11 @@ characteristics, via environmental effects (Kong et al. 2018).
 The model predicts variation in the strength of SGAM. In particular, in
 ``caste societies'' where there is complete endogamy within social status
 groups, there is no scope for SGAM, because marriage partners do not
-trade off genetics for social status. The model also assumes that social
-status is inherited randomly from one parent, in the same way a genetic
-allele is inherited. This assumption can be weakened. For example, if
-social status is inherited deterministically from the father, then the
-results remain unchanged (for each pair of parents, just assume that one
-randomly chosen parent is the father).
+trade off genetics for social status. Also, SGAM is increased by \(\theta\). This
+implies that policy has long-run effects on the social structure: reducing
+\(\theta\) not only increases intergenerational mobility, but reduces
+the correlation of genes with SES, and hence the unfairness of what has been
+called the ``genetic lottery'' (Harden 2021).
 
 In modern societies, both SGAM and meritocratic mobility are likely to
 be at play. Genetic variants that cause (e.g.) higher income and wealth
@@ -813,7 +821,7 @@ will be inherited along with components of social status such as
 inherited wealth. At the same time, higher social status and ``good
 genes'' will assort in the marriage market, even if that higher social
 status is caused by purely environmental variation. Our empirical
-analysis shows this latter process at work.
+analysis shows this latter process at work. (XXX needs model it with gamma)
 
 \hypertarget{data-and-methods}{%
 \section{Data and methods}\label{data-and-methods}}
@@ -2248,7 +2256,187 @@ geneticists.
 \subsection{Proofs}\label{proofs}}
 
 \begin{proof}[Proof of Proposition \ref{prop-couples-SGAM}]
-XXX from other file
+
+By a change of variable, rewrite:
+
+\[
+\left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2}%
+\end{array}%
+\right) \rightarrow \left( 
+\begin{array}{c}
+x_{1} \\ 
+u%
+\end{array}%
+\right) \text{ where }u=\frac{ax_{1}+\left( 1-a\right) x_{2}}{\sqrt{%
+a^{2}s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma }}=
+\frac{ax_{1}+\left( 1-a\right) x_{2}}{\sigma_I}
+\]
+is the attractiveness rescaled to $\mathcal{N}(0, 1)$. Thus,
+\[
+\left( 
+\begin{array}{c}
+x_{1} \\ 
+u
+\end{array}
+\right) = \left( 
+\begin{array}{cc}
+1 & 0 \\ 
+a/\sigma_I & (1-a)/\sigma_I%
+\end{array}%
+\right) \left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2}%
+\end{array}%
+\right). 
+\]
+
+
+Note that the means are still zero, but the covariance of $(x_1,u)$ is:
+
+\begin{eqnarray*}
+C\left( 
+\begin{array}{c}
+x_{1} \\ 
+u
+\end{array}
+\right) &=&\left( 
+\begin{array}{cc}
+1 & 0 \\ 
+a/\sigma_I & \left( 1-a\right)/\sigma_I%
+\end{array}%
+\right) \left( 
+\begin{array}{cc}
+s^{2} & \sigma \\ 
+\sigma & S^{2}%
+\end{array}%
+\right) \left( 
+\begin{array}{cc}
+1 & a/\sigma_I \\ 
+0 & \left( 1-a\right)/\sigma_I%
+\end{array}%
+\right) \\
+&=&\left( 
+\begin{array}{cc}
+s^{2} &  \left( as^{2}+\sigma \left( 1-a\right) \right)/\sigma_I \\ 
+\left( as^{2}+\sigma \left( 1-a\right) \right)/\sigma_I & 1%
+\end{array}%
+\right) \allowbreak 
+\end{eqnarray*}
+
+
+Under SGAM, individual $\left( 
+\begin{array}{c}
+x_{1} \\ 
+u
+\end{array} 
+\right)$ is matched with $\left( 
+\begin{array}{c}
+y_{1} \\ 
+v%
+\end{array}%
+\right)$ such that $u = v = t$.
+
+The distribution of $t$ is 
+$\mathcal{N}\left( 0,1\right)$. Therefore the vector $\left( 
+\begin{array}{c}
+x_{1} \\ 
+y_{1} \\ 
+t%
+\end{array}%
+\right)$ is normally distributed, with mean 0, and covariance
+\[
+\Sigma =\left( 
+\begin{array}{ccc}
+s^{2} & d^{2} & d \\ 
+d^{2} & s^{2} & d \\ 
+d & d & 1%
+\end{array}%
+\right) \allowbreak 
+\]
+where
+\[
+d=\frac{as^{2}+\left( 1-a\right) \sigma }{\sqrt{S^{2}\left( a-1\right)
+^{2}+a^{2}s^{2}-2a\sigma \left( a-1\right) }} = 
+\frac{as^{2}+\left( 1-a\right) \sigma }{\sigma_I}
+\]
+
+Finally, we are interested in 
+\[
+\left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2} \\ 
+y_{1} \\ 
+y_{2}%
+\end{array}%
+\right) =\left( 
+\begin{array}{ccc}
+1 & 0 & 0 \\ 
+-\frac{a}{1-a} & 0 & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
+^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a} \\ 
+0 & 1 & 0 \\ 
+0 & -\frac{a}{1-a} & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
+^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a}%
+\end{array}%
+\right) \left( 
+\begin{array}{c}
+x_{1} \\ 
+y_{1} \\ 
+t%
+\end{array}%
+\right) 
+\]%
+therefore again the means are 0 and 
+\begin{eqnarray*}
+\mathbb{C}\left( 
+\begin{array}{c}
+x_{1} \\ 
+x_{2} \\ 
+y_{1} \\ 
+y_{2}%
+\end{array}%
+\right) &=&\left( 
+\begin{array}{ccc}
+1 & 0 & 0 \\ 
+-\frac{a}{1-a} & 0 & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
+^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a} \\ 
+0 & 1 & 0 \\ 
+0 & -\frac{a}{1-a} & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
+^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a}%
+\end{array}%
+\right) \Sigma \left( 
+\begin{array}{ccc}
+1 & 0 & 0 \\ 
+-\frac{a}{1-a} & 0 & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
+^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a} \\ 
+0 & 1 & 0 \\ 
+0 & -\frac{a}{1-a} & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
+^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a}%
+\end{array}%
+\right) ^{T} \\
+&=&\allowbreak \left( 
+\begin{array}{cccc}
+s^{2} & \sigma & A^{2} & AC \\ 
+\sigma & S^{2} & AC & C^{2} \\ 
+A^{2} & AC & s^{2} & \sigma \\ 
+AC & C^{2} & \sigma & S^{2}%
+\end{array}%
+\right) \allowbreak
+\end{eqnarray*}%
+where:%
+\begin{eqnarray*}
+A &=&\frac{as^{2}+\left( 1-a\right) \sigma }{\sqrt{a^{2}s^{2}+\left(
+1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma }}\text{ \ and} \\
+C &=&\frac{a\sigma +\left( 1-a\right) S^{2}}{\sqrt{a^{2}s^{2}+\left(
+1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma }}.
+\end{eqnarray*}
+
+
+
 \end{proof}
 
 \begin{proof}[Proof of Claim \ref{claim-E-children-RM}]
@@ -2552,136 +2740,67 @@ Finally, the second equation in (\ref{FP}) gives
 which gives $\bar{S}^{2}$, then $\bar{s}^{2}$ and $\bar{\sigma}$ follow.
 \end{proof}
 
-\hypertarget{proof-of-proposition-refpropprop1}{%
-\subsection{Proof of Proposition \ref{prop:prop1}}\label{proof-of-proposition-refpropprop1}}
+\begin{proof}[Proof of Proposition \ref{prop-non-normal}]
+The correlation is signed by the covariance. Write $C$ for the set of couples
+in the parents' generation with typical member $c = (x,y)$. Without loss of generality
+let $x_1 \ge y_1$. Then, since the iso-attractiveness curves defined by 
+$f$ are downward-sloping, $x_2 \le y_2$.
 
-XXX rewrite
+Since $Ex = Ey = 0$, the covariance among the parents' generation is
 
-\begin{proof}
-
-
-Within each pair $i,p(i)$ write $d$ for the person with $s_{d}>s_{p(d)}$
-and $m$ for $p(d)$.  If
-$k < 1$, then $g_{d} < g_{m}$. (If $k = 0$, then define $d$ as the person
-with $g_{d} < g_{p(d)}$.) We integrate over the pairs to calculate the 
-covariance in the parents' generation:
 \[
-cov(G_{p},S_{p})=\int\frac{1}{2}(g_{d}s_{d}+g_{p(d)}s_{p(d)})\,\mathrm{d}d.
+\int_C (x_1x_2 + y_1y_2)/2 \ dc
 \]
 
-For the children, the equivalent expression is
-\[
-cov(G_{c},S_{c})=\int g_{c(d)}s_{c(d)}\mathrm{d}d,
-\]
+Write
 
-observing that $EG_{c} = ES_{c}=0$ from (\ref{eq:children-average}).
-
-Take an arbitrary pair $d,m$. Write
 \begin{align*}
-g_{d}s_{d} & = (g_{c}-\Delta g)(s_{c}+\Delta s);\\
-g_{m}s_{m} & = (g_{c}+\Delta g)(s_{c}-\Delta s)
+x^\prime_1 =& \tau x^*_1 + \varepsilon & \textrm{where } x^*_1 =& (x_1+y_1)/2  \\
+x^\prime_2 =& \theta x^*_2 + \eta & \textrm{where } x^*_2 =& (x_2+y_2)/2  
+\end{align*}
+
+and write the children's covariance as
+\[
+Cov(x^\prime_1, x^\prime_2) = Cov(\tau x^*_1, \theta x^*_2) + Cov(\tau x^*_1, \eta) + 
+  Cov(\varepsilon, \theta x^*_2) + Cov(\varepsilon, \eta).
+\]
+By independence of the shocks, the last 3 terms are zero. So we need to
+show that
+\[
+Cov(\tau x^*_1, \theta x^*_2) = \tau^2\theta^2 Cov(x^*_1, x^*_2) > 0
+\]
+
+Write
+\[
+Cov(x^*_1, x^*_2) = \int_C x^*_1 x^*_2 \ dc
+\]
+using that $Ex^*_1 = Ex^*_2 = 0$. 
+
+Take a typical parent, and write
+\begin{align*}
+x_1x_2 = (x^*_1 - \Delta_1)(x^*_2 - \Delta_2) \\
+y_1y_2 = (x^*_1 + \Delta_1)(x^*_2 + \Delta_2)
 \end{align*}
 where 
-\begin{align*}
-\text{\ensuremath{\Delta g=\frac{g_{m}-g_{d}}{2}\ge0}}, & \textrm{strictly so if and only if }k>0;\\
-\Delta s=\frac{s_{d}-s_{m}}{2}\ge0 & \textrm{strictly so if and only if }k<1.
-\end{align*}
+\[
+\Delta_1 = (x_1 - y_1)/2;\ \Delta_2 = (x_2 - y_2)/2.
+\]
+By assumption $\Delta_1 \ge 0$ and $\Delta_2 \le 0$. Furthermore, if $a \in (0,1)$, then
+for a set of positive measure, $\Delta_1 > 0$ and $\Delta_2 < 0$, by our assumption 
+that not all matching couples are identical.
+
 Taking the average of the parents gives
 \[
-\frac{1}{2}(g_{d}s_{d}+g_{m}s_{m})= g _{c}s_{c}-\Delta g\Delta s.
+(x_1x_2 + y_1y_2)/2 = x^*_1x^*_2 + \Delta_1\Delta_2
 \]
-This is less than $g_{c}s_{c}$ if $0 < k < 1$, and equal to it if $k = 0$
-or $k = 1$. Plugging this into the integral shows that 
+and if $a \in (0,1)$, this is strictly less than $x^*_1x^*_2$ for a set of 
+positive measure. Plugging this into the integral gives
+
 \[
-cov(G_{p},S_{p})\le cov(G_{c},S_{c})
+Cov(x_1,x_2) \le Cov(x^*_1, x^*_2) = \int_C x^*_1 x^*_2 \ dc
 \]
-again with strict inequality if and only if $0 < k < 1$. This proves the first
-part. 
-
-To prove the second part, write
-\begin{equation}
-corr(G_{j},S_{j})=\frac{cov(G_{j},S_{j})}{\sqrt{var(G_{j})var(S_{j})}}\textrm{ for both generations }j\in\{p,c\}.\label{eq:corr-cov-var}
-\end{equation}
-where 
-\begin{align*}
-var(G_{p}) & =\frac{1}{2}\int g_{d}^{2}+g_{p(d)}^{2}\textrm{d}d;\\
-var(G_{c}) & =\int g_{c(d)}^{2}\textrm{d}d.
-\end{align*}
-
-Much as before,
-\begin{align*}
-g_{d}^{2}+g_{m}^{2} & =(g_{c}-\Delta g)^{2}+(g_{c}+\Delta g)^{2}\\
- & =2g_{c}^{2}+2(\Delta g)^{2}\\
- & \ge2g_{c}^{2}.
-\end{align*}
-
-This shows that $var(G_{c})\le var(G_{p})$ and a similar argument
-shows $var(S_{c})\le var(S_{p})$. Thus the covariance is higher (and
-positive) in the children's generation, while the variances are lower.
-Combining these ensures that 
-\[
-corr(G_{c},S_{c}) \ge corr(G_{p},S_{p}).
-\]
-
-Since for any $k$, either $var(G_{c}) < var(G_{p})$ or $var(S_{c}) < var(S_{p})$,
-the only way to get strict equality for the above is if $k \in \{0,1\}$
-and $cov(G_{c}, S_{c}) = cov(G_{p},S_{p}) = 0$.
-
-\end{proof}
-
-To show that the condition in the second part cannot be relaxed further,
-consider the distribution in Figure
-\ref{fig:Correlation-counterexample}. There is negative correlation in
-the parents' generation (the shaded area). If \(k = 1\) or is close enough
-to 1, then assortative mating along the dotted lines will reduce the
-variance of \(S\) along those lines, pushing the distribution towards the
-darker central area, without affecting the covariance. This will make
-the correlation more negative. After repeated generations the horizontal
-variance within values of \(G\) will almost disappear and the correlation
-will approach -1.
-
-\begin{figure}
-\begin{centering}
-\includegraphics[width=0.5\columnwidth]{correlation-counterexample}
-\par\end{centering}
-\caption{Correlation counterexample\label{fig:Correlation-counterexample}}
-
-\end{figure}
-
-\hypertarget{proof-of-proposition}{%
-\subsection{\texorpdfstring{Proof of Proposition \ref{prop:robustness}}{Proof of Proposition }}\label{proof-of-proposition}}
-
-\begin{proof}
-
-Note that in proposition \ref{prop:prop1}, we took $g_{c(i)} = \bar{g}_{i}$ and $s_{c(i)} = \bar{s}_i$. Write 
-\begin{align}
-cov(G_{c},S_{c}) & =cov(\bar{G}+\varepsilon^{G},\bar{S}+\varepsilon^{S})\nonumber \\
- & = cov(\bar{G},\bar{S}) + cov(\varepsilon^{G},\bar{S}) + 
-     cov(\bar{G},\varepsilon^{S}) + cov(\varepsilon^{G},\varepsilon^{S}).
- \label{eq:cov-with-error}
-\end{align}
-For any $X$ and $Y$, $cov(X, Y)$ is bounded by $\sqrt{var(X) var(Y)}$.
-Plugging $\sigma_{G}^{2}$ and $\sigma_{S}^{2}$ into this formula
-shows that under condition 1, $cov(G_{c},S_{c})$ will be arbitrarily
-close to $cov(\bar{G},\bar{S})$. Similarly, writing
-\[
-var(G_{c}) = var(\bar{G}) + var(\varepsilon^{G}) + 2cov(\bar{G},\varepsilon^{G})
-\]
-shows that $var(G_{c})$ will approach $var(\bar{G})$ as $\sigma_{G}^{2}$
-grows small, and similarly for $var(S_{c})$. Plugging these facts
-into (\ref{eq:corr-cov-var}) shows that $corr(G_{c},S_{c})$ approaches
-$corr(\bar{G},\bar{S})$ as $\sigma_{G}^{2}$ and $\sigma_{S}^{2}$
-grow small. Proposition 1 then shows $corr(\bar{G},\bar{S}) < corr(G_{p},S_{p})$
-for $k\in(0,1)$.
-
-Under condition 2, $cov(G_{c}, S_{c}) = cov(\bar{G},\bar{S})$ since
-the last three terms of the sum in (\ref{eq:cov-with-error}) are
-zero. Then since 
-\[
-cov(\bar{G},\bar{S})\ge cov(G_{p},S_{p}) = 0
-\]
-with strict inequality iff $k\in(0,1)$, the covariance signs the
-correlation. 
+with strict inequality if $a \in (0,1)$. Since the parental covariance was 0
+by assumption, this completes the proof.
 
 \end{proof}
 
@@ -4863,6 +4982,9 @@ Greenwood, Jeremy, Nezih Guner, Georgi Kocharkov, and Cezar Santos. 2014. {``Mar
 
 \leavevmode\vadjust pre{\hypertarget{ref-halsey1958genetics}{}}%
 Halsey, AH. 1958. {``Genetics, Social Structure and Intelligence.''} \emph{The British Journal of Sociology} 9 (1): 15--28.
+
+\leavevmode\vadjust pre{\hypertarget{ref-harden2021genetic}{}}%
+Harden, Kathryn Paige. 2021. \emph{The Genetic Lottery: Why DNA Matters for Social Equality}. Princeton University Press.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Heath_1985}{}}%
 Heath, A. C., K. Berg, L. J. Eaves, M. H. Solaas, L. A. Corey, J. Sundet, P. Magnus, and W. E. Nance. 1985. {``Education Policy and the Heritability of Educational Attainment.''} \emph{Nature} 314 (6013): 734--36. \url{https://doi.org/10.1038/314734a0}.

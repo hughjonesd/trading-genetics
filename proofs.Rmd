@@ -538,7 +538,7 @@ Cov(x^\prime_1, x^\prime_2) = Cov(\tau x^*_1, \theta x^*_2) + Cov(\tau x^*_1, \e
 By independence of the shocks, the last 3 terms are zero. So we need to
 show that
 \[
-Cov(\tau x^*_1, \theta x^*_2) = \tau^2\theta^2 Cov(x^*_1, x^*_2) > 0
+Cov(\tau x^*_1, \theta x^*_2) = \tau\theta Cov(x^*_1, x^*_2) > 0
 \]
 
 Write

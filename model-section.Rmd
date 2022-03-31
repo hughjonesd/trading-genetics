@@ -62,7 +62,7 @@ People form matches with transferable utility, where the surplus for a match
 between $x$ and $y$ is $S(i(x), i(y))$ such that 
 $\partial^{2}S/\partial i\partial j > 0$, i.e. $S$ is supermodular. As a result there
 is positive assortative mating on attractiveness: $x$ matches with $y$
-only if $i( x_{1},x_{2}) = j(y_{1},y_{2})$. We describe this as
+only if $i(x_{1},x_{2}) = i(y_{1},y_{2})$. We describe this as
 social-genetic assortative mating (SGAM).
 
 We also consider random matching (RM) as a benchmark to compare against SGAM.
