@@ -138,11 +138,9 @@ y_{2}%
 \right) =\left( 
 \begin{array}{ccc}
 1 & 0 & 0 \\ 
--\frac{a}{1-a} & 0 & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
-^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a} \\ 
+-\frac{a}{1-a} & 0 & \frac{\sigma_I}{1-a} \\ 
 0 & 1 & 0 \\ 
-0 & -\frac{a}{1-a} & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
-^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a}%
+0 & -\frac{a}{1-a} & \frac{\sigma_I}{1-a}%
 \end{array}%
 \right) \left( 
 \begin{array}{c}
@@ -164,20 +162,16 @@ y_{2}%
 \right) &=&\left( 
 \begin{array}{ccc}
 1 & 0 & 0 \\ 
--\frac{a}{1-a} & 0 & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
-^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a} \\ 
+-\frac{a}{1-a} & 0 & \frac{\sigma_I}{1-a} \\ 
 0 & 1 & 0 \\ 
-0 & -\frac{a}{1-a} & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
-^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a}%
+0 & -\frac{a}{1-a} & \frac{\sigma_I}{1-a}%
 \end{array}%
 \right) \Sigma \left( 
 \begin{array}{ccc}
 1 & 0 & 0 \\ 
--\frac{a}{1-a} & 0 & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
-^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a} \\ 
+-\frac{a}{1-a} & 0 & \frac{\sigma_I}{1-a} \\ 
 0 & 1 & 0 \\ 
-0 & -\frac{a}{1-a} & \frac{\sqrt{a^{2}s^{2}+\left( 1-a\right)
-^{2}S^{2}+2a\left( 1-a\right) \sigma }}{1-a}%
+0 & -\frac{a}{1-a} & \frac{\sigma_I}{1-a}%
 \end{array}%
 \right) ^{T} \\
 &=&\allowbreak \left( 
@@ -191,10 +185,8 @@ AC & C^{2} & \sigma & S^{2}%
 \end{eqnarray*}%
 where:%
 \begin{eqnarray*}
-A &=&\frac{as^{2}+\left( 1-a\right) \sigma }{\sqrt{a^{2}s^{2}+\left(
-1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma }}\text{ \ and} \\
-C &=&\frac{a\sigma +\left( 1-a\right) S^{2}}{\sqrt{a^{2}s^{2}+\left(
-1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma }}.
+A &=&\frac{as^{2}+\left( 1-a\right) \sigma }{\sigma_I}\text{ \ and} \\
+C &=&\frac{a\sigma +\left( 1-a\right) S^{2}}{\sigma_I}.
 \end{eqnarray*}
 
 
@@ -305,7 +297,7 @@ The coefficient $\frac{a\left( 1-a\right) \lambda }{a^{2}\lambda +2\left(
 
 \begin{proof}[Proof of Claim \ref{claim-corr-children-RM}]
 
-Under RM, the correlation matrix for children's characteristics is:%
+Under RM, the covariance matrix for children's characteristics is:%
 \begin{eqnarray*}
 \mathbb{C} &=&\left( 
 \begin{array}{cc}
@@ -363,9 +355,19 @@ Corr\left( x_{1}^{\prime },x_{2}^{\prime }\right) =\frac{\frac{1}{2}\theta
 A^{2}+s^{2}\right) +1}\sqrt{\frac{1}{2}\theta ^{2}\left( C^{2}+S^{2}\right)
 +1}} 
 \]
-This is positive if $\sigma = 0$ so long as $AC > 0$ i.e. $0 < a < 1$, and
-linear in $\theta$.
-
+This is positive if $\sigma = 0$ so long as $AC > 0$ i.e. $0 < a < 1$. To show
+it is increasing in $\theta$, strip out constant terms and take the derivative of
+\[
+\frac{\theta}{\sqrt{\frac{1}{2}\theta^2(C^2+S^2) + 1}}
+\]
+The derivative is signed by
+\begin{align*}
+& \left(\frac{1}{2}\theta^2(C^2+S^2) + 1\right)^{0.5} -
+\frac{1}{2}\theta^2(C^2+S^2)\left(\frac{1}{2}\theta^2(C^2+S^2) + 1\right)^{-0.5} \\
+>& \left(\frac{1}{2}\theta^2(C^2+S^2) + 1\right)^{0.5} - 
+\left(\frac{1}{2}\theta^2(C^2+S^2)  + 1\right)\left(\frac{1}{2}\theta^2(C^2+S^2) + 1\right)^{-0.5} \\
+=&\ 0.
+\end{align*}
 \end{proof}
 
 
@@ -511,6 +513,66 @@ which gives $\bar{S}^{2}$, then $\bar{s}^{2}$ and $\bar{\sigma}$ follow.
 \end{proof}
 
 
+\begin{proof}[Proof of Claim \ref{prop-gamma}]
+Write
+\begin{align*}
+x_{1}^{\prime}	&=\tau\frac{x_{1}+y_{1}}{2}+\varepsilon \\
+x_{2}^{\prime}	&=\gamma x_{1}^{\prime}+\theta\frac{x_{2}+y_{2}}{2}+\eta \\
+	              &=\gamma\tau \frac{x_{1}+y_{1}}{2} + \theta \frac{x_{2}+y_{2}}{2} 
+	                + \eta + \gamma\varepsilon
+\end{align*}
+
+Since
+\[
+\left(\begin{array}{c}
+\tau\frac{x_{1}+y_{1}}{2}\\
+\gamma\tau\frac{x_{1}+y_{1}}{2}+\theta\frac{x_{2}+y_{2}}{2}
+\end{array}\right)=\left(\begin{array}{cccc}
+\frac{\tau}{2} & 0 & \frac{\tau}{2} & 0\\
+\frac{\gamma\tau}{2} & \frac{\theta}{2} & \frac{\gamma\tau}{2} & \frac{\theta}{2}
+\end{array}\right)\left(\begin{array}{c}
+x_{1}\\
+x_{2}\\
+y_{1}\\
+y_{2}
+\end{array}\right)
+\]
+we can use \eqref{cov-couples-SGAM} to derive the covariance matrix for children:
+
+\begin{align*}
+\mathbb{C}	&= \left(\begin{array}{cc}
+1 & \gamma\\
+\gamma & \ 1+\gamma^{2}
+\end{array}\right)+\left(\begin{array}{cccc}
+\frac{\tau}{2} & 0 & \frac{\tau}{2} & 0\\
+\frac{\gamma\tau}{2} & \frac{\theta}{2} & \frac{\gamma\tau}{2} & \frac{\theta}{2}
+\end{array}\right)\left(\begin{array}{cccc}
+s^{2} & \sigma & A^{2} & AC\\
+\sigma & S^{2} & AC & C^{2}\\
+A^{2} & AC & s^{2} & \sigma\\
+AC & C^{2} & \sigma & S^{2}
+\end{array}\right)\left(\begin{array}{cc}
+\frac{\tau}{2} & \frac{\gamma\tau}{2}\\
+0 & \frac{\theta}{2}\\
+\frac{\tau}{2} & \frac{\gamma\tau}{2}\\
+0 & \frac{\theta}{2}
+\end{array}\right) \\
+	&=\left(\begin{array}{cc}
+\frac{\tau^{2}}{2}(s^{2}+A^{2})+1 & \frac{\gamma\tau^{2}}{2}(s^{2}+A^{2})+\frac{\tau\theta}{2}(\sigma+AC)+\gamma\\
+\frac{\gamma\tau^{2}}{2}(s^{2}+A^{2})+\frac{\tau\theta}{2}(\sigma+AC)+\gamma & \ \ \frac{\gamma^{2}\tau^{2}}{2}(s^{2}+A^{2})+\gamma\tau\theta(\sigma+AC)+\frac{\theta^{2}}{2}(S^{2}+C^{2})+1+\gamma^{2}
+\end{array}\right)
+\end{align*}
+
+The claims in the proof now follow from the covariance:
+\[
+\frac{\gamma\tau^{2}}{2}(s^{2}+A^{2})+\frac{\tau\theta}{2}(\sigma+AC)+\gamma
+\]
+This is positive if any of $\sigma > 0$, $\gamma > 0$,  or $AC > 0$ 
+(which holds if $0 < a < 1$ when $\sigma = 0$).
+
+
+\end{proof}
+
 \begin{proof}[Proof of Proposition \ref{prop-non-normal}]
 The correlation is signed by the covariance. Write $C$ for the set of couples
 in the parents' generation with typical member $c = (x,y)$. Without loss of generality
@@ -574,4 +636,7 @@ with strict inequality if $a \in (0,1)$. Since the parental covariance was 0
 by assumption, this completes the proof.
 
 \end{proof}
+
+
+
 

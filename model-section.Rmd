@@ -18,7 +18,8 @@ header-includes:
 ---
 
 
-People in the marriage market have two characteristics: $x=\left( x_{1},x_{2}\right)$, drawn from a normal distribution 
+People in the marriage market have two characteristics: 
+$x=\left( x_{1},x_{2}\right)$, drawn from a normal distribution 
 \[
 \mathcal{N}
 \left( 
@@ -33,19 +34,20 @@ s^{2} & \sigma \\
 \end{array}%
 \right).
 \]
-We interpret $x_1$ as a genetic measure, and $x_2$ as a measure of SES or of social status more generally. The 
-correlation between $x_1$ and $x_2$ is then
-
+We interpret $x_1$ as a genetic measure, for example of genes predictive of
+height, physical attractiveness or intelligence. $x_2$ is a measure of 
+socio-economic status, such as income or wealth, or social status more generally
+(we sometimes use "wealth" as a shorthand). The correlation between 
+$x_1$ and $x_2$ is then
 \[
 Corr=\frac{\sigma }{sS}.
 \]
-
 People's attractiveness is given by
 \[
 i\left( x\right) =ax_{1}+\left( 1-a\right) x_{2}
 \]
-where $a \in [0, 1]$ is a parameter reflecting the relative importance of genetics to SES 
-in the marriage market.[^a-interpretation] If $a = 0$, marriage markets are highly
+where $a \in [0, 1]$ is a parameter reflecting the relative importance of genetics 
+to wealth in the marriage market.[^a-interpretation] If $a = 0$, marriage markets are highly
 inegalitarian, such that only SES matters. If $a = 1$, marriage markets are egalitarian
 and only genetics matter. We expect realistic societies to fall between these extremes.
 Attractiveness $i$ is distributed $N(0,\sigma_{I}^{2})$, where
@@ -65,9 +67,9 @@ is positive assortative mating on attractiveness: $x$ matches with $y$
 only if $i(x_{1},x_{2}) = i(y_{1},y_{2})$. We describe this as
 social-genetic assortative mating (SGAM).
 
-We also consider random matching (RM) as a benchmark to compare against SGAM.
-Under RM, the distribution of couples' characteristics is normal with mean 0 and
-covariance matrix
+We also consider random matching as a benchmark to compare against SGAM.
+Under random matching, the distribution of couples' characteristics is 
+normal with mean 0 and covariance matrix
 \[
 \mathbb{C}\left( 
 \begin{array}{c}
@@ -86,12 +88,13 @@ s^{2} & \sigma & 0 & 0 \\
 \right). \allowbreak 
 \]
 
-## Couples under SGAM
+Our first proposition shows that SGAM leads to a positive correlation
+between one partner's wealth and the other's genetics.
 
 \begin{proposition}\label{prop-couples-SGAM}
 Under SGAM, the distribution of couples' characteristics is normal, with mean 0
 and covariance matrix
-\[
+\begin{equation}\label{cov-couples-SGAM}
 \mathbb{C}\left( 
 \begin{array}{c}
 x_{1} \\ 
@@ -107,7 +110,7 @@ A^{2} & AC & s^{2} & \sigma  \\
 AC & C^{2} & \sigma  & S^{2}%
 \end{array}%
 \right) \allowbreak 
-\]
+\end{equation}
 where:
 \begin{align*}
 A &= \frac{as^{2}+\left( 1-a\right) \sigma }{\sqrt{a^{2}s^{2}+\left(
@@ -124,7 +127,7 @@ See Appendix.
 \end{proof}
 \end{proposition}
 
-We consider the distribution of couples' SES. Under RM this has 
+We consider the distribution of couples' wealth. Under random matching this has 
 mean $0$ and variance $2S^2$. Under SGAM, the variance is:
 \[
 V\left( x_{2}+y_{2}\right) =2S^{2}+2C^{2}>2S^{2} 
@@ -133,14 +136,16 @@ Note, however, that
 \[
 V\left( x_{2}+y_{2}\right) \leq 4S^{2} 
 \]
-which would be reached if $a=0$, i.e. if people only matched on SES. Thus,
-SGAM increases cross-sectional inequality but less so than pure matching on SES. 
+which would be reached if $a=0$, i.e. if people only matched on wealth. Thus,
+SGAM increases cross-sectional inequality but less so than pure matching on 
+wealth. 
 
 XXX is the above true only if $\sigma=0$?
 
 ## Children
 
-All couples have the same number of children. Assume that a child's characteristics are given by:
+All couples have the same number of children. Assume that a child's 
+characteristics are given by:
 \begin{eqnarray}
 x_{1}^{\prime } &=&\frac{\tau }{2}\left( x_{1}+y_{1}\right) +\varepsilon
 \label{Chil} \\
@@ -216,7 +221,7 @@ traits; that is, high SES people have genes which are attractive in marriage
 markets.
 
 Regarding point 1, we compute the expected genetic characteristic of the
-child, conditional on parental SES:
+child, conditional on parental wealth:
 \[
 \mathbb{E}\left[ \frac{\tau }{2}\left( x_{1}+y_{1}\right) +\varepsilon \mid
 x_{2}=v,y_{2}=w\right] 
@@ -238,7 +243,7 @@ children does not depend on parental SES.
 Under SGAM, if $\sigma = 0$ (i.e. genetics and
 SES are uncorrelated for the parents), then the expected genetic endowment of
 the children is linearly increasing in parental SES. The relationship
-increases with the ratio of genetic variance to wealth variance, is zero for $a = 0$ or $a = 1$, 
+increases with the ratio of genetic variance to SES variance, is zero for $a = 0$ or $a = 1$, 
 and is highest for intermediate values of $a$.
 \end{claim}
 
@@ -250,34 +255,111 @@ uncorrelated.
 
 \begin{claim}\label{claim-corr-children-RM}
 Under random matching, the correlation between characteristics is smaller
-for children than for parents. In particular, if genetics and wealth are
+for children than for parents. In particular, if genetics and SES are
 uncorrelated for the parents, then they are uncorrelated for the children.
 \end{claim}
 
 \begin{claim}\label{claim-corr-children-SGAM}
-Under SGAM, if genetics and wealth are uncorrelated for the parents, then they
+Under SGAM, if genetics and SES are uncorrelated for the parents, then they
 are positively correlated for the children so long as $0 < a < 1$. The 
 correlation is increasing in $\theta$.
 \end{claim}
 
 Whether characteristics are more or less correlated for children than for
 parents depends on whether the initial correlation between parents'
-characteristics is larger or smaller than the asymptotic one, derived later
-on.
+characteristics is larger or smaller than the asymptotic one, derived below.
+
+Figure \ref{fig:pic-intuition} shows the intuition behind the model. Parents 
+match on downward-sloping attractiveness isoquants given by $a x_1 + (1-a) x_2 = u$.
+Their children are in between them on both dimensions. This compresses the
+distribution along the attractiveness isoquants, leading to a positive correlation
+between the dimensions.
+
+```{r pic-intuition, fig.subcap = c("Parents", "Children"), fig.cap = "Theory. The shaded area is the population distribution. Parents (solid circles) match along attractiveness isoquants (dotted lines). Children (hollow circles) are between them. As a result, in the children's generation, the distribution is squeezed along attractiveness isoquants.", fig.ncol = 2, fig.width = 2.75, fig.height = 2.4, fig.align='center', echo = FALSE}
+setup_plot <- function () {
+  par(mar = rep(2.1, 4))
+  plot.new()
+  plot.window(c(-1.2, 1.2), c(-1.2, 1.2))
+  arrows(x0 = -1.1, x1 = 1.1, y0 = -1.1, length = .1)
+  arrows(y0 = -1.1, y1 = 1.1, x0 = -1.1, length = .1)
+  text(-1.1, 1.2, expression(x[2]), cex = 0.75)
+  text(1.2, -1.1, expression(x[1]), cex = 0.75)
+}
+draw_dist <- function (w) {
+  if (! is.matrix(w)) w <- matrix(c(w, 0, 0, 1), nrow = 2)
+  mygrey <- grey(.85, .03)
+  for (rad in seq(0.2, 1, 0.1)) {
+    v <- car::ellipse(c(0, 0), shape = w, radius = rad, add = TRUE, center.pch = NULL,
+               fill = TRUE, col = mygrey, lwd = 0, segments = 241)
+  }
+  
+  v
+}
+draw_dist_with_a <- function (width, shift) {
+  setup_plot()  
+  v <- draw_dist(width)
+  nr_v <- nrow(v)
+  
+  rotation <- (-shift + seq_len(nr_v)) %% nr_v
+  rotation[rotation == 0] <- nr_v
+  
+  v <- v[rotation, ]
+  v_rev <- v[nr_v:1, ]
+  
+  ivls <- quantile(seq_len(nr_v/2), seq(0.2, 0.8, .2), type = 1)
+  
+  start_x <- v[ivls, 1]
+  end_x   <- v_rev[ivls, 1]
+  start_y <- v[ivls, 2]
+  end_y <- v_rev[ivls, 2]
+  
+  segments(x0 = start_x, x1 = end_x, y0 = start_y, y1 = end_y, lty = 2)  
+  
+  ivls <- ivls[2:3]
+
+  start_x <- mean(v[ivls, 1])
+  end_x   <- mean(v_rev[ivls, 1])
+  start_y <- mean(v[ivls, 2])
+  end_y   <- mean(v_rev[ivls, 2])
+  inset <- 0.15
+  
+  along <- function (tt) list(
+    x = start_x + tt * (end_x - start_x),
+    y = start_y + tt * (end_y - start_y)
+  )
+  
+  end_inset <- 0.15
+  starts <- along(c(inset, 1 - inset))
+  ends   <- along(c(0.5 - end_inset, 0.5 + end_inset))
+  pts <- along(c(inset/2, .5, .5, 1 - inset/2))
+  pts$x[2] <- pts$x[2] - 0.05
+  pts$x[2] <- pts$x[2] - 0.1
+  pts$x[3] <- pts$x[3] + 0.01
+  pts$x[3] <- pts$x[3] + 0.04
+  arrows(x0 = starts$x, x1 = ends$x, y0 = starts$y, y1 = ends$y,
+         length = 0.05)
+  
+  points(x = pts$x, y = pts$y, pch = c(19, 21, 21, 19), cex = 0.8)
+}
+
+draw_dist_with_a(.8, -30)
+setup_plot()
+invisible(draw_dist(matrix(c(1, .4, .4, .8), nrow = 2)))
+```
+
 
 These results show that SGAM can lead to a genes-SES gradient, i.e. a positive
 correlation between genes and SES. Also, the strength of the genes-SES
 correlation is affected by economic institutions, as captured in $\theta$.
-When $\theta$ is high, the genes-SES correlation is high too. As we would expect,
-these results carry over to the asymptotic distribution.
+When $\theta$ is high, the genes-SES correlation is high too. 
 
-
-## Asymptotics
-
+We now consider the asymptotic distribution of $x_1$ and $x_2$ when the matching 
+process is repeated over many generations. As we would expect, our main results 
+continue to hold.
 
 \begin{proposition}\label{prop-asymptotics-RM}
-Under RM, the dynamics converges to a stationary distribution that is normal
-with mean zero and covariance matrix 
+Under random matching, the dynamics converges to a stationary distribution that 
+is normal with mean zero and covariance matrix 
 \[
 C=\left( 
 \begin{array}{cc}
@@ -287,7 +369,7 @@ C=\left(
 \right) \allowbreak 
 \]%
 In particular, the traits are asymptotically uncorrelated and children's expected genetic
-endowment is independent of parents' SES.
+endowment is independent of parents' wealth.
 
 \end{proposition}
 
@@ -312,7 +394,7 @@ $\theta$? Increasing then decreasing in $a$?
 \end{proposition}
 
 
-Conditional expectations of children's genetics given parents' SES under SGAM
+Conditional expectations of children's genetics given parents' wealth under SGAM
 are calculated using the same formula as before, plugging in moments of the 
 asymptotic distribution:
 
@@ -320,8 +402,10 @@ asymptotic distribution:
 \mathbb{E}\left[ \frac{\tau }{2}\left( x_{1}+y_{1}\right) +\varepsilon \mid
 x_{2}=v,y_{2}=w\right]  &=&\frac{1}{2}\tau \frac{\bar{\sigma}+\bar{A}\bar{C}%
 }{\bar{C}^{2}+\bar{S}^{2}}\left( v+w\right)  \\
-&=&\mu \frac{\theta \bar{S}^{2}}{2\bar{S}^{2}-2}
+&=&\mu \frac{\theta \bar{S}^{2}}{2\bar{S}^{2}-2}\left( v+w\right) 
 \end{eqnarray}
+
+XXX double check that $v+w$ belongs on line 2 (you added it)
 
 ### Numerical application
 
@@ -343,7 +427,7 @@ a,\theta ,\tau \right) }{\sqrt{\psi \left( a,\theta ,\tau \right) }}
 (XXX graph omitted)
 
 and the conditional expectation
-of genetics given wealth is proportional to wealth, coefficient:
+of genetics given SES is proportional to SES, coefficient:
 
 (XXX graph omitted)
 
@@ -351,38 +435,67 @@ Note that both $\bar{S}^{2}$ and $\bar{\sigma}$, as well as the correlation
 between characteristics and the conditional expectation of genetics given
 wealth, are increasing in $\theta$, i.e. decreasing in the tax rate. Higher
 taxation reduces the asymptotic variance of wealth (not surprisingly), but
-also the correlation between genetic and wealth. 
+also the correlation between genetics and wealth. 
 
 ## Extensions
 
-We consider robustness in two dimensions. First, the weight of $x_1$ and
+We consider three extensions. First, the weight of $x_1$ and
 $x_2$ might differ for men and women, for example if SES is more important for
 men's attractiveness. Suppose that men's and women's attractiveness are given by
 \begin{align*}
-i(x) = ax_1 + (1-a)x_2; \\
-j(y) = by_1 + (1-b)y_2
+i(x) &= ax_1 + (1-a)x_2, \\
+j(y) &= by_1 + (1-b)y_2
 \end{align*}
 respectively. Then Claims \ref{claim-E-children-SGAM} and 
 \ref{claim-corr-children-SGAM} continue to hold.
 
 XXX put proof in appendix
 
-Second, we consider non-normal distributions of $x_1$ and $x_2$, and
+Second, in modern meritocracies, people's adult SES depends not just 
+on their parents' social status and on chance, but also on their own effort and
+skills, which might be related to their genetics. So, let
+\begin{align}
+x^\prime_2 &= \gamma x^\prime_1 + \theta\frac{x_{2}+y_{2}}{2}+\eta   \nonumber \\
+ &= \gamma \tau \left( \frac{x_{1}+y_{1}}{2} + \varepsilon \right) +
+\theta \frac{x_{2}+y_{2}}{2} + \eta \label{eqn-gamma}
+\end{align}
+where $\gamma > 0$ represents the effect of own genetics on own SES. Not
+surprisingly, the basic result continues to hold:
+
+\begin{claim}\label{prop-gamma}
+Under SGAM and equation \eqref{eqn-gamma}, if genetics and SES are 
+uncorrelated for the parents, then they
+are positively correlated for the children so long as $0 < a < 1$ or
+$\gamma > 0$.
+\end{claim}
+
+
+Third, we consider non-normal distributions of $x_1$ and $x_2$, and
 non-linear attractiveness functions. Suppose
-\begin{equation}
-i(x) = f(ax_1, (1-a)x_2) \label{non-linear-f}
-\end{equation}
-with $f$ strictly increasing in both its arguments. Our sole condition on $x$ is 
-that a positive measure of the population has attractiveness $i(x) = i$ where 
-the distribution of $(x_1, x_2)|i$ is non-degenerate, i.e. not
-everybody with attractiveness $i$ is both genetically and socially identical. 
+\begin{equation} i(x) = f(ax_1, (1-a)x_2) \label{non-linear-f} \end{equation}
+with $f$ strictly increasing in both its arguments. Our sole condition on the
+distribution of $x$ is that a positive measure of the population has
+attractiveness $i(x) = i$ where the distribution of $(x_1, x_2)|i$ is
+non-degenerate, i.e. not everybody with attractiveness $i$ is both genetically
+and socially identical. In particular, this allows for discrete distributions, 
+such as certain kinds of social status.
 
 \begin{proposition}\label{prop-non-normal}
-Let attractiveness be given by \eqref{non-linear-f}. If the correlation 
-between $x_1$ and $x_2$ is 0, then the 
-correlation among children between $x^\prime_1$ and $x^\prime_2$ is non-negative,
-and strictly positive if $0 < a < 1$.
+Let attractiveness be given by \eqref{non-linear-f}. Let $(x_1, x_2)$ have
+any distribution such that a positive measure of the population has
+$i(x) = i$ where the conditional distribution of $(x_1, x_2)|i(x) = i$ is 
+non-degenerate. If the correlation between $x_1$ and $x_2$ is 0, then
+the correlation among children between $x^\prime_1$ and $x^\prime_2$ is
+non-negative, and strictly positive if $0 < a < 1$.
 \end{proposition}
+
+Other extensions are possible. We assumed that all couples have two children. If
+fertility increased with $x_1$ or $x_2$, we would expect this to reduce the
+variance of traits in the children's generation and possibly also their
+covariance. Here, marriage markets as summarized in the $a$ parameter are
+exogenous. A natural extension would be to model $a$ as an equilibrium outcome.
+For example, if parents care about their children's wealth, $a$ might decrease
+in $\theta$.
 
 
 ## Discussion
@@ -399,9 +512,10 @@ partners.
 The meanings of both social status, and "good genes" in the
 marriage market, are likely to vary across societies. Social status could
 encompass variables like social class or caste; ethnic identity in
-"ranked" ethnic systems; or in modern societies, SES. Regarding genetics,
-standards of physical attractiveness, and other characteristics which
-make someone a "good match", vary across societies and over time.
+"ranked" ethnic systems; or in modern societies, SES, including wealth, income
+and occupation. Regarding genetics, standards of physical attractiveness, and
+other characteristics which make someone a "good match", vary across societies
+and over time.
 
 Recent empirical work shows high persistence of SES over time, in particular at
 the top. XXX insert stuff about grandchild-control here.
@@ -431,6 +545,6 @@ will be inherited along with components of social status such as
 inherited wealth. At the same time, higher social status and "good
 genes" will assort in the marriage market, even if that higher social
 status is caused by purely environmental variation. Our empirical
-analysis shows this latter process at work. (XXX needs model it with gamma)
+analysis shows this latter process at work.
 
 
