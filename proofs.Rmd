@@ -513,6 +513,203 @@ which gives $\bar{S}^{2}$, then $\bar{s}^{2}$ and $\bar{\sigma}$ follow.
 \end{proof}
 
 
+\begin{proof}[Proof of Claim \ref{claim-men-women-different}]
+
+Since men and women have different distributions of attractiveness,
+we have to match them by quantiles of their respective distributions. 
+Men's and women's attractiveness are distributed
+\begin{align*}
+N(0,\sigma_{I}^{2})\textrm{ where }\sigma_{I} & =\sqrt{a^{2}s^{2}+(1-a)^{2}S^{2}+2a(1-a)\sigma};\\
+N(0,\sigma_{J}^{2})\textrm{ where }\sigma_{J} & =\sqrt{b^{2}s^{2}+(1-b)^{2}S^{2}+2b(1-b)\sigma}.
+\end{align*}
+Thus, men with normalized attractiveness $i(x)/\sigma_{I}$ match
+women with normalized attractiveness $j(y)/\sigma_{J}$.
+
+Change variables so that 
+\begin{align*}
+\left(\begin{array}{c}
+x_{1}\\
+x_{2}
+\end{array}\right) & \rightarrow\left(\begin{array}{c}
+x_{1}\\
+u
+\end{array}\right)\textrm{ where }u=\frac{ax_{1}+(1-a)x_{2}}{\sigma_{I}};\\
+\left(\begin{array}{c}
+y_{1}\\
+y_{2}
+\end{array}\right) & \rightarrow\left(\begin{array}{c}
+y_{1}\\
+v
+\end{array}\right)\textrm{ where }v=\frac{by_{1}+(1-b)y_{2}}{\sigma_{J}}.
+\end{align*}
+
+Thus 
+\begin{align*}
+\left(\begin{array}{c}
+x_{1}\\
+u
+\end{array}\right) & =\left(\begin{array}{cc}
+1 & 0\\
+a/\sigma_{I} & (1-a)/\sigma_{I}
+\end{array}\right)\left(\begin{array}{c}
+x_{1}\\
+x_{2}
+\end{array}\right);\\
+\left(\begin{array}{c}
+y_{1}\\
+v
+\end{array}\right) & =\left(\begin{array}{cc}
+1 & 0\\
+b/\sigma_{J} & (1-b)/\sigma_{J}
+\end{array}\right)\left(\begin{array}{c}
+y_{1}\\
+y_{2}
+\end{array}\right).
+\end{align*}
+
+and their respective covariance matrices are
+\begin{align*}
+\mathbb{C}\left(\begin{array}{c}
+x_{1}\\
+u
+\end{array}\right) & =\left(\begin{array}{cc}
+1 & 0\\
+a/\sigma_{I} & (1-a)/\sigma_{I}
+\end{array}\right)\left(\begin{array}{cc}
+s^{2} & \sigma\\
+\sigma & S^{2}
+\end{array}\right)\left(\begin{array}{cc}
+1 & a/\sigma_{I}\\
+0 & (1-a)/\sigma_{I}
+\end{array}\right)\\
+ & =\left(\begin{array}{cc}
+s^{2} & \frac{as^{2}+(1-a)\sigma}{\sigma_{I}}\\
+\frac{as^{2}+(1-a)\sigma}{\sigma_{I}} & 1
+\end{array}\right),
+\end{align*}
+
+similarly
+\[
+\mathbb{C}\left(\begin{array}{c}
+y_{1}\\
+v
+\end{array}\right)=\left(\begin{array}{cc}
+s^{2} & \frac{bs^{2}+(1-b)\sigma}{\sigma_{J}}\\
+\frac{bs^{2}+(1-b)\sigma}{\sigma_{J}} & 1
+\end{array}\right).
+\]
+
+Under SGAM, couples have characteristics $\left(\begin{array}{c}
+x_{1}\\
+t\\
+y_{1}\\
+t
+\end{array}\right),$ where $\left(\begin{array}{c}
+x_{1}\\
+y_{1}\\
+t
+\end{array}\right)$ is trivariate normal with mean 0 and covariance matrix
+\[
+\Sigma=\left(\begin{array}{ccc}
+s^{2} & AB & A\\
+AB & s^{2} & B\\
+A & B & 1
+\end{array}\right)
+\]
+where
+\[
+A=\frac{as^{2}+(1-a)\sigma}{\sigma_{I}};B=\frac{bs^{2}+(1-b)\sigma}{\sigma_{J}}.
+\]
+
+Proof. XXX expand Pierre's note in Computations5short.
+
+Lastly, we calculate the covariance matrix of couples' original characteristics.
+Since
+\[
+\left(\begin{array}{c}
+x_{1}\\
+x_{2}\\
+y_{1}\\
+y_{2}
+\end{array}\right)=\left(\begin{array}{ccc}
+1 & 0 & 0\\
+\frac{-a}{1-a} & 0 & \frac{\sigma_{I}}{1-a}\\
+0 & 1 & 0\\
+0 & \frac{-b}{1-b} & \frac{\sigma_{J}}{1-b}
+\end{array}\right)\left(\begin{array}{c}
+x_{1}\\
+y_{1}\\
+t
+\end{array}\right)
+\]
+we have that the mean is again 0 and the covariance matrix is 
+\begin{align*}
+\mathbb{C}\left(\begin{array}{c}
+x_{1}\\
+x_{2}\\
+y_{1}\\
+y_{2}
+\end{array}\right) & =\left(\begin{array}{ccc}
+1 & 0 & 0\\
+\frac{-a}{1-a} & 0 & \frac{\sigma_{I}}{1-a}\\
+0 & 1 & 0\\
+0 & \frac{-b}{1-b} & \frac{\sigma_{J}}{1-b}
+\end{array}\right)\Sigma\left(\begin{array}{cccc}
+1 & \frac{-a}{1-a} & 0 & 0\\
+0 & 0 & 1 & \frac{-b}{1-b}\\
+0 & \frac{\sigma_{I}}{1-a} & 0 & \frac{\sigma_{J}}{1-b}
+\end{array}\right)\\
+ & =\left(\begin{array}{cccc}
+s^{2} & \sigma & AB & AD\\
+\sigma & S^{2} & BC & CD\\
+AB & BC & s^{2} & \sigma\\
+AD & CD & \sigma & S^{2}
+\end{array}\right)
+\end{align*}
+where
+\[
+C=\frac{a\sigma+(1-a)S^{2}}{\sigma_{I}};D=\frac{b\sigma+(1-b)S^{2}}{\sigma_{J}}.
+\]
+
+From the above and \eqref{Chil} we can calculate the
+covariance matrix of children's characteristics as
+\begin{align*}
+\mathbb{C}\left(\begin{array}{c}
+x_{1}^{\prime}\\
+x_{2}^{\prime}
+\end{array}\right) & =\left(\begin{array}{cc}
+1 & 0\\
+0 & 1
+\end{array}\right)+\left(\begin{array}{cccc}
+\frac{\tau}{2} & 0 & \frac{\tau}{2} & 0\\
+0 & \frac{\theta}{2} & 0 & \frac{\theta}{2}
+\end{array}\right)\left(\begin{array}{cccc}
+s^{2} & \sigma & AB & AD\\
+\sigma & S^{2} & BC & CD\\
+AB & BC & s^{2} & \sigma\\
+AD & CD & \sigma & S^{2}
+\end{array}\right)\left(\begin{array}{cc}
+\frac{\tau}{2} & 0\\
+0 & \frac{\theta}{2}\\
+\frac{\tau}{2} & 0\\
+0 & \frac{\theta}{2}
+\end{array}\right)\\
+ & =\left(\begin{array}{cc}
+\frac{\tau^{2}}{2}(s^{2}+AB)+1 & \frac{\tau\theta}{4}(2\sigma+AD+BC)\\
+\frac{\tau\theta}{4}(2\sigma+AD+BC) & \frac{\theta^{2}}{2}(S^{2}+CD)+1
+\end{array}\right).
+\end{align*}
+
+Thus $x_{1}^{\prime}$ and $x_{2}^{\prime}$ will be positively correlated
+if $2\sigma+AD+BC>0$. This is always positive if $\sigma>0$; if
+$\sigma=0$ it reduces to
+\[
+\frac{(a+b-2ab)s^{2}S^{2}}{\sigma_{I}\sigma_{J}}
+\]
+which is positive unless $a=b=0$ or $a=b=1$.
+
+\end{proof}
+
 \begin{proof}[Proof of Claim \ref{prop-gamma}]
 Write
 \begin{align*}

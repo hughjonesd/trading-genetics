@@ -441,15 +441,19 @@ also the correlation between genetics and wealth.
 
 We consider three extensions. First, the weight of $x_1$ and
 $x_2$ might differ for men and women, for example if SES is more important for
-men's attractiveness. Suppose that men's and women's attractiveness are given by
+men's attractiveness. 
+
+\begin{claim}\label{claim-men-women-different}
+Suppose that men's and women's attractiveness are given by
 \begin{align*}
 i(x) &= ax_1 + (1-a)x_2, \\
 j(y) &= by_1 + (1-b)y_2
 \end{align*}
-respectively. Then Claims \ref{claim-E-children-SGAM} and 
-\ref{claim-corr-children-SGAM} continue to hold.
+respectively, with $0\le a \le 1$, $0 \le b \le 1$. Then children's characteristics $x^\prime_1$ and $x^\prime_2$  
+will be positively correlated unless $a = b = 0$ or $a = b = 1$.
+\end{claim}
 
-XXX put proof in appendix
+
 
 Second, in modern meritocracies, people's adult SES depends not just 
 on their parents' social status and on chance, but also on their own effort and
