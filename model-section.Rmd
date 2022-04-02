@@ -6,6 +6,7 @@ output:
     latex_engine: xelatex
     number_sections: false
     keep_tex: true
+bibliography: bibliography.bib
 header-includes:
   - \usepackage{subfig}
   - \usepackage{setspace}\doublespacing
@@ -46,11 +47,12 @@ People's attractiveness is given by
 \[
 i\left( x\right) =ax_{1}+\left( 1-a\right) x_{2}
 \]
-where $a \in [0, 1]$ is a parameter reflecting the relative importance of genetics 
-to wealth in the marriage market.[^a-interpretation] If $a = 0$, marriage markets are highly
-inegalitarian, such that only SES matters. If $a = 1$, marriage markets are egalitarian
-and only genetics matter. We expect realistic societies to fall between these extremes.
-Attractiveness $i$ is distributed $N(0,\sigma_{I}^{2})$, where
+where $a \in [0, 1]$ is a parameter reflecting the relative importance of
+genetics to wealth in the marriage market.[^a-interpretation] If $a = 0$,
+marriage markets are highly inegalitarian, such that only SES matters. If $a =
+1$, marriage markets are egalitarian and only genetics matter. We expect
+realistic societies to fall between these extremes. Attractiveness $i$ is
+distributed $N(0,\sigma_{I}^{2})$, where
 \[
 \sigma _{I}^{2}=a^{2}s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right)\sigma.
 \]
@@ -62,14 +64,14 @@ $a$ being large.
 
 People form matches with transferable utility, where the surplus for a match
 between $x$ and $y$ is $S(i(x), i(y))$ such that 
-$\partial^{2}S/\partial i\partial j > 0$, i.e. $S$ is supermodular. As a result there
-is positive assortative mating on attractiveness: $x$ matches with $y$
-only if $i(x_{1},x_{2}) = i(y_{1},y_{2})$. We describe this as
-social-genetic assortative mating (SGAM).
+$\partial^{2}S/\partial i\partial j > 0$, i.e. $S$ is supermodular. As a result
+there is positive assortative mating on attractiveness: $x$ matches with $y$
+only if $i(x_{1},x_{2}) = i(y_{1},y_{2})$. We describe this as social-genetic
+assortative mating (SGAM).
 
-We also consider random matching as a benchmark to compare against SGAM.
-Under random matching, the distribution of couples' characteristics is 
-normal with mean 0 and covariance matrix
+We also consider random matching as a benchmark to compare against SGAM. Under
+random matching, the distribution of couples' characteristics is normal with
+mean 0 and covariance matrix
 \[
 \mathbb{C}\left( 
 \begin{array}{c}
@@ -132,15 +134,15 @@ mean $0$ and variance $2S^2$. Under SGAM, the variance is:
 \[
 V\left( x_{2}+y_{2}\right) =2S^{2}+2C^{2}>2S^{2} 
 \]
-Note, however, that 
+Note, however, that because $C^2 \le S^2$ (Appendix Lemma \ref{C2})
 \[
 V\left( x_{2}+y_{2}\right) \leq 4S^{2} 
 \]
-which would be reached if $a=0$, i.e. if people only matched on wealth. Thus,
+which would be reached if $a=0$, i.e. if people only matched on wealth, or if
+the correlation between genetics and wealth were perfect. Thus,
 SGAM increases cross-sectional inequality but less so than pure matching on 
 wealth. 
 
-XXX is the above true only if $\sigma=0$?
 
 ## Children
 
@@ -156,10 +158,10 @@ where $x$ and $y$ are the child's parents, and $\varepsilon$ and $\eta$ are
 normal random shocks with mean $0$ and variance $1$.
 
 Parameter $\tau \approx 1$ reflects genetic inheritance. Under standard biological
-assumptions $\tau=1$ and characteristics show no regression to the mean. In our
+assumptions $\tau = 1$ and characteristics show no regression to the mean. In our
 model this leads the variance of $x_1$ to grow without limit over generations.
 In reality, we expect $\tau < 1$ because very extreme characteristics are
-selected against, a process known as stabilizing selection.
+selected against, a process known as stabilizing selection [@sanjak2018evidence].
 
 Parameter $\theta \in [0, 1]$ reflects inheritance of SES. Unlike $\tau$ it may vary
 between societies. $\theta$ is high when there is high intergenerational
@@ -237,14 +239,12 @@ uncorrelated for the parents), then the expected genetic endowment of the
 children does not depend on parental SES.
 \end{claim}
 
-
-
 \begin{claim}\label{claim-E-children-SGAM}
 Under SGAM, if $\sigma = 0$ (i.e. genetics and
 SES are uncorrelated for the parents), then the expected genetic endowment of
 the children is linearly increasing in parental SES. The relationship
-increases with the ratio of genetic variance to SES variance, is zero for $a = 0$ or $a = 1$, 
-and is highest for intermediate values of $a$.
+increases with the ratio of genetic variance to SES variance, is zero for 
+$a = 0$ or $a = 1$, and is highest for intermediate values of $a$.
 \end{claim}
 
 
@@ -272,8 +272,8 @@ characteristics is larger or smaller than the asymptotic one, derived below.
 Figure \ref{fig:pic-intuition} shows the intuition behind the model. Parents 
 match on downward-sloping attractiveness isoquants given by $a x_1 + (1-a) x_2 = u$.
 Their children are in between them on both dimensions. This compresses the
-distribution along the attractiveness isoquants, leading to a positive correlation
-between the dimensions.
+distribution along the attractiveness isoquants, which leads to a 
+positive correlation between genetics and SES.
 
 ```{r pic-intuition, fig.subcap = c("Parents", "Children"), fig.cap = "Theory. The shaded area is the population distribution. Parents (solid circles) match along attractiveness isoquants (dotted lines). Children (hollow circles) are between them. As a result, in the children's generation, the distribution is squeezed along attractiveness isoquants.", fig.ncol = 2, fig.width = 2.75, fig.height = 2.4, fig.align='center', echo = FALSE}
 setup_plot <- function () {
@@ -361,15 +361,15 @@ continue to hold.
 Under random matching, the dynamics converges to a stationary distribution that 
 is normal with mean zero and covariance matrix 
 \[
-C=\left( 
+\mathbb{C}=\left( 
 \begin{array}{cc}
 \frac{2}{2-\tau ^{2}} & 0 \\ 
 0 & \frac{2}{2-\theta ^{2}}%
 \end{array}%
 \right) \allowbreak 
 \]%
-In particular, the traits are asymptotically uncorrelated and children's expected genetic
-endowment is independent of parents' wealth.
+In particular, the traits are asymptotically uncorrelated and children's
+expected genetic endowment is independent of parents' wealth.
 
 \end{proposition}
 
@@ -385,12 +385,11 @@ C=\left(
 \end{array}%
 \right) 
 \]
+For $\theta = 1$, the dynamics diverge and $S^{2}$ goes to $+\infty$; for 
+$\tau = 1$, the dynamics diverges and $s^{2}$ goes to $+\infty$.
 
-For $\theta =1$, the dynamics diverge and $S^{2}$ goes to $+\infty $; for $%
-\tau =1$, the dynamics diverges and $s^{2}$ goes to $+\infty $.
-
-XXX what can we say about $\bar{\sigma}$ e.g. if $0 < a < 1$. Is it positive? Increasing in
-$\theta$? Increasing then decreasing in $a$?
+XXX what can we say about $\bar{\sigma}$ e.g. if $0 < a < 1$. Is it positive?
+Increasing in $\theta$? Increasing then decreasing in $a$?
 \end{proposition}
 
 
@@ -409,12 +408,12 @@ XXX double check that $v+w$ belongs on line 2 (you added it)
 
 ### Numerical application
 
-In what follows, we impose
-\[
-\tau = 0.95.
-\]
-The three components of the asymptotic covariance matrix 
-($s^{2},S^{2},\sigma$) are given in the following graph:
+In what follows, we impose 
+\[ 
+\tau = 0.95. 
+\] The three components of the
+asymptotic covariance matrix ($s^{2},S^{2},\sigma$) are given in the following
+graph:
 
 (XXX omitted)
 
@@ -426,8 +425,8 @@ a,\theta ,\tau \right) }{\sqrt{\psi \left( a,\theta ,\tau \right) }}
 
 (XXX graph omitted)
 
-and the conditional expectation
-of genetics given SES is proportional to SES, coefficient:
+and the conditional expectation of genetics given SES is proportional to SES,
+coefficient:
 
 (XXX graph omitted)
 
@@ -444,60 +443,65 @@ $x_2$ might differ for men and women, for example if SES is more important for
 men's attractiveness. 
 
 \begin{claim}\label{claim-men-women-different}
-Suppose that men's and women's attractiveness are given by
+Suppose that men's and women's attractiveness is given by
 \begin{align*}
 i(x) &= ax_1 + (1-a)x_2, \\
 j(y) &= by_1 + (1-b)y_2
 \end{align*}
-respectively, with $0\le a \le 1$, $0 \le b \le 1$. Then children's characteristics $x^\prime_1$ and $x^\prime_2$  
-will be positively correlated unless $a = b = 0$ or $a = b = 1$.
+respectively, with $0\le a \le 1$, $0 \le b \le 1$. Then children's 
+characteristics $x^\prime_1$ and $x^\prime_2$ will be positively correlated 
+unless $a = b = 0$ or $a = b = 1$. The correlation is increasing in $\theta$.
+
 \end{claim}
-
-
 
 Second, in modern meritocracies, people's adult SES depends not just 
 on their parents' social status and on chance, but also on their own effort and
 skills, which might be related to their genetics. So, let
 \begin{align}
-x^\prime_2 &= \gamma x^\prime_1 + \theta\frac{x_{2}+y_{2}}{2}+\eta   \nonumber \\
- &= \gamma \tau \left( \frac{x_{1}+y_{1}}{2} + \varepsilon \right) +
-\theta \frac{x_{2}+y_{2}}{2} + \eta \label{eqn-gamma}
+x^\prime_1 &= \tau \frac{x_{1} + y_{1}}{2} + \varepsilon   \nonumber \\
+x^\prime_2 &= \gamma x^\prime_1 + \theta \frac{x_{2}+y_{2}}{2}+\eta \label{eqn-gamma}
 \end{align}
 where $\gamma > 0$ represents the effect of own genetics on own SES. Not
 surprisingly, the basic result continues to hold:
 
-\begin{claim}\label{prop-gamma}
+\begin{proposition}\label{prop-gamma}
 Under SGAM and equation \eqref{eqn-gamma}, if genetics and SES are 
 uncorrelated for the parents, then they
 are positively correlated for the children so long as $0 < a < 1$ or
-$\gamma > 0$.
-\end{claim}
+$\gamma > 0$. Also, the correlation between parents' wealth and
+children's wealth exceeds $\theta$ so long as $\gamma > 0$ and either
+$0 < a < 1$ or $\sigma > 0$.
+\end{proposition}
 
+Surprisingly, in this case, the children's correlation is not always increasing
+in $\theta$. (XXX add more?)
 
-Third, we consider non-normal distributions of $x_1$ and $x_2$, and
-non-linear attractiveness functions. Suppose
-\begin{equation} i(x) = f(ax_1, (1-a)x_2) \label{non-linear-f} \end{equation}
+Third, we consider non-normal distributions of $x_1$ and $x_2$, non-normal
+shocks $\varepsilon$ and $\eta$, and non-linear attractiveness functions. Suppose
+\begin{equation}\label{non-linear-f} 
+i(x) = f(ax_1, (1-a)x_2) 
+\end{equation}
 with $f$ strictly increasing in both its arguments. Our sole condition on the
 distribution of $x$ is that a positive measure of the population has
 attractiveness $i(x) = i$ where the distribution of $(x_1, x_2)|i$ is
 non-degenerate, i.e. not everybody with attractiveness $i$ is both genetically
 and socially identical. In particular, this allows for discrete distributions, 
-such as certain kinds of social status.
+like some kinds of social status.
 
 \begin{proposition}\label{prop-non-normal}
 Let attractiveness be given by \eqref{non-linear-f}. Let $(x_1, x_2)$ have
 any distribution such that a positive measure of the population has
 $i(x) = i$ where the conditional distribution of $(x_1, x_2)|i(x) = i$ is 
-non-degenerate. If the correlation between $x_1$ and $x_2$ is 0, then
-the correlation among children between $x^\prime_1$ and $x^\prime_2$ is
-non-negative, and strictly positive if $0 < a < 1$.
+non-degenerate. Let $\eta$ and $\varepsilon$ be mean 0 and independent of
+$x$. If genetics and SES are uncorrelated for the parents, then
+the correlation among children is non-negative, and strictly positive if $0 < a < 1$.
 \end{proposition}
 
-Other extensions are possible. We assumed that all couples have two children. If
-fertility increased with $x_1$ or $x_2$, we would expect this to reduce the
-variance of traits in the children's generation and possibly also their
-covariance. Here, marriage markets as summarized in the $a$ parameter are
-exogenous. A natural extension would be to model $a$ as an equilibrium outcome.
+Other extensions are possible. We assumed that all couples have the same number
+of children. If fertility increased with $x_1$ or $x_2$, we would expect this to
+reduce the variance of traits in the children's generation and possibly also
+their covariance. Here, matching preferences, as summarized in the $a$ parameter,
+are exogenous. It would be natural to model $a$ as an equilibrium outcome.
 For example, if parents care about their children's wealth, $a$ might decrease
 in $\theta$.
 
@@ -522,12 +526,20 @@ other characteristics which make someone a "good match", vary across societies
 and over time.
 
 Recent empirical work shows high persistence of SES over time, in particular at
-the top. XXX insert stuff about grandchild-control here.
+the top. @clark2021bell argues that this is due to unobserved genetic variation. 
+Proposition \ref{prop-gamma} shows that if genes affect own wealth directly,
+under assortative mating, the coefficient of parents' wealth on own wealth exceeds
+the "institutional" coefficient $\theta$, because parents' wealth correlates
+with parents' genetics and via that with own wealth.  Thus, regressions of
+wealth on wealth may include the effect of unobserved genetic 
+variation. This may be a confound due to pre-existing gene-SES correlation
+(if $\sigma > 0$). But under SGAM it can also be a genuine cause, since changes 
+in someone's wealth may indeed affect their spouse's genetics.
 
 The converse also holds: regressions of children's characteristics on their
 genetics alone risk overestimating the effect of genetics, by confounding it
 with the effects of correlated socio-economic status. Recent work in genetics
-has shown just this. Polygenic scores for educational attainment have smaller
+has shown this. Polygenic scores for educational attainment have smaller
 effects in between-sibling regressions, where between-family variation in SES is
 partialled out and where genes are guaranteed to be randomly allocated, than in
 regressions which pool the whole sample [@howe2021within]. Parents' genetic

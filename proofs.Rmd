@@ -60,7 +60,7 @@ x_{2}%
 Note that the means are still zero, but the covariance of $(x_1,u)$ is:
 
 \begin{eqnarray*}
-C\left( 
+\mathbb{C}\left( 
 \begin{array}{c}
 x_{1} \\ 
 u
@@ -83,12 +83,22 @@ s^{2} & \sigma \\
 \right) \\
 &=&\left( 
 \begin{array}{cc}
-s^{2} &  \left( as^{2}+\sigma \left( 1-a\right) \right)/\sigma_I \\ 
-\left( as^{2}+\sigma \left( 1-a\right) \right)/\sigma_I & 1%
+s^{2} &  A \\ 
+A & 1 
 \end{array}%
 \right) \allowbreak 
 \end{eqnarray*}
-
+where
+\[
+A=\frac{
+as^{2}+\left( 1-a\right) \sigma 
+}{
+\sqrt{
+a^{2}s^{2} + (1-a)^2S^{2}
++ 2a\left(1-a\right)\sigma 
+}} = 
+\frac{as^{2}+\left( 1-a\right) \sigma }{\sigma_I}.
+\]
 
 Under SGAM, individual $\left( 
 \begin{array}{c}
@@ -113,17 +123,11 @@ t%
 \[
 \Sigma =\left( 
 \begin{array}{ccc}
-s^{2} & d^{2} & d \\ 
-d^{2} & s^{2} & d \\ 
-d & d & 1%
+s^{2} & A^{2} & A \\ 
+A^{2} & s^{2} & A \\ 
+A & A & 1
 \end{array}%
 \right) \allowbreak 
-\]
-where
-\[
-d=\frac{as^{2}+\left( 1-a\right) \sigma }{\sqrt{S^{2}\left( a-1\right)
-^{2}+a^{2}s^{2}-2a\sigma \left( a-1\right) }} = 
-\frac{as^{2}+\left( 1-a\right) \sigma }{\sigma_I}
 \]
 
 Finally, we are interested in 
@@ -189,20 +193,40 @@ A &=&\frac{as^{2}+\left( 1-a\right) \sigma }{\sigma_I}\text{ \ and} \\
 C &=&\frac{a\sigma +\left( 1-a\right) S^{2}}{\sigma_I}.
 \end{eqnarray*}
 
-
-
 \end{proof}
 
+
+\begin{lemma}\label{C2}
+ $C^2 \le S^2$, with strict inequality if $a > 0$ and $\sigma < 1$.
+
+\end{lemma}
+\begin{proof}
+Write
+\begin{align*}
+C^{2}	&= \frac{
+            a^{2}\sigma^{2}+(1-a)^{2}S^{4}+2a(1-a)\sigma S^{2}
+         }{
+           a^{2}s^{2}+(1-a)^{2}S^{2}+2a(1-a)\sigma
+         } \\
+	&\le \frac{
+	    a^{2}s^{2}S^{2}+(1-a)^{2}S^{4}+2a(1-a)\sigma S^{2}
+	  }{
+	    a^{2}s^{2}+(1-a)^{2}S^{2}+2a(1-a)\sigma
+	  }
+	  \textrm{, since }\sigma/sS = Corr(x_1,x_2) \le 1 \\
+	&= S^{2}
+\end{align*}
+and observe that the inequality is strict if $a > 0$ and $\sigma < sS$.
+\end{proof}
 
 
 \begin{proof}[Proof of Claim \ref{claim-E-children-RM}]
 
-
-Under RM, the joint distribution of $\left( \frac{\tau }{2}\left(
-x_{1}+y_{1}\right) +\varepsilon ,x_{2},y_{2}\right) $ is normal with mean $%
-\left( 0,0,0\right) $ and covariance$\allowbreak $%
+Under random matching, the joint distribution of $\left( \frac{\tau }{2}\left(
+x_{1}+y_{1}\right) +\varepsilon ,x_{2},y_{2}\right) $ is normal with mean 
+$( 0,0,0)$ and covariance
 \[
-C=\left( 
+\mathbb{C}=\left( 
 \begin{array}{lcr}
 \frac{\tau ^{2}}{2}\left( s^{2}+\sigma \right) +1 & \frac{\tau }{2}\sigma  & 
 \frac{\tau }{2}\sigma  \\ 
@@ -211,7 +235,7 @@ C=\left(
 \end{array}%
 \right) 
 \]%
-Therefore%
+Using the matrix formula for the conditional mean of normal variables,
 \begin{eqnarray*}
 \mathbb{E}\left[ \frac{\tau }{2}\left( x_{1}+y_{1}\right) +\varepsilon \mid
 x_{2}=v,y_{2}=w\right]  &=&\left( 
@@ -297,7 +321,7 @@ The coefficient $\frac{a\left( 1-a\right) \lambda }{a^{2}\lambda +2\left(
 
 \begin{proof}[Proof of Claim \ref{claim-corr-children-RM}]
 
-Under RM, the covariance matrix for children's characteristics is:%
+Under random matching, the covariance matrix for children's characteristics is:%
 \begin{eqnarray*}
 \mathbb{C} &=&\left( 
 \begin{array}{cc}
@@ -455,7 +479,8 @@ The last equation gives%
 \left( a\mu +\left( 1-a\right) \right) \left( a\lambda +\left( 1-a\right)
 \mu \right) }{a^{2}\lambda +\left( 1-a\right) ^{2}+2a\left( 1-a\right) \mu }
 \]%
-which is linear in $\lambda $; therefore%
+
+which is linear in $\lambda$; therefore%
 \begin{equation}
 \lambda =\frac{\mu \left( \frac{1}{2}\theta \tau -1\right) \left( \left(
 a-1\right) ^{2}-2a\mu \left( a-1\right) \right) -\frac{1}{2}\theta \tau \mu
@@ -583,9 +608,9 @@ s^{2} & \sigma\\
 0 & (1-a)/\sigma_{I}
 \end{array}\right)\\
  & =\left(\begin{array}{cc}
-s^{2} & \frac{as^{2}+(1-a)\sigma}{\sigma_{I}}\\
-\frac{as^{2}+(1-a)\sigma}{\sigma_{I}} & 1
-\end{array}\right),
+s^{2} & A \\
+A & 1
+\end{array}\right), \textrm{ where } A=\frac{as^{2}+(1-a)\sigma}{\sigma_{I}};
 \end{align*}
 
 similarly
@@ -594,9 +619,9 @@ similarly
 y_{1}\\
 v
 \end{array}\right)=\left(\begin{array}{cc}
-s^{2} & \frac{bs^{2}+(1-b)\sigma}{\sigma_{J}}\\
-\frac{bs^{2}+(1-b)\sigma}{\sigma_{J}} & 1
-\end{array}\right).
+s^{2} & B \\
+B & 1
+\end{array}\right), \textrm{ where } B=\frac{bs^{2}+(1-b)\sigma}{\sigma_{J}}.
 \]
 
 Under SGAM, couples have characteristics $\left(\begin{array}{c}
@@ -615,13 +640,9 @@ s^{2} & AB & A\\
 AB & s^{2} & B\\
 A & B & 1
 \end{array}\right)
-\]
-where
-\[
-A=\frac{as^{2}+(1-a)\sigma}{\sigma_{I}};B=\frac{bs^{2}+(1-b)\sigma}{\sigma_{J}}.
+% XXX do I need to expand Pierre's "just note" proof in Computations5short?
 \]
 
-Proof. XXX expand Pierre's note in Computations5short.
 
 Lastly, we calculate the covariance matrix of couples' original characteristics.
 Since
@@ -701,16 +722,25 @@ AD & CD & \sigma & S^{2}
 \end{align*}
 
 Thus $x_{1}^{\prime}$ and $x_{2}^{\prime}$ will be positively correlated
-if $2\sigma+AD+BC>0$. This is always positive if $\sigma>0$; if
-$\sigma=0$ it reduces to
+if $2\sigma+AD+BC>0$. This is always positive if $\sigma>0$; if $\sigma=0$ 
+it reduces to
 \[
 \frac{(a+b-2ab)s^{2}S^{2}}{\sigma_{I}\sigma_{J}}
 \]
-which is positive unless $a=b=0$ or $a=b=1$.
-
+which is positive unless $a=b=0$ or $a=b=1$. The correlation is
+\[
+\frac{
+\frac{\tau\theta}{4}(2\sigma+AD+BC)
+}{
+\sqrt{\frac{\tau^{2}}{2}(s^{2}+AB)+1}
+\sqrt{\frac{\theta^{2}}{2}(S^{2}+CD)+1}
+}
+\]
+and taking the derivative shows it is increasing in $\theta$, as in the proof 
+for Claim \ref{claim-corr-children-SGAM}.
 \end{proof}
 
-\begin{proof}[Proof of Claim \ref{prop-gamma}]
+\begin{proof}[Proof of Proposition \ref{prop-gamma}]
 Write
 \begin{align*}
 x_{1}^{\prime}	&=\tau\frac{x_{1}+y_{1}}{2}+\varepsilon \\
@@ -760,26 +790,97 @@ AC & C^{2} & \sigma & S^{2}
 \end{array}\right)
 \end{align*}
 
-The claims in the proof now follow from the covariance:
+The first claim in the proof follows from the covariance:
 \[
 \frac{\gamma\tau^{2}}{2}(s^{2}+A^{2})+\frac{\tau\theta}{2}(\sigma+AC)+\gamma
 \]
 This is positive if any of $\sigma > 0$, $\gamma > 0$,  or $AC > 0$ 
 (which holds if $0 < a < 1$ when $\sigma = 0$).
 
+Now we can calculate
+\[
+\mathbb{E}[x_{2}^{\prime}|x_{2}+y_{2}]
+\]
+
+using
+\[
+\left(\begin{array}{c}
+\gamma\tau\frac{x_{1}+y_{1}}{2}+\theta\frac{x_{2}+y_{2}}{2}\\
+x_{2}\\
+y_{2}
+\end{array}\right)=\left(\begin{array}{cccc}
+\frac{\gamma\tau}{2}0 & \frac{\theta}{2}1 & \frac{\gamma\tau}{2}0 & \frac{\theta}{2}0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1
+\end{array}\right)\left(\begin{array}{c}
+x_{1}\\
+x_{2}\\
+y_{1}\\
+y_{2}
+\end{array}\right)
+\]
+to give
+\begin{align*}
+\mathbb{C}\left(\begin{array}{c}
+x_{2}^{\prime}\\
+x_{2}\\
+y_{2}
+\end{array}\right) & =\left(\begin{array}{cccc}
+\frac{\gamma\tau}{2} & \frac{\theta}{2} & \frac{\gamma\tau}{2} & \frac{\theta}{2}\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1
+\end{array}\right)\left(\begin{array}{cccc}
+s^{2} & \sigma & A^{2} & AC\\
+\sigma & S^{2} & AC & C^{2}\\
+A^{2} & AC & s^{2} & \sigma\\
+AC & C^{2} & \sigma & S^{2}
+\end{array}\right)\left(\begin{array}{ccc}
+\frac{\gamma\tau}{2} & 0 & 0\\
+\frac{\theta}{2} & 1 & 0\\
+\frac{\gamma\tau}{2} & 0 & 0\\
+\frac{\theta}{2} & 0 & 1
+\end{array}\right)+\left(\begin{array}{ccc}
+1+\gamma^{2} & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right)\\
+ & =\left(\begin{array}{ccc}
+\ldots & \frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2}) & \frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2})\\
+\frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2}) & S^{2} & C^{2}\\
+\frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2}) & C^{2} & S^{2}
+\end{array}\right).
+\end{align*}
+
+Next
+\begin{align*}
+\mathbb{E}[x_{2}^{\prime}|x_{2},y_{2}] & =\left(\begin{array}{cc}
+\frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2}) & \frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2})\end{array}\right)\left(\begin{array}{cc}
+S^{2} & C^{2}\\
+C^{2} & S^{2}
+\end{array}\right)^{-1}\left(\begin{array}{c}
+x_{2}\\
+y_{2}
+\end{array}\right)\\
+ & =\left(\gamma\tau\frac{\sigma+AC}{S^{2}+C^{2}}+\theta\right)\frac{x_{2}+y_{2}}{2}
+\end{align*}
+
+The coefficient on parents' wealth is thus higher than $\theta$,
+so long as $0<a<1$ or $\sigma>0$.
 
 \end{proof}
 
 \begin{proof}[Proof of Proposition \ref{prop-non-normal}]
-The correlation is signed by the covariance. Write $C$ for the set of couples
-in the parents' generation with typical member $c = (x,y)$. Without loss of generality
+The correlation is signed by the covariance. Write $K$ for the set of couples
+in the parents' generation with typical member $k = (x,y)$. Without loss of generality
 let $x_1 \ge y_1$. Then, since the iso-attractiveness curves defined by 
-$f$ are downward-sloping, $x_2 \le y_2$.
+$f$ are downward-sloping, $x_2 \le y_2$. (If $a = 1$ then $x_1 = y_1$; pick $x$ so 
+that $x_2 \le y_2$.) Also, for $a \in (0,1)$, if
+$x_1 > y_1$ then $x_2 < y_2$.
 
 Since $Ex = Ey = 0$, the covariance among the parents' generation is
 
 \[
-\int_C (x_1x_2 + y_1y_2)/2 \ dc
+\int_K (x_1x_2 + y_1y_2)/2 \ dk
 \]
 
 Write
@@ -802,7 +903,7 @@ Cov(\tau x^*_1, \theta x^*_2) = \tau\theta Cov(x^*_1, x^*_2) > 0
 
 Write
 \[
-Cov(x^*_1, x^*_2) = \int_C x^*_1 x^*_2 \ dc
+Cov(x^*_1, x^*_2) = \int_K x^*_1 x^*_2 \ dk
 \]
 using that $Ex^*_1 = Ex^*_2 = 0$. 
 
@@ -827,7 +928,7 @@ and if $a \in (0,1)$, this is strictly less than $x^*_1x^*_2$ for a set of
 positive measure. Plugging this into the integral gives
 
 \[
-Cov(x_1,x_2) \le Cov(x^*_1, x^*_2) = \int_C x^*_1 x^*_2 \ dc
+Cov(x_1,x_2) \le Cov(x^*_1, x^*_2) = \int_K x^*_1 x^*_2 \ dk
 \]
 with strict inequality if $a \in (0,1)$. Since the parental covariance was 0
 by assumption, this completes the proof.
