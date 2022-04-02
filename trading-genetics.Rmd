@@ -45,6 +45,7 @@ header-includes:
   - \usepackage{amsmath}
   - \usepackage{amsthm}
   - \usepackage{placeins}
+  - \usepackage{etoc}
   - \newtheorem{prop}{Proposition}
   - \newtheorem{claim}{Claim}
 ---
@@ -1662,6 +1663,9 @@ geneticists.
 \newpage
 
 # Appendix
+
+\localtableofcontents
+\clearpage
 
 ## Proofs
 
