@@ -9,21 +9,23 @@ author: |
   David Hugh-Jones\thanks{Corresponding author. School of Economics, 
   University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}
 abstract: |
-  If social status and genetic variants are both assets in marriage markets,
-  then the two will become associated in spouse pairs, and will be passed on to 
-  subsequent generations together. This process provides a 
-  new explanation for the surprising persistence of inequality across generations,
-  and for observed genetic differences across the distribution of socio-economic 
-  status. We model Social-Genetic Assortative Mating (SGAM) and test for its 
-  existence in a large genetically-informed survey. We compare spouses of 
-  individuals with different birth order, which is known to affect socio-economic 
-  status and which is exogenous to own genetic endowments among siblings. Spouses of 
-  earlier-born siblings have more genetic variants that predict educational 
-  attainment. We provide evidence that this effect is mediated by individuals' 
-  own educational attainment and income. Thus, environmental shocks to 
-  socio-economic status are reflected in the DNA of subsequent generations. 
-  SGAM reveals a new aspect of the inheritance of inequality in contemporary and
-  historical societies. 
+  If socio-economic status (SES) and genetic variants are both assets in marriage 
+  markets, then the two will become associated in spouse pairs, and will be 
+  passed on together to future generations. This process provides a new 
+  explanation for the surprising persistence of inequality across generations,
+  and for the "genes-SES gradient" (the genetic differences we observe between 
+  high- and low-income people). We model Social-Genetic Assortative Mating 
+  (SGAM) and test for its existence in a large genetically-informed survey. We 
+  compare spouses of individuals with different birth order, which is known to 
+  affect socio-economic status and which is exogenous to own genetic endowments 
+  among siblings. Spouses of earlier-born siblings have more genetic variants 
+  that predict educational attainment. We provide evidence that this effect is 
+  mediated by individuals' own educational attainment and income. Thus, 
+  environmental shocks to socio-economic status are reflected in the DNA of 
+  subsequent generations. Our work uncovers a new channel by which economic 
+  institutions can affect long-run inequality; suggests that genes-SES
+  gradients may be historically widespread; and shows that genetic variation
+  is endogenous to social institutions.
 date: "`r Sys.Date()`"
 output: 
   bookdown::pdf_document2:
@@ -281,20 +283,20 @@ Under this mechanism, shocks to an individual’s social status may alter the id
 # Introduction
 
 Over the long run, inequality is surprisingly persistent across generations
-[@clark2015intergenerational; @solon2018we].
-Intergenerational mobility is correlated with cross-sectional inequality
-[@becker2018theory; @krueger2012rise], which has risen dramatically in
-high-income countries, at the same time as 
-intergenerational absolute mobility has declined [@western2008inequality; @chetty2017fading].[^stats] Assortative mating in marriage markets can increase the variance of human 
-capital and income across families [@breen2011educational; @greenwood2014marry],
-and increasing returns to human capital may explain rising inequality [e.g. @kaplan2013s; @becker2018theory]. It
-follows that how families are formed, and how they transmit traits and assets to
-their offspring, are critical for understanding inequality. These processes have
-been studied from both socio-economic and genetic angles. While educational
-homogamy is well established, genetic assortative mating has been demonstrated
-only recently [@hugh2016assortative; @robinson2017genetic]. Similarly, wealthy 
-families pass on advantages to their children through both genetic inheritance 
-and environmental influence [@Rimfeld_2018; @bjorklund2006origins].[^review]
+[@clark2015intergenerational; @solon2018we]. Intergenerational mobility is
+correlated with cross-sectional inequality [@becker2018theory;
+@krueger2012rise], which has risen dramatically in high-income countries, at the
+same time as intergenerational absolute mobility has declined
+[@western2008inequality; @chetty2017fading].[^stats] Assortative mating in
+marriage markets can increase the inequality of human capital and income
+across families [@breen2011educational; @greenwood2014marry]. It follows that 
+how families are formed, and transmit traits and assets to their offspring, 
+are critical for understanding inequality. These processes have been studied 
+from both socio-economic and genetic angles. While educational homogamy is 
+well established, genetic assortative mating has been demonstrated only recently 
+[@hugh2016assortative;@robinson2017genetic]. Similarly, wealthy families pass on 
+advantages to their children through both genetic inheritance and environmental 
+influence [@Rimfeld_2018; @bjorklund2006origins].[^review]
 
 [^stats]: Though relative mobility has been stable [@chetty2014united]. In the 
 United Kingdom the Gini coefficient has increased from 26% to 34.6% between 1977 
@@ -303,10 +305,9 @@ during 1962-2013.
 
 [^review]: See @sacerdote2011nature for a review of the behavioural genetics and
 economics literatures on the nature vs nurture debate; for a broader review of
-the studies on intergenerational transmission of income see @black2010recent.
+intergenerational transmission of income see @black2010recent.
 
-
-This paper examines a plausible, but under-analysed, aspect of the spouse
+This paper examines a plausible, not previously analysed aspect of the spouse
 matching process: that both social status and genetics contribute to a person’s
 attractiveness in marriage markets, and as a result, genetics and inherited
 social status may become associated in subsequent generations.[^status-SES] For
@@ -330,78 +331,74 @@ children.
   certain social institutions (bank deposits, title deeds et cetera).
   Other examples include caste, class, income, and educational
   qualifications. *Socio-economic status* (SES) is a specific type of
-  social status which exists in economically stratified societies, and
-  which refers to a combination of educational attainment,
-  occupational class, income and wealth [e.g. @white1982relation].
+  social status which exists in economically stratified societies, covering
+  variables such as educational attainment, occupational class, income and 
+  wealth [e.g. @white1982relation].
 
 
 Below, we first outline a theoretical framework where attractiveness in the
 marriage market is a function of both socio-economic status (SES) and genetic
 variants. We show that social-genetic assortative mating in one generation
 increases the correlation between SES and genetic variants in the offspring
-generation. This result provides a new explanation of the association between
-genetics and socio-economic status [@belsky2018genetic; @Rimfeld_2018;
-@bjorklund2006origins]. While existing explanations have focused on meritocratic
-social mobility (genes cause SES), under SGAM causality goes both ways, from
-genes to SES and vice versa.
+generation. This result provides a new explanation of the *genes-SES gradient*,
+that is, the fact that SES is biologically heritable and associated with certain
+genetic variants [@belsky2018genetic; @Rimfeld_2018;@bjorklund2006origins]. The 
+dominant existing explanation for the gradient is meritocratic social mobility: 
+if a genetic variant predicts success in the labour market, then it will 
+become associated with high SES and will be inherited in high-SES families.
+Under meritocracy, genes causes SES. On the other hand, under SGAM, 
+causality goes both ways, from genes to SES and vice versa.
 
-Next, using novel data on matched spouses born between 1935 and 1970 from the UK
-Biobank, we empirically test the hypothesis that an individual’s higher social
+Next, using data on matched spouses born between 1935 and 1970 from UK Biobank 
+(a large genetically-informed survey), we test the hypothesis that an individual’s higher social
 status attracts spouses with higher genetic potential for educational
 attainment. Our genetic measure, the Polygenic Score for Educational Attainment
 (PSEA), derives from large-scale genome-wide association studies [@lee2018gene]
-and is causally related to educational attainment itself, as well as to
+and is a cause of educational attainment itself, as well as of
 intelligence and labour market outcomes. It is already known that humans mate
 assortatively on PSEA, which makes it a likely candidate for detecting SGAM
-[@hugh2016assortative; @robinson2017genetic]. We depart from the assumption that
-both socio-economic status and genetic traits can enhance the attractiveness of
-potential spouses, and are substitutable. This assumption has received support
-in recent economic studies of marriage markets, which suggest that people trade
-off physical characteristics for higher earnings [e.g. @chiappori2012fatter] or
-matching social status [@banerjee2013marry].
+[@hugh2016assortative; @robinson2017genetic]. 
 
-The endogeneity of social status is the main challenge in identifying the causal
-effect of social status on the spouse’s genetic endowment. For instance,
+The endogeneity of socio-economic status is the main challenge in identifying
+the causal effect of SES on the spouse’s genetic endowment. For instance,
 individuals with high education qualifications tend to also have high
 educational attainment genes, and as mentioned above, they may take partners
-based on genomic similarity. In order to isolate the causal link from own
-socio-economic status to partner genes, we use the “accident of birth”
-as a source of exogenous variation in socio-economics status. Specifically, we
-use the birth order of individuals in the sample as a “treatment” which affects
-their partner choice through a range of mechanisms, of which the most salient
-one is own socio-economic status. It is well documented that earlier-born
+based on genomic similarity. Indeed, recent studies show strong assortative
+mating on polygenic scores for educational attainment, much more than we would
+expect if spouses matched only on (our observed measures of) actual educational
+attainment [@okbay2022polygenic]. In order to isolate the causal link from own
+SES to partner genes, we use the “accident of birth” as a shock to SES which is
+independent of own genetics. Specifically, we use an individual's birth order as a
+“treatment” which affects their partner choice through a range of mechanisms,
+including by affecting their own SES. It is well documented that earlier-born
 children enjoy higher parental investment and have better life outcomes,
-including measures of socio-economic status such as educational attainment and
-occupational status [@black2011older; @booth2009birth; @Lindahl_2008]. At the
-same time, birth order is independent of siblings’ genetic endowments, a fact
-guaranteed by the biological mechanism involved (the “lottery of meiosis”).
+including measures of SES such as educational attainment and occupational status
+[@black2011older;@booth2009birth;@Lindahl_2008]. At the same time, the facts of
+biology, in particular the so-called "lottery of meiosis", guarantee that
+siblings' birth order is independent of their genetic endowments.
 
-While birth order is plausibly independent of siblings’ genes, it cannot be used
-as a valid instrument for socio-economic status, because it may affect partner
-choice through alternative mechanisms. Hence, we steer away from a two-stage
-procedure and instead rely on a mediation analysis similar to
-@heckman2013understanding, who decompose the average treatment effect into
-effects of measured and unmeasured consequences of treatment. Specifically, we
-estimate a reduced-form model with spouse genes associated with educational
-attainment as the dependent variable, and own birth order as the main
-independent variable. We then estimate a model which also includes measures of
-own socio-economic status. In the latter model, socio-economic status can be
-interpreted, under certain assumptions, as a mediator of the effect of birth
-order on spouse genetics. We also include controls to balance covariates across
-individuals with different birth orders in different cohorts.
+Birth order could affect partner choice both through SES, and through non-SES
+mechanisms. So, we run a mediation analysis similar to
+@heckman2013understanding, decomposing the treatment effect into effects of
+measured and unmeasured mediating variables. Specifically, we estimate a
+reduced-form model with spouse polygenic scores for educational attainment
+(PSEA) as the dependent variable, and own birth order as the main independent
+variable. We then estimate a model which also includes measures of own
+socio-economic status, including university attendance and a measure of income.
+Under certain assumptions, these variables can be interpreted as mediating the
+effect of birth order on spouse genetics.
 
-We find that later-born children have spouses with significantly lower 
-polygenic scores for educational attainment in the reduced-form regressions. When
-we include university attendance as a measure of socio-economic status, birth
-order is no longer significant, while university attendance increases the
-spouse’s genetic endowment at 0.1% significance. A similar pattern holds
-when we proxy socio-economic status with a measure of income, although the
-sample is reduced. Thus, SES appears to mediate the effect of birth order on 
-spouse genetics. The results are robust to the inclusion of several own
-phenotype traits and a rich set of own genetic traits.
+We find that later-born children have spouses with significantly lower PSEA in
+the reduced-form regressions. When we include university attendance and/or
+income as mediators, birth order is no longer independently significant, while
+the mediators increase the spouse’s PSEA at 0.1% significance. University 
+attendance explains an estimated 40-60% of the effect of birth order, and
+income explains about 10-13%. Thus, SES appears to mediate the effect of birth
+order on spouse genetics. The results are robust to the inclusion of several
+controls, including non-SES mediators, and a rich set of own genetic traits.
 
-Our paper contributes to several literatures. Firstly, we highlight a novel
-mechanism of assortative mating. The economics literature on matching in
+Our paper contributes to several literatures. Firstly, we study a new
+kind of assortative mating. The economics literature on matching in
 marriage markets has typically focused on educational similarities 
 [e.g. @pencavel1998assortative] or social class or caste 
 [e.g. @abramitzky2011marrying; @banerjee2013marry], but also sorting based on age,
@@ -416,13 +413,13 @@ Recent research has confirmed the long-standing conjecture that GAM takes place
 in contemporary human populations 
 [@howe2019genetic; @hugh2016assortative; @robinson2017genetic]. Geneticists have 
 also developed the concept of cross-trait assortative mating 
-[@Beauchamp_2010;@Sundet_2005], which refers to people with (genes for) e.g.
-height marrying people with (genes for) e.g. intelligence. As a result, the two
-types of variation become associated. In this paper we bring the two literatures
-together, extending the idea of cross-trait assortative mating to encompass both
-socially inherited status, and biologically inherited genetic variants. Our
-results confirm that individuals with higher social status are more likely to
-attract a spouse with higher innate cognitive ability.
+[@Beauchamp_2010;@Sundet_2005]. This happens when people with genes for e.g.
+height marrying people with genes for e.g. intelligence. As a result, the two
+types of genetic variation become associated. In this paper we bring the two
+literatures together, extending the idea of cross-trait assortative mating to
+encompass both social status, and genetic variants. Our results confirm that 
+individuals with higher social status are more likely to attract a spouse with 
+genetics for higher educational attainment.
 
 [^others]: @oreffice2010anthropometry show that height and BMI are associated 
 with spouse earnings. @dupuy2014personality find spouse matching on multiple 
@@ -440,7 +437,9 @@ wealth. We show below that SGAM could also generate these patterns. The mechanis
 again is unobserved genetic variation, but the interpretation is slightly different,
 since we view genetic endowments not an exogenous source of variation, but as
 an asset effectively "traded" in marriage markets in exchange for wealth and 
-social status.
+social status. Put another way, for Clark, in analysing the effect of parental 
+wealth on child wealth, genetics are a *confound*; for us, they may also be
+a *mediator*.
 
 SGAM also affects cross-sectional inequality, like other forms of assortative
 mating [@fernandez2001sorting]. The standard mechanism is that when couples
