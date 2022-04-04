@@ -159,7 +159,7 @@ fml_bo_psea[-1] <- lapply(fml_bo_psea[-1], update,
 # basic tidy args
 # tidy_args <- list(se = "cluster", cluster = "couple_id", conf.int = FALSE)
 tidy_args <- list(se = "hetero", conf.int = FALSE)
-my_note <- "{stars}. Standard errors: robust."
+
 ```
 
 ```{r TODO-NOTES, eval = FALSE}
@@ -426,73 +426,63 @@ with spouse earnings. @dupuy2014personality find spouse matching on multiple
 independent dimensions, including education, height, BMI and personality.
 
 
-Secondly, our findings have implications for understanding the sources of
-economic inequality and intergenerational mobility. @clark2015intergenerational 
-show using a database of surnames that long-run intergenerational persistence
-of wealth is higher than simple parent-child correlations would predict. In 
-particular, grandparents' wealth predicts grandchildren's wealth even after 
-controlling for parents' wealth. @clark2021bell argues that the data can be
-explained by an underlying process where unobserved genetic variation determines
-wealth. We show below that SGAM could also generate these patterns. The mechanism
-again is unobserved genetic variation, but the interpretation is slightly different,
-since we view genetic endowments not an exogenous source of variation, but as
-an asset effectively "traded" in marriage markets in exchange for wealth and 
-social status. Put another way, for Clark, in analysing the effect of parental 
-wealth on child wealth, genetics are a *confound*; for us, they may also be
-a *mediator*.
+Secondly, SGAM may affect economic inequality and intergenerational mobility.
+@clark2015intergenerational show using a database of surnames that long-run
+intergenerational persistence of wealth is higher than simple parent-child
+correlations would predict. @clark2021bell argues that the data can be explained
+by an underlying process where unobserved genetic variation determines wealth.
+We show below that SGAM could also generate these patterns. The mechanism again
+is unobserved genetic variation, but the interpretation is different,
+since we view genetic endowments not an exogenous source of variation, but as an
+asset effectively "traded" in marriage markets in exchange for wealth and social
+status. Put another way, for Clark, in analysing the effect of parental wealth
+on child wealth, genetics is a *confound*; under SGAM, it may also be a
+*mediator*.
 
 SGAM also affects cross-sectional inequality, like other forms of assortative
-mating [@fernandez2001sorting]. The standard mechanism is that when couples
-assort with respect to some characteristic, the resulting households will have
-more variance in that characteristic than if couples match randomly. This may
-then carry over into higher inter-individual inequality in the next generation
-[@fernandez2005love; @eika2019educational]. In particular, a likely driver of 
-the rise in inequality is the increase in market returns
-to human capital [e.g. @kaplan2013s; @eika2019educational]. In this context, the
-distribution of human capital is a key contributor to inequality, in addition to
-inherited wealth.[^wealth] Of course, one part of human capital is acquired and
-the other is genetic. From twin studies, the heritability of occupational class
-and educational attainment, i.e. the proportion of variance explained by genetic
+mating [@fernandez2001sorting; @fernandez2005love; @eika2019educational]. We
+know that there is a "genes-SES gradient": people with high and low SES have
+different genes. From twin studies, the heritability of occupational class and
+educational attainment, i.e. the proportion of variance explained by genetic
 differences between individuals, is around 50% [@Tambs_1989]. Genome-wide
-Complex Trait Analysis shows that the family socio-economic status of 
-2-year-old children can be predicted from their genes [@Trzaskowski_2014].
-Studies comparing parent-child income and education associations between
-adoptees and non-adoptees show that both post-birth environment and pre-birth
-conditions (genetics and to a lesser extent prenatal environment) contribute to
-the transmission of wealth and human capital [e.g. @bjorklund2006origins]. Thus,
-an important component of inequality is the association between SES and genetic
-variation -- the "genes-SES gradient". 
+Complex Trait Analysis shows that the family socio-economic status of 2-year-old
+children can be predicted from their genes [@Trzaskowski_2014]. Children born
+into higher-income families have more genetic variants predicting educational
+attainment [@belsky2018genetic]. Studies comparing adoptees to non-adoptees show
+that both post-birth environment and pre-birth conditions (genetics and to a
+lesser extent prenatal environment) contribute to the transmission of wealth and
+human capital [e.g. @bjorklund2006origins]. Thus, the genes-SES gradient is an
+important source of inequality. In particular, genetic variation in human
+capital is key, since a likely cause of the recent rise in inequality is the
+increase in market returns to human capital [e.g. @kaplan2013s;
+@eika2019educational].
 
-[^wealth]: See @adermon2018intergenerational, @mulder2009intergenerational.
+SGAM shows how marriage markets can lead high SES to be associated with different 
+genetic variants. Thus, it can explain the genes-SES gradient. The standard 
+explanation for the genes-SES gradient is returns to talent in labour markets, a.k.a.
+meritocracy. Parents with higher ability reap higher market returns, and they
+may then pass both higher socio-economic status and their genes to their
+children, leading to an association between the two [@belsky2018genetic]. This
+mechanism depends on the level of meritocracy in social institutions
+[@branigan2013variation; @Heath_1985]: in a society where social status was
+ascribed rather than earned, it could not take effect. Indeed, after the fall of
+communism in Estonia, the heritability of SES increased, presumably because
+post-communist society allowed higher returns to talent [@Rimfeld_2018]. By
+contrast, SGAM does not require meritocracy. Even when social status is entirely
+ascribed, it may still become associated with certain genetic variants, so long
+as their associated phenotypes (and not only status) are prized assets in
+marriage markets. Since meritocracy is historically rare, while assortative
+mating is universal, this suggests that genes-SES gradients are likely to be
+historically widespread.
 
-
-The standard explanation for the genes-SES gradient is social meritocracy.
-Parents with higher ability reap higher market returns, and they may then pass
-both higher socio-economic status and their genes to their children, leading to
-an association between the two [@belsky2018genetic]. This mechanism depends on
-the level of meritocracy in social institutions [@branigan2013variation;
-@Heath_1985]; in a society where social status was ascribed rather than earned,
-it could not take effect. Indeed, after the fall of communism in Estonia, the
-heritability of SES increased, presumably because post-communist society allowed
-higher returns to talent [@Rimfeld_2018]. 
-
-Social-genetic assortative mating provides a complementary explanation for the
-association between genes and SES, one which does not require social
-meritocracy. Even when social status is entirely ascribed, it may still become
-associated with certain genetic variants, so long as their associated phenotypes
-(and not only status) are prized assets in marriage markets. Since meritocracy
-is historically rare, while assortative mating is universal, this suggests
-that genes-SES gradients are likely to be historically widespread.
-
-SGAM may increase social inequality overall, if there are complementarities
-between genetic and environmental components of human capital. For example,
-higher-ability parents may make more productive investments in children’s human
-capital [@cunha2007technology; @cunha2010estimating; @heckman2014economics; @kong2018nature]. @becker2018theory demonstrated how inequality
-can arise in a model of intergenerational transmission of human capital where
-high income, high human capital parents are able to invest more in their
-children’s human capital than low income parents. Thus, by bringing "good genes"
-and enriched environments together, SGAM may increase inequality in the next
-generation.
+Both meritocracy and SGAM may increase social inequality overall, if there are
+complementarities between genetic and environmental components of human capital, 
+for example if higher-ability parents make more productive investments in
+children’s human capital [@cunha2007technology; @cunha2010estimating;
+@heckman2014economics; @kong2018nature], or if high-income parents are able to
+invest more in transmitting their human capital [@becker2018theory]. Thus, by
+bringing "good genes" and enriched environments together, SGAM may increase
+inequality in the next generation.
 
 Lastly, we contribute to a literature in economics that examines the
 relationship between genetic and economic variables. @benjamin2011promises is an
@@ -507,15 +497,22 @@ assumption, in economics and beyond, that genetic endowment is exogenous to
 economic characteristics. While this may be tenable in within-generation
 studies, it ceases to hold in intergenerational models. Social-genetic
 assortative mating is a causal mechanism going from socio-economic status to
-genetic traits. Furthermore, our model shows that the strength of this mechanism
-varies with the structure of the society’s marriage market. When both genes and
-status are both relevant in marriage markets, then they become associated in the
-next generation. When social status is irrelevant and only good genes matter –-
-or vice versa –- then genes and status do not become associated. Social structure
-matters for the redistribution of genes, just as for other forms of capital.
+genetic traits. 
+
+Also, our model shows that the strength of this mechanism
+is endogenous to social and economic institutions. When SES is highly transmissible
+across the generations, this has the long-run effect of increasing the association 
+between SES and genetics. If so, institutional reforms that increase 
+*intergenerational mobility*, like mass education or inheritance taxation, may 
+in the long run affect not only economic but genetic inequality. Conversely, an 
+increase in *economic meritocracy* increases the association between SES and
+genetics in the long run. This poses the problem raised first by
+@young1958rise, and more recently by @markovits2019meritocracy: meritocracy 
+may be self-limiting or even self-undermining. 
+
 
 The observations behind SGAM are not new. That status and physical
-attractiveness assort in marriage markets is a commonplace, and a perennial theme
+attractiveness assort in marriage markets is a commonplace and a perennial theme
 of literature. In the Iliad, powerful leaders fight over the beautiful
 slave-girl Bryseis. In Jane Austen’s novels, wealth, attractiveness and “virtue”
 all make a good match. @marx1844economic wrote “the effect of ugliness, its repelling
@@ -525,8 +522,9 @@ psychology [@buss1986preferences; @buss1989sex; @buss2019mate] confirms
 that attractive mate characteristics include aspects of social status (“high
 earning capacity,” “professional status”) as well as traits that are partly
 under genetic influence (“intelligent,” “tall,” “kind,” “physically
-attractive”). Despite this, we have found almost no previous work in genetics or
-economics that analyses SGAM or its consequences.[^prev-work]
+attractive”). Despite this, we have found almost no previous work in genetics,
+economics or the social sciences more broadly that analyses SGAM or its 
+consequences.[^prev-work]
 
 [^prev-work]: @halsey1958genetics showed in a two-class model that social mobility combined
 with assortative mating might increase the association between genetics and
@@ -576,10 +574,14 @@ education-linked genetics and SES, but do not consider SGAM.
 
 # Data and methods
 
-To test for the existence of SGAM, we use data from the UK Biobank, a study of about
-500,000 individuals born between 1935 and 1970. The Biobank contains
-information on respondents' genetics, derived from DNA microarrays,
-along with questionnaire data on health and social outcomes.
+In modern societies, both SGAM and meritocratic mobility may be at play. Genetic 
+variants that cause higher SES, e.g. higher income and wealth,
+will be passed down along with that status. At the same time, higher SES and "good
+genes" will assort in the marriage market. To differentiate SGAM from
+meritocracy and from pre-existing correlations between genes and SES, 
+we look for an environmental "shock" to people's SES, and examine its effects on 
+the genetics of their spouse.
+
 
 ```{r calc-validate-pairs}
 
@@ -589,8 +591,12 @@ n_both_same_kid <- prop_shared$both
 
 ```
 
-The Biobank does not contain explicit information on spouse pairs. We
-categorize respondents as pairs if they:
+
+We use data from the UK Biobank, a study of about 500,000 individuals born
+between 1935 and 1970 [@bycroft2018uk]. The Biobank contains information on respondents'
+genetics, derived from DNA microarrays, along with questionnaire data on health
+and social outcomes. The Biobank does not contain explicit information on spouse 
+pairs. We categorize respondents as pairs if they:
 
 -   had the same home postcode on at least one occasion;[^4]
 -   both reported the same homeownership/renting status, length of time
@@ -670,17 +676,17 @@ estimated_false_pos <- observed_dupe_prop/sample_prop_per_coord
 We also eliminate all pairs where either spouse appeared more than once
 in the data. This leaves a total of `r pretty(nrow(mf_pairs))` pairs. Some of
 these could be false positives, i.e. people who are not each others'
-spouse but simply live in the same postcode. So, to validate the accuracy of
-our pairs, we use genetic relationships. Some respondents in the
-Biobank sample have a child who is also in the sample, as inferred from
-genetic data. Among our spouse pairs, `r n_one_has_kid` have a genetic
+spouse but simply live in the same postcode. To validate the accuracy of
+our pairs, we use genetic relationships. Some respondents in the UK
+Biobank sample have a child (inferred from genetic data) who is also in the 
+sample. Among our spouse pairs, `r n_one_has_kid` have a genetic
 child of at least one partner in the sample. For `r n_both_same_kid` of
 these, the child is the genetic child of both partners. If this
 subsample is representative, then at least
 `r percent(n_both_same_kid/n_one_has_kid)` of the pairs who have had a
 child, have had a child together. This is a lower bound, because those
-who had a child with someone else may also have had a child with the
-presumed partner in our data. As a point of comparison, 11% of families
+who had a child with someone else may also have had a child with their partner
+who is not in the UK Biobank sample. As a point of comparison, 11% of families
 with dependent children included a stepchild in England and Wales in
 2011 [@ons2011stepfamilies].
 
@@ -730,6 +736,7 @@ stopifnot(pval_own_psea < 2e-16)
 stopifnot(pval_own_psea_within < 2e-16)
 ```
 
+
 We calculate PSEA using per-SNP summary statistics from @lee2018gene,
 re-estimated excluding UK Biobank participants.[^5] We normalize the score to
 have mean 0 and variance 1. Because polygenic scores are created from estimates
@@ -768,16 +775,25 @@ remainder is causal. Nevertheless, the causal effect remains substantial: for a
 rough comparison, the (ITT) effect on college attendance of the Moving To
 Opportunity experiment in the US was 2.5 percentage points [@chetty2016effects].
 
-Figures \@ref(fig:pic-basic-corr-uni) and \@ref(fig:pic-basic-corr-income)
-illustrate the core idea of SGAM within our pair data. The X axis shows a
-measure of one partner's socio-economic status: university attendance (Figure
-\@ref(fig:pic-basic-corr-uni)) or income (Figure
-\@ref(fig:pic-basic-corr-income)). The Y axis plots the other partner's mean
-PSEA. Both males and females who went to university had spouses with higher
-PSEA. So did males and females with higher income. Since DNA is inherited, these
-people's children will also have higher PSEA.
 
-```{r pic-basic-corr-uni, fig.subcap = c("Female PSEA by male educational attainment", "Male PSEA by female educational attainment"), fig.cap = "Spouse PSEA against own university attendance. Lines show 95\\% confidence intervals", fig.width = 3, fig.height = 3}
+We use two measures of socio-economic status: income, and university attendance.
+Income is a direct measure of SES. University attendance is a predictor of
+income over the whole life course, and a form of SES itself. The UK Biobank data
+only contains a direct measure of current household income, which is
+inappropriate for our purposes because it includes income from both spouses and
+is measured after marriage. Instead, we estimate income in £000s in the respondent's
+first job, by matching the job's Standard Occupational Classification (SOC) code
+with average earnings by SOC from @ONS2007ASHE. Job codes are only available for 
+a subset of respondents.
+
+Figure \@ref(fig:pic-basic-corr) illustrates the core idea of SGAM within our
+pair data. The X axis shows a measure of one partner's socio-economic status:
+university attendance or income. The Y axis plots the other partner's mean PSEA.
+Both males and females who went to university had spouses with higher PSEA. So
+did males and females with higher income. Since DNA is inherited, these people's
+children will also have higher PSEA.
+
+```{r pic-basic-corr, fig.cap = "Spouse PSEA against own university attendance and own income in first job. Lines show 95\\% confidence intervals.", fig.subcap = rep("", 4), fig.align = "center", fig.width = 3, fig.height = 3, fig.ncol = 2}
 
 pic_ss <- stat_summary(fun.data = mean_cl_normal, na.rm = TRUE)
 pic_cc <- coord_cartesian(ylim = c(-0.15, 0.25))
@@ -788,7 +804,7 @@ mf_pairs %>%
       ggplot(aes(University, EA3.f)) + 
         pic_ss + 
         pic_cc +
-        labs(x = "Male university attendance", y = "Female PSEA")
+        labs(x = "Male spouse university attendance", y = "Female spouse PSEA")
 
 mf_pairs %>% 
       filter(! is.na(university.f)) %>% 
@@ -797,11 +813,8 @@ mf_pairs %>%
       ggplot(aes(University, EA3.m)) + 
         pic_ss + 
         pic_cc +
-        labs(x = "Female university attendance", y = "Male PSEA")
-        
-```
+        labs(x = "Female spouse university attendance", y = "Male spouse PSEA")
 
-```{r pic-basic-corr-income, fig.subcap = c("Female EA3 by male income", "Male EA3 by female income"), fig.cap = "Spouse PSEA against own estimated income in first job. Lines show 95\\% confidence intervals", fig.width = 3, fig.height = 3}
 
 pic_ss <- stat_summary(
             fun.data = mean_se, 
@@ -815,23 +828,23 @@ mf_pairs %>%
       mutate(Income = santoku::chop_deciles(first_job_pay.m, labels = 1:10)) %>% 
       ggplot(aes(Income, EA3.f)) + 
         pic_ss + 
-        # pic_cc + 
-        labs(x = "Male income decile", y = "Female PSEA")
+        labs(x = "Male spouse income decile", y = "Female spouse PSEA")
 
 mf_pairs %>% 
       filter(! is.na(first_job_pay.f)) %>% 
       mutate(Income = santoku::chop_deciles(first_job_pay.f, labels = 1:10)) %>% 
       ggplot(aes(Income, EA3.m)) + 
         pic_ss + 
-        # pic_cc +
-        labs(x = "Female income decile", y = "Male PSEA")
-        
+        labs(x = "Female spouse income decile", y = "Male spouse PSEA")
 ```
+
 
 These figures do not prove that SGAM is taking place. Since an
 individual's own PSEA correlates with both their educational attainment,
 and their income, both figures could be a result of genetic assortative
-mating (GAM) alone [@hugh2016assortative]. To demonstrate SGAM, we need
+mating (GAM) alone [@hugh2016assortative]. Indeed, recent studies show much
+higher levels of GAM than could be explained by matching on the observed 
+education phenotype alone [@okbay2022polygenic]. So, to demonstrate SGAM, we need
 a source of social status which is exogenous to genetics. Also, the link
 between social status and spouse genetics is likely to be noisy, for
 three reasons: first, polygenic scores contain a large amount of error, as
@@ -870,16 +883,6 @@ the parent was still alive). For most regressions, we use only
 respondents with between 1 and 5 siblings, i.e. with a family size of
 2-6. 
 
-To test whether birth order effects are mediated by SES, we use two measures:
-income, and university attendance. Income is a direct measure of SES. University
-attendance is a predictor of income over the whole life course, and a form of
-SES itself. The UK Biobank data only contains a direct measure of current
-household income, which is inappropriate for our purposes because it includes
-income from both spouses. Instead, we estimate income in the respondent's first
-job, from the job's Standard Occupational Classification (SOC) code. We match
-this with information on average earnings by SOC from the Annual Survey of Hours
-and Earnings 2007 [@ONS2007ASHE]. This data is only available for a subset of
-respondents.
 
 ## Decomposing the birth order effect on spouse genetics
 
@@ -900,26 +903,7 @@ status and spouse's genetics. Also, if the estimated effect of birth
 order on spouse's PSEA changes when SES is controlled for, that is
 evidence that SES mediates the effect of birth order.
 
-
-Linearizing our model so that $A(g, s) = (1-k)g + ks$ and applying
-\@ref(eq:same-A) shows that:
-
-```{=tex}
-\[
-\frac{d A(g_{p(i)}, s_{p(i)})}{d s_i} = k
-\]
-```
-
-We wish to test whether $k \in (0, 1)$, i.e. whether SGAM is taking
-place. If $k > 0$ then an increase in $i$'s social status $s_i$ will
-increase $i$'s attractiveness $A$; if $k < 1$ then an increase in $A$
-will be associated (in expectation) with an increase in $i$'s partner's
-genetic endowment $g_{p(i)}$. We therefore wish to estimate the effect
-of $i$'s status on their partner's genetics, while controlling for $i$'s
-own genetics $g_i$. Since measures of genetic endowment, such as PSEA,
-are noisy and incomplete, it is not enough to include them as controls in the
-regression. Instead, we use birth order as a source of variation in
-$s_i$ which is orthogonal to $g_i$.
+XXX connect to theory here?
 
 We follow @heckman2013understanding to decompose the aggregate treatment
 effect into components due to observed and unobserved proximate channels
@@ -932,30 +916,30 @@ Given $b$, spouse PSEA is assumed to be independent across observations
 conditional on some predetermined controls which are assumed not to be affected
 by $B$.
 
-Let $\theta_{b}$ be a set of mediators, i.e. proximate outcomes
+Let $m_{b}$ be a set of mediators, i.e. proximate outcomes
 determined by $b$, which account (at least in part) for the $b$
-treatment effect on spouse PSEA. We can think of $\theta_{b}$ as all
+treatment effect on spouse PSEA. We can think of $m_{b}$ as all
 the effects on attractiveness, such as increments to SES, health,
 cognitive and non-cognitive skills, that individuals receive due to
-their birth rank. We can split the mediators in $\theta_b$ into a set $J_m$ of
-measured mediators, including measures of SES, and a set $J_u$ of
-mediators that we cannot measure. We are mainly interested in estimating the effect of
-SES on spouse PSEA.
+their birth rank. We can split the mediators in $m_b$ into a set $J_m$ of
+measured mediators, including university attendance and income in first job, 
+and a set $J_u$ of mediators that we cannot measure. 
 
 Our linear model is:
 
 \begin{equation}
 \label{eq:linear-model}
-Y_b = \kappa_b + \sum_{j \in J_m} \alpha_b^j \theta^j_b+\sum_{j \in J_u} \alpha_b^j \theta^j_b + \mathbf{X'} \symbf{\beta_b} + \tilde{\varepsilon}_b = \tau_b + \sum_{j \in J_m} \alpha_b^j \theta^j_b + \mathbf{X'} \symbf{\beta_b} + \varepsilon_b 
+Y_b = \kappa_b + \sum_{j \in J_m} \alpha_b^j m^j_b+\sum_{j \in J_u} \alpha_b^j m^j_b + \mathbf{X^\prime} \symbf{\beta_b} + \tilde{\varepsilon}_b = \tau_b + \sum_{j \in J_m} \alpha_b^j m^j_b + \mathbf{X^\prime} \symbf{\beta_b} + \varepsilon_b 
 \end{equation}
 
+
 where $\tilde{\varepsilon}_b$ is a mean-zero residual assumed independent of
-$\theta_b$ and $\mathbf{X}$; 
-$\tau_b = \kappa_b + \sum_{j \in J_u} \alpha_b^j E(\theta^j_b)$; and 
-$\varepsilon_b = \tilde{\varepsilon}_b + \sum_{j \in J_u} (\theta^j_b - E(\theta^j_b))$.
+$m_b$ and $\mathbf{X}$; 
+$\tau_b = \kappa_b + \sum_{j \in J_u} \alpha_b^j E(m^j_b)$; and 
+$\varepsilon_b = \tilde{\varepsilon}_b + \sum_{j \in J_u} (m^j_b - E(m^j_b))$.
 We simplify by assuming that $\beta_b = \beta$
-and $\alpha_b = \alpha$ for all $b$, i.e.~that the effects of $\mathbf{X}$ and
-$\theta_B$ don't differ by birth order.[^assumptions] We assume differences in
+and $\alpha_b = \alpha$ for all $b$, i.e. that the effects of $\mathbf{X}$ and
+$m_B$ don't differ by birth order.[^assumptions] We assume differences in
 unmeasured investments due to $b$ are independent of $\mathbf{X}$.
 
 [^assumptions]:Under the assumption that measured and unmeasured mediators are
@@ -969,27 +953,29 @@ for details and different applications.
 We use a linear model for each observed mediator variable:
 \begin{equation}
 \label{eq:mediator-model}
-\theta^j_b=\mu_{0,j}+\textbf{X'}\symbf{\mu_{1,j}}+\mu_{2,j}\cdot b+\eta_j, j \in J_m  
+m^j_b=\mu_{0,j}+\mathbf{X^\prime}\symbf{\mu_{1,j}}+\mu_{2,j}\cdot b+\eta_j, j \in J_m  
 \end{equation}
-where \(\eta_j\) is a mean-zero residual. We also assume the treatment-specific intercepts are linear in $b$:
+where \(\eta_j\) is a mean-zero residual. We also assume the treatment-specific 
+intercepts are linear in $b$:
 \begin{equation}
 \label{eq:linear-intercept}
 \tau_b=\tau_{0}+\tau b.  
 \end{equation}
 
-With the simplifying assumptions above and substituting \@ref(eq:mediator-model)-
-\@ref(eq:linear-intercept) into \@ref(eq:linear-model) we obtain:
+With the simplifying assumptions above and substituting \@ref(eq:mediator-model)
+and \@ref(eq:linear-intercept) into \@ref(eq:linear-model) we obtain:
 \begin{equation}
 \label{eq:simplified-model}
-Y_b = \tau_0+\tau b + \sum_{j \in J_m} \alpha^j (\mu_{0,j}+\textbf{X'}\symbf{\mu_{1,j}}+\mu_{2,j}\cdot b+\eta_j) + \mathbf{X'} \symbf{\beta} + \varepsilon_b 
+Y_b = \tau_0+\tau b + \sum_{j \in J_m} \alpha^j (\mu_{0,j}+\mathbf{X^\prime}\symbf{\mu_{1,j}}+\mu_{2,j}\cdot b+\eta_j) + \mathbf{X^\prime} \symbf{\beta} + \varepsilon_b 
 \end{equation}
 
 Using equation \@ref(eq:simplified-model), we can decompose the average treatment 
-effect of $B$ (birth order $b'$ instead of $b$) into the effect of measured mediators $\theta^j$ and unmeasured mediators on the outcome:
+effect of a change from birth order $b$ to $b'$ into the effect of measured mediators 
+$m^j$ and unmeasured mediators on the outcome:
 
 \begin{equation}
 \label{eq:decomposition}
-E(Y_b' - Y_b) = \tau(b' - b) + \sum_{j \in J_m} \alpha^j E(\theta^j_{b'} - \theta^j_b) \\
+E(Y_b' - Y_b) = \tau(b' - b) + \sum_{j \in J_m} \alpha^j E(m^j_{b'} - m^j_b) \\
 =\underbrace{\tau(b' - b)}_{\text{Effect of unmeasured mediators}} + \underbrace{\sum_{j \in J_m} \alpha^j \mu_{2,j} (b' - b)}_{\text{Effect of measured mediators}}
 \end{equation}
 
@@ -1000,12 +986,12 @@ relative importance of SES compared to other factors in predicting spouse PSEA.
 We therefore estimate: 
 \begin{equation}
 \label{eq:model-to-estimate}
-Y = \tau_0 + \tau B + \sum_{j \in J_m} \alpha^j \theta^j_b + \mathbf{X'} \symbf{\beta} + \varepsilon
+Y = \tau_0 + \tau B + \sum_{j \in J_m} \alpha^j m^j_b + \mathbf{X'} \symbf{\beta} + \varepsilon
 \end{equation}
 
 
 Estimating the above by OLS will generate unbiased estimates of
-$\alpha^j$ if $\theta^j$ is measured without error and is
+$\alpha^j$ if $m^j$ is measured without error and is
 uncorrelated with the error term $\varepsilon$. Since
 $\varepsilon$ contains both individual disturbances and differences
 in unmeasured investments due to birth order, there are two identifying assumptions that need to hold for unbiased OLS estimates: (a) the measured investments
@@ -1015,16 +1001,17 @@ conflated with the effects of unmeasured investments. Second, (b) the measured
 investments should be uncorrelated with other shocks $\tilde{\varepsilon}_b$.
 
 By running a least square regression of \@ref(eq:model-to-estimate), we can
-estimate $\tau$ and $\alpha^j$. If assumption (a) holds, the part of the
-birth order treatment effect on spouse PSEA that is due to measured mediators,
+estimate $\tau$ and $\alpha^j$. If assumption (a) holds, the part of the birth
+order treatment effect on spouse PSEA that is due to measured mediators,
 including SES, can be constructed using the estimated $\alpha^j$ and the effects
 of birth order on measured mediators. We can estimate these effects in a second
 step, from OLS regressions based on equation \@ref(eq:mediator-model) for each
-measured mediator (in particular university attendance and income) on $X$ and
-$B$. The part of the birth order effect that is due to university attendance (or
-income) on spouse PSEA will be the coefficient of university (income) in the
-regression of spouse PSEA in equation \@ref(eq:model-to-estimate) multiplied by
-the coefficient of birth order from equation \@ref(eq:mediator-model).
+measured mediator (in particular university attendance and income) on
+$\mathbf{X}$ and $B$. The part of the birth order effect that is due to
+university attendance (or income) on spouse PSEA will be the coefficient of
+university/income in the regression of spouse PSEA in equation
+\@ref(eq:model-to-estimate), multiplied by the coefficient of birth order on
+university/income from equation \@ref(eq:mediator-model).
 
 # Results
 
@@ -1042,6 +1029,7 @@ coef_bo <- purrr::map(mod_bo_1st, tidy) %>%
              purrr::map(filter, term == "birth_order.x") %>% 
              purrr::map_dbl("estimate")
 
+my_note <- "{stars}. Standard errors: robust."
 tbl_note <- paste("Estimates from OLS regressions with the ",
 "mediators (university attendance, income, fluid IQ and height) as dependent",
 "variables, and own birth order as the main independent variable. PSEA is the",
@@ -1143,7 +1131,7 @@ tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent"
 "variable, and own birth order as the main independent variable. PSEA is the",
 "polygenic score for educational attainment, which is normalized with mean 0 and",
 "standard deviation 1. We include parents' age at birth (the mean of parents'",
-"ages), and further controls in column 3 to ensure the balance of covariates",
+"ages), and further controls in columns 2-3 to ensure the balance of covariates",
 "across birth order. All data is from the UK Biobank for a sample of UK",
 "individuals born between 1935 and 1970.", my_note)
 
@@ -1338,7 +1326,12 @@ the birth order effect that is mediated by these variables. Table
 2-4. Each estimate is the coefficient of birth order on the mediator,
 times the coefficient of the mediator on spouse PSEA, divided by the
 coefficient of birth order on spouse PSEA estimated from column 1, i.e.
-without mediators. 
+without mediators. Education explains about 40-60 percent of the effect, much more
+than all the other mediators. Income, fluid IQ and height all explain about 10-15
+percent of the effect.
+
+These results provide evidence that birth order affects spouse PSEA via
+education and income, with education being especially important.
 
 Our next regressions split up the data into subsets. Cultural
 stereotypes often assume that the link between status and genes is not
@@ -1550,7 +1543,8 @@ indeed exogenous to genetics.
 
 The appendix reports other robustness checks, including a specification with
 separate dummies for each value of birth order, and replacing university attendance
-with age of leaving full-time education.
+with age of leaving full-time education. The basic pattern that birth order coefficients
+shrink after adding SES mediators appears robust across our variations.
 
 # Conclusion
 
@@ -1606,7 +1600,7 @@ effect sizes. This is by necessity: even the latest measures of
 PSEA contain substantial noise compared to the "true" polygenic score. As
 polygenic scores become more accurate, we will be better able to gauge the true
 effect size of SGAM on both the inheritance of inequality and the genes-SES
-gradient. We expect this to be an increasingly important research topic.
+gradient. 
 
 In our model, the association between social status and genetic variation
 depends on the society's marriage market. The association is weaker when
@@ -1627,17 +1621,11 @@ instance, a society's level of redistribution could affect the relative weight
 of social status in the attractiveness function. If so, then part of the effect
 of large-scale social changes may take place over the very long run, by altering
 marriage markets and thus affecting the genes-SES gradient and intergenerational
-mobility. Intuitively one would expect that a more "egalitarian" society and
-marriage market would lead to a weaker genes-SES gradient. But in our model, the
-covariance between genes $G$ and status $S$ is non-monotonic in the weight of
-status in marriage markets $k$, so this intuition may not always hold true. A
-natural extension of our theory would be to endogenize the marriage market to
-investigate further. In any case, the potential for economic changes to have
-such long-run effects suggests the potential for hysteresis, with initial social
+mobility. This suggests the potential for hysteresis, with initial social
 differences cumulating over time via their effect on genetic inequality.
 
-The broadest message of this paper is that genetics are a social
-outcome. Both popular and scientific discourse often parse genetics as
+The broadest message of this paper is that *genetics are a social
+outcome*. Both popular and scientific discourse often parse genetics as
 "nature", in opposition to "nurture" or "environment" [e.g.
 @chakravarti2003nature; @plomin2019blueprint]. This idea expresses the
 fact that our genetic endowment is fixed at birth and cannot be
@@ -1648,7 +1636,7 @@ genes from their parents, along with other forms of inheritance such as
 economic and cultural capital. Human parents, in turn, form spouse
 pairs, bear children, and raise them, within social institutions. A
 person's genetic inheritance is a social and historical fact about them,
-and not a fact of nature, any more than their inherited wealth or social
+not solely a fact of nature, any more than their inherited wealth or social
 status is natural. As @marx1844economic wrote, "History is the true
 natural history of man". Genetic endowments can even be viewed as
 another form of capital, alongside human, social and cultural capital: a

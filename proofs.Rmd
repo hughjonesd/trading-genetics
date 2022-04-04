@@ -794,8 +794,36 @@ The first claim in the proof follows from the covariance:
 \[
 \frac{\gamma\tau^{2}}{2}(s^{2}+A^{2})+\frac{\tau\theta}{2}(\sigma+AC)+\gamma
 \]
-This is positive if any of $\sigma > 0$, $\gamma > 0$,  or $AC > 0$ 
-(which holds if $0 < a < 1$ when $\sigma = 0$).
+This is increasing in $\gamma$, and positive if any of $\sigma > 0$, 
+$\gamma > 0$,  or $AC > 0$ (which holds if $0 < a < 1$ when $\sigma = 0$).
+
+The correlation $Cov(x_{1}^{\prime},x_{2}^{\prime})/\sqrt{Var(x_{1}^{\prime})Var(x_{2}^{\prime})}$
+is proportional to
+\[
+\frac{\gamma p+q}{\sqrt{\gamma^{2}p+\gamma2q+r}}
+\]
+where 
+\begin{align*}
+p & =\tau^{2}(s^{2}+A^{2})+2;\\
+q & =\tau\theta(\sigma+AC);\\
+r & =\theta^{2}(S^{2}+C^{2})+2.
+\end{align*}
+The derivative of this with respect to $\gamma$ is signed by $pr-q^{2}$, 
+which equals
+\begin{align*}
+ & [\tau^{2}(s^{2}+A^{2})+2][\theta^{2}(S^{2}+C^{2})+2]-[\tau\theta(\sigma+AC)]^{2}\\
+= & \tau^{2}\theta^{2}(s^{2}S^{2}+A^{2}S^{2}+s^{2}C^{2}-2\sigma AC-\sigma^{2})+2[\theta^{2}(S^{2}+C^{2})+\tau^{2}(s^{2}+A^{2})]+4
+\end{align*}
+The last two terms are positive. In the first term, $\sigma^{2}<s^{2}S^{2}$,
+and
+\begin{align*}
+0 & <(AS-Cs)^{2}\\
+ & =A^{2}S^{2}+C^{2}s^{2}-2ACSs\\
+ & <A^{2}S^{2}+C^{2}s^{2}-2\sigma AC\textrm{ , again using }\sigma<sS.\\
+\end{align*}
+
+Hence the whole sum is positive.
+
 
 Now we can calculate
 \[
@@ -864,8 +892,8 @@ y_{2}
  & =\left(\gamma\tau\frac{\sigma+AC}{S^{2}+C^{2}}+\theta\right)\frac{x_{2}+y_{2}}{2}
 \end{align*}
 
-The coefficient on parents' wealth is thus higher than $\theta$,
-so long as $0<a<1$ or $\sigma>0$.
+So long as $0<a<1$ or $\sigma>0$, the coefficient on parents' wealth is thus 
+higher than $\theta$.
 
 \end{proof}
 
