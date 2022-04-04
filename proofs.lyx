@@ -1,0 +1,321 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+% Options for packages loaded elsewhere
+
+
+%
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage{textcomp}% provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+\defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage{longtable}
+\usepackage{booktabs}\usepackage{array}\usepackage{calc}% for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+
+\def\fps@figure{htbp}
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+ % remove section numbering
+
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{mitpress}
+\newtheorem{prop}{Proposition}\newtheorem{claim}{Claim}\ifLuaTeX
+  \usepackage{selnolig}% disable illegal ligatures
+\fi
+
+\title{Model proofs}
+\author{}
+\date{\vspace{-2.5em}}
+
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}\newtheorem{lemma}{Lemma}\newtheorem{corollary}{Corollary}\newtheorem{proposition}{Proposition}\newtheorem{conjecture}{Conjecture}\theoremstyle{definition}
+\newtheorem{definition}{Definition}\theoremstyle{definition}
+\newtheorem{example}{Example}\theoremstyle{definition}
+\newtheorem{exercise}{Exercise}\theoremstyle{definition}
+\newtheorem{hypothesis}{Hypothesis}\theoremstyle{remark}
+\newtheorem*{remark}{Remark}\newtheorem*{solution}{Solution}
+\end_preamble
+\use_default_options false
+\begin_modules
+theorems-ams
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding utf8
+\fontencoding T1
+\font_roman "lmodern" "default"
+\font_sans "default" "default"
+\font_typewriter "lmodern" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing double
+\use_hyperref true
+\pdf_title "Model proofs"
+\pdf_bookmarks false
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks false
+\pdf_backref section
+\pdf_pdfusetitle false
+\pdf_quoted_options "hidelinks,pdfcreator={LaTeX via pandoc}"
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth -1
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Formula 
+\begin{align*}
+\\
+ & \left(\begin{array}{cccc}
+\frac{\gamma\tau}{2} & \frac{\theta}{2} & \frac{\gamma\tau}{2} & \frac{\theta}{2}\end{array}\right)\left(\begin{array}{cccc}
+s^{2} & \sigma & A^{2} & AC\\
+\sigma & S^{2} & AC & C^{2}\\
+A^{2} & AC & s^{2} & \sigma\\
+AC & C^{2} & \sigma & S^{2}
+\end{array}\right)\\
+= & \left(\begin{array}{cccc}
+\frac{\gamma\tau}{2}(s^{2}+A^{2})+\frac{\theta}{2}(\sigma+AC) & \frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2}) & \frac{\gamma\tau}{2}(s^{2}+A^{2})+\frac{\theta}{2}(\sigma+AC) & \frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2})\end{array}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now we can calculate
+\begin_inset Formula 
+\[
+\mathbb{E}[x_{2}^{\prime}|x_{2}+y_{2}]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+using
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+\gamma\tau\frac{x_{1}+y_{1}}{2}+\theta\frac{x_{2}+y_{2}}{2}\\
+x_{2}\\
+y_{2}
+\end{array}\right)=\left(\begin{array}{cccc}
+\frac{\gamma\tau}{2}0 & \frac{\theta}{2}1 & \frac{\gamma\tau}{2}0 & \frac{\theta}{2}0\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1
+\end{array}\right)\left(\begin{array}{c}
+x_{1}\\
+x_{2}\\
+y_{1}\\
+y_{2}
+\end{array}\right)
+\]
+
+\end_inset
+
+to give
+\begin_inset Formula 
+\begin{align*}
+\mathbb{C}\left(\begin{array}{c}
+x_{2}^{\prime}\\
+x_{2}\\
+y_{2}
+\end{array}\right) & =\left(\begin{array}{cccc}
+\frac{\gamma\tau}{2} & \frac{\theta}{2} & \frac{\gamma\tau}{2} & \frac{\theta}{2}\\
+0 & 1 & 0 & 0\\
+0 & 0 & 0 & 1
+\end{array}\right)\left(\begin{array}{cccc}
+s^{2} & \sigma & A^{2} & AC\\
+\sigma & S^{2} & AC & C^{2}\\
+A^{2} & AC & s^{2} & \sigma\\
+AC & C^{2} & \sigma & S^{2}
+\end{array}\right)\left(\begin{array}{ccc}
+\frac{\gamma\tau}{2} & 0 & 0\\
+\frac{\theta}{2} & 1 & 0\\
+\frac{\gamma\tau}{2} & 0 & 0\\
+\frac{\theta}{2} & 0 & 1
+\end{array}\right)+\left(\begin{array}{ccc}
+1+\gamma^{2} & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 0
+\end{array}\right)\\
+ & =\left(\begin{array}{ccc}
+\frac{\gamma^{2}\tau^{2}}{2}(s^{2}+A^{2})+\gamma\tau\theta(\sigma+AC)+\frac{\theta^{2}}{2}(S^{2}+C^{2})+1+\gamma^{2} & \frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2}) & \frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2})\\
+\frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2}) & S^{2} & C^{2}\\
+\frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2}) & C^{2} & S^{2}
+\end{array}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next
+\begin_inset Formula 
+\begin{align*}
+\mathbb{E}[x_{2}^{\prime}|x_{2},y_{2}] & =\left(\begin{array}{cc}
+\frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2}) & \frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2})\end{array}\right)\left(\begin{array}{cc}
+S^{2} & C^{2}\\
+C^{2} & S^{2}
+\end{array}\right)^{-1}\left(\begin{array}{c}
+x_{2}\\
+y_{2}
+\end{array}\right)\\
+ & =\left(\begin{array}{cc}
+\frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2}) & \frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2})\end{array}\right)\frac{1}{(S^{2}+C^{2})(S^{2}-C^{2})}\left(\begin{array}{cc}
+S^{2} & -C^{2}\\
+-C^{2} & S^{2}
+\end{array}\right)\left(\begin{array}{c}
+x_{2}\\
+y_{2}
+\end{array}\right)\\
+ & =\left(\gamma\tau\frac{\sigma+AC}{S^{2}+C^{2}}+\theta\right)\frac{x_{2}+y_{2}}{2}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The coefficient on parents' wealth is thus higher than 
+\begin_inset Formula $\theta$
+\end_inset
+
+, so long as 
+\begin_inset Formula $0<a<1$
+\end_inset
+
+ or 
+\begin_inset Formula $\sigma>0$
+\end_inset
+
+.
+\end_layout
+
+\end_body
+\end_document
