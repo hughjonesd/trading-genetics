@@ -131,7 +131,7 @@ UK. Email: O.Borcan@uea.ac.uk},
 Pierre Chiappori\thanks{Department of Economics, University of Columbia, New York. Email: pc2167@columbia.edu} \&
 David Hugh-Jones\thanks{Corresponding author. School of Economics, 
 University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}}
-\date{2022-04-04}
+\date{2022-04-06}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -719,11 +719,12 @@ x_2
 \end{array}%
 \right) 
 \]
+
+The covariance $\bar{\sigma} \ge 0$ and is strictly positive so long as $0 < a < 1$.
+
 For $\theta = 1$, the dynamics diverge and $S^{2}$ goes to $+\infty$; for 
 $\tau = 1$, the dynamics diverges and $s^{2}$ goes to $+\infty$.
 
-XXX what can we say about $\bar{\sigma}$ e.g. if $0 < a < 1$. Is it positive?
-Increasing in $\theta$? Increasing then decreasing in $a$?
 \end{proposition}
 
 Conditional expectations of children's genetics given parents' wealth under SGAM
@@ -737,32 +738,23 @@ x_{2}=v,y_{2}=w\right]  &=&\frac{1}{2}\tau \frac{\bar{\sigma}+\bar{A}\bar{C}%
 &=&\mu \frac{\theta \bar{S}^{2}}{2\bar{S}^{2}-2}\left( v+w\right) 
 \end{eqnarray}
 
-XXX double check that \(v+w\) belongs on line 2 (you added it)
+XXX double check the above, esp.~that \(v+w\) belongs on line 2 (you added it)
 
-\hypertarget{numerical-application}{%
-\subsubsection{Numerical application}\label{numerical-application}}
-
-In what follows, we impose
-\[ 
-\tau = 0.95. 
-\] The three components of the
-asymptotic covariance matrix (\(s^{2},S^{2},\sigma\)) are given in the following
-graph:
-
-(XXX omitted)
-
-Lastly, the asymptotic correlation between characteristics is:
+The asymptotic correlation between characteristics is:
 \[
 Corr=\frac{\sigma }{sS}=\frac{\mu }{\sqrt{\lambda }}=\frac{\phi \left(
 a,\theta ,\tau \right) }{\sqrt{\psi \left( a,\theta ,\tau \right) }}
 \]
+Figure \ref{fig:pic-asymptotic-corr} plots this for \(\tau = 0.95\).
 
-(XXX graph omitted)
+\begin{figure}
 
-and the conditional expectation of genetics given SES is proportional to SES,
-coefficient:
+{\centering \includegraphics{trading-genetics_files/figure-latex/pic-asymptotic-corr-1-rgl} 
 
-(XXX graph omitted)
+}
+
+\caption{Long-run correlation between $x_1$ and $x_2$, by $a$ and $\theta$}\label{fig:pic-asymptotic-corr}
+\end{figure}
 
 Note that both \(\bar{S}^{2}\) and \(\bar{\sigma}\), as well as the correlation
 between characteristics and the conditional expectation of genetics given
@@ -1107,7 +1099,7 @@ where \(\tilde{\varepsilon}_b\) is a mean-zero residual assumed independent of
 \(\tau_b = \kappa_b + \sum_{j \in J_u} \alpha_b^j E(m^j_b)\); and
 \(\varepsilon_b = \tilde{\varepsilon}_b + \sum_{j \in J_u} (m^j_b - E(m^j_b))\).
 We simplify by assuming that \(\beta_b = \beta\)
-and \(\alpha_b = \alpha\) for all \(b\), i.e.\textasciitilde that the effects of \(\mathbf{X}\) and
+and \(\alpha_b = \alpha\) for all \(b\), i.e.~that the effects of \(\mathbf{X}\) and
 \(m_B\) don't differ by birth order.\footnote{Under the assumption that measured and unmeasured mediators are
   uncorrelated, we can test these assumptions by running an OLS regression of an
   extended model \eqref{eq:model-to-estimate} where we interact the measured
@@ -1122,7 +1114,8 @@ We use a linear model for each observed mediator variable:
 \label{eq:mediator-model}
 m^j_b=\mu_{0,j}+\mathbf{X^\prime}\symbf{\mu_{1,j}}+\mu_{2,j}\cdot b+\eta_j, j \in J_m  
 \end{equation}
-where \(\eta_j\) is a mean-zero residual. We also assume the treatment-specific intercepts are linear in \(b\):
+where \(\eta_j\) is a mean-zero residual. We also assume the treatment-specific
+intercepts are linear in \(b\):
 \begin{equation}
 \label{eq:linear-intercept}
 \tau_b=\tau_{0}+\tau b.  
@@ -1136,7 +1129,8 @@ Y_b = \tau_0+\tau b + \sum_{j \in J_m} \alpha^j (\mu_{0,j}+\mathbf{X^\prime}\sym
 \end{equation}
 
 Using equation \eqref{eq:simplified-model}, we can decompose the average treatment
-effect of \(B\) (birth order \(b'\) instead of \(b\)) into the effect of measured mediators \(m^j\) and unmeasured mediators on the outcome:
+effect of a change from birth order \(b\) to \(b'\) into the effect of measured mediators
+\(m^j\) and unmeasured mediators on the outcome:
 
 \begin{equation}
 \label{eq:decomposition}
@@ -1165,16 +1159,17 @@ conflated with the effects of unmeasured investments. Second, (b) the measured
 investments should be uncorrelated with other shocks \(\tilde{\varepsilon}_b\).
 
 By running a least square regression of \eqref{eq:model-to-estimate}, we can
-estimate \(\tau\) and \(\alpha^j\). If assumption (a) holds, the part of the
-birth order treatment effect on spouse PSEA that is due to measured mediators,
+estimate \(\tau\) and \(\alpha^j\). If assumption (a) holds, the part of the birth
+order treatment effect on spouse PSEA that is due to measured mediators,
 including SES, can be constructed using the estimated \(\alpha^j\) and the effects
 of birth order on measured mediators. We can estimate these effects in a second
 step, from OLS regressions based on equation \eqref{eq:mediator-model} for each
-measured mediator (in particular university attendance and income) on \(X\) and
-\(B\). The part of the birth order effect that is due to university attendance (or
-income) on spouse PSEA will be the coefficient of university/income in the
-regression of spouse PSEA in equation \eqref{eq:model-to-estimate}, multiplied by
-the coefficient of birth order on university/income from equation \eqref{eq:mediator-model}.
+measured mediator (in particular university attendance and income) on
+\(\mathbf{X}\) and \(B\). The part of the birth order effect that is due to
+university attendance (or income) on spouse PSEA will be the coefficient of
+university/income in the regression of spouse PSEA in equation
+\eqref{eq:model-to-estimate}, multiplied by the coefficient of birth order on
+university/income from equation \eqref{eq:mediator-model}.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
@@ -2733,7 +2728,28 @@ where%
 \bar{s}^{2}+\left( 1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma%
 }}},
 \end{eqnarray*}%
-Therefore%
+
+Note that if the distribution converges, $\bar{s}^{2}$ and $\bar{S}^{2}$
+must be above 1. Also, for $\bar{A}$ and $\bar{C}$ to have a real-valued
+solution, it must be that $a^{2}\bar{s}^{2}+(1-a)^{2}\bar{S}^{2}+2a(1-a)\bar{\sigma}>0$;
+using this,
+
+\[
+\bar{A}\bar{C}=\frac{a^{2}\bar{s}^{2}\bar{\sigma}+(1-a)^{2}\bar{S}^{2}\bar{\sigma}+a(1-a)(\bar{\sigma}^{2}+\bar{S}^{2}\bar{s}^{2})}{a^{2}\bar{s}^{2}+(1-a)^{2}\bar{S}^{2}+2a(1-a)\bar{\sigma}}>\bar{\sigma}\textrm{, by }\bar{\sigma}^{2}<\bar{S}^{2}\bar{s}^{2}.
+\]
+
+Since $\bar{A}\bar{C}>\bar{\sigma}$, $\frac{\theta\tau}{2}(\bar{\sigma}+\bar{A}\bar{C})>\theta\tau\bar{\sigma}$.
+If $\bar{\sigma}<0$ then $\bar{\sigma}=\frac{\theta\tau}{2}(\bar{\sigma}+\bar{A}\bar{C})>\theta\tau\bar{\sigma}>\bar{\sigma}$,
+a contradiction. Thus $\bar{\sigma}\ge0$. Also if $\bar{\sigma}=0$
+then 
+\[
+\bar{\sigma}=\frac{\theta\tau}{2}\left(\frac{a(1-a)(\bar{S}^{2}\bar{s}^{2})}{a^{2}\bar{s}^{2}+(1-a)^{2}\bar{S}^{2}}\right)
+\]
+which implies $a=0$ or $a=1$. This proves that $\bar{\sigma}$ is
+non-negative, and positive if $a\in(0,1)$, so long as the distribution
+converges.
+
+From the invariant distribution,%
 \begin{eqnarray}
 \bar{s}^{2} &=&\frac{1}{2}\tau ^{2}\left( \frac{\left( a\bar{s}^{2}+\left(
 1-a\right) \bar{\sigma}\right) ^{2}}{a^{2}\bar{s}^{2}+\left( 1-a\right) ^{2}%

@@ -164,15 +164,19 @@ tidy_args <- list(se = "hetero", conf.int = FALSE)
 
 ```{r TODO-NOTES, eval = FALSE}
 
-Nice chunk from earlier version:
-Under this mechanism, shocks to an individual’s social status may alter the identity of his or her spouse, and so be reflected in the genetics of his or her children. Thus, in contrast to a large body of research that treats genetic data as an independentvariableandtracesitseffectsonsocialandeconomicoutcomes,wemakethegeneticsendogenous.[^2]
+# TODO - Apr 2022
 
-[^2]: Almost all research in behavioural genetics fits this pattern [see
-    e.g. @plomin2008behavioral]. For a review of relevant research in
-    economics, see @benjamin2011promises. Some more recent economics
-    papers use polygenic scores [@barth2020genetic;
-    @papageorge2020genes; @ronda2020family; @sias2020molecular].
-
+* Oana, do analysis of missing mediator and how close it would have to correlate
+  with univ. attendance to make our results insignificant
+* What to do with the Chiappori et al style matching model? Ask Pierre
+* Comp statics of long run, using Imp Fun Thm;
+  solve comp stats and do graphs
+* Rework conclusion esp re $\theta$, $\gamma$
+* $E[x'_2 | x_2]$ and $E[x'_2 | x_1, x_2]$ in prop-gamma, 
+  to show that $\sigma$ is a confound while $\gamma$ is a mediator?
+* Connect theory to Oana's empirics
+* G-E interactions? We mention in intro; could just mention it as a potential
+  extension
 
 
 # * Why missing all the first job data? - because not everyone does the

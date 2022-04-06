@@ -779,6 +779,13 @@
       "Repository": "CRAN",
       "Hash": "1c3ef87cbb81c23ac96797781ec7aecc"
     },
+    "rgl": {
+      "Package": "rgl",
+      "Version": "0.108.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "f64f09322c08801bb67928325188c38c"
+    },
     "rlang": {
       "Package": "rlang",
       "Version": "1.0.2",
@@ -792,6 +799,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "ac78f4d2e0289d4cba73b88af567b8b1"
+    },
+    "rootSolve": {
+      "Package": "rootSolve",
+      "Version": "1.8.2.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "b8fbe639ed0e0e4f4c80498f4411ec5f"
     },
     "rpart": {
       "Package": "rpart",

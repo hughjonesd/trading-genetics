@@ -18,6 +18,14 @@ header-includes:
   - \newtheorem{claim}{Claim}
 ---
 
+```{r set-echo-off, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+
+invisible(loadNamespace("rootSolve"))
+invisible(loadNamespace("rgl"))
+rgl::setupKnitr(autoprint = TRUE)
+```
 
 People in the marriage market have two characteristics: 
 $x=\left( x_{1},x_{2}\right)$, drawn from a normal distribution 
@@ -396,11 +404,12 @@ x_2
 \end{array}%
 \right) 
 \]
+
+The covariance $\bar{\sigma} \ge 0$ and is strictly positive so long as $0 < a < 1$.
+
 For $\theta = 1$, the dynamics diverge and $S^{2}$ goes to $+\infty$; for 
 $\tau = 1$, the dynamics diverges and $s^{2}$ goes to $+\infty$.
 
-XXX what can we say about $\bar{\sigma}$ e.g. if $0 < a < 1$. Is it positive?
-Increasing in $\theta$? Increasing then decreasing in $a$?
 \end{proposition}
 
 
@@ -415,31 +424,85 @@ x_{2}=v,y_{2}=w\right]  &=&\frac{1}{2}\tau \frac{\bar{\sigma}+\bar{A}\bar{C}%
 &=&\mu \frac{\theta \bar{S}^{2}}{2\bar{S}^{2}-2}\left( v+w\right) 
 \end{eqnarray}
 
-XXX double check that $v+w$ belongs on line 2 (you added it)
+XXX double check the above, esp. that $v+w$ belongs on line 2 (you added it)
 
-### Numerical application
-
-In what follows, we impose 
-\[ 
-\tau = 0.95. 
-\] The three components of the
-asymptotic covariance matrix ($s^{2},S^{2},\sigma$) are given in the following
-graph:
-
-(XXX omitted)
-
-Lastly, the asymptotic correlation between characteristics is:
+The asymptotic correlation between characteristics is:
 \[
 Corr=\frac{\sigma }{sS}=\frac{\mu }{\sqrt{\lambda }}=\frac{\phi \left(
 a,\theta ,\tau \right) }{\sqrt{\psi \left( a,\theta ,\tau \right) }}
 \]
+Figure \@ref(fig:pic-asymptotic-corr) plots this for $\tau = 0.95$.
 
-(XXX graph omitted)
+```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between $x_1$ and $x_2$, by $a$ and $\\theta$", dpi = 144}
 
-and the conditional expectation of genetics given SES is proportional to SES,
-coefficient:
 
-(XXX graph omitted)
+D <- function (a, lambda, mu) {
+  a^2 * lambda + (1-a)^2 + 2*a*(1-a)*mu
+}
+
+Astar <- function (a, lambda, mu) {
+  D <- D(a, lambda, mu)
+  (a*lambda + (1-a)*mu)^2/D
+}
+
+Bstar <- function (a, lambda, mu) {
+  D <- D(a, lambda, mu)
+  (a*lambda + (1-a)*mu)*(a*mu + (1-a))/D
+}
+
+Cstar <- function (a, lambda, mu) {
+  D <- D(a, lambda, mu)
+  (a*mu + (1-a))^2/D
+}
+
+
+corr <- function (theta, a) {
+  tau <- 0.95
+  # x is (lambda, mu)
+  H <- function (x) {
+    lambda <- x[1]
+    mu <- x[2]
+    Astar <- Astar(a, lambda, mu)
+    Bstar <- Bstar(a, lambda, mu)
+    Cstar <- Cstar(a, lambda, mu)
+    root1 <- tau^2/2 * (Astar + lambda) -
+                   theta^2/2 * (Cstar + 1) - 
+                   lambda + 1
+    root2     <- theta*tau/2 * (mu + Bstar) - mu
+    
+    c(root1, root2)
+  }
+  
+  res <- rootSolve::multiroot(H, start = c(0, 0))
+  res <- res$root
+  corr <- res[2]/sqrt(res[1])
+  
+  return(corr)
+}
+# 
+# um <- matrix(c(0.63775003,  -0.7701848, -0.009502447, 0,
+#                0.04336312,   0.0235839,  0.998780727, 0,
+#               -0.76902151,  -0.6373846,  0.048438177, 0,
+#                0, 0, 0, 1), 
+#              4, 4, byrow = TRUE)
+invisible(rgl::open3d(
+              userMatrix = rgl::rotate3d(rgl::r3dDefaults$userMatrix, 
+                                         angle = 45, x = 0, y = 0, z = 1),
+              zoom = 0.8
+            ))
+rgl::plot3d(
+             Vectorize(corr),
+             xlim = c(0, 0.95),
+             ylim = c(0, 0.99), # 1 gives an error
+             zlab = "Corr.",
+             col = "darkgreen",
+             front = "lines",
+             lwd = 3,
+             n = 40
+           )
+
+```
+
 
 Note that both $\bar{S}^{2}$ and $\bar{\sigma}$, as well as the correlation
 between characteristics and the conditional expectation of genetics given
@@ -471,8 +534,8 @@ skills, which might be related to their genetics. So, let
 x^\prime_1 &= \tau \frac{x_{1} + y_{1}}{2} + \varepsilon   \nonumber \\
 x^\prime_2 &= \gamma x^\prime_1 + \theta \frac{x_{2}+y_{2}}{2}+\eta \label{eqn-gamma}
 \end{align}
-where $\gamma > 0$ represents the effect of own genetics on own SES. Not
-surprisingly, the basic result continues to hold:
+where $\gamma > 0$ represents the effect of own genetics on own SES. 
+The basic result continues to hold:
 
 \begin{proposition}\label{prop-gamma}
 Under SGAM and equation \eqref{eqn-gamma}, if genetics and SES are 
@@ -484,7 +547,10 @@ of parents' wealth on children's wealth exceeds $\theta$.
 \end{proposition}
 
 Surprisingly, in this case, the children's correlation is not always increasing
-in $\theta$. (XXX add more?)
+in $\theta$. The reason is that when $\gamma$ is high, a higher $\theta$ decreases
+the proportion of $x^\prime_2$ that comes via $\gamma$ from own genetics, and
+increases the proportion that comes from parents' SES, which may be less strongly
+correlated with own genetics.
 
 Third, we consider non-normal distributions of $x_1$ and $x_2$, non-normal
 shocks $\varepsilon$ and $\eta$, and non-linear attractiveness functions. Suppose
