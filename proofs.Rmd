@@ -433,45 +433,45 @@ Start by characterizing the invariant distribution. This must satisfy:%
 \[
 \left( 
 \begin{array}{cc}
-\bar{s}^{2} & \bar{\sigma} \\ 
-\bar{\sigma} & \bar{S}^{2}%
+s^{2} & \sigma \\ 
+\sigma & S^{2}%
 \end{array}%
 \right) =\left( 
 \begin{array}{cc}
-\frac{1}{2}\tau ^{2}\left( \bar{A}^{2}+\bar{s}^{2}\right) +1 & \frac{1}{2}%
-\theta \tau \left( \bar{\sigma}+\bar{A}\bar{C}\right)  \\ 
-\frac{1}{2}\theta \tau \left( \bar{\sigma}+\bar{A}\bar{C}\right)  & \frac{1}{%
-2}\theta ^{2}\left( \bar{C}^{2}+\bar{S}^{2}\right) +1%
+\frac{1}{2}\tau ^{2}\left( A^{2}+s^{2}\right) +1 & \frac{1}{2}%
+\theta \tau \left( \sigma+AC\right)  \\ 
+\frac{1}{2}\theta \tau \left( \sigma+AC\right)  & \frac{1}{%
+2}\theta ^{2}\left( C^{2}+S^{2}\right) +1%
 \end{array}%
 \right) \allowbreak 
 \]%
 where%
 \begin{eqnarray*}
-\bar{A} &=&\frac{a\bar{s}^{2}+\left( 1-a\right) \bar{\sigma}}{\sqrt{a^{2}%
-\bar{s}^{2}+\left( 1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma%
+A &=&\frac{as^{2}+\left( 1-a\right) \sigma}{\sqrt{a^{2}%
+s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \bar{\sigma%
 }}}\textrm{ \ and} \\
-\bar{C} &=&\frac{a\bar{\sigma}+\left( 1-a\right) \bar{S}^{2}}{\sqrt{a^{2}%
-\bar{s}^{2}+\left( 1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma%
+C &=&\frac{a\sigma+\left( 1-a\right) S^{2}}{\sqrt{a^{2}%
+s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \bar{\sigma%
 }}},
 \end{eqnarray*}%
 
-Note that if the distribution converges, $\bar{s}^{2}$ and $\bar{S}^{2}$
-must be above 1. Also, for $\bar{A}$ and $\bar{C}$ to have a real-valued
-solution, it must be that $a^{2}\bar{s}^{2}+(1-a)^{2}\bar{S}^{2}+2a(1-a)\bar{\sigma}>0$;
+Note that if the distribution converges, $s^{2}$ and $S^{2}$
+must be above 1. Also, for $A$ and $C$ to have a real-valued
+solution, it must be that $a^{2}s^{2}+(1-a)^{2}S^{2}+2a(1-a)\sigma>0$;
 using this,
 
 \[
-\bar{A}\bar{C}=\frac{a^{2}\bar{s}^{2}\bar{\sigma}+(1-a)^{2}\bar{S}^{2}\bar{\sigma}+a(1-a)(\bar{\sigma}^{2}+\bar{S}^{2}\bar{s}^{2})}{a^{2}\bar{s}^{2}+(1-a)^{2}\bar{S}^{2}+2a(1-a)\bar{\sigma}}>\bar{\sigma}\textrm{, by }\bar{\sigma}^{2}<\bar{S}^{2}\bar{s}^{2}.
+AC=\frac{a^{2}s^{2}\sigma+(1-a)^{2}S^{2}\sigma+a(1-a)(\sigma^{2}+S^{2}s^{2})}{a^{2}s^{2}+(1-a)^{2}S^{2}+2a(1-a)\sigma}>\sigma\textrm{, by }\sigma^{2}<S^{2}s^{2}.
 \]
 
-Since $\bar{A}\bar{C}>\bar{\sigma}$, $\frac{\theta\tau}{2}(\bar{\sigma}+\bar{A}\bar{C})>\theta\tau\bar{\sigma}$.
-If $\bar{\sigma}<0$ then $\bar{\sigma}=\frac{\theta\tau}{2}(\bar{\sigma}+\bar{A}\bar{C})>\theta\tau\bar{\sigma}>\bar{\sigma}$,
-a contradiction. Thus $\bar{\sigma}\ge0$. Also if $\bar{\sigma}=0$
+Since $AC>\sigma$, $\frac{\theta\tau}{2}(\sigma+AC)>\theta\tau\sigma$.
+If $\sigma<0$ then $\sigma=\frac{\theta\tau}{2}(\sigma+AC)>\theta\tau\sigma>\sigma$,
+a contradiction. Thus $\sigma\ge0$. Also if $\sigma=0$
 then 
 \[
-\bar{\sigma}=\frac{\theta\tau}{2}\left(\frac{a(1-a)(\bar{S}^{2}\bar{s}^{2})}{a^{2}\bar{s}^{2}+(1-a)^{2}\bar{S}^{2}}\right)
+\sigma=\frac{\theta\tau}{2}\left(\frac{a(1-a)(S^{2}s^{2})}{a^{2}s^{2}+(1-a)^{2}S^{2}}\right)
 \]
-which implies $a=0$ or $a=1$. This proves that $\bar{\sigma}$ is
+which implies $a=0$ or $a=1$. This proves that $\sigma$ is
 non-negative, and positive if $a\in(0,1)$, so long as the distribution
 converges.
 
@@ -557,8 +557,8 @@ asymptotic distribution:
 
 \[
 \mathbb{E}\left[ \frac{\tau }{2}\left( x_{1}+y_{1}\right) +\varepsilon \mid
-x_{2}=v,y_{2}=w\right]  = \frac{1}{2}\tau \frac{\bar{\sigma}+\bar{A}\bar{C}%
-}{\bar{C}^{2}+\bar{S}^{2}}\left( v+w\right)  
+x_{2}=v,y_{2}=w\right]  = \frac{1}{2}\tau \frac{\sigma+AC%
+}{C^{2}+S^{2}}\left( v+w\right)  
 \]
 
 \end{proof}

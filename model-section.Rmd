@@ -410,8 +410,8 @@ increasing in $\theta$ and increasing then decreasing in $a$.
 The coefficient of parents' wealth on children's genetics is also positive 
 for $0 < a < 1$.
 
-For $\theta = 1$, the dynamics diverge and $S^{2}$ goes to $+\infty$; for 
-$\tau = 1$, the dynamics diverges and $s^{2}$ goes to $+\infty$.
+For $\theta = 1$, the dynamics diverge and $\bar{S}^{2}$ goes to $+\infty$; for 
+$\tau = 1$, the dynamics diverges and $\bar{s}^{2}$ goes to $+\infty$.
 
 \end{proposition}
 
