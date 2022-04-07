@@ -454,87 +454,113 @@ where%
 \bar{s}^{2}+\left( 1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma%
 }}},
 \end{eqnarray*}%
-Therefore%
-\begin{eqnarray}
-\bar{s}^{2} &=&\frac{1}{2}\tau ^{2}\left( \frac{\left( a\bar{s}^{2}+\left(
-1-a\right) \bar{\sigma}\right) ^{2}}{a^{2}\bar{s}^{2}+\left( 1-a\right) ^{2}%
-\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma}}+\bar{s}^{2}\right) +1 
-\nonumber \\
-\bar{S}^{2} &=&\frac{1}{2}\theta ^{2}\left( \frac{\left( a\bar{\sigma}%
-+\left( 1-a\right) \bar{S}^{2}\right) ^{2}}{a^{2}\bar{s}^{2}+\left(
-1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma}}+\bar{S}%
-^{2}\right) +1  \label{FP} \\
-\left( 1-\frac{1}{2}\theta \tau \right) \bar{\sigma} &=&\frac{1}{2}\theta
-\tau \frac{\left( a\bar{\sigma}+\left( 1-a\right) \bar{S}^{2}\right) \left( a%
-\bar{s}^{2}+\left( 1-a\right) \bar{\sigma}\right) }{a^{2}\bar{s}^{2}+\left(
-1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma}}  \nonumber
-\end{eqnarray}%
-Define%
-\[
-\lambda =\bar{s}^{2}/\bar{S}^{2}\textrm{ and }\mu =\bar{\sigma}/\bar{S}^{2}
-\]%
-The last equation gives%
-\[
-\left( 1-\frac{1}{2}\theta \tau \right) \mu =\frac{1}{2}\theta \tau \frac{%
-\left( a\mu +\left( 1-a\right) \right) \left( a\lambda +\left( 1-a\right)
-\mu \right) }{a^{2}\lambda +\left( 1-a\right) ^{2}+2a\left( 1-a\right) \mu }
-\]%
 
-which is linear in $\lambda$; therefore%
+Note that if the distribution converges, $\bar{s}^{2}$ and $\bar{S}^{2}$
+must be above 1. Also, for $\bar{A}$ and $\bar{C}$ to have a real-valued
+solution, it must be that $a^{2}\bar{s}^{2}+(1-a)^{2}\bar{S}^{2}+2a(1-a)\bar{\sigma}>0$;
+using this,
+
+\[
+\bar{A}\bar{C}=\frac{a^{2}\bar{s}^{2}\bar{\sigma}+(1-a)^{2}\bar{S}^{2}\bar{\sigma}+a(1-a)(\bar{\sigma}^{2}+\bar{S}^{2}\bar{s}^{2})}{a^{2}\bar{s}^{2}+(1-a)^{2}\bar{S}^{2}+2a(1-a)\bar{\sigma}}>\bar{\sigma}\textrm{, by }\bar{\sigma}^{2}<\bar{S}^{2}\bar{s}^{2}.
+\]
+
+Since $\bar{A}\bar{C}>\bar{\sigma}$, $\frac{\theta\tau}{2}(\bar{\sigma}+\bar{A}\bar{C})>\theta\tau\bar{\sigma}$.
+If $\bar{\sigma}<0$ then $\bar{\sigma}=\frac{\theta\tau}{2}(\bar{\sigma}+\bar{A}\bar{C})>\theta\tau\bar{\sigma}>\bar{\sigma}$,
+a contradiction. Thus $\bar{\sigma}\ge0$. Also if $\bar{\sigma}=0$
+then 
+\[
+\bar{\sigma}=\frac{\theta\tau}{2}\left(\frac{a(1-a)(\bar{S}^{2}\bar{s}^{2})}{a^{2}\bar{s}^{2}+(1-a)^{2}\bar{S}^{2}}\right)
+\]
+which implies $a=0$ or $a=1$. This proves that $\bar{\sigma}$ is
+non-negative, and positive if $a\in(0,1)$, so long as the distribution
+converges.
+
+From the invariant distribution, first:
+
+\[
+\sigma\left(1-\frac{1}{2}\theta\tau\right)=\frac{\theta\tau}{2}\frac{\left(as^{2}+\left(1-a\right)\sigma\right)\left(a\sigma+\left(1-a\right)S^{2}\right)}{a^{2}s^{2}+\left(1-a\right)^{2}S^{2}+2a\left(1-a\right)\sigma}
+\]
+or
+\[
+\mu\left(1-\frac{1}{2}\theta\tau\right)=\frac{\theta\tau}{2}\frac{\left(a\lambda+\left(1-a\right)\mu\right)\left(a\mu+\left(1-a\right)\right)}{a^{2}\lambda+\left(1-a\right)^{2}+2a\left(1-a\right)\mu}
+\]
+where
+\[
+\lambda=s^{2}/S^{2}\text{ and }\mu=\sigma/S^{2}.
+\]
+Solving for $\lambda$ gives
 \begin{equation}
-\lambda =\frac{\mu \left( \frac{1}{2}\theta \tau -1\right) \left( \left(
-a-1\right) ^{2}-2a\mu \left( a-1\right) \right) -\frac{1}{2}\theta \tau \mu
-\left( a-1\right) \left( -a+a\mu +1\right) }{a^{2}\mu \left( 1-\frac{1}{2}%
-\theta \tau \right) -\frac{1}{2}a\theta \tau \left( 1-a+a\mu \right) }
-\label{Lamb}
+\lambda=\frac{1-a}{a}\mu\frac{\left(-2a+4a\mu-2\theta\tau+2a\theta\tau-3a\theta\tau\mu+2\right)\allowbreak}{\left(1-a\right)\theta\tau-2a\mu\left(1-\theta\tau\right)}\label{L}
 \end{equation}
 
-The first two give:%
-\begin{align*}
-& 1-\frac{1}{2}\theta ^{2}\left( \frac{\left( a\mu +\left( 1-a\right) \right)
-^{2}}{a^{2}\bar{s}^{2}+\left( 1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) 
-\bar{\sigma}}+1\right) \\
-= & \lambda -\frac{1}{2}\tau ^{2}\left( \frac{\left(
-a\lambda +\left( 1-a\right) \mu \right) ^{2}}{a^{2}\bar{s}^{2}+\left(
-1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma}}+\lambda \right) 
-\end{align*}
-
-where $\lambda $ is given by (\ref{Lamb}). This is equivalent to $F(\mu) =0$, 
-where 
-
-\begin{align*}
-F\left( \mu \right) =& \lambda - \frac{1}{2}\tau ^{2}\left( \frac{\left(
-a\lambda +\left( 1-a\right) \mu \right) ^{2}}{a^{2}\lambda +\left(
-1-a\right) ^{2}+2a\left( 1-a\right) \mu }+\lambda \right) - \\
-& \left( 1-\frac{1}{%
-2}\theta ^{2}\left( \frac{\left( a\mu +\left( 1-a\right) \right) ^{2}}{%
-a^{2}\lambda +\left( 1-a\right) ^{2}+2a\left( 1-a\right) \mu }+1\right)
-\right)
-\end{align*}
-
-This equation is quadratic in $\mu $; thus it has two closed form solutions,
-of which one, denoted $\phi \left( a,\theta ,\tau \right) $, is positive.
 Then
 \begin{align*}
-\lambda =& \psi \left( a,\theta ,\tau \right) \\
- =& \frac{\phi \left( a,\theta
-,\tau \right) \left( \frac{1}{2}\theta \tau -1\right) \left( \left(
-a-1\right) ^{2}-2a\phi \left( a,\theta ,\tau \right) \left( a-1\right)
-\right) -\frac{1}{2}\theta \tau \phi \left( a,\theta ,\tau \right) \left(
-a-1\right) \left( -a+a\phi \left( a,\theta ,\tau \right) +1\right) }{%
-a^{2}\phi \left( a,\theta ,\tau \right) \left( 1-\frac{1}{2}\theta \tau
-\right) -\frac{1}{2}a\theta \tau \left( 1-a+a\phi \left( a,\theta ,\tau
-\right) \right) } 
+s^{2}\left(1-\frac{1}{2}\tau^{2}\right) & =\frac{1}{2}A^{2}\tau^{2}+1\\
+S^{2}\left(1-\frac{1}{2}\theta^{2}\right) & =\frac{1}{2}C^{2}\theta^{2}+1
+\end{align*}
+give
+\begin{align*}
+s^{2}\left(1-\frac{1}{2}\tau^{2}\right)-\frac{1}{2}A^{2}\tau^{2} & =S^{2}\left(1-\frac{1}{2}\theta^{2}\right)-\frac{1}{2}C^{2}\theta^{2}\text{ therefore}\\
+\lambda\left(1-\frac{1}{2}\tau^{2}\right)-\frac{1}{2}\frac{A^{2}}{S^{2}}\tau^{2} & =\left(1-\frac{1}{2}\theta^{2}\right)-\frac{1}{2}\frac{C^{2}}{S^{2}}\theta^{2}
 \end{align*}
 
-Finally, the second equation in (\ref{FP}) gives
+Here
+\begin{align*}
+\frac{A^{2}}{S^{2}} & =\frac{\left(a\lambda+\left(1-a\right)\mu\right)^{2}}{D}\text{ \ and}\\
+\frac{C^{2}}{S^{2}} & =\frac{\left(a\mu+\left(1-a\right)\right)^{2}}{D},\\
+D & =a^{2}\lambda+\left(1-a\right)^{2}+2a\left(1-a\right)\mu
+\end{align*}
+which give a quadratic equation in $\mu$:
 \[
-1=\frac{1}{2}\theta ^{2}\left( \frac{\left( a\phi \left( a,\theta ,\tau
-\right) +\left( 1-a\right) \right) ^{2}}{a^{2}\psi \left( a,\theta ,\tau
-\right) +\left( 1-a\right) ^{2}+2a\left( 1-a\right) \phi \left( a,\theta
-,\tau \right) }+1\right) +\frac{1}{\bar{S}^{2}}
-\]%
-which gives $\bar{S}^{2}$, then $\bar{s}^{2}$ and $\bar{\sigma}$ follow.
+\lambda\left(1-\frac{1}{2}\tau^{2}\right)D-\frac{1}{2}\left(a\lambda+\left(1-a\right)\mu\right)^{2}\tau^{2}-\left(1-\frac{1}{2}\theta^{2}\right)D+\frac{1}{2}\left(a\mu+\left(1-a\right)\right)^{2}\theta^{2}=0
+\]
+Plugging in $\lambda$ given by (\ref{L}), this can be rewritten
+to
+\[
+F\left(\mu\right)=\frac{\left(1-a+a\mu\right)^{2}}{a}\frac{N\left(\mu\right)}{D\left(\mu\right)}=0
+\]
+where
+\[
+N\left(\mu\right)=X\mu^{2}+Y\mu+Z,\textrm{ with }X,Y,Z\textrm{ polynomials in }a,\theta,\tau
+\]
+and
+\[
+D\left(\mu\right)=\left(\theta\tau\left(1-a\right)-2a\mu\left(1-\theta\tau\right)\right)^{2}
+\]
+
+One can check that the discriminant is always positive. Therefore
+this has two solutions (not shown), of which only one is acceptable
+(it goes to the exact solution when the coefficient of $\mu^{2}$
+goes to 0). Writing 
+\[
+\mu=\phi_{1}(a,\theta,\tau)
+\]
+ for this solution:
+\[
+\lambda=\psi\left(a,\theta,\tau\right)=\frac{1-a}{a}\phi_{1}\left(a,\theta,\tau\right)\allowbreak\frac{\left(-2a+4a\phi_{1}\left(a,\theta,\tau\right)-2\theta\tau+2a\theta\tau-3a\theta\tau\phi_{1}\left(a,\theta,\tau\right)+2\right)}{\left(1-a\right)\theta\tau-2a\phi_{1}\left(a,\theta,\tau\right)\left(1-\theta\tau\right)}.
+\]
+
+Finally
+\begin{align*}
+S^{2} & =\frac{1}{1-\frac{1}{2}\theta^{2}-\frac{1}{2}\frac{C^{2}}{S^{2}}\theta^{2}}\text{ where}\\
+\frac{C^{2}}{S^{2}} & =\frac{\left(a\phi_{1}\left(a,\theta,\tau\right)+\left(1-a\right)\right)^{2}}{a^{2}\psi\left(a,\theta,\tau\right)+\left(1-a\right)^{2}+2a\left(1-a\right)\phi_{1}\left(a,\theta,\tau\right)}
+\end{align*}
+and
+\begin{align*}
+s^{2} & =\lambda S^{2}=\frac{\psi\left(a,\theta,\tau\right)}{1-\frac{1}{2}\theta^{2}-\frac{1}{2}\frac{C^{2}}{S^{2}}\theta^{2}};\\
+\sigma & =\mu S^{2}=\frac{\phi_{1}\left(a,\theta,\tau\right)}{1-\frac{1}{2}\theta^{2}-\frac{1}{2}\frac{C^{2}}{S^{2}}\theta^{2}}.
+\end{align*}
+
+Conditional expectations of children's genetics given parents' wealth under SGAM
+are calculated using the same formula as before, plugging in moments of the 
+asymptotic distribution:
+
+\[
+\mathbb{E}\left[ \frac{\tau }{2}\left( x_{1}+y_{1}\right) +\varepsilon \mid
+x_{2}=v,y_{2}=w\right]  = \frac{1}{2}\tau \frac{\bar{\sigma}+\bar{A}\bar{C}%
+}{\bar{C}^{2}+\bar{S}^{2}}\left( v+w\right)  
+\]
+
 \end{proof}
 
 
@@ -898,14 +924,14 @@ higher than $\theta$.
 \end{proof}
 
 \begin{proof}[Proof of Proposition \ref{prop-non-normal}]
-The correlation is signed by the covariance. Write $K$ for the set of couples
-in the parents' generation with typical member $k = (x,y)$. Without loss of generality
-let $x_1 \ge y_1$. Then, since the iso-attractiveness curves defined by 
-$f$ are downward-sloping, $x_2 \le y_2$. (If $a = 1$ then $x_1 = y_1$; pick $x$ so 
-that $x_2 \le y_2$.) Also, for $a \in (0,1)$, if
-$x_1 > y_1$ then $x_2 < y_2$.
+Without loss of generality let $Ex_1 = Ex_2 = 0$. The correlation is signed by
+the covariance. Write $K$ for the set of couples in the parents' generation with
+typical member $k = (x,y)$. Without loss of generality let $x_1 \ge y_1$. Then,
+since the iso-attractiveness curves defined by $f$ are downward-sloping, 
+$x_2 \le y_2$. (If $a = 1$ then $x_1 = y_1$; pick $x$ so that $x_2 \le y_2$.) Also,
+for $a \in (0,1)$, if $x_1 > y_1$ then $x_2 < y_2$.
 
-Since $Ex = Ey = 0$, the covariance among the parents' generation is
+Since $Ex_1 = Ex_2 = 0$, the covariance among the parents' generation is
 
 \[
 \int_K (x_1x_2 + y_1y_2)/2 \ dk

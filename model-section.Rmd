@@ -404,8 +404,11 @@ x_2
 \end{array}%
 \right) 
 \]
-
-The covariance $\bar{\sigma} \ge 0$ and is strictly positive so long as $0 < a < 1$.
+Moreover, the asymptotic correlation between characteristics, 
+$corr = \sigma/s*S$, is non-negative, positive for $0 < a < 1$, 
+increasing in $\theta$ and increasing then decreasing in $a$. 
+The coefficient of parents' wealth on children's genetics is also positive 
+for $0 < a < 1$.
 
 For $\theta = 1$, the dynamics diverge and $S^{2}$ goes to $+\infty$; for 
 $\tau = 1$, the dynamics diverges and $s^{2}$ goes to $+\infty$.
@@ -413,27 +416,11 @@ $\tau = 1$, the dynamics diverges and $s^{2}$ goes to $+\infty$.
 \end{proposition}
 
 
-Conditional expectations of children's genetics given parents' wealth under SGAM
-are calculated using the same formula as before, plugging in moments of the 
-asymptotic distribution:
 
-\begin{eqnarray}
-\mathbb{E}\left[ \frac{\tau }{2}\left( x_{1}+y_{1}\right) +\varepsilon \mid
-x_{2}=v,y_{2}=w\right]  &=&\frac{1}{2}\tau \frac{\bar{\sigma}+\bar{A}\bar{C}%
-}{\bar{C}^{2}+\bar{S}^{2}}\left( v+w\right)  \\
-&=&\mu \frac{\theta \bar{S}^{2}}{2\bar{S}^{2}-2}\left( v+w\right) 
-\end{eqnarray}
+Figure \@ref(fig:pic-asymptotic-corr) plots the asymptotic correlation
+between $x_1$ and $x_2$ for $\tau = 0.95$.
 
-XXX double check the above, esp. that $v+w$ belongs on line 2 (you added it)
-
-The asymptotic correlation between characteristics is:
-\[
-Corr=\frac{\sigma }{sS}=\frac{\mu }{\sqrt{\lambda }}=\frac{\phi \left(
-a,\theta ,\tau \right) }{\sqrt{\psi \left( a,\theta ,\tau \right) }}
-\]
-Figure \@ref(fig:pic-asymptotic-corr) plots this for $\tau = 0.95$.
-
-```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between $x_1$ and $x_2$, by $a$ and $\\theta$", dpi = 144}
+```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between $x_1$ and $x_2$, by $a$ and $\\theta$", dpi = 300, out.height="3in"}
 
 
 D <- function (a, lambda, mu) {
@@ -479,16 +466,11 @@ corr <- function (theta, a) {
   
   return(corr)
 }
-# 
-# um <- matrix(c(0.63775003,  -0.7701848, -0.009502447, 0,
-#                0.04336312,   0.0235839,  0.998780727, 0,
-#               -0.76902151,  -0.6373846,  0.048438177, 0,
-#                0, 0, 0, 1), 
-#              4, 4, byrow = TRUE)
+
 invisible(rgl::open3d(
               userMatrix = rgl::rotate3d(rgl::r3dDefaults$userMatrix, 
                                          angle = 45, x = 0, y = 0, z = 1),
-              zoom = 0.8
+              zoom = 1.1
             ))
 rgl::plot3d(
              Vectorize(corr),
@@ -590,8 +572,10 @@ marriage market, are likely to vary across societies. Social status could
 encompass variables like social class or caste; ethnic identity in
 "ranked" ethnic systems; or in modern societies, SES, including wealth, income
 and occupation. Regarding genetics, standards of physical attractiveness, and
-other characteristics which make someone a "good match", vary across societies
-and over time.
+other genetically-influenced characteristics which make someone a "good match", 
+vary across societies and over time. By the logic of the model,
+for any such characteristics, a positive correlation between these characteristics
+and SES will emerge in the long run.
 
 Recent empirical work shows high persistence of SES over time, in particular at
 the top. @clark2021bell argues that this is due to unobserved genetic variation.

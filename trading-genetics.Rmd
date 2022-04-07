@@ -404,7 +404,7 @@ controls, including non-SES mediators, and a rich set of own genetic traits.
 Our paper contributes to several literatures. Firstly, we study a new
 kind of assortative mating. The economics literature on matching in
 marriage markets has typically focused on educational similarities 
-[e.g. @pencavel1998assortative] or social class or caste 
+[e.g. @pencavel1998assortative; @chiappori2017partner] or social class or caste 
 [e.g. @abramitzky2011marrying; @banerjee2013marry], but also sorting based on age,
 physical traits and ethnicity [@hitsch2010matching]. Matching decisions on the
 marriage market have also been shown to follow multiple criteria, with some
@@ -444,8 +444,8 @@ on child wealth, genetics is a *confound*; under SGAM, it may also be a
 *mediator*.
 
 SGAM also affects cross-sectional inequality, like other forms of assortative
-mating [@fernandez2001sorting; @fernandez2005love; @eika2019educational]. We
-know that there is a "genes-SES gradient": people with high and low SES have
+mating [@fernandez2001sorting; @fernandez2005love; @eika2019educational; @chiappori2018marriage]. 
+We know that there is a "genes-SES gradient": people with high and low SES have
 different genes. From twin studies, the heritability of occupational class and
 educational attainment, i.e. the proportion of variance explained by genetic
 differences between individuals, is around 50% [@Tambs_1989]. Genome-wide
@@ -906,8 +906,6 @@ plus other environmental variables that correlate with it, on own social
 status and spouse's genetics. Also, if the estimated effect of birth
 order on spouse's PSEA changes when SES is controlled for, that is
 evidence that SES mediates the effect of birth order.
-
-XXX connect to theory here?
 
 We follow @heckman2013understanding to decompose the aggregate treatment
 effect into components due to observed and unobserved proximate channels
