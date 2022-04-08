@@ -509,6 +509,10 @@ unless $a = b = 0$ or $a = b = 1$. The correlation is increasing in $\theta$.
 
 \end{claim}
 
+Interestingly, the $x_1$-$x_2$ correlation is highest when $a$ and $b$ are most
+different from each other. So gender differences in what counts as attractive
+make the effects of SGAM stronger.
+
 Second, in modern meritocracies, people's adult SES depends not just 
 on their parents' social status and on chance, but also on their own effort and
 skills, which might be related to their genetics. So, let
