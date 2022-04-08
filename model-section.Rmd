@@ -521,7 +521,9 @@ x^\prime_1 &= \tau \frac{x_{1} + y_{1}}{2} + \varepsilon   \nonumber \\
 x^\prime_2 &= \gamma x^\prime_1 + \theta \frac{x_{2}+y_{2}}{2}+\eta \label{eqn-gamma}
 \end{align}
 where $\gamma > 0$ represents the effect of own genetics on own SES. 
-The basic result continues to hold:
+The basic result continues to hold, and also, the degree of meritocracy $\gamma$ 
+increases the correlation between genes and SES; a highly meritocratic
+society may in the long run lead to a highly unfair genes-SES gradient.
 
 \begin{proposition}\label{prop-gamma}
 Under SGAM and equation \eqref{eqn-gamma}, if genetics and SES are 
@@ -555,8 +557,9 @@ Let attractiveness be given by \eqref{non-linear-f}. Let $(x_1, x_2)$ have
 any distribution such that a positive measure of the population has
 $i(x) = i$ where the conditional distribution of $(x_1, x_2)|i(x) = i$ is 
 non-degenerate. Let $\eta$ and $\varepsilon$ be mean 0 and independent of
-$x$. If genetics and SES are uncorrelated for the parents, then
-the correlation among children is non-negative, and strictly positive if $0 < a < 1$.
+$x$ and each other. If genetics and SES are uncorrelated for the parents, then
+the correlation among children is non-negative, and strictly positive if 
+$0 < a < 1$.
 \end{proposition}
 
 Other extensions are possible. We assumed that all couples have the same number
@@ -565,7 +568,9 @@ reduce the variance of traits in the children's generation and possibly also
 their covariance. Here, matching preferences, as summarized in the $a$ parameter,
 are exogenous. It would be natural to model $a$ as an equilibrium outcome.
 For example, if parents care about their children's wealth, $a$ might decrease
-in $\theta$ and increase in $\gamma$.
+in $\theta$ and increase in $\gamma$. Lastly, a gene-environment *interaction*
+(e.g. $x^\prime_2 = \alpha x_2 x_1$) might increase the gene-environment
+correlation some more.
 
 
 ## Discussion
@@ -577,9 +582,8 @@ encompass variables like social class or caste; ethnic identity in
 "ranked" ethnic systems; or in modern societies, SES, including wealth, income
 and occupation. Regarding genetics, standards of physical attractiveness, and
 other genetically-influenced characteristics which make someone a "good match", 
-vary across societies and over time. By the logic of the model,
-for any such characteristics, a positive correlation between these characteristics
-and SES will emerge in the long run.
+vary across societies and over time. By the logic of the model, in the long run,
+a positive correlation will emerge between any such characteristics and SES.
 
 Recent empirical work shows high persistence of SES over time, in particular at
 the top. @clark2021bell argues that this is due to unobserved genetic variation.

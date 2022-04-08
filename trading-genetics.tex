@@ -98,6 +98,7 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 \usepackage{subfig}
+\captionsetup[subfloat]{labelformat=empty}
 \usepackage{setspace}\doublespacing
 \usepackage{amsmath}
 \usepackage{amsthm}
@@ -131,7 +132,7 @@ UK. Email: O.Borcan@uea.ac.uk},
 Pierre Chiappori\thanks{Department of Economics, University of Columbia, New York. Email: pc2167@columbia.edu} \&
 David Hugh-Jones\thanks{Corresponding author. School of Economics, 
 University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}}
-\date{2022-04-07}
+\date{2022-04-08}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -157,7 +158,7 @@ If socio-economic status (SES) and genetic variants are both assets in marriage
 markets, then the two will become associated in spouse pairs, and will be
 passed on together to future generations. This process provides a new
 explanation for the surprising persistence of inequality across generations,
-and for the ``genes-SES gradient'' (the genetic differences we observe between
+and for the genes-SES gradient (the genetic differences we observe between
 high- and low-income people). We model Social-Genetic Assortative Mating
 (SGAM) and test for its existence in a large genetically-informed survey. We
 compare spouses of individuals with different birth order, which is known to
@@ -251,15 +252,15 @@ the causal effect of SES on the spouse's genetic endowment. For instance,
 individuals with high education qualifications tend to also have high
 educational attainment genes, and as mentioned above, they may take partners
 based on genomic similarity. Indeed, recent studies show strong assortative
-mating on polygenic scores for educational attainment, much more than we would
-expect if spouses matched only on (our observed measures of) actual educational
-attainment (Okbay et al. 2022). In order to isolate the causal link from own
-SES to partner genes, we use the ``accident of birth'' as a shock to SES which is
-independent of own genetics. Specifically, we use an individual's birth order as a
-``treatment'' which affects their partner choice through a range of mechanisms,
-including by affecting their own SES. It is well documented that earlier-born
-children enjoy higher parental investment and have better life outcomes,
-including measures of SES such as educational attainment and occupational status
+mating on PSEA, much more than we would expect if spouses matched only on (our
+observed measures of) actual educational attainment (Okbay et al. 2022). To
+isolate the causal link from own SES to partner genes, we use the
+``accident of birth'' as a shock to SES which is independent of own genetics.
+Specifically, we use an individual's birth order as a ``treatment'' which affects
+their partner choice through a range of mechanisms, including by affecting their
+own SES. It is well documented that earlier-born children enjoy higher parental
+investment and have better life outcomes, including measures of SES such as
+educational attainment and occupational status
 (Black, Devereux, and Salvanes 2011; Booth and Kee 2009; Lindahl 2008). At the same time, the facts of
 biology, in particular the so-called ``lottery of meiosis'', guarantee that
 siblings' birth order is independent of their genetic endowments.
@@ -284,18 +285,16 @@ income explains about 10-13\%. Thus, SES appears to mediate the effect of birth
 order on spouse genetics. The results are robust to the inclusion of several
 controls, including non-SES mediators, and a rich set of own genetic traits.
 
-Our paper contributes to several literatures. Firstly, we study a new
-kind of assortative mating. The economics literature on matching in
-marriage markets has typically focused on educational similarities
-(e.g. Pencavel 1998; Chiappori, Salanié, and Weiss 2017) or social class or caste
-(e.g. Abramitzky, Delavande, and Vasconcelos 2011; Banerjee et al. 2013), but also sorting based on age,
+Our paper contributes to several literatures. Firstly, we study a new kind of
+assortative mating. The economics literature on matching in marriage markets has
+typically focused on educational similarities (e.g. Pencavel 1998; Chiappori, Salanié, and Weiss 2017) or social class or caste (e.g. Abramitzky, Delavande, and Vasconcelos 2011; Banerjee et al. 2013), but also sorting based on age,
 physical traits and ethnicity (Hitsch, Hortaçsu, and Ariely 2010). Matching decisions on the
-marriage market have also been shown to follow multiple criteria, with some
-degree of substitutability between them.\footnote{Oreffice and Quintana-Domeque (2010) show that height and BMI are associated
+marriage market follow multiple criteria, with some degree of substitutability
+between them.\footnote{Oreffice and Quintana-Domeque (2010) show that height and BMI are associated
   with spouse earnings. Dupuy and Galichon (2014) find spouse matching on multiple
-  independent dimensions, including education, height, BMI and personality.} For instance, Chiappori, Oreffice, and Quintana-Domeque (2012)
-showed that individuals trade off BMI for partners' income or education and that
-the marginal rate of substitution between these characteristics is different for
+  independent dimensions, including education, height, BMI and personality.} For instance, Chiappori, Oreffice, and Quintana-Domeque (2012) showed that
+individuals trade off BMI for partners' income or education and that the
+marginal rate of substitution between these characteristics is different for
 males and females. The genetics literature has focused on genetic assortative
 mating (GAM), the phenomenon that people with similar genes marry each other.
 Recent research has confirmed the long-standing conjecture that GAM takes place
@@ -353,10 +352,9 @@ communism in Estonia, the heritability of SES increased, presumably because
 post-communist society allowed higher returns to talent (Rimfeld et al. 2018). By
 contrast, SGAM does not require meritocracy. Even when social status is entirely
 ascribed, it may still become associated with certain genetic variants, so long
-as their associated phenotypes (and not only status) are prized assets in
-marriage markets. Since meritocracy is historically rare, while assortative
-mating is universal, this suggests that genes-SES gradients are likely to be
-historically widespread.
+as their associated phenotypes are prized assets in marriage markets. Since
+meritocracy is historically rare, while assortative mating is universal, this
+suggests that genes-SES gradients are likely to be historically widespread.
 
 Both meritocracy and SGAM may increase social inequality overall, if there are
 complementarities between genetic and environmental components of human capital,
@@ -387,7 +385,7 @@ between SES and genetics. If so, institutional reforms that increase
 \emph{intergenerational mobility}, like mass education or inheritance taxation, may
 in the long run affect not only economic but genetic inequality. Conversely, an
 increase in \emph{economic meritocracy} increases the association between SES and
-genetics in the long run. This poses the problem raised first by
+genetics in the long run.\footnote{See Proposition \ref{prop-gamma} below.} This poses the problem raised first by
 Young (1958), and more recently by Markovits (2019): meritocracy
 may be self-limiting or even self-undermining.
 
@@ -403,8 +401,7 @@ that attractive mate characteristics include aspects of social status (``high
 earning capacity,'' ``professional status'') as well as traits that are partly
 under genetic influence (``intelligent,'' ``tall,'' ``kind,'' ``physically
 attractive''). Despite this, we have found almost no previous work in genetics,
-economics or the social sciences more broadly that analyses SGAM or its
-consequences.\footnote{Halsey (1958) showed in a two-class model that social mobility combined
+economics or the social sciences that analyses SGAM or its consequences.\footnote{Halsey (1958) showed in a two-class model that social mobility combined
   with assortative mating might increase the association between genetics and
   social class. Belsky et al. (2018) offer three reasons for the association between
   education-linked genetics and SES, but do not consider SGAM.}
@@ -725,8 +722,8 @@ increasing in $\theta$ and increasing then decreasing in $a$.
 The coefficient of parents' wealth on children's genetics is also positive 
 for $0 < a < 1$.
 
-For $\theta = 1$, the dynamics diverge and $S^{2}$ goes to $+\infty$; for 
-$\tau = 1$, the dynamics diverges and $s^{2}$ goes to $+\infty$.
+For $\theta = 1$, the dynamics diverge and $\bar{S}^{2}$ goes to $+\infty$; for 
+$\tau = 1$, the dynamics diverges and $\bar{s}^{2}$ goes to $+\infty$.
 
 \end{proposition}
 
@@ -766,6 +763,10 @@ unless $a = b = 0$ or $a = b = 1$. The correlation is increasing in $\theta$.
 
 \end{claim}
 
+Interestingly, the \(x_1\)-\(x_2\) correlation is highest when \(a\) and \(b\) are most
+different from each other. So gender differences in what counts as attractive
+make the effects of SGAM stronger.
+
 Second, in modern meritocracies, people's adult SES depends not just
 on their parents' social status and on chance, but also on their own effort and
 skills, which might be related to their genetics. So, let
@@ -774,7 +775,9 @@ x^\prime_1 &= \tau \frac{x_{1} + y_{1}}{2} + \varepsilon   \nonumber \\
 x^\prime_2 &= \gamma x^\prime_1 + \theta \frac{x_{2}+y_{2}}{2}+\eta \label{eqn-gamma}
 \end{align}
 where \(\gamma > 0\) represents the effect of own genetics on own SES.
-The basic result continues to hold:
+The basic result continues to hold, and also, the degree of meritocracy \(\gamma\)
+increases the correlation between genes and SES; a highly meritocratic
+society may in the long run lead to a highly unfair genes-SES gradient.
 
 \begin{proposition}\label{prop-gamma}
 Under SGAM and equation \eqref{eqn-gamma}, if genetics and SES are 
@@ -808,8 +811,9 @@ Let attractiveness be given by \eqref{non-linear-f}. Let $(x_1, x_2)$ have
 any distribution such that a positive measure of the population has
 $i(x) = i$ where the conditional distribution of $(x_1, x_2)|i(x) = i$ is 
 non-degenerate. Let $\eta$ and $\varepsilon$ be mean 0 and independent of
-$x$. If genetics and SES are uncorrelated for the parents, then
-the correlation among children is non-negative, and strictly positive if $0 < a < 1$.
+$x$ and each other. If genetics and SES are uncorrelated for the parents, then
+the correlation among children is non-negative, and strictly positive if 
+$0 < a < 1$.
 \end{proposition}
 
 Other extensions are possible. We assumed that all couples have the same number
@@ -818,7 +822,9 @@ reduce the variance of traits in the children's generation and possibly also
 their covariance. Here, matching preferences, as summarized in the \(a\) parameter,
 are exogenous. It would be natural to model \(a\) as an equilibrium outcome.
 For example, if parents care about their children's wealth, \(a\) might decrease
-in \(\theta\) and increase in \(\gamma\).
+in \(\theta\) and increase in \(\gamma\). Lastly, a gene-environment \emph{interaction}
+(e.g.~\(x^\prime_2 = \alpha x_2 x_1\)) might increase the gene-environment
+correlation some more.
 
 \hypertarget{discussion}{%
 \subsection{Discussion}\label{discussion}}
@@ -829,9 +835,8 @@ encompass variables like social class or caste; ethnic identity in
 ``ranked'' ethnic systems; or in modern societies, SES, including wealth, income
 and occupation. Regarding genetics, standards of physical attractiveness, and
 other genetically-influenced characteristics which make someone a ``good match'',
-vary across societies and over time. By the logic of the model,
-for any such characteristics, a positive correlation between these characteristics
-and SES will emerge in the long run.
+vary across societies and over time. By the logic of the model, in the long run,
+a positive correlation will emerge between any such characteristics and SES.
 
 Recent empirical work shows high persistence of SES over time, in particular at
 the top. Clark (2021) argues that this is due to unobserved genetic variation.
@@ -965,13 +970,13 @@ within-siblings regression among genetic full siblings (N =
 4.5 (\(p < 2 \times 10^{-16}\)). This suggests
 that about half of the raw correlation of PSEA with university attendance is
 down to confounds like good environments or parental nurture, while the
-remainder is causal. Nevertheless, the causal effect remains substantial: for a
+remainder is causal. Still, the causal effect remains substantial: for a
 rough comparison, the (ITT) effect on college attendance of the Moving To
 Opportunity experiment in the US was 2.5 percentage points (Chetty, Hendren, and Katz 2016).
 
 We use two measures of socio-economic status: income, and university attendance.
 Income is a direct measure of SES. University attendance is a predictor of
-income over the whole life course, and a form of SES itself. The UK Biobank data
+income over the whole life course, and a form of SES in itself. The UK Biobank data
 only contains a direct measure of current household income, which is
 inappropriate for our purposes because it includes income from both spouses and
 is measured after marriage. Instead, we estimate income in £000s in the respondent's
@@ -1014,18 +1019,20 @@ We use \emph{birth order}. It is known that earlier-born children receive more
 parental care and have better life outcomes, including measures of SES such as
 educational attainment and occupational status (Lindahl 2008; Booth and Kee 2009; Black, Devereux, and Salvanes 2011). On the other hand, all full siblings have the same \emph{ex ante}
 expected genetic endowment from their parents, irrespective of their birth
-order. For example, siblings' expected polygenic score is equal to the mean of
+order. This is guaranteed by the biological mechanism of meiosis, which ensures
+that any gene is transmitted from either the mother or the father to the
+child, with independent 50\% probability (Mendel 1865; Lawlor et al. 2008).
+For example, siblings' expected polygenic score is equal to the mean of
 their parents' polygenic scores.\footnote{Although genetic variation is randomly assigned to children at
   birth, genetics and birth order could be dependent if parents'
   choice of whether to have more children is endogenous to the genetic
   endowment of their earlier children. We check for this below.
   Isungset et al. (2021) also find that birth order differences in education are
   not genetic.} We can therefore use birth order as a
-``shock'' to social status. Despite this language, we do not claim that birth
+``shock'' to social status. We put ``shock'' in quotes because we do not claim that birth
 order is exogenous to all other variables. For example, it naturally correlates
-with parental age, and it may also be related to the family's economic position at
-the time of birth. We only claim that birth order is exogenous to genetic
-variation.
+with parental age, and it may also correlate with household SES at the time of
+birth. We only claim that birth order is exogenous to genetic variation.
 
 Our main independent variable is respondents' birth order, i.e.~their
 number of elder siblings plus one. For controls we use family size, i.e.
@@ -2696,45 +2703,45 @@ Start by characterizing the invariant distribution. This must satisfy:%
 \[
 \left( 
 \begin{array}{cc}
-\bar{s}^{2} & \bar{\sigma} \\ 
-\bar{\sigma} & \bar{S}^{2}%
+s^{2} & \sigma \\ 
+\sigma & S^{2}%
 \end{array}%
 \right) =\left( 
 \begin{array}{cc}
-\frac{1}{2}\tau ^{2}\left( \bar{A}^{2}+\bar{s}^{2}\right) +1 & \frac{1}{2}%
-\theta \tau \left( \bar{\sigma}+\bar{A}\bar{C}\right)  \\ 
-\frac{1}{2}\theta \tau \left( \bar{\sigma}+\bar{A}\bar{C}\right)  & \frac{1}{%
-2}\theta ^{2}\left( \bar{C}^{2}+\bar{S}^{2}\right) +1%
+\frac{1}{2}\tau ^{2}\left( A^{2}+s^{2}\right) +1 & \frac{1}{2}%
+\theta \tau \left( \sigma+AC\right)  \\ 
+\frac{1}{2}\theta \tau \left( \sigma+AC\right)  & \frac{1}{%
+2}\theta ^{2}\left( C^{2}+S^{2}\right) +1%
 \end{array}%
 \right) \allowbreak 
 \]%
 where%
 \begin{eqnarray*}
-\bar{A} &=&\frac{a\bar{s}^{2}+\left( 1-a\right) \bar{\sigma}}{\sqrt{a^{2}%
-\bar{s}^{2}+\left( 1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma%
+A &=&\frac{as^{2}+\left( 1-a\right) \sigma}{\sqrt{a^{2}%
+s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \bar{\sigma%
 }}}\textrm{ \ and} \\
-\bar{C} &=&\frac{a\bar{\sigma}+\left( 1-a\right) \bar{S}^{2}}{\sqrt{a^{2}%
-\bar{s}^{2}+\left( 1-a\right) ^{2}\bar{S}^{2}+2a\left( 1-a\right) \bar{\sigma%
+C &=&\frac{a\sigma+\left( 1-a\right) S^{2}}{\sqrt{a^{2}%
+s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \bar{\sigma%
 }}},
 \end{eqnarray*}%
 
-Note that if the distribution converges, $\bar{s}^{2}$ and $\bar{S}^{2}$
-must be above 1. Also, for $\bar{A}$ and $\bar{C}$ to have a real-valued
-solution, it must be that $a^{2}\bar{s}^{2}+(1-a)^{2}\bar{S}^{2}+2a(1-a)\bar{\sigma}>0$;
+Note that if the distribution converges, $s^{2}$ and $S^{2}$
+must be above 1. Also, for $A$ and $C$ to have a real-valued
+solution, it must be that $a^{2}s^{2}+(1-a)^{2}S^{2}+2a(1-a)\sigma>0$;
 using this,
 
 \[
-\bar{A}\bar{C}=\frac{a^{2}\bar{s}^{2}\bar{\sigma}+(1-a)^{2}\bar{S}^{2}\bar{\sigma}+a(1-a)(\bar{\sigma}^{2}+\bar{S}^{2}\bar{s}^{2})}{a^{2}\bar{s}^{2}+(1-a)^{2}\bar{S}^{2}+2a(1-a)\bar{\sigma}}>\bar{\sigma}\textrm{, by }\bar{\sigma}^{2}<\bar{S}^{2}\bar{s}^{2}.
+AC=\frac{a^{2}s^{2}\sigma+(1-a)^{2}S^{2}\sigma+a(1-a)(\sigma^{2}+S^{2}s^{2})}{a^{2}s^{2}+(1-a)^{2}S^{2}+2a(1-a)\sigma}>\sigma\textrm{, by }\sigma^{2}<S^{2}s^{2}.
 \]
 
-Since $\bar{A}\bar{C}>\bar{\sigma}$, $\frac{\theta\tau}{2}(\bar{\sigma}+\bar{A}\bar{C})>\theta\tau\bar{\sigma}$.
-If $\bar{\sigma}<0$ then $\bar{\sigma}=\frac{\theta\tau}{2}(\bar{\sigma}+\bar{A}\bar{C})>\theta\tau\bar{\sigma}>\bar{\sigma}$,
-a contradiction. Thus $\bar{\sigma}\ge0$. Also if $\bar{\sigma}=0$
+Since $AC>\sigma$, $\frac{\theta\tau}{2}(\sigma+AC)>\theta\tau\sigma$.
+If $\sigma<0$ then $\sigma=\frac{\theta\tau}{2}(\sigma+AC)>\theta\tau\sigma>\sigma$,
+a contradiction. Thus $\sigma\ge0$. Also if $\sigma=0$
 then 
 \[
-\bar{\sigma}=\frac{\theta\tau}{2}\left(\frac{a(1-a)(\bar{S}^{2}\bar{s}^{2})}{a^{2}\bar{s}^{2}+(1-a)^{2}\bar{S}^{2}}\right)
+\sigma=\frac{\theta\tau}{2}\left(\frac{a(1-a)(S^{2}s^{2})}{a^{2}s^{2}+(1-a)^{2}S^{2}}\right)
 \]
-which implies $a=0$ or $a=1$. This proves that $\bar{\sigma}$ is
+which implies $a=0$ or $a=1$. This proves that $\sigma$ is
 non-negative, and positive if $a\in(0,1)$, so long as the distribution
 converges.
 
@@ -2820,8 +2827,8 @@ asymptotic distribution:
 
 \[
 \mathbb{E}\left[ \frac{\tau }{2}\left( x_{1}+y_{1}\right) +\varepsilon \mid
-x_{2}=v,y_{2}=w\right]  = \frac{1}{2}\tau \frac{\bar{\sigma}+\bar{A}\bar{C}%
-}{\bar{C}^{2}+\bar{S}^{2}}\left( v+w\right)  
+x_{2}=v,y_{2}=w\right]  = \frac{1}{2}\tau \frac{\sigma+AC%
+}{C^{2}+S^{2}}\left( v+w\right)  
 \]
 
 \end{proof}
@@ -5475,6 +5482,9 @@ Kristensen, Petter, and Tor Bjerkedal. 2007. {``Explaining the Relation Between 
 \leavevmode\vadjust pre{\hypertarget{ref-krueger2012rise}{}}%
 Krueger, Alan. 2012. {``The Rise and Consequences of Inequality.''} \emph{Presentation Made to the Center for American Progress, January 12th}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-lawlor2008mendelian}{}}%
+Lawlor, Debbie A, Roger M Harbord, Jonathan AC Sterne, Nic Timpson, and George Davey Smith. 2008. {``Mendelian Randomization: Using Genes as Instruments for Making Causal Inferences in Epidemiology.''} \emph{Statistics in Medicine} 27 (8): 1133--63.
+
 \leavevmode\vadjust pre{\hypertarget{ref-lee2018gene}{}}%
 Lee, James J, Robbee Wedow, Aysu Okbay, Edward Kong, Omeed Maghzian, Meghan Zacher, Tuan Anh Nguyen-Viet, et al. 2018. {``Gene Discovery and Polygenic Prediction from a Genome-Wide Association Study of Educational Attainment in 1.1 Million Individuals.''} \emph{Nature Genetics} 50 (8): 1112--21.
 
@@ -5486,6 +5496,9 @@ Markovits, Daniel. 2019. \emph{The Meritocracy Trap}. Penguin UK.
 
 \leavevmode\vadjust pre{\hypertarget{ref-marx1844economic}{}}%
 Marx, Karl. 1844. {``Economic and Philosophical Manuscripts.''} \emph{Early Writings} 333.
+
+\leavevmode\vadjust pre{\hypertarget{ref-mendel1865experiments}{}}%
+Mendel, Gregor. 1865. {``Experiments in Plant Hybridization.''}
 
 \leavevmode\vadjust pre{\hypertarget{ref-ONS2007ASHE}{}}%
 National Statistics, Office for. 2007. {``Annual Survey of Hours and Earnings.''} \url{https://webarchive.nationalarchives.gov.uk/20160108022706/http://www.ons.gov.uk/ons/rel/ashe/annual-survey-of-hours-and-earnings/2007-results/index.html}.
