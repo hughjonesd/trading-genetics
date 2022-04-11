@@ -1347,10 +1347,9 @@ tbl_note <- paste("Percentage of the effects of birth order in Table",
 
 as_huxtable(med_matrix, add_colnames = TRUE, add_rownames = "") %>% 
       theme_article() %>% 
+      add_footnote(tbl_note) %>% 
       set_escape_contents(final(1), everywhere, FALSE) %>% 
       set_width(0.7) %>% 
-      set_align(-1, -1, ".") %>% 
-      add_footnote(tbl_note) %>% 
       set_caption(
         "Percent of birth order effects accounted for by mediators, models 2-4"
       )  
