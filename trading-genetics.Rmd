@@ -83,7 +83,9 @@ regression_subset <- function (data) {
            ! is.na(birth_order.x),
            ! is.na(height.x),
            ! is.na(fluid_iq.x),
-           ! is.na(university.x)
+           ! is.na(university.x),
+           ! is.na(bmi.x),
+           ! is.na(sr_health.x)
            # we don't demand first_job_pay.x is not NA, that would 
            # shrink the N by a lot
          )
@@ -133,6 +135,8 @@ famhist$EA3 <- famhist$EA3_excl_23andMe_UK_resid
 
 mf_pairs_reg <- regression_subset(mf_pairs_twice)
 
+my_note <- "{stars}. Standard errors: robust."
+
 # for p values
 my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
 
@@ -155,7 +159,7 @@ fml_bo_psea <- lapply(fml_bo_psea, update,
 
 # alternative mediators
 fml_bo_psea[-1] <- lapply(fml_bo_psea[-1], update,
-                            . ~ . + fluid_iq.x + height.x)
+                            . ~ . + fluid_iq.x + height.x + bmi.x + sr_health.x)
 
 # basic tidy args
 # tidy_args <- list(se = "cluster", cluster = "couple_id", conf.int = FALSE)
@@ -1030,6 +1034,9 @@ fml_bo_1st[["University"]] <- update(fml_bo_psea[[1]], university.x ~ . )
 fml_bo_1st[["Income"]] <- update(fml_bo_psea[[1]], first_job_pay.x ~ .)
 fml_bo_1st[["Fluid IQ"]] <- update(fml_bo_psea[[1]], fluid_iq.x ~ . )
 fml_bo_1st[["Height"]] <- update(fml_bo_psea[[1]], height.x ~ .)
+fml_bo_1st[["BMI"]] <- update(fml_bo_psea[[1]], bmi.x ~ .)
+fml_bo_1st[["Health"]] <- update(fml_bo_psea[[1]], sr_health.x ~ .)
+
 mod_bo_1st <- purrr::map(fml_bo_1st, fixest::feols, data = mf_pairs_reg, 
                            notes = FALSE)
 
@@ -1037,9 +1044,9 @@ coef_bo <- purrr::map(mod_bo_1st, tidy) %>%
              purrr::map(filter, term == "birth_order.x") %>% 
              purrr::map_dbl("estimate")
 
-my_note <- "{stars}. Standard errors: robust."
 tbl_note <- paste("Estimates from OLS regressions with the ",
-"mediators (university attendance, income, fluid IQ and height) as dependent",
+"mediators (university attendance, income, fluid IQ, height, BMI, self-reported",
+"health) as dependent",
 "variables, and own birth order as the main independent variable. PSEA is the",
 "polygenic score for educational attainment, which is normalized with mean 0 and",
 "standard deviation 1. We include parents' age at birth (the mean of parents'", 
@@ -1061,13 +1068,13 @@ huxreg(mod_bo_1st,
          stars = my_stars,
          tidy_args = tidy_args
        ) %>% 
-       insert_row(after = 7, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 8, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 9, "Birth year dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 7, "Family size dummies", rep("Yes", 6)) %>% 
+       insert_row(after = 8, "Birth month dummies", rep("Yes", 6)) %>% 
+       insert_row(after = 9, "Birth year dummies", rep("Yes", 6)) %>% 
        set_bottom_border(8:9, everywhere, 0) %>% 
        set_align(8:10, -1, "center") %>% 
        set_number_format(2:7, -1, 4) %>% 
-       set_width(0.9) %>% 
+       set_width(1) %>% 
        set_caption("Regressions of variables on birth order")
        
 ```
@@ -1075,16 +1082,19 @@ huxreg(mod_bo_1st,
 
 We first regress our measures of socio-economic status, university attendance
 and income from first job, on birth order in our sample. We also do the same for
-two non-SES mediators that could be affected by birth order: fluid IQ and height.
-We control for respondent's own PSEA and their parents' age at birth (see below).
-Table \@ref(tab:tbl-bo-first-stage) shows that birth order significantly
-predicts all these variables. Effect sizes are quite substantial: a single extra
-elder sibling reduces the chance of attending university by about 
+four non-SES mediators that could be affected by birth order: fluid IQ, height,
+body mass index (BMI) and a measure of self-reported health. We control for
+respondent's own PSEA and their parents' age at birth (see below). Table
+\@ref(tab:tbl-bo-first-stage) shows that birth order significantly predicts all
+these variables. Effect sizes are quite substantial: a single extra elder
+sibling reduces the chance of attending university by about 
 `r pretty(-coef_bo["University"] * 100)` percentage points, income by about 
 £`r pretty(-coef_bo["Income"] * 1000, format = "d")`, fluid IQ by about 
-`r pretty(-coef_bo["Fluid IQ"])` points on a 13 point test, and height by about 
-`r pretty(-coef_bo["Height"])` centimeters.
-
+`r pretty(-coef_bo["Fluid IQ"])` points on a 13 point test, height by about 
+`r pretty(-coef_bo["Height"])` centimeters, and self reported health by 
+`r pretty(-coef_bo["Health"])` points on a 4-point scale; and increases BMI by 
+`r pretty(coef_bo["BMI"])`.
+ 
 Next we run regressions of spouse PSEA on birth order, within our
 dataset of spouse pairs. Table \@ref(tab:tbl-bo-psea-basic) reports the
 results. Column 1 controls only for family size (using dummies). As
@@ -1163,7 +1173,7 @@ huxreg(mod_bo_psea_base,
        set_bottom_border(8:9, everywhere, 0) %>% 
        set_align(8:10, -1, "center") %>% 
        set_number_format(2:7, -1, 4) %>% 
-       set_width(0.8) %>% 
+       set_width(0.9) %>% 
        set_caption("Regressions of spouse PSEA on birth order")
 
 
@@ -1185,12 +1195,14 @@ mod_bo_psea <- lapply(fml_bo_psea, fixest::feols,
                )
 
 tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent",
-"variable, and own Birth Order and mediators (university attendance and income)",
+"variable, and own birth order and mediators (university attendance and income)",
 "as the main independent variables. Columns 2-4 correspond to model 7. PSEA is", 
 "the polygenic score for educational attainment, which is normalized with mean 0",
-"and standard deviation 1. We include parents’ age at birth (the mean of",
-"parent’s ages) and further controls to ensure the balance of",
-"covariates across birth order. All data is from the UK Biobank for a sample of", "UK individuals born between 1935 and 1970.", my_note)
+"and standard deviation 1. We include mean of parents’ ages at birth,",
+"potential non-SES mediators (fluid IQ, height, BMI, self-reported health)",
+"and further controls to ensure the balance of",
+"covariates across birth order. All data is from the UK Biobank for a sample of", 
+"UK individuals born between 1935 and 1970.", my_note)
 
 huxreg(mod_bo_psea, 
         coefs = c(
@@ -1200,18 +1212,20 @@ huxreg(mod_bo_psea,
           "Own PSEA"              = "EA3.x",
           "Parents' age at birth" = "par_age_birth.x",
           "Fluid IQ"              = "fluid_iq.x",
-          "Height"                = "height.x"
+          "Height"                = "height.x",
+          "BMI"                   = "bmi.x",
+          "Self-reported health"  = "sr_health.x"
         ),
          note = tbl_note,
          stars = my_stars,
          tidy_args = tidy_args
        ) %>% 
-       insert_row(after = 15, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 16, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 17, "Birth year dummies", rep("Yes", 4)) %>% 
-       set_bottom_border(16:17, everywhere, 0) %>% 
-       set_align(16:18, -1, "center") %>% 
-       set_number_format(2:15, -1, 4) %>% 
+       insert_row(after = 19, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 20, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 21, "Birth year dummies", rep("Yes", 4)) %>% 
+       set_bottom_border(20:21, everywhere, 0) %>% 
+       set_align(20:22, -1, "center") %>% 
+       set_number_format(2:19, -1, 4) %>% 
        set_tb_padding(3) %>% 
        set_width(0.9) %>% 
        set_caption("Regressions of spouse PSEA on birth order and potential mediators")
@@ -1221,15 +1235,17 @@ Table \@ref(tab:tbl-bo-psea) shows the results. Column 1 shows the
 effect of birth order, using the same specification as column 3 of the
 previous table. The remaining columns add potential mediators of
 birth order effects. Column 2 includes our first measure of
-socio-economic status: university attendance. As controls, we also
-include fluid IQ and height, both of which could be affected by birth
-order and affect spouse matching. Column 3 adds our second measure of
-socio-economic status, income in first job. Column 4 includes both.
+socio-economic status: university attendance. We also include potential
+non-SES mediators, which are affected by birth order and might affect spouse
+matching: fluid IQ, height, BMI and self-reported health. Column 3 adds our 
+second measure of socio-economic status, income in first job. Column 4 includes 
+both.
 
 When we add university attendance (column 2), the effect of birth order
 drops and becomes insignificant, while the coefficient for university is
-positive and highly significant. Fluid IQ and height are also positive
-and significant. Controlling for income alone (column 3), again the effect of
+positive and highly significant. Fluid IQ, height and BMI are also positive
+and significant, while self-reported health has the right sign but is 
+insignificant. Controlling for income alone (column 3), again the effect of
 birth order shrinks and becomes insignificant, while income has a positive and
 highly significant effect. Lastly, the same pattern holds when we 
 control for both university and income (column 4).
@@ -1241,7 +1257,9 @@ control for both university and income (column 4).
 # divided by PSEA effect of BO (column 1)
 
 mediators <- c("university.xTRUE", "first_job_pay.x", "height.x",
-                 "fluid_iq.x")
+                 "fluid_iq.x", "bmi.x", "sr_health.x")
+
+n_mediators <- length(mediators)
 
 compute_mediation_effects <- function (resample = FALSE) {
   mf_pairs_tmp <- mf_pairs_reg
@@ -1265,8 +1283,9 @@ compute_mediation_effects <- function (resample = FALSE) {
 
   psea_effect_mediators <- purrr::map(mod_bo_psea_boot[-1],
                                          ~coef(.x)[mediators])
-  psea_effect_mediators <- matrix(unlist(psea_effect_mediators), ncol = 4,
-                                  byrow = TRUE)
+  psea_effect_mediators <- matrix(unlist(psea_effect_mediators), 
+                                    ncol = n_mediators,
+                                    byrow = TRUE)
   colnames(psea_effect_mediators) <- mediators
   
   psea_effect_bo <- coef(mod_bo_overall_boot)["birth_order.x"]
@@ -1279,12 +1298,18 @@ compute_mediation_effects <- function (resample = FALSE) {
     psea_effect_mediators[, "height.x"] 
   effects_fluid_iq <- mediator_effect_bo["Fluid IQ"] * 
     psea_effect_mediators[, "fluid_iq.x"]
+  effects_bmi <- mediator_effect_bo["BMI"] * 
+    psea_effect_mediators[, "bmi.x"]
+  effects_health <- mediator_effect_bo["Health"] * 
+    psea_effect_mediators[, "sr_health.x"]
   
   effects_pct <- cbind(
           University = effects_uni, 
           Income     = effects_income, 
           Height     = effects_height, 
-          `Fluid IQ` = effects_fluid_iq
+          `Fluid IQ` = effects_fluid_iq,
+          BMI        = effects_bmi,
+          `Self-reported health` = effects_health
         )
   # divide by overall effect re-estimated using data in each of models 2-4
   effects_pct <- effects_pct / psea_effect_bo
@@ -1303,30 +1328,35 @@ estimates <- compute_mediation_effects(resample = FALSE)
 format_est_ci <- function(coef, model) {
   # char <- glue::glue("{percent(estimates[model, coef], 0.1)} ({percent(cis[1, model, coef], 0.1)}, {percent(cis[2,model, coef], 0.1)})")
   char <- percent(estimates[model, coef], 0.1)
-  char[is.na(estimates[model, coef])] <- "-"
+  char[is.na(estimates[model, coef])] <- ""
   char
 }
 
-med_matrix <- format_est_ci(c("University", "Income", "Fluid IQ", "Height"), 
+med_matrix <- format_est_ci(c("University", "Income", "Fluid IQ", "Height", 
+                                "BMI", "Self-reported health"), 
                               1:3)
 med_matrix <- matrix(med_matrix, ncol = 3, byrow = TRUE)
-rownames(med_matrix) <- c("University", "Income", "Fluid IQ", "Height")
+rownames(med_matrix) <- c("University", "Income", "Fluid IQ", "Height", "BMI",
+                            "Self-reported health")
 colnames(med_matrix) <- paste("Model", 2:4)
 
 tbl_note <- paste("Percentage of the effects of birth order in Table", 
 "\\ref{tab:tbl-bo-psea}, columns 2 to 4, that are explained by mediators",
-"(university attendance, income in first job, fluid IQ and height).")
+"(SES: university attendance, income in first job; non-SES: fluid IQ, height, ",
+"BMI, self-reported health).")
 
 as_huxtable(med_matrix, add_colnames = TRUE, add_rownames = "") %>% 
       theme_article() %>% 
-      add_footnote(tbl_note) %>% 
       set_escape_contents(final(1), everywhere, FALSE) %>% 
       set_width(0.7) %>% 
+      set_align(-1, -1, ".") %>% 
+      add_footnote(tbl_note) %>% 
       set_caption(
         "Percent of birth order effects accounted for by mediators, models 2-4"
       )  
 
 ```
+
 
 Under the assumptions discussed above, we can estimate the proportion of
 the birth order effect that is mediated by these variables. Table
@@ -1422,7 +1452,9 @@ huxreg(reg_list,
             "Own PSEA"              = "EA3.x",
             "Parents' age at birth" = "par_age_birth.x",
             "Fluid IQ"              = "fluid_iq.x",
-            "Height"                = "height.x"
+            "Height"                = "height.x",
+            "BMI"                   = "bmi.x",
+            "Self-reported health"  = "sr_health.x"
           ),
          statistics = c("N" = "nobs", "R2" = "r.squared"),
          note       = tbl_note,
@@ -1430,11 +1462,11 @@ huxreg(reg_list,
          tidy_args  = tidy_args
        ) %>% 
        set_escape_contents(final(1), everywhere, FALSE) %>% 
-       insert_row(after = 13, "Family size dummies", rep("Yes", 6)) %>% 
-       insert_row(after = 14, "Birth month dummies", rep("Yes", 6)) %>% 
-       insert_row(after = 15, "Birth year dummies", rep("Yes", 6)) %>% 
-       set_bottom_border(14:15, everywhere, 0) %>% 
-       set_align(14:16, -1, "center") %>% 
+       insert_row(after = 17, "Family size dummies", rep("Yes", 6)) %>% 
+       insert_row(after = 18, "Birth month dummies", rep("Yes", 6)) %>% 
+       insert_row(after = 19, "Birth year dummies", rep("Yes", 6)) %>% 
+       set_bottom_border(18:19, everywhere, 0) %>% 
+       set_align(18:20, -1, "center") %>% 
        set_font_size(10) %>% 
        set_width(1) %>% 
        set_tb_padding(3) %>% 
@@ -1494,8 +1526,8 @@ balance_check_within <- purrr::map_dfr(score_names, check_cor_within)
 
 if (any(balance_check$p.value < 0.1/33)) stop("Some check p values < 0.1/33; rewrite text!")
 
-n_below_10 <- sum(balance_check$p.value < 0.1)
-stopifnot(n_below_10 == 5)
+n_below_10 <- sum(balance_check$p.value < 0.10)
+stopifnot(n_below_10 == 4)
 if(any(
         balance_check %>% filter(p.value < 0.10) %>% pull(estimate) > 0.02
       )) stop("Some coefs > 0.02; rewrite text!")
@@ -1518,7 +1550,7 @@ stopifnot(pval_own_psea_3 > 0.05)
 
 To check for the latter two problems, we run balance tests on 33 different
 polygenic scores.[^10] We regress each score on own birth order, controlling for
-family size. No scores were significant at $p < 0.10/33$. Five scores were
+family size. No scores were significant at $p < 0.10/33$. Four scores were
 significant at $p < 0.10$, all with effect sizes of less than 0.02 per standard
 deviation. Table \@ref(tab:tbl-bo-psea-pgs) in the appendix reruns our
 regressions controlling for these scores. Results are almost unchanged. To test
@@ -1811,18 +1843,20 @@ huxreg(mod_bo_no_par_age,
           "Income"                = "first_job_pay.x", 
           "Own PSEA"              = "EA3.x",
           "Fluid IQ"              = "fluid_iq.x",
-          "Height"                = "height.x"
+          "Height"                = "height.x",
+          "BMI"                   = "bmi.x",
+          "Self-reported health"  = "sr_health.x"
         ),
          note = my_note,
          stars = my_stars,
          tidy_args = tidy_args
        ) %>% 
-       insert_row(after = 13, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 14, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 15, "Birth year dummies", rep("Yes", 4)) %>% 
-       set_bottom_border(14:15, everywhere, 0) %>% 
-       set_align(14:16, -1, "center") %>% 
-       set_number_format(2:13, -1, 4) %>% 
+       insert_row(after = 17, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 18, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 19, "Birth year dummies", rep("Yes", 4)) %>% 
+       set_bottom_border(18:19, everywhere, 0) %>% 
+       set_align(18:20, -1, "center") %>% 
+       set_number_format(2:17, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, without controls for parents' age at respondent's birth")
 
 ```
@@ -1872,7 +1906,7 @@ huxtable::huxreg(mod_bo_psea_dummies,
        insert_row(after = 20, "Family size dummies", rep("Yes", 4)) %>% 
        insert_row(after = 21, "Birth month dummies", rep("Yes", 4)) %>% 
        insert_row(after = 22, "Birth year dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 23, "Controls (IQ, height)", 
+       insert_row(after = 23, "Controls (IQ, height, BMI, s.-r. health)", 
                     c("No", rep("Yes", 3))) %>% 
        set_bottom_border(21:23, everywhere, 0) %>% 
        set_align(21:24, -1, "center") %>% 
@@ -1947,7 +1981,8 @@ huxtable::huxreg(reg_list,
        insert_row(after = 18, "Family size dummies", rep("Yes", 6))   %>% 
        insert_row(after = 19, "Birth month dummies", rep("Yes", 6))   %>% 
        insert_row(after = 20, "Birth year dummies", rep("Yes", 6))    %>% 
-       insert_row(after = 21, "Controls (IQ, height)", rep("Yes", 6)) %>% 
+       insert_row(after = 21, "Controls (IQ, height, BMI, s.-r. health)", 
+                    rep("Yes", 6)) %>% 
        set_bottom_border(19:21, everywhere, 0) %>%
        set_align(19:22, -1, "center") %>% 
        set_number_format(2:18, -1, 4) %>% 
@@ -2004,7 +2039,6 @@ fml_bo_psea_pgs <- fml_bo_psea %>%
                         purrr::map(update, 
                            . ~ . + 
                            alzheimer_resid.x + 
-                           caffeine_resid.x + 
                            cognitive_ability_resid.x +
                            neuroticism_resid.x +
                            sc_substance_use_resid.x
@@ -2023,27 +2057,29 @@ huxreg(mod_bo_psea_pgs,
            "Own PSEA"              = "EA3.x",
            "Parents' age at birth" = "par_age_birth.x",
            "Fluid IQ"              = "fluid_iq.x",
-           "Height"                = "height.x"
+           "Height"                = "height.x",
+           "BMI"                   = "bmi.x",
+           "Self-reported health"  = "sr_health.x"
          ),
          statistics = c(
            "N" = "nobs", 
            "R2" = "r.squared"
          ),
          note = paste(my_note,
-                 "\nPolygenic scores: alzheimer's, caffeine, cognitive ability, neuroticism, substance use."),
+                 "\nPolygenic scores: alzheimer's, cognitive ability, neuroticism, substance use."),
          stars = my_stars,
          tidy_args = list(
            conf.int = FALSE, 
            cluster = list(mf_pairs_reg$f.54.0.0.x)
          )
        ) %>% 
-       insert_row(after = 15, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 16, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 17, "Birth year dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 18, "Polygenic score controls", rep("Yes", 4)) %>% 
-       set_bottom_border(16:18, everywhere, 0) %>% 
-       set_align(16:19, -1, "center") %>% 
-       set_number_format(2:15, -1, 4) %>% 
+       insert_row(after = 19, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 20, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 21, "Birth year dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 22, "Polygenic score controls", rep("Yes", 4)) %>% 
+       set_bottom_border(20:22, everywhere, 0) %>% 
+       set_align(20:23, -1, "center") %>% 
+       set_number_format(2:19, -1, 4) %>% 
        set_width(1) %>% 
        set_wrap(final(1), everywhere, TRUE) %>% 
        set_caption("Regressions of spouse PSEA with controls for polygenic scores")
@@ -2069,18 +2105,20 @@ huxreg(mod_bo_psea_age_fte,
           "Parents' age at birth" = "par_age_birth.x",
           "Own PSEA"              = "EA3.x",
           "Fluid IQ"              = "fluid_iq.x",
-          "Height"                = "height.x"
+          "Height"                = "height.x",
+           "BMI"                  = "bmi.x",
+           "Self-reported health" = "sr_health.x"
         ),
          note = my_note,
          stars = my_stars,
          tidy_args = tidy_args
        ) %>% 
-       insert_row(after = 15, "Family size dummies", rep("Yes", 3)) %>% 
-       insert_row(after = 16, "Birth month dummies", rep("Yes", 3)) %>% 
-       insert_row(after = 17, "Birth year dummies", rep("Yes", 3)) %>% 
-       set_bottom_border(16:17, everywhere, 0) %>% 
-       set_align(16:18, -1, "center") %>% 
-       set_number_format(2:15, -1, 4) %>% 
+       insert_row(after = 19, "Family size dummies", rep("Yes", 3)) %>% 
+       insert_row(after = 20, "Birth month dummies", rep("Yes", 3)) %>% 
+       insert_row(after = 21, "Birth year dummies", rep("Yes", 3)) %>% 
+       set_bottom_border(20:21, everywhere, 0) %>% 
+       set_align(20:22, -1, "center") %>% 
+       set_number_format(2:19, -1, 4) %>% 
        set_width(0.8) %>% 
        set_caption("Regressions of spouse PSEA using age of leaving full-time education")
 ```
@@ -2101,7 +2139,9 @@ huxreg(mod_bo_psea_no3,
           "Parents' age at birth" = "par_age_birth.x",
           "Own PSEA"              = "EA3.x",
           "Fluid IQ"              = "fluid_iq.x",
-          "Height"                = "height.x"
+          "Height"                = "height.x",
+           "BMI"                  = "bmi.x",
+           "Self-reported health" = "sr_health.x"
         ),
          note = my_note,
          stars = my_stars,

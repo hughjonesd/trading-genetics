@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 invisible(loadNamespace("rootSolve"))
 invisible(loadNamespace("rgl"))
-rgl::setupKnitr(autoprint = TRUE)
+rgl::setupKnitr(autoprint = TRUE, rgl.newwindow = FALSE, rgl.closewindows = FALSE)
 ```
 
 People in the marriage market have two characteristics: 
@@ -405,7 +405,7 @@ x_2
 \right) 
 \]
 Moreover, the asymptotic correlation between characteristics, 
-$corr = \sigma/s*S$, is non-negative, positive for $0 < a < 1$, 
+$corr = \bar{\sigma}/\bar{s}\bar{S}$, is non-negative, positive for $0 < a < 1$, 
 increasing in $\theta$ and increasing then decreasing in $a$. 
 The coefficient of parents' wealth on children's genetics is also positive 
 for $0 < a < 1$.
