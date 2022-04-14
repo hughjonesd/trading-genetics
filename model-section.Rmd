@@ -479,7 +479,7 @@ corr <- function (theta, a) {
 
 invisible(rgl::open3d(
               userMatrix = rgl::rotate3d(rgl::r3dDefaults$userMatrix, 
-                                           angle = pi/4, x = 0, y = 0, 
+                                           angle = pi/5, x = 0, y = 0, 
                                            z = 1)
             ))
 rgl::par3d(cex = 1.4)
@@ -598,7 +598,7 @@ corr_x1_x2 <- function (s, S, sigma, a, gamma, tau, theta) {
 
 invisible(rgl::open3d(
               userMatrix = rgl::rotate3d(rgl::r3dDefaults$userMatrix,
-                                           angle = pi/4, x = 0, y = 0,
+                                           angle = pi/5, x = 0, y = 0,
                                            z = 1)
             ))
 rgl::par3d(cex=1.4)
@@ -607,7 +607,7 @@ rgl::plot3d(\(theta, a) corr_x1_x2(s = 1, S = 1, sigma = 0, a = a, gamma = 0.15,
                                    tau = 0.95, theta = theta), 
             zlab  = "", 
             xlab  = "θ", 
-            col   = "darkgreen", 
+            col   = "lightskyblue1", 
             front = "lines",
             back = "lines",
             lwd   = 3,

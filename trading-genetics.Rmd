@@ -173,6 +173,18 @@ fml_bo_psea[-1] <- lapply(fml_bo_psea[-1], update,
 # tidy_args <- list(se = "cluster", cluster = "couple_id", conf.int = FALSE)
 tidy_args <- list(se = "hetero", conf.int = FALSE)
 
+reg_coefs <- c(
+          "Birth order"           = "birth_order.x", 
+          "University"            = "university.xTRUE", 
+          "Income"                = "first_job_pay.x",
+          "Fluid IQ"              = "fluid_iq.x",
+          "Height"                = "height.x",
+          "BMI"                   = "bmi.x",
+          "Self-reported health"  = "sr_health.x",
+          "Own PSEA"              = "EA3.x",
+          "Parents' age at birth" = "par_age_birth.x"
+        )
+
 ```
 
 ```{r TODO-NOTES, eval = FALSE}
@@ -1230,17 +1242,7 @@ tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent"
 "UK individuals born between 1935 and 1970.", my_note)
 
 huxreg(mod_bo_psea, 
-        coefs = c(
-          "Birth order"           = "birth_order.x", 
-          "University"            = "university.xTRUE", 
-          "Income"                = "first_job_pay.x",
-          "Own PSEA"              = "EA3.x",
-          "Parents' age at birth" = "par_age_birth.x",
-          "Fluid IQ"              = "fluid_iq.x",
-          "Height"                = "height.x",
-          "BMI"                   = "bmi.x",
-          "Self-reported health"  = "sr_health.x"
-        ),
+         coefs = reg_coefs,
          note = tbl_note,
          stars = my_stars,
          tidy_args = tidy_args
@@ -1471,16 +1473,7 @@ tbl_note <- paste("Estimates from OLS regressions corresponding to",
 "UK individuals born between 1935 and 1970.", my_note)
 
 huxreg(reg_list,
-         coefs = c(
-            "Birth order"           = "birth_order.x", 
-            "University"            = "university.xTRUE",
-            "Own PSEA"              = "EA3.x",
-            "Parents' age at birth" = "par_age_birth.x",
-            "Fluid IQ"              = "fluid_iq.x",
-            "Height"                = "height.x",
-            "BMI"                   = "bmi.x",
-            "Self-reported health"  = "sr_health.x"
-          ),
+         coefs      = reg_coefs[reg_coefs != "first_job_pay.x"],
          statistics = c("N" = "nobs", "R2" = "r.squared"),
          note       = tbl_note,
          stars      = my_stars,
@@ -1520,7 +1513,7 @@ reflecting a high PSEA, parents are more likely to have a second child.
 Then within the subset of two-child families, first children would have
 higher-than-average PSEA, while second children would not.
 
-```{r tbl-pgs-check}
+```{r calc-pgs-check}
 
 check_cor <- function (score_name) {
   fml_check <- as.formula(paste0(score_name, ".x ~ factor(n_sibs.x) + birth_order.x"))
@@ -1791,18 +1784,9 @@ mod_bo_fath_age <- lapply(fml_bo_fath_age, fixest::feols,
                    )
 
 huxreg(mod_bo_no_par_age, 
-        coefs = c(
-          "Birth order"           = "birth_order.x", 
-          "University"            = "university.xTRUE", 
-          "Income"                = "first_job_pay.x", 
-          "Own PSEA"              = "EA3.x",
-          "Fluid IQ"              = "fluid_iq.x",
-          "Height"                = "height.x",
-          "BMI"                   = "bmi.x",
-          "Self-reported health"  = "sr_health.x"
-        ),
-         note = my_note,
-         stars = my_stars,
+         coefs     = reg_coefs[reg_coefs != "par_age_birth.x"],
+         note      = my_note,
+         stars     = my_stars,
          tidy_args = tidy_args
        ) %>% 
        insert_row(after = 17, "Family size dummies", rep("Yes", 4)) %>% 
@@ -1838,20 +1822,21 @@ wald_tests <- purrr::map2(mod_bo_psea_dummies, mod_restricted,
 wald_pvals <- purrr::map_dbl(wald_tests, ~ pull(tidy(.x), p.value)[2])
 
 
-huxreg_coefs <- grep("factor\\(birth_order", names(coef(mod_bo_psea_dummies[[1]])),
-                       value = TRUE)
-names(huxreg_coefs) <- gsub("^.*(\\d).*$", "Birth order \\1",
-                            huxreg_coefs)
-huxreg_coefs <- c(
-                   huxreg_coefs,
-                   "University"  = "university.xTRUE", 
-                   "Income"      = "first_job_pay.x",
-                   "Own PSEA"     = "EA3.x",
-                   "Parents' age at birth" = "par_age_birth.x"
-                 )
+dummy_reg_coefs <- grep("factor\\(birth_order", 
+                         names(coef(mod_bo_psea_dummies[[1]])),
+                         value = TRUE)
+names(dummy_reg_coefs) <- gsub("^.*(\\d).*$", "Birth order \\1",
+                                 dummy_reg_coefs)
+dummy_reg_coefs <- c(
+                      dummy_reg_coefs,
+                      "University"  = "university.xTRUE", 
+                      "Income"      = "first_job_pay.x",
+                      "Own PSEA"     = "EA3.x",
+                      "Parents' age at birth" = "par_age_birth.x"
+                    )
 
 huxtable::huxreg(mod_bo_psea_dummies, 
-                   coefs     = huxreg_coefs,
+                   coefs     = dummy_reg_coefs,
                    note      = my_note,
                    stars     = my_stars,
                    tidy_args = tidy_args
@@ -1912,21 +1897,21 @@ wald_tests <- purrr::map(reg_list, fixest::wald,
                          )
 wald_pvals <- purrr::map_dbl(wald_tests, "p")
 
-huxreg_coefs <- grep("factor\\(birth_order", 
-                       names(coef(mod_bo_males_dummies[[1]])),
-                       value = TRUE)
-names(huxreg_coefs) <- gsub(".*(\\d).*$", "Birth order \\1",
-                            huxreg_coefs)
+dummy_reg_coefs <- grep("factor\\(birth_order", 
+                          names(coef(mod_bo_males_dummies[[1]])),
+                          value = TRUE)
+names(dummy_reg_coefs) <- gsub(".*(\\d).*$", "Birth order \\1",
+                                 dummy_reg_coefs)
 
-huxreg_coefs <- c(
-                   huxreg_coefs,
-                   "University"  = "university.xTRUE", 
-                   "Own PSEA"     = "EA3.x",
-                   "Parents' age at birth" = "par_age_birth.x"
-                 )
+dummy_reg_coefs <- c(
+                      dummy_reg_coefs,
+                      "University"  = "university.xTRUE", 
+                      "Own PSEA"     = "EA3.x",
+                      "Parents' age at birth" = "par_age_birth.x"
+                     )
 
 huxtable::huxreg(reg_list, 
-                   coefs = huxreg_coefs,
+                   coefs = dummy_reg_coefs,
                    note = my_note,
                    stars = my_stars,
                    tidy_args = tidy_args
@@ -2004,17 +1989,7 @@ mod_bo_psea_pgs <-  purrr::map(fml_bo_psea_pgs, fixest::feols,
                        )
 
 huxreg(mod_bo_psea_pgs, 
-         coefs = c(
-           "Birth order"           = "birth_order.x", 
-           "University"            = "university.xTRUE", 
-           "Income"                = "first_job_pay.x",
-           "Own PSEA"              = "EA3.x",
-           "Parents' age at birth" = "par_age_birth.x",
-           "Fluid IQ"              = "fluid_iq.x",
-           "Height"                = "height.x",
-           "BMI"                   = "bmi.x",
-           "Self-reported health"  = "sr_health.x"
-         ),
+         coefs = reg_coefs,
          statistics = c(
            "N" = "nobs", 
            "R2" = "r.squared"
@@ -2051,20 +2026,16 @@ mod_bo_psea_age_fte <- lapply(fml_bo_psea_age_fte, fixest::feols,
                  notes = FALSE
                )
 
+
+age_reg_coefs <- reg_coefs
+age_reg_coefs[age_reg_coefs == "university.xTRUE"] <- "age_fulltime_edu.x"
+names(age_reg_coefs)[age_reg_coefs == "age_fulltime_edu.x"] <- 
+      "Age left full-time educ."
+
 huxreg(mod_bo_psea_age_fte, 
-        coefs = c(
-          "Birth order"           = "birth_order.x", 
-          "Age left full-time educ." = "age_fulltime_edu.x", 
-          "Income"                = "first_job_pay.x",
-          "Parents' age at birth" = "par_age_birth.x",
-          "Own PSEA"              = "EA3.x",
-          "Fluid IQ"              = "fluid_iq.x",
-          "Height"                = "height.x",
-           "BMI"                  = "bmi.x",
-           "Self-reported health" = "sr_health.x"
-        ),
-         note = my_note,
-         stars = my_stars,
+         coefs     = age_reg_coefs,
+         note      = my_note,
+         stars     = my_stars,
          tidy_args = tidy_args
        ) %>% 
        insert_row(after = 19, "Family size dummies", rep("Yes", 3)) %>% 
@@ -2077,6 +2048,7 @@ huxreg(mod_bo_psea_age_fte,
        set_caption("Regressions of spouse PSEA using age of leaving full-time education")
 ```
 
+
 ```{r tbl-bo-psea-no3}
 
 mod_bo_psea_no3 <- lapply(fml_bo_psea, 
@@ -2086,27 +2058,17 @@ mod_bo_psea_no3 <- lapply(fml_bo_psea,
                             notes = FALSE
                           )
 huxreg(mod_bo_psea_no3, 
-        coefs = c(
-          "Birth order"           = "birth_order.x", 
-          "University"            = "university.xTRUE", 
-          "Income"                = "first_job_pay.x",
-          "Parents' age at birth" = "par_age_birth.x",
-          "Own PSEA"              = "EA3.x",
-          "Fluid IQ"              = "fluid_iq.x",
-          "Height"                = "height.x",
-           "BMI"                  = "bmi.x",
-           "Self-reported health" = "sr_health.x"
-        ),
-         note = my_note,
-         stars = my_stars,
+         coefs     = reg_coefs,
+         note      = my_note,
+         stars     = my_stars,
          tidy_args = tidy_args
        ) %>% 
-       insert_row(after = 15, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 16, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 17, "Birth year dummies", rep("Yes", 4)) %>% 
-       set_bottom_border(16:17, everywhere, 0) %>% 
-       set_align(16:18, -1, "center") %>% 
-       set_number_format(2:15, -1, 4) %>% 
+       insert_row(after = 19, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 20, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 21, "Birth year dummies", rep("Yes", 4)) %>% 
+       set_bottom_border(20:21, everywhere, 0) %>% 
+       set_align(20:22, -1, "center") %>% 
+       set_number_format(2:19, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, excluding family size 3")
 ```
 
