@@ -368,9 +368,9 @@ Under meritocracy, genes causes SES. On the other hand, under SGAM,
 causality goes both ways, from genes to SES and vice versa. What is more, the
 strength of the genes-SES gradient depends on economic institutions. Under
 institutions which increase intergenerational mobility, such as high inheritance
-tax rates, the genes-SES gradient is in general weaker.[^qualification]
+tax rates, the genes-SES gradient is in general weaker.[^not-always]
 
-[^qualification]: "In general" because the relationship can be reversed when
+[^not-always]: "In general" because the relationship can be reversed when
 there is meritocracy and SGAM is weak. See Proposition \ref{prop-gamma}.
 
 Next, using data on matched spouses born between 1935 and 1970 from UK Biobank 
@@ -440,10 +440,10 @@ also developed the concept of cross-trait assortative mating
 [@Beauchamp_2010;@Sundet_2005]. This happens when people with genes for e.g.
 height marrying people with genes for e.g. intelligence. As a result, the two
 types of genetic variation become associated. In this paper we bring the two
-literatures together, extending the idea of cross-trait assortative mating to
-encompass both social status, and genetic variants. Our results confirm that
-individuals with higher social status are more likely to attract a spouse with
-genetics for higher educational attainment.
+literatures together, extending cross-trait assortative mating to
+encompass social status as well as genetic variants. Our results confirm that
+individuals with higher social status attract spouses with genetics for higher
+educational attainment.
 
 [^others]: @oreffice2010anthropometry show that height and BMI are associated 
 with spouse earnings. @dupuy2014personality find spouse matching on multiple 
@@ -464,22 +464,31 @@ on descendant wealth, genetics is a *confound*; under SGAM, it can be a
 *mediator*.
 
 SGAM also affects cross-sectional inequality, like other forms of assortative
-mating [@fernandez2001sorting; @fernandez2005love; @eika2019educational; @chiappori2018marriage]. 
-We know that there is a "genes-SES gradient": people with high and low SES have
-different genes. From twin studies, the heritability of occupational class and
-educational attainment, i.e. the proportion of variance explained by genetic
-differences between individuals, is around 50% [@Tambs_1989]. Genome-wide
-Complex Trait Analysis shows that the family socio-economic status of 2-year-old
-children can be predicted from their genes [@Trzaskowski_2014]. Children born
-into higher-income families have more genetic variants predicting educational
-attainment [@belsky2018genetic]. Studies comparing adoptees to non-adoptees show
-that both post-birth environment and pre-birth conditions (genetics and to a
-lesser extent prenatal environment) contribute to the transmission of wealth and
-human capital [e.g. @bjorklund2006origins]. Thus, the genes-SES gradient is an
-important source of inequality. In particular, genetic variation in human
-capital is key, since a likely cause of the recent rise in inequality is the
-increase in market returns to human capital [e.g. @kaplan2013s;
-@eika2019educational].
+mating [@fernandez2001sorting;@fernandez2005love;@eika2019educational;
+@chiappori2018marriage]. We know that there is a "genes-SES gradient": people
+with high and low SES have different genes. From twin studies, the heritability
+of occupational class and educational attainment, i.e. the proportion of
+variance explained by genetic differences between individuals, is around 50%
+[@Tambs_1989]. Genome-wide Complex Trait Analysis shows that the family
+socio-economic status of 2-year-old children can be predicted from their genes
+[@Trzaskowski_2014]. Children born into higher-income families have more genetic
+variants predicting educational attainment [@belsky2018genetic]. Studies
+comparing adoptees to non-adoptees show that both post-birth environment and
+pre-birth conditions (genetics and to a lesser extent prenatal environment)
+contribute to the transmission of wealth and human capital [e.g.
+@bjorklund2006origins]. Thus, the genes-SES gradient is an important source of
+inequality. Genetic variation in human capital is key, since a likely cause of
+the recent rise in inequality is the increase in market returns to human capital
+[e.g. @kaplan2013s;@eika2019educational]. Another important aspect of the
+genes-SES gradient is in health genetics. DNA-derived scores predicting several
+health outcomes are associated with regional deprivation
+[@abdellaoui2019genetic]. There is a correlation between education and health,
+which may be mediated by shared genetic causes
+[@amin2015schooling;@boardman2015can]. Family SES is a confound for several
+health-related polygenic scores [@selzam2019comparing]. Understanding the 
+aetiology of health and disease requires disentangling the effects of genetics 
+and environments. In turn, that requires understanding how the two can become
+correlated.
 
 SGAM shows how marriage markets can lead high SES to be associated with different 
 genetic variants. Thus, it can explain the genes-SES gradient. The standard 
@@ -1750,76 +1759,6 @@ excluding families of size 3. Results are very similar to those in the
 main text.
 
 
-```{r calc-sur-ratios}
-
-# Plan
-# - for men and women separately
-# - estimate table 2, last column with DVs of (a) spouse PSEA and (b)
-#   spouse birth order
-# - check that the coefficients have the same ratios, as in "Fatter Attrn"
-#   paper
-
-# we avoid YOB fixed effects as it makes the estimation fail
-fml_sur_psea <- EA3.y ~ birth_order.x + EA3.x + par_age_birth.x + 
-                  factor(n_sibs.x) + factor(birth_mon.x)
-fml_sur_bo <- update(fml_sur_psea, birth_order.y ~ .)
-
-list_fml <- list(PSEA = fml_sur_psea, BO = fml_sur_bo)
-
-# systemfit doesn't like missing data
-mf_pairs_sf <- mf_pairs_reg %>% 
-                 filter(
-                   ! is.na(birth_order.y),
-                   ! is.na(EA3.y),
-                   ! is.na(birth_mon.x),
-                   ! is.na(EA3.x),
-                   ! is.na(par_age_birth.x)
-                 )
-
-mod_sur <- list()
-mod_sur$females <- systemfit::systemfit(list_fml, 
-                                          data = mf_pairs_sf %>% 
-                                                   filter(female.x),
-                                          method = "SUR"
-                                        )
-mod_sur$males <- systemfit::systemfit(list_fml, 
-                                        data = mf_pairs_sf %>% 
-                                                 filter(! female.x),
-                                        method = "SUR"
-                                      )
-
-wald_eq_ratio <- purrr::map(mod_sur, 
-                              nlWaldTest::nlWaldtest,
-                              texts = "b[2] * b[22] = b[3] * b[21]",
-                              df2 = TRUE
-                            )
-
-
-```
-
-
-@chiappori2012fatter write down a matching model in which a person's
-attractiveness is summarized by a single index. The linear version of the
-model can be tested by regressing one partner's characteristics on each of the
-other partner's characteristics in turn (using Seemingly Unrelated
-Regressions), and checking that the coefficients have the same proportions
-across each regression. We do this for birth order and PSEA. Table
-\@ref(tab:tbl-sur) shows the results. We exclude year of birth dummies,
-since they cause the estimation procedure to fail. 
-
-We also check the proportionality of coefficients. We run a Wald test that
-
-\[
-\frac{\beta^{PSEA}_{PSEA}}{\beta^{PSEA}_{BO}} =
-\frac{\beta^{BO}_{PSEA}}{\beta^{BO}_{BO}}
-\]
-
-where e.g. $\beta^{PSEA}_{BO}$ is the coefficient of birth order in the
-regression targeting PSEA. P values are $p$ = 
-`r pretty(wald_eq_ratio$males$p.value)` for males and $p$ = 
-`r pretty(wald_eq_ratio$females$p.value)` for females. So for females there
-is some evidence against this linear model.
-
 ```{r tbl-bo-psea-no-par-age}
 
 
@@ -2172,65 +2111,7 @@ huxreg(mod_bo_psea_no3,
 ```
 
 
-```{r tbl-sur}
-
-mod_sur_psea <- purrr::map(mod_sur, ~ huxtable::tidy_replace(.x,
-                                        tidied = 
-                                          broom::tidy(.x) %>% 
-                                          filter(grepl("^PSEA_", term)) %>%
-                                          mutate(
-                                           term = gsub("^PSEA_", "", term)
-                                          ),
-                                         glance = list(
-                                           nobs = sum(summary(.x)$eq[[1]]$df)
-                                         )
-                          ))
-mod_sur_bo <- purrr::map(mod_sur, ~ huxtable::tidy_replace(.x,
-                                        tidied = 
-                                          broom::tidy(.x) %>% 
-                                          filter(grepl("^BO_", term)) %>%
-                                          mutate(
-                                           term = gsub("^BO_", "", term)
-                                          ),
-                                         glance = list(
-                                           nobs = sum(summary(.x)$eq[[2]]$df)
-                                         )
-                          ))
-
-# avoid warnings from glance() due to huxreg bug
-suppressWarnings(huxreg(
-        "Spouse PSEA"          = mod_sur_psea$males, 
-        "Spouse birth order"   = mod_sur_bo$males, 
-        "Spouse PSEA"        = mod_sur_psea$females, 
-        "Spouse birth order" = mod_sur_bo$females,
-        coefs                  = c(
-                                    "Birth order" = "birth_order.x", 
-                                    "PSEA"        = "EA3.x"
-                                 ),
-        statistics             = c(N = "nobs"),
-        stars                  = my_stars
-      )) %>% 
-        insert_row(c("", "Males", "Males", "Females", "Females"), 
-                     after = 0) %>%         
-        merge_cells(1, 2:3) %>% 
-        merge_cells(1, 4:5) %>% 
-        set_align(1, everywhere, "center") %>% 
-        insert_row("Controls (parents' age)", rep("Yes", 4), after = 6) %>% 
-        insert_row("Family size dummies", rep("Yes", 4), after = 7) %>% 
-        insert_row("Birth month dummies", rep("Yes", 4), after = 8) %>% 
-        insert_row("Birth year dummies", rep("No", 4), after = 9) %>% 
-        set_bottom_border(7:9, everywhere, 0) %>% 
-        set_align(7:10, -1, "center") %>% 
-        set_number_format(11, everywhere, 0) %>% 
-        # merge_cells(10, 2:3) %>% 
-        # merge_cells(10, 4:5) %>% 
-        # set_align(10, everywhere, "center") %>% 
-        set_caption(
-          "Seemingly Unrelated Regressions on spouse characteristics")
-
-```
 \FloatBarrier
-
 \newpage
 
 ### Regressions with "fake pairs"
