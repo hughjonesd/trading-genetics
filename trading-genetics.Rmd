@@ -5,7 +5,8 @@ author: |
   of Amsterdam, Amsterdam, The Netherlands. Email: a.abdellaoui@amsterdamumc.nl},
   Oana Borcan\thanks{School of Economics, University of East Anglia, Norwich, 
   UK. Email: O.Borcan@uea.ac.uk}, 
-  Pierre Chiappori\thanks{Department of Economics, University of Columbia, New York. Email: pc2167@columbia.edu} &
+  Pierre Chiappori\thanks{Department of Economics, University of Columbia, 
+    New York. Email: pc2167@columbia.edu} &
   David Hugh-Jones\thanks{Corresponding author. School of Economics, 
   University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}
 abstract: |
@@ -14,12 +15,12 @@ abstract: |
   passed on together to future generations. This process provides a new 
   explanation for the surprising persistence of inequality across generations,
   and for the genes-SES gradient (the genetic differences we observe between 
-  high- and low-income people). We model Social-Genetic Assortative Mating 
+  high- and low-income people). We model social-genetic assortative mating 
   (SGAM) and test for its existence in a large genetically-informed survey. We 
   compare spouses of individuals with different birth order, which is known to 
   affect socio-economic status and which is exogenous to own genetic endowments 
-  among siblings. Spouses of earlier-born siblings have more genetic variants 
-  that predict educational attainment. We provide evidence that this effect is 
+  among siblings. Spouses of earlier-born individuals have genetic variants that 
+  predict higher educational attainment. We provide evidence that this effect is 
   mediated by individuals' own educational attainment and income. Thus, 
   environmental shocks to socio-economic status are reflected in the DNA of 
   subsequent generations. Our work uncovers a new channel by which economic 
@@ -121,6 +122,13 @@ update_with_birth_order_dummies <- function (fml) {
 
 
 knitr::opts_chunk$set(echo = FALSE)
+knitr::knit_hooks$set(
+  inline = function (x) {
+    if (is.numeric(x)) x <- as.character(round(x, getOption("digits")))
+    x <- gsub("-", "\u2212", x)
+    paste(as.character(x), collapse = ", ")
+  }
+)
 options(huxtable.long_minus = TRUE)
 theme_set(theme_minimal())
 
@@ -324,8 +332,8 @@ social status may become associated in subsequent generations.[^status-SES] For
 example, suppose that wealth and intelligence are both positive assets in a
 potential spouse. Then wealthy people are more likely to marry intelligent
 people, and their children will inherit both wealth, and genetic variants
-associated with intelligence. We call this mechanism Social-Genetic Assortative
-Mating (SGAM). SGAM may be an important channel for the transmission of
+associated with intelligence. We call this mechanism social-genetic assortative
+mating (SGAM). SGAM may be an important channel for the transmission of
 inequality. It leads to a hidden dimension of advantage for privileged families
 – hidden because most social science datasets do not include genetic
 information. This dimension may help to explain the surprising long-run
@@ -351,13 +359,19 @@ marriage market is a function of both socio-economic status (SES) and genetic
 variants. We show that social-genetic assortative mating in one generation
 increases the correlation between SES and genetic variants in the offspring
 generation. This result provides a new explanation of the *genes-SES gradient*,
-that is, the fact that SES is biologically heritable and associated with certain
-genetic variants [@belsky2018genetic; @Rimfeld_2018;@bjorklund2006origins]. The 
+that is, the systematic genetic differences between high- and low-SES people 
+[@belsky2018genetic;@Rimfeld_2018;@bjorklund2006origins]. The 
 dominant existing explanation for the gradient is meritocratic social mobility: 
 if a genetic variant predicts success in the labour market, then it will 
 become associated with high SES and will be inherited in high-SES families.
 Under meritocracy, genes causes SES. On the other hand, under SGAM, 
-causality goes both ways, from genes to SES and vice versa.
+causality goes both ways, from genes to SES and vice versa. What is more, the
+strength of the genes-SES gradient depends on economic institutions. Under
+institutions which increase intergenerational mobility, such as high inheritance
+tax rates, the genes-SES gradient is in general weaker.[^qualification]
+
+[^qualification]: "In general" because the relationship can be reversed when
+there is meritocracy and SGAM is weak. See Proposition \ref{prop-gamma}.
 
 Next, using data on matched spouses born between 1935 and 1970 from UK Biobank 
 (a large genetically-informed survey), we test the hypothesis that an individual’s higher social
@@ -366,8 +380,8 @@ attainment. Our genetic measure, the Polygenic Score for Educational Attainment
 (PSEA), derives from large-scale genome-wide association studies [@lee2018gene]
 and is a cause of educational attainment itself, as well as of
 intelligence and labour market outcomes. It is already known that humans mate
-assortatively on PSEA, which makes it a likely candidate for detecting SGAM
-[@hugh2016assortative; @robinson2017genetic]. 
+assortatively on PSEA [@hugh2016assortative;@robinson2017genetic], which makes 
+it a likely candidate for detecting SGAM. 
 
 The endogeneity of socio-economic status is the main challenge in identifying
 the causal effect of SES on the spouse’s genetic endowment. For instance,
@@ -394,15 +408,15 @@ measured and unmeasured mediating variables. Specifically, we estimate a
 reduced-form model with spouse polygenic scores for educational attainment
 (PSEA) as the dependent variable, and own birth order as the main independent
 variable. We then estimate a model which also includes measures of own
-socio-economic status, including university attendance and a measure of income.
-Under certain assumptions, these variables can be interpreted as mediating the
-effect of birth order on spouse genetics.
+socio-economic status, including university attendance and estimated income
+in one's first job. Under certain assumptions, these variables can be 
+interpreted as mediating the effect of birth order on spouse genetics.
 
 We find that later-born children have spouses with significantly lower PSEA in
-the reduced-form regressions. When we include university attendance and/or
-income as mediators, birth order is no longer independently significant, while
-the mediators increase the spouse’s PSEA at 0.1% significance. University 
-attendance explains an estimated 40-60% of the effect of birth order, and
+the reduced-form regressions. When we add mediators, including university attendance and/or
+income, birth order is no longer independently significant, while
+the SES mediators increase the spouse’s PSEA at 0.1% significance. University 
+attendance explains an estimated 38-55% of the effect of birth order, and
 income explains about 10-13%. Thus, SES appears to mediate the effect of birth
 order on spouse genetics. The results are robust to the inclusion of several
 controls, including non-SES mediators, and a rich set of own genetic traits.
@@ -435,18 +449,18 @@ genetics for higher educational attainment.
 with spouse earnings. @dupuy2014personality find spouse matching on multiple 
 independent dimensions, including education, height, BMI and personality.
 
-
 Secondly, SGAM may affect economic inequality and intergenerational mobility.
 @clark2015intergenerational show using a database of surnames that long-run
-intergenerational persistence of wealth is higher than simple parent-child
-correlations would predict. @clark2021bell argues that the data can be explained
-by an underlying process where unobserved genetic variation determines wealth.
-We show below that SGAM could also generate these patterns. The mechanism again
-is unobserved genetic variation, but the interpretation is different,
-since we view genetic endowments not an exogenous source of variation, but as an
-asset effectively "traded" in marriage markets in exchange for wealth and social
-status. Put another way, for Clark, in analysing the effect of parental wealth
-on child wealth, genetics is a *confound*; under SGAM, it may also be a
+intergenerational persistence of wealth, over five generations, is much higher
+than would be predicted by the statistics for parent-child correlations in
+wealth. @clark2021bell argues that the data can be explained by an underlying
+process where unobserved genetic variation determines wealth. We show below
+that SGAM could also generate these patterns. The mechanism again is
+unobserved genetic variation, but the interpretation is different, since we
+view genetic endowments not an exogenous source of variation, but as an asset
+effectively "traded" in marriage markets in exchange for wealth and social
+status. Put another way, for Clark, in analysing the effect of ancestral wealth
+on descendant wealth, genetics is a *confound*; under SGAM, it can be a
 *mediator*.
 
 SGAM also affects cross-sectional inequality, like other forms of assortative
@@ -586,10 +600,8 @@ education-linked genetics and SES, but do not consider SGAM.
 In modern societies, both SGAM and meritocratic mobility may be at play. Genetic 
 variants that cause higher SES, e.g. higher income and wealth,
 will be passed down along with that status. At the same time, higher SES and "good
-genes" will assort in the marriage market. To differentiate SGAM from
-meritocracy and from pre-existing correlations between genes and SES, 
-we look for an environmental "shock" to people's SES, and examine its effects on 
-the genetics of their spouse.
+genes" will assort in the marriage market. To test this, we look at correlations
+among spouses between one partner's SES and the other partner's genetics.
 
 
 ```{r calc-validate-pairs}
@@ -743,6 +755,8 @@ pval_own_psea_within <- mod_own_psea_within[[1, "p.value"]]
 
 stopifnot(pval_own_psea < 2e-16)
 stopifnot(pval_own_psea_within < 2e-16)
+
+n_with_job_codes <- sum(! is.na(mf_pairs_reg$first_job_pay.x))
 ```
 
 
@@ -756,8 +770,8 @@ of sample, @lee2018gene], whereas the true proportion explained by genetic
 variation -- the heritability -- is estimated from twin studies to be about 40%
 [@branigan2013variation]. In addition, polygenic scores are no more guaranteed
 to be causal than any other independent variable. For example, social
-stratification by descent may lead genes to be associated with educational
-attainment even while playing no causal role [@selzam2019comparing].
+stratification by ancestry may lead genes to be associated with educational
+attainment even if they play no causal role [@selzam2019comparing].
 
 [^5]: PSEA was computed by summing the alleles across \~1.3 million
     genetic variants weighted by their effect sizes as estimated in
@@ -777,29 +791,31 @@ associated with a `r pretty(eff_own_psea*100)` percentage point increase in the
 probability of university attendance ($p < 2 \times 10^{-16}$). In a
 within-siblings regression among genetic full siblings (N = 
 `r pretty(n_own_psea_within)`), the increase was 
-`r pretty(eff_own_psea_within * 100)` ($p < 2 \times 10^{-16}$). This suggests 
-that about half of the raw correlation of PSEA with university attendance is
-down to confounds like good environments or parental nurture, while the
-remainder is causal. Still, the causal effect remains substantial: for a
-rough comparison, the (ITT) effect on college attendance of the Moving To
-Opportunity experiment in the US was 2.5 percentage points [@chetty2016effects].
+`r pretty(eff_own_psea_within * 100)` percentage points ($p < 2 \times 10^{-16}$).
+This suggests that about half of the raw correlation of PSEA with
+university attendance is down to confounds like good environments or parental
+nurture, while the remainder is causal. Still, the causal effect remains
+substantial: for a rough comparison, the (ITT) effect on college attendance of
+the Moving To Opportunity experiment in the US was 2.5 percentage points
+[@chetty2016effects].
 
 We use two measures of socio-economic status: income, and university attendance.
 Income is a direct measure of SES. University attendance is a predictor of
-income over the whole life course, and a form of SES in itself. The UK Biobank data
-only contains a direct measure of current household income, which is
+income over the whole life course, and a form of SES in itself. The UK Biobank
+data only contains a direct measure of current household income, which is
 inappropriate for our purposes because it includes income from both spouses and
-is measured after marriage. Instead, we estimate income in £000s in the respondent's
-first job, by matching the job's Standard Occupational Classification (SOC) code
-with average earnings by SOC from @ONS2007ASHE. Job codes are only available for 
-a subset of respondents.
+is measured after marriage. Instead, we estimate income in £000s in the
+respondent's first job, by matching the job's Standard Occupational
+Classification (SOC) code with average earnings by SOC from @ONS2007ASHE. Job
+codes are only available for a subset of `r n_with_job_codes` respondents among
+our pairs.
 
 Figure \@ref(fig:pic-basic-corr) illustrates the core idea of SGAM within our
 pair data. The X axis shows a measure of one partner's socio-economic status:
 university attendance or income. The Y axis plots the other partner's mean PSEA.
 Both males and females who went to university had spouses with higher PSEA. So
-did males and females with higher income. Since DNA is inherited, these people's
-children will also have higher PSEA.
+did males and females with higher income in their first job. Since DNA is
+inherited, these people's children will also have higher PSEA.
 
 ```{r pic-basic-corr, fig.cap = "Spouse PSEA against own university attendance and own income in first job. Lines show 95\\% confidence intervals.", fig.subcap = rep("", 4), fig.align = "center", fig.width = 3, fig.height = 3, fig.ncol = 2}
 
@@ -1075,7 +1091,7 @@ huxreg(mod_bo_1st,
        set_align(8:10, -1, "center") %>% 
        set_number_format(2:7, -1, 4) %>% 
        set_width(1) %>% 
-       set_caption("Regressions of variables on birth order")
+       set_caption("Regressions of mediators on birth order")
        
 ```
 
@@ -1086,7 +1102,7 @@ four non-SES mediators that could be affected by birth order: fluid IQ, height,
 body mass index (BMI) and a measure of self-reported health. We control for
 respondent's own PSEA and their parents' age at birth (see below). Table
 \@ref(tab:tbl-bo-first-stage) shows that birth order significantly predicts all
-these variables. Effect sizes are quite substantial: a single extra elder
+these variables. Effect sizes are quite substantial: on average, one extra elder
 sibling reduces the chance of attending university by about 
 `r pretty(-coef_bo["University"] * 100)` percentage points, income by about 
 £`r pretty(-coef_bo["Income"] * 1000, format = "d")`, fluid IQ by about 
@@ -1095,35 +1111,33 @@ sibling reduces the chance of attending university by about
 `r pretty(-coef_bo["Health"])` points on a 4-point scale; and increases BMI by 
 `r pretty(coef_bo["BMI"])`.
  
-Next we run regressions of spouse PSEA on birth order, within our
-dataset of spouse pairs. Table \@ref(tab:tbl-bo-psea-basic) reports the
-results. Column 1 controls only for family size (using dummies). As
-expected, higher birth order is negatively associated with spouse's
-PSEA, though the estimated effect size is small and insignificant. 
-Column 2 includes the respondent's own PSEA, as well as dummies for birth year 
-to control for cohort effects, and dummies for birth month to control for 
-seasonality effects. The effect size of birth order is not much changed.
+Next we run regressions of spouse PSEA on birth order, within our dataset of
+spouse pairs. Table \@ref(tab:tbl-bo-psea-basic) reports the results. Column 1
+reports results controlling only for family size (using dummies). As expected,
+higher birth order is negatively associated with spouse's PSEA, though the
+estimated effect size is small and insignificant. Column 2 reports results
+controlling for the respondent's own PSEA, as well as dummies for birth year to
+control for cohort effects, and dummies for birth month to control for
+seasonal effects. The effect size of birth order is not much changed.
 
-Column 3 includes parents' age at birth. Within a family, later children
-have older parents by definition. Older parents have more life
+Column 3 reports results controlling for parents' age at birth. Within a family,
+later children have older parents by definition. Older parents have more life
 experience and may have higher income, which would presumably help later
-children.[^7] Including parents' age means we can separate the effect
-of parental age from birth order. This reduces the N by a lot, since
-only respondents with a live parent reported the necessary data. However,
-the effect of birth order jumps in size and becomes significant at the 5 per
-cent level. Meanwhile, parents' age has a
-positive effect. This suggests that estimates in columns 1-2 mixed two
-opposite-signed effects: having older parents versus being later in
-birth order.
+children.[^7] Including parents' age means we can separate the effect of
+parental age from birth order. This reduces the N by a lot, since only
+respondents with a live parent reported the necessary data. However, the effect
+of birth order jumps in size and becomes significant at the 5 per cent level.
+Meanwhile, parents' age has a positive effect. This suggests that estimates in
+columns 1-2 mixed two opposite-signed effects: having older parents versus being
+later in birth order.
 
 [^7]: We often only have data only for one parent. We use this, or take the mean
-  if we have both. There are also potential 
-  genetic effects from parental age, though recent research has rejected these 
-  in favour of "social" explanations [@kristensen2007explaining; @black2011older].
-  @cochran2013paternal report that mutational load is approximately
-  linear in father's age, while it is constant in mother's age. We
-  observe very similar results if we control only for father's age at
-  respondent's birth.
+if we have both. There are also potential genetic effects from parental age,
+though recent research has rejected these in favour of "social" explanations
+[@kristensen2007explaining; @black2011older]. @cochran2013paternal report that
+mutational load is approximately linear in father's age, while it is constant in
+mother's age. We observe very similar results if we control only for father's
+age at respondent's birth.
 
 
 ```{r tbl-bo-psea-basic}
@@ -1148,8 +1162,9 @@ mod_bo_psea_base <- lapply(fml_bo_psea_base, fixest::feols,
 tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent",
 "variable, and own birth order as the main independent variable. PSEA is the",
 "polygenic score for educational attainment, which is normalized with mean 0 and",
-"standard deviation 1. We include parents' age at birth (the mean of parents'",
-"ages), and further controls in columns 2-3 to ensure the balance of covariates",
+"standard deviation 1. We include own PSEA, parents' age at birth (the mean of parents'",
+"ages), and further controls (family size, birth year, and birth month dummies) 
+in columns 2-3 to ensure the balance of covariates",
 "across birth order. All data is from the UK Biobank for a sample of UK",
 "individuals born between 1935 and 1970.", my_note)
 
@@ -1198,9 +1213,10 @@ tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent"
 "variable, and own birth order and mediators (university attendance and income)",
 "as the main independent variables. Columns 2-4 correspond to model 7. PSEA is", 
 "the polygenic score for educational attainment, which is normalized with mean 0",
-"and standard deviation 1. We include mean of parents’ ages at birth,",
+"and standard deviation 1. We include own PSEA, mean of parents’ ages at birth,",
 "potential non-SES mediators (fluid IQ, height, BMI, self-reported health)",
-"and further controls to ensure the balance of",
+"and further controls (family size, birth year, and birth month dummies)",
+"to ensure the balance of",
 "covariates across birth order. All data is from the UK Biobank for a sample of", 
 "UK individuals born between 1935 and 1970.", my_note)
 
@@ -1228,27 +1244,27 @@ huxreg(mod_bo_psea,
        set_number_format(2:19, -1, 4) %>% 
        set_tb_padding(3) %>% 
        set_width(0.9) %>% 
-       set_caption("Regressions of spouse PSEA on birth order and potential mediators")
+       set_caption("Regressions of spouse PSEA on birth order and mediators")
 ```
 
 Table \@ref(tab:tbl-bo-psea) shows the results. Column 1 shows the
 effect of birth order, using the same specification as column 3 of the
 previous table. The remaining columns add potential mediators of
-birth order effects. Column 2 includes our first measure of
+birth order effects. Column 2 controls for our first measure of
 socio-economic status: university attendance. We also include potential
 non-SES mediators, which are affected by birth order and might affect spouse
 matching: fluid IQ, height, BMI and self-reported health. Column 3 adds our 
 second measure of socio-economic status, income in first job. Column 4 includes 
 both.
 
-When we add university attendance (column 2), the effect of birth order
-drops and becomes insignificant, while the coefficient for university is
-positive and highly significant. Fluid IQ, height and BMI are also positive
-and significant, while self-reported health has the right sign but is 
-insignificant. Controlling for income alone (column 3), again the effect of
-birth order shrinks and becomes insignificant, while income has a positive and
-highly significant effect. Lastly, the same pattern holds when we 
-control for both university and income (column 4).
+When we add university attendance and other mediators (column 2), the effect of
+birth order drops and becomes insignificant, while the coefficient for
+university is positive and highly significant. Fluid IQ, height and BMI are also
+positive and significant, while self-reported health has the right sign but is
+insignificant. Controlling for income instead of university attendance (column
+3), again the effect of birth order shrinks and becomes insignificant, while
+income has a positive and highly significant effect. Lastly, the same pattern
+holds when we control for both university and income (column 4).
 
 ```{r tbl-mediation-prop, cache = FALSE}
 
@@ -1327,7 +1343,7 @@ estimates <- compute_mediation_effects(resample = FALSE)
 
 format_est_ci <- function(coef, model) {
   # char <- glue::glue("{percent(estimates[model, coef], 0.1)} ({percent(cis[1, model, coef], 0.1)}, {percent(cis[2,model, coef], 0.1)})")
-  char <- percent(estimates[model, coef], 0.1)
+  char <- estimates[model, coef] * 100
   char[is.na(estimates[model, coef])] <- ""
   char
 }
@@ -1338,18 +1354,22 @@ med_matrix <- format_est_ci(c("University", "Income", "Fluid IQ", "Height",
 med_matrix <- matrix(med_matrix, ncol = 3, byrow = TRUE)
 rownames(med_matrix) <- c("University", "Income", "Fluid IQ", "Height", "BMI",
                             "Self-reported health")
-colnames(med_matrix) <- paste("Model", 2:4)
+colnames(med_matrix) <- paste("Model", 2:4, " (%)")
 
 tbl_note <- paste("Percentage of the effects of birth order in Table", 
-"\\ref{tab:tbl-bo-psea}, columns 2 to 4, that are explained by mediators",
-"(SES: university attendance, income in first job; non-SES: fluid IQ, height, ",
-"BMI, self-reported health).")
+"\\ref{tab:tbl-bo-psea}, columns 2 to 4, explained by by each mediating variable.")
 
 as_huxtable(med_matrix, add_colnames = TRUE, add_rownames = "") %>% 
       theme_article() %>% 
       add_footnote(tbl_note) %>% 
       set_escape_contents(final(1), everywhere, FALSE) %>% 
       set_width(0.7) %>% 
+      set_col_width(c(.4, .2, .2, .2)) %>% 
+      set_align(1, -1, "right") %>% 
+      set_align(-1, -1 , ".") %>% 
+      set_number_format(-1, -1, 1) %>% 
+      set_tb_padding(3) %>% 
+      set_bottom_border(1, 1, 0) %>% 
       set_caption(
         "Percent of birth order effects accounted for by mediators, models 2-4"
       )  
@@ -1363,9 +1383,9 @@ the birth order effect that is mediated by these variables. Table
 2-4. Each estimate is the coefficient of birth order on the mediator,
 times the coefficient of the mediator on spouse PSEA, divided by the
 coefficient of birth order on spouse PSEA estimated from column 1, i.e.
-without mediators. Education explains about 40-60 percent of the effect, much more
-than all the other mediators. Income, fluid IQ and height all explain about 10-15
-percent of the effect.
+without mediators. Education explains about 38-55 percent of the effect, much more
+than all the other mediators. Income, fluid IQ, height and BMI all explain 
+between 6 and 17 percent of the effect, depending on the specification.
 
 These results provide evidence that birth order affects spouse PSEA via
 education and income, with education being especially important.
@@ -1373,33 +1393,29 @@ education and income, with education being especially important.
 Our next regressions split up the data into subsets. Cultural
 stereotypes often assume that the link between status and genes is not
 symmetric across the genders, for example, that males with high SES are
-particularly likely to marry attractive spouses. To test this, we
-separately regress male spouses' PSEA on female birth order, and female
+particularly likely to marry attractive spouses. Claim \@ref(claim-men-women-different) showed that these differences would strengthen
+the effects of SGAM.
+To test for this, we
+separately regress female spouses' PSEA on male birth order, and male
 spouses' PSEA on female birth order. We also rerun regressions among the
 subset of individuals who had children. A significant result here will
 confirm that the association between status and genetics is carried over
 into the next generation.
 
-Table \@ref(tab:tbl-bo-subsets) shows the results. Columns 1 and 2 use birth
-order of male respondents to predict female spouses' PSEA. Column 1 runs the
-regression of birth order; column 2 adds university attendance as a mediator
-(here, we focus on university attendance alone so as to keep our N large).
-Columns 3 and 4 repeat the exercise for female respondents, using their birth
-order to predict male spouses' PSEA. Birth order loses significance in these subsets.
-However, the pattern of coefficient sizes is the same as in the main regression:
-the coefficient of birth order is about -0.3, and adding university attendance 
-reduces the absolute size of the birth order effect. Columns 5 and 6 use only 
-couples with children. Here, birth order is significant in the base 
-specification, and again, university attendance still seems to mediate the 
-birth order effect.
+Table \@ref(tab:tbl-bo-subsets) shows the results. Columns 1 and 2 present
+results using birth order of male respondents to predict female spouses' PSEA.
+Column 1 shows the regression of birth order plus controls; in column 2, we add
+university attendance and non-SES mediators (here, we exclude first job income
+so as to keep our N large). Columns 3 and 4 repeat the exercise for female
+respondents, using their birth order to predict male spouses' PSEA. The effect of
+birth order is imprecisely estimated in these subsets due to the lower sample
+size. However, the pattern of coefficient sizes is the same as in the main
+regression: the coefficient of birth order is about -0.3, and adding university
+attendance reduces the absolute size of the birth order effect. Columns 5 and 6
+show results from regressions on the subsample of couples with children. 
+Here, birth order is significant in the base specification, and again, 
+university attendance still seems to mediate the birth order effect.
 
-Spouse matching is strictly a single process in which neither side is an
-"independent variable". In Appendix Table \@ref(tab:tbl-sur), we estimate a
-matching model in the style of @chiappori2012fatter, estimating the effects of 
-birth order (and PSEA) on both spouse's PSEA and spouse's birth order, and
-testing for proportionality of coefficients across the dependent variables. 
-For women only we reject proportionality of coefficients, suggesting that there
-may be some assortative matching separately on each dimension.
 
 ```{r tbl-bo-subsets}
 
@@ -1439,8 +1455,9 @@ tbl_note <- paste("Estimates from OLS regressions corresponding to",
 "and respondents with children. Spouse PSEA is the dependent variable, and own",
 "birth order and university attendance are the main independent variables. PSEA",
 "is the polygenic score for educational attainment, which is normalized with",
-"mean 0 and standard deviation 1. We include parents’ age at birth (the mean of",
-"parent’s ages) and further controls to ensure the balance of", 
+"mean 0 and standard deviation 1. We include own PSEA, parents’ age at birth (the mean of",
+"parent’s ages) and further controls (family size, birth year, and birth month",
+"dummies) to ensure the balance of", 
 "covariates across birth order. All data is from the UK Biobank for a sample of", 
 "UK individuals born between 1935 and 1970.", my_note)
 
@@ -1551,7 +1568,7 @@ To check for the latter two problems, we run balance tests on 33 different
 polygenic scores.[^10] We regress each score on own birth order, controlling for
 family size. No scores were significant at $p < 0.10/33$. Four scores were
 significant at $p < 0.10$, all with effect sizes of less than 0.02 per standard
-deviation. Table \@ref(tab:tbl-bo-psea-pgs) in the appendix reruns our
+deviation. Table \@ref(tab:tbl-bo-psea-pgs) in the appendix reports 
 regressions controlling for these scores. Results are almost unchanged. To test
 whether polygenic scores might vary across birth orders within a particular
 family size, we also regress each score on a full set of birth order dummies,
@@ -1560,7 +1577,7 @@ interacted with a full set of family size dummies. None of the
 However, among families of size 3, there is a marginally significant positive
 correlation of birth order with own PSEA (effect size 
 `r pretty(coef_own_psea_3, 3)`, $p = `r pretty(pval_own_psea_3, 2)`$). Table
-\@ref(tab:tbl-bo-psea-no3) in the appendix therefore reruns our regressions with
+\@ref(tab:tbl-bo-psea-no3) in the appendix therefore reports regressions with
 families of size 3 excluded. Results are substantially unchanged. Of course,
 there could still be unmeasured genetic variants which correlate with birth
 order in our sample. Nevertheless, a wide set of polygenic scores shows no large
@@ -1588,10 +1605,10 @@ shrink after adding SES mediators appears robust across our variations.
 # Conclusion
 
 Our empirical analysis shows that in a contemporary developed society,
-earlier-born children had spouses with higher PSEA. We also provide
+individuals with fewer elder siblings had spouses with higher PSEA. We also provide
 evidence that these effects are mediated by socio-economic status, specifically
 income and education. We interpret this as evidence of social-genetic assortative
-mating. 
+mating (SGAM). 
 
 There are multiple mechanisms by which advantage is transmitted across
 generations. High-income parents may invest more in their children's human
@@ -1656,13 +1673,12 @@ misleading. Humans inherit their genes from their parents, along with other
 forms of inheritance such as economic and cultural capital. Human parents, in
 turn, form spouse pairs and bear children within social institutions. A person's
 genetic inheritance is a social and historical fact about them, not just a
-fact of nature, any more than their inherited wealth or social status is
-natural. As @marx1844economic wrote, "History is the true natural history of
+fact of nature. As @marx1844economic wrote, "History is the true natural history of
 man". Genetic endowments can even be viewed as another form of capital,
 alongside human, social and cultural capital: a resource to be sought,
 accumulated and competed over. The analysis of this kind of capital is an
 exciting area for further research, which will require the contributions of both
-social scientists and geneticists.
+economists and geneticists.
 
 \FloatBarrier
 

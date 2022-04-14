@@ -24,7 +24,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 invisible(loadNamespace("rootSolve"))
 invisible(loadNamespace("rgl"))
-rgl::setupKnitr(autoprint = TRUE, rgl.newwindow = FALSE, rgl.closewindows = FALSE)
+rgl::setupKnitr(
+        autoprint = TRUE, 
+        rgl.newwindow = FALSE, 
+        rgl.closewindows = FALSE
+      )
 ```
 
 People in the marriage market have two characteristics: 
@@ -59,7 +63,9 @@ where $a \in [0, 1]$ is a parameter reflecting the relative importance of
 genetics to wealth in the marriage market.[^a-interpretation] If $a = 0$,
 marriage markets are highly inegalitarian, such that only SES matters. If $a =
 1$, marriage markets are egalitarian and only genetics matter. We expect
-realistic societies to fall between these extremes. Attractiveness $i$ is
+realistic societies to fall between these extremes, with $0 < a < 1$. Then, both genes and SES matter to attractiveness, and as a result, social-genetic assortative mating (SGAM) takes place.
+
+Attractiveness $i$ is
 distributed $N(0,\sigma_{I}^{2})$, where
 \[
 \sigma _{I}^{2}=a^{2}s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right)\sigma.
@@ -98,8 +104,9 @@ s^{2} & \sigma & 0 & 0 \\
 \right). \allowbreak 
 \]
 
-Our first proposition shows that SGAM leads to a positive correlation
-between one partner's wealth and the other's genetics.
+Our first proposition shows that if SGAM is taking place, i.e. if $0 < a < 1$, then
+there is a positive correlation between one partner's wealth and the other
+partner's genetics.
 
 \begin{proposition}\label{prop-couples-SGAM}
 Under SGAM, the distribution of couples' characteristics is normal, with mean 0
@@ -129,8 +136,10 @@ C &= \frac{a\sigma +\left( 1-a\right) S^{2}}{\sqrt{a^{2}s^{2}+\left(
 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma }} &= \frac{a\sigma +\left( 1-a\right) S^{2}}{\sigma_I}.
 \end{align*}
 
-In particular, the covariance between $x_2$ and $y_1$, $AC$, is positive if either
-$\sigma > 0$ or $\sigma = 0$ and $0 < a < 1$.
+In particular, the covariance between $x_2$ and $y_1$, $AC$, is positive if
+either $x_1$ and $x_2$ are already correlated ($\sigma > 0$) or if they are
+uncorrelated ($\sigma = 0$) and the attractiveness parameter $a$ is strictly
+between 0 and 1.
 
 \begin{proof}
 See Appendix.
@@ -177,7 +186,8 @@ For the time being, we assume that a person's genetic endowment has no impact on
 their SES. Technically, thus, $x_{2}^\prime$ does not directly depend on
 $x_{1}^\prime$. In a meritocratic society we would expect adult SES to partly depend
 on genetics. We show that even absent meritocracy, correlations between $x_1^\prime$ and
-$x_{2}^\prime$ can arise.
+$x_{2}^\prime$ can arise. In an extension below, we relax this assumption and allow
+meritocracy.
 
 We can now calculate the covariance matrix for 
 $x^\prime = (x_{1}^{\prime }, x_{2}^{\prime })$ under SGAM as: 
@@ -420,7 +430,7 @@ $\tau = 1$, the dynamics diverges and $\bar{s}^{2}$ goes to $+\infty$.
 Figure \@ref(fig:pic-asymptotic-corr) plots the asymptotic correlation
 between $x_1$ and $x_2$ for $\tau = 0.95$.
 
-```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between $x_1$ and $x_2$, by $a$ and $\\theta$", dpi = 300, out.height="3in"}
+```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between $x_1$ and $x_2$, by $a$ and $\\theta$. $\\tau$ = 0.95.", dpi = 300, out.height="3.5in"}
 
 
 D <- function (a, lambda, mu) {
@@ -469,19 +479,23 @@ corr <- function (theta, a) {
 
 invisible(rgl::open3d(
               userMatrix = rgl::rotate3d(rgl::r3dDefaults$userMatrix, 
-                                         angle = 45, x = 0, y = 0, z = 1),
-              zoom = 1.1
+                                           angle = pi/4, x = 0, y = 0, 
+                                           z = 1)
             ))
+rgl::par3d(cex = 1.4)
+
 rgl::plot3d(
              Vectorize(corr),
              xlim = c(0, 0.95),
              ylim = c(0, 0.99), # 1 gives an error
-             zlab = "Corr.",
+             zlab = "",
+             xlab = "θ", 
              col = "darkgreen",
              front = "lines",
              lwd = 3,
              n = 40
            )
+rgl::mtext3d("Corr(x₁, x₂)", "z-+", line = 6)
 
 ```
 
@@ -511,7 +525,10 @@ unless $a = b = 0$ or $a = b = 1$. The correlation is increasing in $\theta$.
 
 Interestingly, the $x_1$-$x_2$ correlation is highest when $a$ and $b$ are most
 different from each other. So gender differences in what counts as attractive
-make the effects of SGAM stronger.
+make the effects of SGAM stronger. Intuitively, if one sex only assorts on 
+SES while the other sex only assorts on genetics, this induces a very reliable
+correlation between genes and SES in couples, since (e.g.) every high-SES male 
+is matched for sure with a high-genetics female.
 
 Second, in modern meritocracies, people's adult SES depends not just 
 on their parents' social status and on chance, but also on their own effort and
@@ -534,11 +551,71 @@ long as $\gamma > 0$ and either $0 < a < 1$ or $\sigma > 0$, the coefficient
 of parents' wealth on children's wealth exceeds $\theta$.
 \end{proposition}
 
-Surprisingly, in this case, the children's correlation is not always increasing
-in $\theta$. The reason is that when $\gamma$ is high, a higher $\theta$ decreases
-the proportion of $x^\prime_2$ that comes via $\gamma$ from own genetics, and
-increases the proportion that comes from parents' SES, which may be less strongly
-correlated with own genetics.
+Surprisingly, in this case, the children's genes-SES correlation is not always
+increasing in $\theta$. The reason is that when $\gamma$ is high, a higher
+$\theta$ decreases the proportion of $x^\prime_2$ that comes via $\gamma$ from
+own genetics, and increases the proportion that comes from parents' SES, which
+may be less strongly correlated with own genetics. Figure \@ref(fig:pic-gamma)
+plots the correlation for $\gamma = 0.15$, by $a$ and $\theta$.
+
+```{r pic-gamma, fig.align = "center", fig.cap = "Correlation between $x^\\prime_1$ and $x^\\prime_2$, by $a$ and $\\theta$ under meritocracy. $\\gamma$ = 0.15, $\\tau$ = 0.95, $s$ = $S$ = 1, $\\sigma$ = 0.", dpi = 300, out.height = "3.5in"}
+
+sigma_I <- function (s, S, sigma, a) {
+  sqrt(
+    a^2 * s^2 + (1-a)^2 * S^2 + 2*a*(1-a)*sigma
+  )
+}
+
+A <- function (s, S, sigma, a) (a*s^2 + (1-a)*sigma)/sigma_I(s, S, sigma, a)
+
+C <- function (s, S, sigma, a) (a*sigma + (1-a)*S^2)/sigma_I(s, S, sigma, a)
+
+
+cov_x1_x2 <- function (s, S, sigma, a, gamma, tau, theta) {
+  A <- A(s, S, sigma, a)
+  C <- C(s, S, sigma, a)
+  
+  gamma * tau^2/2 * (s^2 + A^2) + 
+  theta * tau/2 *(sigma + A*C) + 
+  gamma
+}
+
+corr_x1_x2 <- function (s, S, sigma, a, gamma, tau, theta) {
+  A <- A(s, S, sigma, a)
+  C <- C(s, S, sigma, a)
+  
+  cov_x1_x2 <- cov_x1_x2(s, S, sigma, a, gamma, tau, theta)
+  
+  var_x1 <- tau^2/2 * (s^2+A^2) + 1
+  
+  var_x2 <- gamma^2 * tau^2/2 * (s^2 + A^2) +
+            gamma * tau * theta * (sigma + A*C) +
+            theta^2/2 * (S^2 + C^2) +
+            1 + gamma^2
+  
+  cov_x1_x2/sqrt(var_x1 * var_x2)
+}
+
+invisible(rgl::open3d(
+              userMatrix = rgl::rotate3d(rgl::r3dDefaults$userMatrix,
+                                           angle = pi/4, x = 0, y = 0,
+                                           z = 1)
+            ))
+rgl::par3d(cex=1.4)
+
+rgl::plot3d(\(theta, a) corr_x1_x2(s = 1, S = 1, sigma = 0, a = a, gamma = 0.15,
+                                   tau = 0.95, theta = theta), 
+            zlab  = "", 
+            xlab  = "θ", 
+            col   = "darkgreen", 
+            front = "lines",
+            back = "lines",
+            lwd   = 3,
+            n     = 40,
+            zlim = c(0.1, 0.3)
+            )
+rgl::mtext3d("Corr(x₁', x₂')", "z-+", line = 6)
+```
 
 Third, we consider non-normal distributions of $x_1$ and $x_2$, non-normal
 shocks $\varepsilon$ and $\eta$, and non-linear attractiveness functions. Suppose
@@ -569,7 +646,7 @@ their covariance. Here, matching preferences, as summarized in the $a$ parameter
 are exogenous. It would be natural to model $a$ as an equilibrium outcome.
 For example, if parents care about their children's wealth, $a$ might decrease
 in $\theta$ and increase in $\gamma$. Lastly, a gene-environment *interaction*
-(e.g. $x^\prime_2 = \alpha x_2 x_1$) might increase the gene-environment
+(e.g. $x^\prime_2 = \gamma x^\prime_1 + \theta\frac{x_2+y_2}{2} + \zeta x'_1\frac{x_2+y_2}{2}$) might increase the gene-environment
 correlation some more.
 
 
@@ -582,8 +659,9 @@ encompass variables like social class or caste; ethnic identity in
 "ranked" ethnic systems; or in modern societies, SES, including wealth, income
 and occupation. Regarding genetics, standards of physical attractiveness, and
 other genetically-influenced characteristics which make someone a "good match", 
-vary across societies and over time. By the logic of the model, in the long run,
-a positive correlation will emerge between any such characteristics and SES.
+vary across societies and over time. The central prediction of the model is that
+whatever those characteristics, in the long run they will become correlated with
+SES.
 
 Recent empirical work shows high persistence of SES over time, in particular at
 the top. @clark2021bell argues that this is due to unobserved genetic variation.
@@ -594,7 +672,8 @@ correlates with parents' genetics and via that with own wealth.  Thus,
 regressions of wealth on wealth may include the effect of unobserved genetic
 variation. This may be a confound due to pre-existing gene-SES correlation
 (if $\sigma > 0$). But under SGAM it can also be a genuine cause, since changes 
-in someone's wealth may indeed affect their spouse's genetics.
+in someone's wealth may indeed affect the identity of their spouse, and therefore
+the genetics of their offspring.
 
 The converse also holds: regressions of children's characteristics on their
 genetics alone risk overestimating the effect of genetics, by confounding it
@@ -609,9 +688,9 @@ children's characteristics, via environmental effects [@kong2018nature].
 The model predicts variation in the strength of SGAM. In particular, in
 "caste societies" where there is complete endogamy within social status
 groups, there is no scope for SGAM, because marriage partners do not
-trade off genetics for social status. Also, SGAM is increased by $\theta$. This
+trade off genetics for social status. Also, SGAM is increased by the institutional variable $\theta$, which captures intergenerational persistence of SES. This
 implies that policy has long-run effects on the social structure: reducing
 $\theta$ not only increases intergenerational mobility, but reduces
-the correlation of genes with SES, and hence the unfairness of what has been
-called the "genetic lottery" [@harden2021genetic].
+the correlation of genes with SES, and hence the unfairness of what
+@harden2021genetic calls the "genetic lottery".
 
