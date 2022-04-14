@@ -15,7 +15,8 @@ abstract: |
   passed on together to future generations. This process provides a new 
   explanation for the surprising persistence of inequality across generations,
   and for the genes-SES gradient (the genetic differences we observe between 
-  high- and low-income people). We model social-genetic assortative mating 
+  high- and low-income people, including differences related to human capital and
+  health). We model social-genetic assortative mating 
   (SGAM) and test for its existence in a large genetically-informed survey. We 
   compare spouses of individuals with different birth order, which is known to 
   affect socio-economic status and which is exogenous to own genetic endowments 
@@ -385,15 +386,15 @@ tax rates, the genes-SES gradient is in general weaker.[^not-always]
 [^not-always]: "In general" because the relationship can be reversed when
 there is meritocracy and SGAM is weak. See Proposition \ref{prop-gamma}.
 
-Next, using data on matched spouses born between 1935 and 1970 from UK Biobank 
-(a large genetically-informed survey), we test the hypothesis that an individual’s higher social
-status attracts spouses with higher genetic potential for educational
-attainment. Our genetic measure, the Polygenic Score for Educational Attainment
-(PSEA), derives from large-scale genome-wide association studies [@lee2018gene]
-and is a cause of educational attainment itself, as well as of
-intelligence and labour market outcomes. It is already known that humans mate
-assortatively on PSEA [@hugh2016assortative;@robinson2017genetic], which makes 
-it a likely candidate for detecting SGAM. 
+Next, using data on matched spouses born between 1935 and 1970 from UK Biobank
+(a large genetically-informed survey), we test the hypothesis that an
+individual’s higher social status attracts spouses with higher genetic potential
+for educational attainment. Our genetic measure, the Polygenic Score for
+Educational Attainment (PSEA), derives from large-scale genome-wide association
+studies [@lee2018gene] and is a cause of educational attainment itself, as well
+as of intelligence and labour market outcomes. It is already known that humans
+mate assortatively on PSEA [@hugh2016assortative;@robinson2017genetic], which
+makes it a likely candidate for detecting SGAM.
 
 The endogeneity of socio-economic status is the main challenge in identifying
 the causal effect of SES on the spouse’s genetic endowment. For instance,
@@ -497,10 +498,11 @@ health outcomes are associated with regional deprivation
 [@abdellaoui2019genetic]. There is a correlation between education and health,
 which may be mediated by shared genetic causes
 [@amin2015schooling;@boardman2015can]. Family SES is a confound for several
-health-related polygenic scores [@selzam2019comparing]. Understanding the 
-aetiology of health and disease requires disentangling the effects of genetics 
-and environments. In turn, that requires understanding how the two can become
-correlated.
+health-related polygenic scores [@selzam2019comparing]; SES correlates with
+genetic variants for mental psychiatric disorders and substance use
+[@marees2021genetic]. Understanding the aetiology of health and disease requires
+disentangling the effects of genetics and environments. In turn, that requires
+understanding how the two can become correlated.
 
 SGAM shows how marriage markets can lead high SES to be associated with different 
 genetic variants. Thus, it can explain the genes-SES gradient. The standard 
