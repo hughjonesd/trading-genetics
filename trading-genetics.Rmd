@@ -552,11 +552,11 @@ between SES and genetics. If so, institutional reforms that increase
 *intergenerational mobility*, like mass education or inheritance taxation, may 
 in the long run affect not only economic but genetic inequality. Conversely, an 
 increase in *economic meritocracy* increases the association between SES and
-genetics in the long run.[^prop4] This poses the problem raised first by
+genetics in the long run.[^prop] This poses the problem raised first by
 @young1958rise, and more recently by @markovits2019meritocracy: meritocracy 
 may be self-limiting or even self-undermining. 
 
-[^prop4]: See Proposition \@ref(prop-gamma) below.
+[^prop]: See Proposition \@ref(prop-gamma) below.
 
 The observations behind SGAM are not new. That status and physical
 attractiveness assort in marriage markets is a commonplace and a perennial theme
@@ -569,13 +569,13 @@ psychology [@buss1986preferences; @buss1989sex; @buss2019mate] confirms
 that attractive mate characteristics include aspects of social status (“high
 earning capacity,” “professional status”) as well as traits that are partly
 under genetic influence (“intelligent,” “tall,” “kind,” “physically
-attractive”). Despite this, we have found almost no previous work in genetics,
-economics or the social sciences that analyses SGAM or its consequences.[^prev-work]
+attractive”). Despite this, to our knowledge, this is the first paper in either
+genetics or economics to formally analyse SGAM and its consequences.[^prev-work]
 
-[^prev-work]: @halsey1958genetics showed in a two-class model that social mobility combined
-with assortative mating might increase the association between genetics and
-social class. @belsky2018genetic offer three reasons for the association between
-education-linked genetics and SES, but do not consider SGAM.
+[^prev-work]: @halsey1958genetics showed in a two-class model that social
+mobility combined with assortative mating might increase the association between
+genetics and social class. @belsky2018genetic offer three reasons for the
+association between education-linked genetics and SES, but do not consider SGAM.
 
 
 ```{r literature-notes, eval = FALSE}
@@ -1801,6 +1801,7 @@ huxreg(mod_bo_no_par_age,
 
 ```
 
+
 ```{r tbl-bo-psea-dummies}
 
 # we use standard lms because fixest::wald breaks sometimes
@@ -1837,9 +1838,10 @@ dummy_reg_coefs <- c(
                       "Parents' age at birth" = "par_age_birth.x"
                     )
 
-huxtable::huxreg(mod_bo_psea_dummies, 
+ht <- huxtable::huxreg(mod_bo_psea_dummies, 
                    coefs     = dummy_reg_coefs,
-                   note      = my_note,
+                   note      = paste(my_note, 
+                     "\nGrey background: coefficients are larger than column 1."),
                    stars     = my_stars,
                    tidy_args = tidy_args
                  ) %>% 
@@ -1847,16 +1849,26 @@ huxtable::huxreg(mod_bo_psea_dummies,
        insert_row(after = 20, "Family size dummies", rep("Yes", 4)) %>% 
        insert_row(after = 21, "Birth month dummies", rep("Yes", 4)) %>% 
        insert_row(after = 22, "Birth year dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 23, "Controls (IQ, height, BMI, s.-r. health)", 
+       insert_row(after = 23, "Other mediators (IQ, height, BMI, s.-r. health)", 
                     c("No", rep("Yes", 3))) %>% 
        set_bottom_border(21:23, everywhere, 0) %>% 
        set_align(21:24, -1, "center") %>% 
        set_number_format(2:20, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, separate birth order dummies") %>% 
        set_tb_padding(3) %>% 
-       set_font_size(10)
+       set_font_size(10) %>% 
+       set_width(0.9)
+
+coef_vals <- as.matrix(ht[seq(2, 10, 2), 2:5])
+coef_vals <-  readr::parse_number(coef_vals)
+dim(coef_vals) <- c(5, 4)
+coefs_larger <- coef_vals[1:5, -1] > coef_vals[1:5, 1]
+background_color(ht)[seq(2, 10, 2), 3:5] <- ifelse(coefs_larger, "grey90", 
+                                                     "white")
+ht
 
 ```
+
 
 ```{r tbl-bo-subset-dummies}
 
@@ -1912,9 +1924,11 @@ dummy_reg_coefs <- c(
                       "Parents' age at birth" = "par_age_birth.x"
                      )
 
-huxtable::huxreg(reg_list, 
+ht <- huxtable::huxreg(reg_list, 
                    coefs = dummy_reg_coefs,
-                   note = my_note,
+                   note = paste(my_note, "\nGrey background: birth dummy",
+                                "coefficient is larger than corresponding",
+                                "coefficient without mediators."),
                    stars = my_stars,
                    tidy_args = tidy_args
                  ) %>% 
@@ -1922,18 +1936,51 @@ huxtable::huxreg(reg_list,
        insert_row(after = 18, "Family size dummies", rep("Yes", 6))   %>% 
        insert_row(after = 19, "Birth month dummies", rep("Yes", 6))   %>% 
        insert_row(after = 20, "Birth year dummies", rep("Yes", 6))    %>% 
-       insert_row(after = 21, "Controls (IQ, height, BMI, s.-r. health)", 
-                    rep("Yes", 6)) %>% 
+       insert_row(after = 21, "Other mediators (IQ, height, BMI, s.-r. health)", 
+                    rep(c("No", "Yes"), 3)) %>% 
        set_bottom_border(19:21, everywhere, 0) %>%
        set_align(19:22, -1, "center") %>% 
        set_number_format(2:18, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, separate birth order dummies: subsets") %>% 
        set_tb_padding(3) %>% 
        set_lr_padding(2) %>% 
-       set_font_size(9)
+       set_font_size(9) %>% 
+       set_width(0.95)
+
+
+coef_vals <- as.matrix(ht[seq(2, 10, 2), 2:7])
+coef_vals <-  readr::parse_number(coef_vals)
+dim(coef_vals) <- c(5, 6)
+coefs_larger <- cbind(
+                        coef_vals[, 2] > coef_vals[, 1], 
+                        coef_vals[, 4] > coef_vals[, 3], 
+                        coef_vals[, 6] > coef_vals[, 5]
+                      )
+background_color(ht)[seq(2, 10, 2), seq(3, 7, 2)] <- ifelse(coefs_larger, 
+                                                              "grey90", "white")
+ht
+
 ```
 
-```{r pic-bo-psea-interactions, fig.align = "center", fig.cap = "Regressions of spouse PSEA: birth order dummies within different family sizes. Labels show birth order. Lines are 95 per cent confidence intervals."}
+
+```{r calc-bo-mediator-interactions}
+
+fml_bo_mediator_interact <- update(fml_bo_psea_dummies[[4]],
+                                     . ~ . * factor(birth_order.x)) 
+mod_bo_mediator_interact <- fixest::feols(fml_bo_mediator_interact, 
+                                            data = mf_pairs_reg, 
+                                            note = FALSE)
+
+tidy_bo_mediator <- do.call(broom::tidy, c(list(x = mod_bo_mediator_interact), 
+                                           tidy_args))
+
+tidy_bo_mediator$sig <- tidy_bo_mediator$p.value < 0.05
+n_interactions <- sum(grepl(":", tidy_bo_mediator$term))
+tidy_bo_mediator$sig_corrected <- tidy_bo_mediator$p.value < 0.05/n_interactions
+```
+
+
+```{r pic-bo-psea-interactions, fig.align = "center", fig.cap = "Regressions of spouse PSEA: birth order dummies within different family sizes. Labels show birth order. Lines are 95 per cent confidence intervals. The omitted category is birth order 1."}
  
 mf_pairs_reg$BO2 <- 1 * (mf_pairs_reg$birth_order.x == 2)
 mf_pairs_reg$BO3 <- 1 * (mf_pairs_reg$birth_order.x == 3)
@@ -1973,6 +2020,7 @@ suppressWarnings({
 })
 
 ```
+
 
 ```{r tbl-bo-psea-pgs}
 
@@ -2015,6 +2063,7 @@ huxreg(mod_bo_psea_pgs,
        set_wrap(final(1), everywhere, TRUE) %>% 
        set_caption("Regressions of spouse PSEA with controls for polygenic scores")
 ```
+
 
 ```{r tbl-bo-psea-age-fte}
 

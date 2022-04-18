@@ -556,9 +556,14 @@ increasing in $\theta$. The reason is that when $\gamma$ is high, a higher
 $\theta$ decreases the proportion of $x^\prime_2$ that comes via $\gamma$ from
 own genetics, and increases the proportion that comes from parents' SES, which
 may be less strongly correlated with own genetics. Figure \@ref(fig:pic-gamma)
-plots the correlation for $\gamma = 0.15$, by $a$ and $\theta$.
+plots the correlation for $\gamma = 0.15$, by $a$ and $\theta$. However,
+computing the asymptotic correlation shows that it is increasing in $\theta$ for 
+all but values of $\theta$ very close to 1.
 
 ```{r pic-gamma, fig.align = "center", fig.cap = "Correlation between $x^\\prime_1$ and $x^\\prime_2$, by $a$ and $\\theta$ under meritocracy. $\\gamma$ = 0.15, $\\tau$ = 0.95, $s$ = $S$ = 1, $\\sigma$ = 0.", dpi = 300, out.height = "3.5in"}
+
+# "if we compute the asymptotic correlation": see new-model-computation.R
+# for code
 
 sigma_I <- function (s, S, sigma, a) {
   sqrt(
@@ -607,7 +612,7 @@ rgl::plot3d(\(theta, a) corr_x1_x2(s = 1, S = 1, sigma = 0, a = a, gamma = 0.15,
                                    tau = 0.95, theta = theta), 
             zlab  = "", 
             xlab  = "θ", 
-            col   = "lightskyblue1", 
+            col   = "cyan", 
             front = "lines",
             back = "lines",
             lwd   = 3,

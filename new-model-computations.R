@@ -49,6 +49,36 @@ corr_x1_x2_a_b <- function (s, S, sigma, a, b, tau, theta) {
   cov/sqrt(var_s*var_S)
 }
 
+
+long_run_corr <- function (a, gamma, tau, theta) {
+  s2 <- 1
+  S2 <- 1
+  sigma <- 0
+  
+  diff <- Inf
+  epsilon <- 1e-5
+  while (diff > epsilon) {
+    old_s2 <- s2
+    old_S2 <- S2
+    old_sigma <- sigma
+    old_corr <- sigma/sqrt(s2*S2)
+
+    A <- A(sqrt(s2), sqrt(S2), sigma, a)
+    C <- C(sqrt(s2), sqrt(S2), sigma, a)
+    s2 <- tau^2/2 * (s2+A^2) + 1
+    S2 <- gamma^2 * tau^2/2 * (s2 + A^2) +
+            gamma * tau * theta * (sigma + A*C) +
+            theta^2/2 * (S2 + C^2) +
+            1 + gamma^2
+    sigma <- cov_x1_x2(sqrt(s2), sqrt(S2), sigma, a, gamma, tau, theta)
+    
+    corr <- sigma/sqrt(s2*S2)
+    diff <- abs(corr - old_corr)
+  }
+  
+  return(corr)
+}
+
 # example of where theta decreases correlation for positive gamma
 curve(corr_x1_x2(1, 1, sigma = 0, a = .1, gamma = 0.25, tau = 0.95, theta = x), ylim = c(0, 0.33))
 curve(corr_x1_x2(1, 1, sigma = 0, a = .1, gamma = 0, tau = 0.95, theta = x), add=T,col='red')
