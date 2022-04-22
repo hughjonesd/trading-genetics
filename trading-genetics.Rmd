@@ -58,6 +58,7 @@ header-includes:
 
 ```{r setup, include = FALSE}
 
+library(robomit)
 library(Formula)
 library(car)
 library(drake)
@@ -314,9 +315,9 @@ reg_coefs <- c(
 # Introduction
 
 Over the long run, inequality is surprisingly persistent across generations
-[@clark2015intergenerational; @solon2018we]. Intergenerational mobility is
-correlated with cross-sectional inequality [@becker2018theory;
-@krueger2012rise], which has risen dramatically in high-income countries, at the
+[@clark2015intergenerational;@solon2018we]. Intergenerational mobility is
+correlated with cross-sectional inequality [@becker2018theory;@krueger2012rise], 
+which has risen dramatically in high-income countries, at the
 same time as intergenerational absolute mobility has declined
 [@western2008inequality; @chetty2017fading].[^stats] Assortative mating in
 marriage markets can increase the inequality of human capital and income
@@ -999,7 +1000,10 @@ extended model \@ref(eq:model-to-estimate) where we interact the measured
 mediators and controls with the treatment $B$, and test the significance of the
 coefficients on the interaction terms ($\symbf{\alpha_b}=0$ and
 $\symbf{\beta_b}=0$). See @heckman2013understanding and @fagereng2021wealthy 
-for details and different applications.
+for details and different applications. When we run the model with interactions,
+only one interaction is significant after Bonferroni correction at $p < 0.05/34$:
+the interaction of income in first job with the dummy for birth order 6. So 
+overall, the uninteracted model seems a good enough approximation.
 
 We use a linear model for each observed mediator variable:
 \begin{equation}
@@ -1601,10 +1605,94 @@ indeed exogenous to genetics.
     circumference, and waist-to-hip ratio. For full details of score
     construction, see @abdellaoui2019genetic.
 
+```{r calc-oster-2019}
+# Plan:
+# 1. pick the max R2 of spousal PSEA, backing it out
+
+# 2. for each SES mediator (university, first_job_pay):
+#   run the "short regression" including only BO, the SES mediator and controls
+#   run the "medium regression" including these + non-SES mediators
+#   using these statistics and the max R2, calculate the delta 
+#   (degree of selection into treatment on unobservables, compared to 
+#   selection on observables)
+#   that would lead the effect of the SES mediator to be zero
+
+# we need the max R2 of spousal PSEA *from an unobserved environmental factor*, 
+# given that we know birth order's effect could only be via the environment.
+# So, sources of error are (1) limits to assortative mating
+# (2) error in measured PSEA (3) only environmental factors can contribute
+# to the R2
+# 
+
+mod_ea_psea <- fixest::feols(age_fulltime_edu ~ EA3_excl_23andMe_UK, 
+                               data = famhist, notes = FALSE)
+R2_ea_psea <- fixest::r2(mod_ea_psea, type = "r2")
+prop_systematic_psea <- R2_ea_psea/0.4 
+
+true_psea_R2_max <- 0.5
+R2max <- prop_systematic_psea * true_psea_R2_max
+
+res_uni <- robomit::o_delta(y = "EA3.y", x = "university.x", 
+                            con = "first_job_pay.x + fluid_iq.x + height.x + 
+                                   bmi.x + sr_health.x", 
+                            m = "EA3.x + par_age_birth.x + factor(n_sibs.x) +
+                                 factor(YOB.x) + factor(birth_mon.x)", 
+                            R2max = R2max, type = "lm", data = mf_pairs_reg)
+res_fjp <- robomit::o_delta(y = "EA3.y", x = "first_job_pay.x", 
+                            con = "university.x + fluid_iq.x + height.x + bmi.x +
+                                   sr_health.x", 
+                            m = "EA3.x + par_age_birth.x + factor(n_sibs.x) +
+                                 factor(YOB.x) + factor(birth_mon.x)", 
+                            R2max = R2max, type = "lm", data = mf_pairs_reg)
+
+delta_uni <- round(res_uni[[1, 2]], 3)
+delta_fjp <- round(res_fjp[[1, 2]], 3)
+
+```
+
+
+Another concern is that our chosen SES mediators might not be exogenous. We have
+already seen that birth order affects intelligence, height, BMI
+and health. So there might be other unobserved variables which mediate the effect
+of birth order on spousal PSEA, and which correlate with education or income,
+but which do not themselves capture SES. If so, that would threaten our claim that 
+education and income are important mediators. By definition we can't test this
+directly. Instead, we perform an @oster2019unobservable -style analysis, by asking
+how much selection on unobservables would reduce the coefficients of university
+attendance and income in first job to zero in Table \@ref(tab:tbl-bo-psea). Here,
+we are helped by the fact that the dependent variable PSEA is noisy, and so is the
+spouse matching process. PSEA contains measurement error because it sums many
+small effects of individual single nucleotide polymorphisms. A meta-analysis of 
+twin studies estimates the heritability of educational attainment to be around 40%
+[@branigan2013variation]. This is the variance of educational attainment 
+explained by the “true” polygenic score for educational attainment, i.e. the 
+best linear unbiased predictor of educational attainment from genetic data. In 
+our data, the $R^2$ of PSEA on own educational attainment is 
+`r percent(R2_ea_psea, 0.01)`. Assuming the classic errors-in-variables model,
+the ratio of these two $R^2$ statistics, gives the proportion of measured PSEA that is systematic, with the rest being noise. This is then the maximum $R^2$ for any
+regression with measured PSEA as the dependent variable: 
+`r percent(prop_systematic_psea, 0.01)`. We can reduce this number further by
+considering the maximum possible variance explained of spouse's *true* PSEA by
+any environmental variable. (Own genetic variables are excluded because, as
+discussed, these cannot mediate the effect of birth order.) We take this as 
+`r percent(true_psea_R2_max)`. Phenotypic correlations between spouses
+are typically much less than $\sqrt{0.5}$, and non-SES-related 
+phenotypes are smaller still [@clark2021bell], so this seems like a
+generous upper bound. Multiplying these together gives a maximum $R^2$ of 
+`r percent(R2max, 0.01)`. Following @oster2019unobservable, we use this maximum
+to estimate the degree $\delta$ of selection on unobservables that would reduce
+the effect of university attendance and income in first job to zero in Table
+\@ref(tab:tbl-bo-psea). Results are $\delta = `r delta_uni`$ for university
+attendance, $\delta = `r delta_fjp`$ for income in first job. That is, selection
+on unobserved, non-SES-related variables would have to be almost equal to
+selection on observed variables (height, IQ, BMI, health) to reduce our effects
+to zero.
+
 The appendix reports other robustness checks, including a specification with
-separate dummies for each value of birth order, and replacing university attendance
-with age of leaving full-time education. The basic pattern that birth order coefficients
-shrink after adding SES mediators appears robust across our variations.
+separate dummies for each value of birth order, and replacing university
+attendance with age of leaving full-time education. The basic pattern that birth
+order coefficients shrink after adding SES mediators appears robust across our
+variations.
 
 # Conclusion
 
