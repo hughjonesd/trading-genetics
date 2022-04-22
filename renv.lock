@@ -86,6 +86,13 @@
       "Repository": "CRAN",
       "Hash": "ddfa72a87fdf4c80466a20818be91d00"
     },
+    "Rdpack": {
+      "Package": "Rdpack",
+      "Version": "2.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "30b04e5b957144334d31e024ee2a222e"
+    },
     "SparseM": {
       "Package": "SparseM",
       "Version": "1.81",
@@ -127,6 +134,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "0c54cf3a08cc0e550fbd64ad33166143"
+    },
+    "bdsmatrix": {
+      "Package": "bdsmatrix",
+      "Version": "1.3-4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1012f2033c32d595e1a16bee3bb0b3e5"
     },
     "bit": {
       "Package": "bit",
@@ -239,6 +253,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "ce49bfe5bc0b3ecd43a01fe1b01c2243"
+    },
+    "collapse": {
+      "Package": "collapse",
+      "Version": "1.7.6",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1bcb8d8e330bf1c849295e70b02d8e33"
     },
     "colorspace": {
       "Package": "colorspace",
@@ -569,6 +590,13 @@
       "Repository": "CRAN",
       "Hash": "b8e6221fc11247b12ab1b055a6f66c27"
     },
+    "maxLik": {
+      "Package": "maxLik",
+      "Version": "1.5-2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "56b86f88928f66983965406582149e5c"
+    },
     "memoise": {
       "Package": "memoise",
       "Version": "2.0.1",
@@ -589,6 +617,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "eaee7d2a6f3ed4491df868611cb064cc"
+    },
+    "miscTools": {
+      "Package": "miscTools",
+      "Version": "0.6-26",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "340f0789cb2dcc816d9856d375c1df83"
     },
     "munsell": {
       "Package": "munsell",
@@ -674,6 +709,13 @@
       "Repository": "CRAN",
       "Hash": "7533cd805940821bf23eaf3c8d4c1735"
     },
+    "plm": {
+      "Package": "plm",
+      "Version": "2.6-1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "f677256ce01b586ac64671b33c5e3d38"
+    },
     "png": {
       "Package": "png",
       "Version": "0.1-7",
@@ -744,6 +786,13 @@
       "Repository": "CRAN",
       "Hash": "70cf51235e017702ed77427797572ef0"
     },
+    "rbibutils": {
+      "Package": "rbibutils",
+      "Version": "2.2.8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "60eae09898124cffcab51e5ee082a89f"
+    },
     "readr": {
       "Package": "readr",
       "Version": "2.1.2",
@@ -799,6 +848,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "ac78f4d2e0289d4cba73b88af567b8b1"
+    },
+    "robomit": {
+      "Package": "robomit",
+      "Version": "1.0.6",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "50b889a4bc89450bec354503748d2d89"
     },
     "rootSolve": {
       "Package": "rootSolve",

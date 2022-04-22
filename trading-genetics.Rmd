@@ -1605,6 +1605,7 @@ indeed exogenous to genetics.
     circumference, and waist-to-hip ratio. For full details of score
     construction, see @abdellaoui2019genetic.
 
+
 ```{r calc-oster-2019}
 # Plan:
 # 1. pick the max R2 of spousal PSEA, backing it out
@@ -1633,13 +1634,13 @@ true_psea_R2_max <- 0.5
 R2max <- prop_systematic_psea * true_psea_R2_max
 
 res_uni <- robomit::o_delta(y = "EA3.y", x = "university.x", 
-                            con = "first_job_pay.x + fluid_iq.x + height.x + 
+                            con = "fluid_iq.x + height.x + 
                                    bmi.x + sr_health.x", 
                             m = "EA3.x + par_age_birth.x + factor(n_sibs.x) +
                                  factor(YOB.x) + factor(birth_mon.x)", 
                             R2max = R2max, type = "lm", data = mf_pairs_reg)
 res_fjp <- robomit::o_delta(y = "EA3.y", x = "first_job_pay.x", 
-                            con = "university.x + fluid_iq.x + height.x + bmi.x +
+                            con = "fluid_iq.x + height.x + bmi.x +
                                    sr_health.x", 
                             m = "EA3.x + par_age_birth.x + factor(n_sibs.x) +
                                  factor(YOB.x) + factor(birth_mon.x)", 
@@ -1669,24 +1670,31 @@ explained by the “true” polygenic score for educational attainment, i.e. the
 best linear unbiased predictor of educational attainment from genetic data. In 
 our data, the $R^2$ of PSEA on own educational attainment is 
 `r percent(R2_ea_psea, 0.01)`. Assuming the classic errors-in-variables model,
-the ratio of these two $R^2$ statistics, gives the proportion of measured PSEA that is systematic, with the rest being noise. This is then the maximum $R^2$ for any
+the ratio of these two $R^2$ statistics gives the proportion of measured PSEA that is systematic, with the rest being noise. This ratio is then the maximum $R^2$ for any
 regression with measured PSEA as the dependent variable: 
 `r percent(prop_systematic_psea, 0.01)`. We can reduce this number further by
 considering the maximum possible variance explained of spouse's *true* PSEA by
 any environmental variable. (Own genetic variables are excluded because, as
 discussed, these cannot mediate the effect of birth order.) We take this as 
 `r percent(true_psea_R2_max)`. Phenotypic correlations between spouses
-are typically much less than $\sqrt{0.5}$, and non-SES-related 
+are typically much less than $\sqrt{0.5}$, and those for non-SES-related 
 phenotypes are smaller still [@clark2021bell], so this seems like a
-generous upper bound. Multiplying these together gives a maximum $R^2$ of 
+generous upper bound.[^psea-r2] Multiplying these together gives a maximum $R^2$ of 
 `r percent(R2max, 0.01)`. Following @oster2019unobservable, we use this maximum
 to estimate the degree $\delta$ of selection on unobservables that would reduce
 the effect of university attendance and income in first job to zero in Table
-\@ref(tab:tbl-bo-psea). Results are $\delta = `r delta_uni`$ for university
+\@ref(tab:tbl-bo-psea). $\delta = 1$ would mean equal selection on observables and
+unobservables. Results are $\delta = `r delta_uni`$ for university
 attendance, $\delta = `r delta_fjp`$ for income in first job. That is, selection
 on unobserved, non-SES-related variables would have to be almost equal to
 selection on observed variables (height, IQ, BMI, health) to reduce our effects
 to zero.
+
+[^psea-r2]: Measured phenotypes might contain a lot of noise compared to the
+"true" phenotypes on which people match, and if so, spousal correlations on 
+genotypes might be higher than these numbers. However, @robinson2017genetic estimate 
+the $R^2$ of own true PSEA on spouse PSEA as $0.654^2 = 0.43$, so even in this
+case an $R^2$ of 50% seems quite high.
 
 The appendix reports other robustness checks, including a specification with
 separate dummies for each value of birth order, and replacing university
@@ -1929,7 +1937,7 @@ dummy_reg_coefs <- c(
 ht <- huxtable::huxreg(mod_bo_psea_dummies, 
                    coefs     = dummy_reg_coefs,
                    note      = paste(my_note, 
-                     "\nGrey background: coefficients are larger than column 1."),
+                     "\nGrey background: coefficients are higher than column 1."),
                    stars     = my_stars,
                    tidy_args = tidy_args
                  ) %>% 
@@ -2015,7 +2023,7 @@ dummy_reg_coefs <- c(
 ht <- huxtable::huxreg(reg_list, 
                    coefs = dummy_reg_coefs,
                    note = paste(my_note, "\nGrey background: birth dummy",
-                                "coefficient is larger than corresponding",
+                                "coefficient is higher than corresponding",
                                 "coefficient without mediators."),
                    stars = my_stars,
                    tidy_args = tidy_args
