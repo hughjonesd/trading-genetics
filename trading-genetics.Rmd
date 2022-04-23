@@ -382,10 +382,8 @@ Under meritocracy, genes causes SES. On the other hand, under SGAM,
 causality goes both ways, from genes to SES and vice versa. What is more, the
 strength of the genes-SES gradient depends on economic institutions. Under
 institutions which increase intergenerational mobility, such as high inheritance
-tax rates, the genes-SES gradient is in general weaker.[^not-always]
+tax rates, the genes-SES gradient becomes weaker.
 
-[^not-always]: "In general" because the relationship can be reversed when
-there is meritocracy and SGAM is weak. See Proposition \ref{prop-gamma}.
 
 Next, using data on matched spouses born between 1935 and 1970 from UK Biobank
 (a large genetically-informed survey), we test the hypothesis that an
@@ -1694,7 +1692,7 @@ to zero.
 "true" phenotypes on which people match, and if so, spousal correlations on 
 genotypes might be higher than these numbers. However, @robinson2017genetic estimate 
 the $R^2$ of own true PSEA on spouse PSEA as $0.654^2 = 0.43$, so even in this
-case an $R^2$ of 50% seems quite high.
+case a maximum $R^2$ of 50% seems reasonable.
 
 The appendix reports other robustness checks, including a specification with
 separate dummies for each value of birth order, and replacing university

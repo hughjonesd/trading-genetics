@@ -133,7 +133,7 @@ Pierre Chiappori\thanks{Department of Economics, University of Columbia,
   New York. Email: pc2167@columbia.edu} \&
 David Hugh-Jones\thanks{Corresponding author. School of Economics, 
 University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}}
-\date{2022-04-22}
+\date{2022-04-23}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -2371,20 +2371,26 @@ explained by the ``true'' polygenic score for educational attainment, i.e.~the
 best linear unbiased predictor of educational attainment from genetic data. In
 our data, the \(R^2\) of PSEA on own educational attainment is
 4.45\%. Assuming the classic errors-in-variables model,
-the ratio of these two \(R^2\) statistics, gives the proportion of measured PSEA that is systematic, with the rest being noise. This is then the maximum \(R^2\) for any
+the ratio of these two \(R^2\) statistics gives the proportion of measured PSEA that is systematic, with the rest being noise. This ratio is then the maximum \(R^2\) for any
 regression with measured PSEA as the dependent variable:
 11.13\%. We can reduce this number further by
 considering the maximum possible variance explained of spouse's \emph{true} PSEA by
 any environmental variable. (Own genetic variables are excluded because, as
 discussed, these cannot mediate the effect of birth order.) We take this as
 50\%. Phenotypic correlations between spouses
-are typically much less than \(\sqrt{0.5}\) (Clark 2021), so this seems like a
-fair upper bound. Multiplying these together gives a maximum \(R^2\) of
-5.57\%. Following Oster (2019), we calculate the
-degree \(\delta\) of selection on unobservables that would reduce the effect of
-university attendance and income in first job to zero in Table
-\ref{tab:tbl-bo-psea}. Results are \(\delta = 0.9\) for university
-attendance, \(\delta = 1.04\) for income in first job. That is, selection
+are typically much less than \(\sqrt{0.5}\), and those for non-SES-related
+phenotypes are smaller still (Clark 2021), so this seems like a
+generous upper bound.\footnote{Measured phenotypes might contain a lot of noise compared to the
+  ``true'' phenotypes on which people match, and if so, spousal correlations on
+  genotypes might be higher than these numbers. However, Robinson et al. (2017) estimate
+  the \(R^2\) of own true PSEA on spouse PSEA as \(0.654^2 = 0.43\), so even in this
+  case a maximum \(R^2\) of 50\% seems reasonable.} Multiplying these together gives a maximum \(R^2\) of
+5.57\%. Following Oster (2019), we use this maximum
+to estimate the degree \(\delta\) of selection on unobservables that would reduce
+the effect of university attendance and income in first job to zero in Table
+\ref{tab:tbl-bo-psea}. \(\delta = 1\) would mean equal selection on observables and
+unobservables. Results are \(\delta = 0.951\) for university
+attendance, \(\delta = 1.048\) for income in first job. That is, selection
 on unobserved, non-SES-related variables would have to be almost equal to
 selection on observed variables (height, IQ, BMI, health) to reduce our effects
 to zero.
@@ -4068,7 +4074,7 @@ main text.
 \hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
 \arrayrulecolor{black}
 
-\multicolumn{5}{!{\huxvb{0, 0, 0}{0}}p{0.9\textwidth+8\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.9\textwidth+8\tabcolsep-6pt-6pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. Standard errors: robust.  \newline Grey background: coefficients are larger than column 1.}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+\multicolumn{5}{!{\huxvb{0, 0, 0}{0}}p{0.9\textwidth+8\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.9\textwidth+8\tabcolsep-6pt-6pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. Standard errors: robust.  \newline Grey background: coefficients are higher than column 1.}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -4409,7 +4415,7 @@ main text.
 \hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
 \arrayrulecolor{black}
 
-\multicolumn{7}{!{\huxvb{0, 0, 0}{0}}p{0.95\textwidth+12\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{2pt}\parbox[b]{0.95\textwidth+12\tabcolsep-2pt-2pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{9pt}{10.8pt}\selectfont  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. Standard errors: robust.  \newline Grey background: birth dummy coefficient is larger than corresponding coefficient without mediators.}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+\multicolumn{7}{!{\huxvb{0, 0, 0}{0}}p{0.95\textwidth+12\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{2pt}\parbox[b]{0.95\textwidth+12\tabcolsep-2pt-2pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{9pt}{10.8pt}\selectfont  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. Standard errors: robust.  \newline Grey background: birth dummy coefficient is higher than corresponding coefficient without mediators.}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
