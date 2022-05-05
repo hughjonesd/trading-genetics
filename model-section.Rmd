@@ -48,7 +48,7 @@ s^{2} & \sigma \\
 \right).
 \]
 We interpret $x_1$ as a genetic measure, for example of genes predictive of
-height, physical attractiveness or intelligence. $x_2$ is a measure of 
+height, physical attractiveness, health or intelligence. $x_2$ is a measure of 
 socio-economic status, such as income or wealth, or social status more generally
 (we sometimes use "wealth" as a shorthand). The correlation between 
 $x_1$ and $x_2$ is
@@ -62,8 +62,10 @@ i\left( x\right) =ax_{1}+\left( 1-a\right) x_{2}
 where $a \in [0, 1]$ is a parameter reflecting the relative importance of
 genetics to wealth in the marriage market.[^a-interpretation] If $a = 0$,
 marriage markets are highly inegalitarian, such that only SES matters. If $a =
-1$, marriage markets are egalitarian and only genetics matter. We expect
-realistic societies to fall between these extremes, with $0 < a < 1$. Then, both genes and SES matter to attractiveness, and as a result, social-genetic assortative mating (SGAM) takes place.
+1$, marriage markets are economically egalitarian and only genetics matter. We
+expect realistic societies to fall between these extremes, with $0 < a < 1$.
+Then, both genes and SES matter to attractiveness, and as a result,
+social-genetic assortative mating (SGAM) takes place.
 
 Attractiveness $i$ is
 distributed $N(0,\sigma_{I}^{2})$, where
@@ -234,7 +236,7 @@ longer exogenous; because of assortative matching, they are (partly) socially
 determined. In particular, even if genetics and SES are uncorrelated among
 parents, the expected genetic endowment of the child is positively related to
 parental SES. Second, as a result, in the long run a correlation appears between
-traits; that is, high SES people have genes which are attractive in marriage
+traits; that is, high SES people inherit genes that are attractive in marriage
 markets.
 
 Regarding point 1, we compute the expected genetic characteristic of the
@@ -430,7 +432,7 @@ $\tau = 1$, the dynamics diverges and $\bar{s}^{2}$ goes to $+\infty$.
 Figure \@ref(fig:pic-asymptotic-corr) plots the asymptotic correlation
 between $x_1$ and $x_2$ for $\tau = 0.95$.
 
-```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between $x_1$ and $x_2$, by $a$ and $\\theta$. $\\tau$ = 0.95.", dpi = 300, out.height="3.5in"}
+```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between genetics $x_1$ and SES $x_2$, by weight of genetics in matching $a$ and SES inheritance $\\theta$. $\\tau$ = 0.95.", dpi = 300, out.height="3.5in"}
 
 
 D <- function (a, lambda, mu) {
@@ -560,7 +562,7 @@ plots the correlation for $\gamma = 0.15$, by $a$ and $\theta$. However,
 computing the asymptotic correlation shows that it is increasing in $\theta$ for 
 all but values of $\theta$ very close to 1.
 
-```{r pic-gamma, fig.align = "center", fig.cap = "Correlation between $x^\\prime_1$ and $x^\\prime_2$, by $a$ and $\\theta$ under meritocracy. $\\gamma$ = 0.15, $\\tau$ = 0.95, $s$ = $S$ = 1, $\\sigma$ = 0.", dpi = 300, out.height = "3.5in"}
+```{r pic-gamma, fig.align = "center", fig.cap = "Correlation between children's genetics $x^\\prime_1$ and children's SES $x^\\prime_2$, by weight of genetics in matching $a$ and SES inheritance $\\theta$, for meritocracy $\\gamma$ = 0.15. Other parameters: $\\tau$ = 0.95, $s$ = $S$ = 1, $\\sigma$ = 0.", dpi = 300, out.height = "3.5in"}
 
 # "if we compute the asymptotic correlation": see new-model-computation.R
 # for code
