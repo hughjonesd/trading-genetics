@@ -15,8 +15,10 @@ abstract: |
   passed on together to future generations. This process provides a new 
   explanation for the surprising persistence of inequality across generations,
   and for the genes-SES gradient: the genetic differences we observe between 
-  high- and low-income people, including differences related to human capital and
-  physical and mental health. We model social-genetic assortative mating 
+  high- and low-income people. The gradient includes differences related 
+  to human capital and to physical and mental health, so understanding its origins
+  is important for understanding inequality in general, and health inequalities
+  in particular. We model social-genetic assortative mating 
   (SGAM) and test for its existence in a large genetically-informed survey. We 
   compare spouses of individuals with different birth order, which is known to 
   affect socio-economic status and which is exogenous to own genetic endowments 
@@ -27,7 +29,7 @@ abstract: |
   subsequent generations. Our work uncovers a new channel by which economic 
   institutions can affect long-run inequality; suggests that genes-SES
   gradients may be historically widespread; and shows that genetic variation
-  is endogenous to social institutions.
+  is endogenous to social institutions. 
 date: "`r Sys.Date()`"
 output: 
   bookdown::pdf_document2:
