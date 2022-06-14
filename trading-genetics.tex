@@ -133,7 +133,7 @@ Pierre Chiappori\thanks{Department of Economics, University of Columbia,
   New York. Email: pc2167@columbia.edu} \&
 David Hugh-Jones\thanks{Corresponding author. School of Economics, 
 University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}}
-\date{2022-05-11}
+\date{2022-06-14}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -2359,44 +2359,12 @@ already seen that birth order affects intelligence, height, BMI
 and health. So there might be other unobserved variables which mediate the effect
 of birth order on spousal PSEA, and which correlate with education or income,
 but which do not themselves capture SES. If so, that would threaten our claim that
-education and income are important mediators. By definition we can't test this
-directly. Instead, we perform an Oster (2019) -style analysis, by asking
-how much selection on unobservables would reduce the coefficients of university
-attendance and income in first job to zero in Table \ref{tab:tbl-bo-psea}. Here,
-we are helped by the fact that the dependent variable PSEA is noisy, and so is the
-spouse matching process. PSEA contains measurement error because it sums many
-small effects of individual single nucleotide polymorphisms. A meta-analysis of
-twin studies estimates the heritability of educational attainment to be around 40\%
-(Branigan, McCallum, and Freese 2013). This is the variance of educational attainment
-explained by the ``true'' polygenic score for educational attainment, i.e.~the
-best linear unbiased predictor of educational attainment from genetic data. In
-our data, the \(R^2\) of PSEA on own educational attainment is
-4.45\%. Assuming the classic errors-in-variables model,
-the ratio of these two \(R^2\) statistics gives the proportion of measured PSEA
-that is systematic, with the rest being noise: 4.45\%/40\%
-= 11.13\%. This is then the maximum \(R^2\) for
-any regression with measured PSEA as the dependent variable. We can reduce this
-number further by considering the maximum possible variance explained of spouse's
-\emph{true} PSEA by any environmental variable. (Own genetic variables are excluded
-because, as discussed, these cannot mediate the effect of birth order.) We take
-this as 50\%. Phenotypic correlations between spouses
-are typically much less than \(\sqrt{0.5}\), and those for non-SES-related
-phenotypes are smaller still (Clark 2021), so this seems like a generous
-upper bound.\footnote{Measured phenotypes might contain a lot of noise compared to the
-  ``true'' phenotypes on which people match, and if so, spousal correlations on
-  genotypes might be higher than these numbers. However, Robinson et al. (2017) estimate
-  the \(R^2\) of own true PSEA on spouse PSEA as \(0.654^2 = 0.43\), so even in this
-  case a maximum \(R^2\) of 50\% seems reasonable.} Multiplying these together gives a maximum \(R^2\) of
-50\% \(\times\) 11.13\%
-= 5.57\%. Following Oster (2019), we use this
-maximum to estimate the degree \(\delta\) of selection on unobservables that would
-reduce the effect of university attendance and income in first job to zero in
-Table \ref{tab:tbl-bo-psea}. \(\delta = 1\) would mean equal selection on
-observables and unobservables. Results are \(\delta = 0.951\) for
-university attendance, \(\delta = 1.048\) for income in first job. That
-is, selection on unobserved, non-SES-related variables would have to be almost
-equal to selection on observed variables (height, IQ, BMI, health) to reduce our
-effects to zero.
+education and income are important mediators. However, the effects of education
+on spouse PSEA in Table \ref{tab:tbl-bo-psea}, and of birth order on education in
+Table \ref{tab:tbl-bo-first-stage}, are both large and highly significant. In other
+literature on spouse matching, education is a common, robust and significant
+predictor. For these admittedly informal reasons, we think that our results
+are unlikely to be driven wholly by other unobserved mediators.
 
 The appendix reports other robustness checks, including a specification with
 separate dummies for each value of birth order, and replacing university
@@ -2484,8 +2452,8 @@ economists and geneticists.
 
 AA is supported by the Foundation Volksbond Rotterdam and by ZonMw grant
 849200011 from The Netherlands Organisation for Health Research and Development.
-This study was conducted using UK Biobank resources under application numbers
-40310 and 19127.
+This study was conducted using UK Biobank resources under application number
+40310.
 
 \FloatBarrier
 
@@ -5733,9 +5701,6 @@ Okbay, A, Y Wu, N Wang, H Jayashankar, M Bennett, SM Nehzati, J Sidorenko, et al
 
 \leavevmode\vadjust pre{\hypertarget{ref-oreffice2010anthropometry}{}}%
 Oreffice, Sonia, and Climent Quintana-Domeque. 2010. {``Anthropometry and Socioeconomics Among Couples: Evidence in the United States.''} \emph{Economics \& Human Biology} 8 (3): 373--84.
-
-\leavevmode\vadjust pre{\hypertarget{ref-oster2019unobservable}{}}%
-Oster, Emily. 2019. {``Unobservable Selection and Coefficient Stability: Theory and Evidence.''} \emph{Journal of Business \& Economic Statistics} 37 (2): 187--204.
 
 \leavevmode\vadjust pre{\hypertarget{ref-papageorge2020genes}{}}%
 Papageorge, Nicholas W, and Kevin Thom. 2020. {``Genes, Education, and Labor Market Outcomes: Evidence from the Health and Retirement Study.''} \emph{Journal of the European Economic Association} 18 (3): 1351--99.
