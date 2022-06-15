@@ -83,7 +83,8 @@ between $x$ and $y$ is $S(i(x), i(y))$ such that $\partial^{2}S/\partial
 i\partial j > 0$, i.e. $S$ is supermodular. As a result there is positive
 assortative mating on attractiveness: $x$ matches with $y$ only if they are at
 the same quantile of attractiveness, i.e. if $i(x_{1},x_{2}) = i(y_{1},y_{2})$.
-We describe this as social-genetic assortative mating (SGAM).
+Within attractiveness quantiles, matching is random. We describe this as
+social-genetic assortative mating (SGAM). 
 
 We also consider random matching as a benchmark to compare against SGAM. Under
 random matching, the distribution of couples' characteristics is normal with
