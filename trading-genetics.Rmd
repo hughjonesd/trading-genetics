@@ -1767,6 +1767,8 @@ AA is supported by the Foundation Volksbond Rotterdam and by ZonMw grant
 This study was conducted using UK Biobank resources under application number 
 40310.
 
+Code to reproduce is available at https://github.com/hughjonesd/trading-genetics.
+
 
 \FloatBarrier
 
