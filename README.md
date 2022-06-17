@@ -10,6 +10,8 @@ The current version of the paper is at https://github.com/hughjonesd/trading-gen
 Data is from UK Biobank and is not publicly available, but you can request it
 from them. We can help with all other data - just get in touch.
 
+Most of the code for the analyses is either in `_drake.R` or in `trading-genetics.Rmd`.
+
 To reproduce:
 
 * make sure you have the required data
