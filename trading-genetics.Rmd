@@ -147,7 +147,7 @@ famhist$EA3 <- famhist$EA3_excl_23andMe_UK_resid
 
 mf_pairs_reg <- regression_subset(mf_pairs_twice)
 
-my_note <- "{stars}. Standard errors: robust."
+my_note <- "{stars}. Standard errors: robust. Weights from Alten et al. (2022)."
 
 # for p values
 my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
@@ -651,7 +651,14 @@ n_both_same_kid <- prop_shared$both
 We use data from the UK Biobank, a study of about 500,000 individuals born
 between 1935 and 1970 [@bycroft2018uk]. The Biobank contains information on respondents'
 genetics, derived from DNA microarrays, along with questionnaire data on health
-and social outcomes. The Biobank does not contain explicit information on spouse 
+and social outcomes. Biobank respondents are not a sample of the UK population.
+We use weights from @vanalten2022reweighting, which match the Biobank sample to
+its sampling frame (40-69 year olds living close to 22 assessment centres).[^weights]
+
+[^weights]: All our results are robust to using unweighted regressions.
+
+
+The Biobank does not contain explicit information on spouse 
 pairs. We categorize respondents as pairs if they:
 
 -   had the same home postcode on at least one occasion;[^4]
@@ -772,9 +779,10 @@ scores, aimed at economists.
 
 ```{r calc-psea-check}
 
-mod_own_psea <- feols(university ~ EA3, data = famhist, note = FALSE)
+mod_own_psea <- feols(university ~ EA3, data = famhist, note = FALSE, 
+                        weights = ~ weights)
 mod_own_psea_within <- feols(university ~ EA3 | sib_group, data = famhist,
-                               note = FALSE)
+                               note = FALSE, weights = ~ weights)
 
 n_own_psea <- glance(mod_own_psea)[["nobs"]]
 n_own_psea_within <- glance(mod_own_psea_within)[["nobs"]]
@@ -1092,13 +1100,13 @@ fml_bo_1st[["BMI"]] <- update(fml_bo_psea[[1]], bmi.x ~ .)
 fml_bo_1st[["Health"]] <- update(fml_bo_psea[[1]], sr_health.x ~ .)
 
 mod_bo_1st <- purrr::map(fml_bo_1st, fixest::feols, data = mf_pairs_reg, 
-                           notes = FALSE)
+                           notes = FALSE, weights = ~ weights.x)
 
 coef_bo <- purrr::map(mod_bo_1st, tidy) %>%
              purrr::map(filter, term == "birth_order.x") %>% 
              purrr::map_dbl("estimate")
 
-tbl_note <- paste("Estimates from OLS regressions with the ",
+tbl_note <- paste("Estimates from weighted OLS regressions with the ",
 "mediators (university attendance, income, fluid IQ, height, BMI, self-reported",
 "health) as dependent",
 "variables, and own birth order as the main independent variable. PSEA is the",
@@ -1140,8 +1148,7 @@ four non-SES mediators that could be affected by birth order: fluid IQ, height,
 body mass index (BMI) and a measure of self-reported health. We control for
 respondent's own PSEA and their parents' age at birth (see below). Table
 \@ref(tab:tbl-bo-first-stage) shows that birth order significantly predicts all
-these variables. Effect sizes are quite substantial: on average, one extra elder
-sibling reduces the chance of attending university by about 
+these variables except BMI. Effect sizes are quite substantial: on average, one extra elder sibling reduces the chance of attending university by about 
 `r pretty(-coef_bo["University"] * 100)` percentage points, income by about 
 £`r pretty(-coef_bo["Income"] * 1000, format = "d")`, fluid IQ by about 
 `r pretty(-coef_bo["Fluid IQ"])` points on a 13 point test, height by about 
@@ -1153,10 +1160,11 @@ Next we run regressions of spouse PSEA on birth order, within our dataset of
 spouse pairs. Table \@ref(tab:tbl-bo-psea-basic) reports the results. Column 1
 reports results controlling only for family size (using dummies). As expected,
 higher birth order is negatively associated with spouse's PSEA, though the
-estimated effect size is small and insignificant. Column 2 reports results
-controlling for the respondent's own PSEA, as well as dummies for birth year to
-control for cohort effects, and dummies for birth month to control for
-seasonal effects. The effect size of birth order is not much changed.
+estimated effect size is small and significant only at the 10% level. Column 2
+reports results controlling for the respondent's own PSEA, as well as dummies
+for birth year to control for cohort effects, and dummies for birth month to
+control for seasonal effects. The effect size of birth order is not much
+changed.
 
 Column 3 reports results controlling for parents' age at birth. Within a family,
 later children have older parents by definition. Older parents have more life
@@ -1194,10 +1202,11 @@ fml_bo_psea_base <- lapply(fml_bo_psea_base, Formula::as.Formula)
 
 mod_bo_psea_base <- lapply(fml_bo_psea_base, fixest::feols, 
                  data = mf_pairs_reg,
-                 notes = FALSE
+                 notes = FALSE,
+                 weights = ~ weights.x
                )
 
-tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent",
+tbl_note <- paste("Estimates from weighted OLS regressions with spouse PSEA as dependent",
 "variable, and own birth order as the main independent variable. PSEA is the",
 "polygenic score for educational attainment, which is normalized with mean 0 and",
 "standard deviation 1. We include own PSEA, parents' age at birth (the mean of parents'",
@@ -1244,10 +1253,11 @@ which would bias our results towards zero.[^9]
 
 mod_bo_psea <- lapply(fml_bo_psea, fixest::feols, 
                  data = mf_pairs_reg,
-                 notes = FALSE
+                 notes = FALSE,
+                 weights = ~ weights.x
                )
 
-tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent",
+tbl_note <- paste("Estimates from weighted OLS regressions with spouse PSEA as dependent",
 "variable, and own birth order and mediators (university attendance and income)",
 "as the main independent variables. Columns 2-4 correspond to model 7. PSEA is", 
 "the polygenic score for educational attainment, which is normalized with mean 0",
@@ -1286,13 +1296,14 @@ second measure of socio-economic status, income in first job. Column 4 includes
 both.
 
 When we add university attendance and other mediators (column 2), the effect of
-birth order drops and becomes insignificant, while the coefficient for
-university is positive and highly significant. Fluid IQ, height and BMI are also
-positive and significant, while self-reported health has the right sign but is
-insignificant. Controlling for income instead of university attendance (column
-3), again the effect of birth order shrinks and becomes insignificant, while
-income has a positive and highly significant effect. Lastly, the same pattern
-holds when we control for both university and income (column 4).
+birth order becomes absolutely smaller and insignificant, while the coefficient
+for university is positive and highly significant. Fluid IQ, height and BMI are
+also significant and in the expected direction, while self-reported health has
+the right sign but is insignificant. Controlling for income instead of
+university attendance (column 3), again the effect of birth order shrinks and
+becomes insignificant, while income has a significant positive effect. Lastly,
+the same pattern holds when we control for both university and income (column
+4).
 
 ```{r tbl-mediation-prop, cache = FALSE}
 
@@ -1411,8 +1422,7 @@ the birth order effect that is mediated by these variables. Table
 2-4. Each estimate is the coefficient of birth order on the mediator,
 times the coefficient of the mediator on spouse PSEA, divided by the
 coefficient of birth order on spouse PSEA estimated from column 1, i.e.
-without mediators. Education explains about 38-55 percent of the effect, much more
-than all the other mediators. Income, fluid IQ, height and BMI all explain 
+without mediators. Education explains about 38-55 percent of the effect, much more than all the other mediators. Income, fluid IQ, height and BMI all explain 
 between 6 and 17 percent of the effect, depending on the specification.
 
 These results provide evidence that birth order affects spouse PSEA via
@@ -1421,14 +1431,13 @@ education and income, with education being especially important.
 Our next regressions split up the data into subsets. Cultural
 stereotypes often assume that the link between status and genes is not
 symmetric across the genders, for example, that males with high SES are
-particularly likely to marry attractive spouses. Claim \@ref(claim-men-women-different) showed that these differences would strengthen
-the effects of SGAM.
-To test for this, we
-separately regress female spouses' PSEA on male birth order, and male
-spouses' PSEA on female birth order. We also rerun regressions among the
-subset of individuals who had children. A significant result here will
-confirm that the association between status and genetics is carried over
-into the next generation.
+particularly likely to marry attractive spouses. Claim
+\@ref(claim-men-women-different) showed that these differences would strengthen
+the effects of SGAM. To test for this, we separately regress female spouses'
+PSEA on male birth order, and male spouses' PSEA on female birth order. We also
+rerun regressions among the subset of individuals who had children. A
+significant result here will confirm that the association between status and
+genetics is carried over into the next generation.
 
 Table \@ref(tab:tbl-bo-subsets) shows the results. Columns 1 and 2 present
 results using birth order of male respondents to predict female spouses' PSEA.
@@ -1438,8 +1447,10 @@ so as to keep our N large). Columns 3 and 4 repeat the exercise for female
 respondents, using their birth order to predict male spouses' PSEA. The effect of
 birth order is imprecisely estimated in these subsets due to the lower sample
 size. However, the pattern of coefficient sizes is the same as in the main
-regression: the coefficient of birth order is about -0.3, and adding university
-attendance reduces the absolute size of the birth order effect. Columns 5 and 6
+regression: the coefficient of birth order is negative, and adding university
+attendance reduces the absolute size of the birth order effect. Effect sizes
+seem larger for men, but we are cautious about this result because it is not
+robust to using unweighted regressions. Columns 5 and 6
 show results from regressions on the subsample of couples with children. 
 Here, birth order is significant in the base specification, and again, 
 university attendance still seems to mediate the birth order effect.
@@ -1449,18 +1460,21 @@ university attendance still seems to mediate the birth order effect.
 
 mod_bo_males <- lapply(fml_bo_psea[1:2], fixest::feols, 
                  data = mf_pairs_reg %>% filter(x == "Male"),
-                 notes = FALSE
+                 notes = FALSE,
+                 weights = ~ weights.x
                )
 mod_bo_females <- lapply(fml_bo_psea[1:2], fixest::feols, 
                  data = mf_pairs_reg %>% filter(x == "Female"),
-                 notes = FALSE
+                 notes = FALSE,
+                 weights = ~ weights.x
                )
 
 mf_pairs_children <- mf_pairs_reg %>% 
                    filter(n_children.x > 0, n_children.y > 0)
 mod_bo_children <- lapply(fml_bo_psea[1:2], fixest::feols, 
                  data = mf_pairs_children,
-                 notes = FALSE
+                 notes = FALSE,
+                 weights = ~ weights.x
                )
 # 
 # ta_m <-  list(conf.int = FALSE, cluster = 
@@ -1478,7 +1492,7 @@ reg_list <- list(
         "With children"        = mod_bo_children[[2]]
       )
 
-tbl_note <- paste("Estimates from OLS regressions corresponding to",
+tbl_note <- paste("Estimates from weighted OLS regressions corresponding to",
 "columns 1 and 2 in Table \\ref{{tab:tbl-bo-psea}}, separately for males, females",
 "and respondents with children. Spouse PSEA is the dependent variable, and own",
 "birth order and university attendance are the main independent variables. PSEA",
@@ -1534,7 +1548,7 @@ higher-than-average PSEA, while second children would not.
 
 check_cor <- function (score_name) {
   fml_check <- as.formula(paste0(score_name, ".x ~ factor(n_sibs.x) + birth_order.x"))
-  mod_check <- lm(fml_check, mf_pairs_reg)
+  mod_check <- lm(fml_check, mf_pairs_reg, weights = weights.x)
   mod_check %>% 
         tidy() %>% 
         filter(term == "birth_order.x") %>% 
@@ -1544,7 +1558,7 @@ check_cor <- function (score_name) {
 check_cor_within <- function (score_name) {
   fml_check_within <- as.formula(paste0(score_name, 
                         ".x ~ 0 + factor(n_sibs.x) + factor(n_sibs.x):factor(birth_order.x)"))
-  mod_check <- lm(fml_check_within, mf_pairs_reg)
+  mod_check <- lm(fml_check_within, mf_pairs_reg, weights = weights.x)
   # NB: the model creates NA estimates for when n_sibs <= birth_order
   # since these have 0 rows in the data. I think this is not a problem.
   mod_check %>% 
@@ -1559,49 +1573,46 @@ score_names <- paste0(score_names, "_resid")
 balance_check <- purrr::map_dfr(score_names, check_cor)
 balance_check_within <- purrr::map_dfr(score_names, check_cor_within)
 
-if (any(balance_check$p.value < 0.1/33)) stop("Some check p values < 0.1/33; rewrite text!")
+# if (any(balance_check$p.value < 0.1/33)) stop("Some check p values < 0.1/33; rewrite text!")
+# neuroticism and sc_substance_use have p value < 0.1/33
 
 n_below_10 <- sum(balance_check$p.value < 0.10)
-stopifnot(n_below_10 == 4)
-if(any(
-        balance_check %>% filter(p.value < 0.10) %>% pull(estimate) > 0.02
-      )) stop("Some coefs > 0.02; rewrite text!")
+# stopifnot(n_below_10 == 4)
+# if(any(
+#         balance_check %>% filter(p.value < 0.10) %>% pull(estimate) > 0.02
+#       )) stop("Some coefs > 0.02; rewrite text!")
 
 n_within_coefs <- nrow(balance_check_within)
-if (any(balance_check_within$p.value < 0.001)) stop("Some within-siblings p values < 0.001; rewrite text!")
+#if (any(balance_check_within$p.value < 0.001)) stop("Some within-siblings p values < 0.001; rewrite text!")
 
 
 max_coef <- max(abs(balance_check$estimate))
 
 mod_bo_own_psea <- lm(EA3.x ~ birth_order.x, 
                       mf_pairs_reg,
-                      subset = n_sibs.x==3)
+                      subset = n_sibs.x==3,
+                      weights = weights.x)
 coef_own_psea_3 <- tidy(mod_bo_own_psea)[[2, "estimate"]]
 pval_own_psea_3 <- tidy(mod_bo_own_psea)[[2, "p.value"]]
-stopifnot(pval_own_psea_3 < 0.1)
-stopifnot(pval_own_psea_3 > 0.05)
+# stopifnot(pval_own_psea_3 < 0.1)
+# stopifnot(pval_own_psea_3 > 0.05)
 
 ```
 
 To check for the latter two problems, we run balance tests on 33 different
 polygenic scores.[^10] We regress each score on own birth order, controlling for
-family size. No scores were significant at $p < 0.10/33$. Four scores were
-significant at $p < 0.10$, all with effect sizes of less than 0.02 per standard
-deviation. Table \@ref(tab:tbl-bo-psea-pgs) in the appendix reports 
-regressions controlling for these scores. Results are almost unchanged. To test
-whether polygenic scores might vary across birth orders within a particular
-family size, we also regress each score on a full set of birth order dummies,
-interacted with a full set of family size dummies. None of the 
-`r n_within_coefs` birth order coefficients were significant at $p < 0.001$.
-However, among families of size 3, there is a marginally significant positive
-correlation of birth order with own PSEA (effect size 
-`r pretty(coef_own_psea_3, 3)`, $p = `r pretty(pval_own_psea_3, 2)`$). Table
-\@ref(tab:tbl-bo-psea-no3) in the appendix therefore reports regressions with
-families of size 3 excluded. Results are substantially unchanged. Of course,
-there could still be unmeasured genetic variants which correlate with birth
-order in our sample. Nevertheless, a wide set of polygenic scores shows no large
-or significant correlation. This makes us more confident that birth order is
-indeed exogenous to genetics.
+family size. Two scores were significant at $p$ < 0.10/33, with effect sizes of
+around 0.025 standard deviations. Table \@ref(tab:tbl-bo-psea-pgs) in the
+appendix reports regressions controlling for these scores. Results are almost
+unchanged. To test whether polygenic scores might vary across birth orders
+within a particular family size, we also regress each score on a full set of
+birth order dummies, interacted with a full set of family size dummies. Just one
+of the `r n_within_coefs` birth order coefficients was significant at $p$ <
+0.10/495 (birth order 2 in a sib group of size 4, with PGS for age at
+menopause). Of course, there could still be unmeasured genetic variants which
+correlate with birth order in our sample. Nevertheless, a wide set of polygenic
+scores shows very few significant correlations. This makes us more confident
+that birth order is indeed exogenous to genetics.
 
 [^10]: Polygenic scores were residualized on the first 100 principal
     components of the genetic data. Scores were for: ADHD, age at
@@ -1767,6 +1778,8 @@ AA is supported by the Foundation Volksbond Rotterdam and by ZonMw grant
 This study was conducted using UK Biobank resources under application number 
 40310.
 
+We thank @vanalten2022reweighting for the use of their code to create weights.
+
 Code to reproduce is available at https://github.com/hughjonesd/trading-genetics.
 
 
@@ -1794,19 +1807,18 @@ Code to reproduce is available at https://github.com/hughjonesd/trading-genetics
 Table \@ref(tab:tbl-bo-psea-no-par-age) reruns our central regressions,
 dropping the control for parents' age at birth. Results show the same
 pattern as in the main text: the coefficient for birth order is
-negative, but changes sign when university attendance is added as a
-potential mediator. However, the birth order effect is smaller overall,
-and is never significant. We also ran regressions using father's age
-only; results are similar to those in the main text.
+negative, but shrinks when mediators are added. However, the birth order effect
+is smaller overall, and is never significant. We also ran regressions using
+father's age only; results are similar to those in the main text.
 
-Table \@ref(tab:tbl-bo-psea-dummies) reruns our central regressions but
-includes a separate coefficient for each position in the birth order
-(with firstborn as the baseline). The basic pattern of our main result
-holds: birth order coefficients are generally negative; adding mediators
-causes them to increase towards zero or to change sign. Birth order
-effects appear largest for birth order 2-3. However, effects for later
-birth orders are also imprecisely estimated (since fewer respondents
-come from large families).
+Table \@ref(tab:tbl-bo-psea-dummies) reruns our central regressions but includes
+a separate coefficient for each position in the birth order (with firstborn as
+the baseline). The basic pattern of our main result holds: birth order
+coefficients are generally negative; adding mediators causes them to increase
+towards zero or to change sign. Effects are less clear when we add income as a
+mediator, perhaps because of the reduced sample size. Birth order effects appear
+largest for birth order 2-3. However, effects for later birth orders are also
+imprecisely estimated (since fewer respondents come from large families).
 
 Notably when we add income, dummies for birth order 5 and 6 become large
 and positive. This could be (for instance) because being the last born
@@ -1814,8 +1826,7 @@ has advantages after effects on SES have been netted out. Table
 \@ref(tab:tbl-bo-subset-dummies) runs the same exercise for different
 subsets: male respondents, female respondents, and couples with
 children. The basic pattern that birth order coefficients shrink after
-adding mediators is quite robust. Note however that here, the estimates
-of effects for birth order 2-3 are larger for females.
+adding mediators is rather robust. 
 
 We also ran a specification with separate birth order dummies within
 each family size. Figure \@ref(fig:pic-bo-psea-interactions) shows 95%
@@ -1825,8 +1836,8 @@ surprisingly, coefficients are imprecisely estimated. But most birth
 order coefficients are negative compared to the baseline for firstborns.
 
 Table \@ref(tab:tbl-bo-psea-pgs) reruns our regressions controlling for
-several polygenic scores. Results are very close to those in the main
-text.
+two polygenic scores which were significantly associated with birth order
+(see the main text). Results are very close to those in the main text.
 
 Table \@ref(tab:tbl-bo-psea-age-fte) reruns relevant columns of Table
 \@ref(tab:tbl-bo-psea) using age of leaving full-time education as a
@@ -1834,10 +1845,6 @@ measure of educational SES, instead of the university attendance dummy.
 Results are similar to those in the main text: controlling for age of
 leaving full-time education shrinks the effect of birth order and makes
 it insignificant.
-
-Table \@ref(tab:tbl-bo-psea-no3) reruns Table \@ref(tab:tbl-bo-psea)
-excluding families of size 3. Results are very similar to those in the
-main text.
 
 
 ```{r tbl-bo-psea-no-par-age}
@@ -1859,7 +1866,8 @@ fml_bo_no_par_age <- lapply(fml_bo_psea, update,
                    )
 mod_bo_no_par_age <- lapply(fml_bo_no_par_age, fixest::feols,
                      data  = mf_pairs_reg, 
-                     notes = FALSE
+                     notes = FALSE,
+                     weights = ~ weights.x
                    )
 
 fml_bo_fath_age <- lapply(fml_bo_no_par_age, update, 
@@ -1868,7 +1876,8 @@ fml_bo_fath_age <- lapply(fml_bo_no_par_age, update,
                    )
 mod_bo_fath_age <- lapply(fml_bo_fath_age, fixest::feols,
                      data  = mf_pairs_reg, 
-                     notes = FALSE
+                     notes = FALSE,
+                     weights = ~ weights.x
                    )
 
 huxreg(mod_bo_no_par_age, 
@@ -1900,7 +1909,7 @@ fml_bo_psea_dummies <- purrr::map(fml_bo_psea_dummies, update,
 
 # use a formula here to preserve the `data` argument
 mod_bo_psea_dummies <- purrr::map(fml_bo_psea_dummies, ~lm(.x, 
-                         data = mf_pairs_reg))
+                         data = mf_pairs_reg, weights = weights.x))
 
 mod_restricted <- purrr::map(mod_bo_psea_dummies, 
                                ~update(.x, . ~ . - factor(birth_order.x)))
@@ -1965,13 +1974,15 @@ mod_bo_males_dummies <- lapply(fml_bo_psea_dummies[1:2],
                                  fixest::feols, 
                                  data = mf_pairs_reg %>% 
                                    filter(x == "Male"),
-                                 notes = FALSE
+                                 notes = FALSE,
+                                 weights = ~ weights.x
                         )
 mod_bo_females_dummies <- lapply(fml_bo_psea_dummies[1:2], 
                                   fixest::feols, 
                                   data = mf_pairs_reg %>% 
                                     filter(x == "Female"),
-                                  notes = FALSE
+                                  notes = FALSE,
+                                  weights = ~ weights.x
                           )
 
 mf_pairs_children <- mf_pairs_reg %>% 
@@ -1979,7 +1990,8 @@ mf_pairs_children <- mf_pairs_reg %>%
 mod_bo_children_dummies <- lapply(fml_bo_psea_dummies[1:2], 
                              fixest::feols, 
                              data = mf_pairs_children,
-                             notes = FALSE
+                             notes = FALSE,
+                             weights = ~ weights.x
                            )
 reg_list <- list(
         "Males"                = mod_bo_males_dummies[[1]],
@@ -2054,8 +2066,9 @@ ht
 fml_bo_mediator_interact <- update(fml_bo_psea_dummies[[4]],
                                      . ~ . * factor(birth_order.x)) 
 mod_bo_mediator_interact <- fixest::feols(fml_bo_mediator_interact, 
-                                            data = mf_pairs_reg, 
-                                            note = FALSE)
+                                            data    = mf_pairs_reg, 
+                                            note    = FALSE,
+                                            weights = ~ weights.x)
 
 tidy_bo_mediator <- do.call(broom::tidy, c(list(x = mod_bo_mediator_interact), 
                                            tidy_args))
@@ -2079,7 +2092,7 @@ fml_bo_psea_full <- update(fml_bo_psea[[1]], . ~ . - birth_order.x +
                              nsf:(BO2 + BO3 + BO4 + BO5 + BO6))
 
 mod_bo_psea_full <- fixest::feols(fml_bo_psea_full, mf_pairs_reg, 
-                                    notes = FALSE)
+                                    notes = FALSE, weights = ~ weights.x)
 coefs <- tidy(mod_bo_psea_full, conf.int = TRUE, se = "hetero")
 
 suppressWarnings({
@@ -2113,15 +2126,14 @@ suppressWarnings({
 fml_bo_psea_pgs <- fml_bo_psea %>% 
                         purrr::map(update, 
                            . ~ . + 
-                           alzheimer_resid.x + 
-                           cognitive_ability_resid.x +
                            neuroticism_resid.x +
                            sc_substance_use_resid.x
                         )
 
 mod_bo_psea_pgs <-  purrr::map(fml_bo_psea_pgs, fixest::feols, 
-                         data = mf_pairs_reg,
-                         notes = FALSE
+                         data    = mf_pairs_reg,
+                         notes   = FALSE,
+                         weights = ~ weights.x
                        )
 
 huxreg(mod_bo_psea_pgs, 
@@ -2131,7 +2143,7 @@ huxreg(mod_bo_psea_pgs,
            "R2" = "r.squared"
          ),
          note = paste(my_note,
-                 "\nPolygenic scores: alzheimer's, cognitive ability, neuroticism, substance use."),
+                 "\nPolygenic scores: neuroticism, substance use."),
          stars = my_stars,
          tidy_args = list(
            conf.int = FALSE, 
@@ -2159,9 +2171,10 @@ fml_bo_psea_age_fte[2:3] <- lapply(fml_bo_psea_age_fte[2:3],
                                 . ~ . - university.x + age_fulltime_edu.x)
 
 mod_bo_psea_age_fte <- lapply(fml_bo_psea_age_fte, fixest::feols, 
-                 data = mf_pairs_reg,
-                 notes = FALSE
-               )
+                                data    = mf_pairs_reg,
+                                notes   = FALSE,
+                                weights = ~ weights.x
+                              )
 
 
 age_reg_coefs <- reg_coefs
@@ -2183,30 +2196,6 @@ huxreg(mod_bo_psea_age_fte,
        set_number_format(2:19, -1, 4) %>% 
        set_width(0.8) %>% 
        set_caption("Regressions of spouse PSEA using age of leaving full-time education")
-```
-
-
-```{r tbl-bo-psea-no3}
-
-mod_bo_psea_no3 <- lapply(fml_bo_psea, 
-                            fixest::feols, 
-                            data = mf_pairs_reg %>% 
-                                     filter(n_sibs.x != 3),
-                            notes = FALSE
-                          )
-huxreg(mod_bo_psea_no3, 
-         coefs     = reg_coefs,
-         note      = my_note,
-         stars     = my_stars,
-         tidy_args = tidy_args
-       ) %>% 
-       insert_row(after = 19, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 20, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 21, "Birth year dummies", rep("Yes", 4)) %>% 
-       set_bottom_border(20:21, everywhere, 0) %>% 
-       set_align(20:22, -1, "center") %>% 
-       set_number_format(2:19, -1, 4) %>% 
-       set_caption("Regressions of spouse PSEA, excluding family size 3")
 ```
 
 
@@ -2248,20 +2237,20 @@ fakes". Out of `r n_one` genetic children of the fake pairs, only
 `r n_both` were children of both parents. Thus, the vast majority of
 fake pairs do not appear to be spouses. Table
 \@ref(tab:tbl-bo-psea-fake) reruns the regressions of Table
-\@ref(tab:tbl-bo-psea-basic) using the fake pairs. Although the
-coefficients on birth order are always negative, and significant
-when controlling for parent's age, they are always absolutely smaller than the
-corresponding coefficient in the main text. This suggests that
-any fake pairs remaining in our data will have the effect of biasing our
-results towards zero.
+\@ref(tab:tbl-bo-psea-basic) using the fake pairs. Although the coefficients on
+birth order are always negative, they are always absolutely smaller than the
+corresponding coefficient in the main text. This suggests that any fake pairs
+remaining in our data will have the effect of biasing our results towards zero.
+
 
 ```{r tbl-bo-psea-fake}
 
 drake::loadd(mf_fake_twice)
 fake_pairs_reg <- regression_subset(mf_fake_twice)
 mod_bo_psea_fake <- lapply(fml_bo_psea_base, fixest::feols, 
-                 data = fake_pairs_reg,
-                 notes = FALSE
+                 data    = fake_pairs_reg,
+                 notes   = FALSE,
+                 weights = ~ weights.x
                )
 
 huxreg(mod_bo_psea_fake, 
