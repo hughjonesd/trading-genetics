@@ -4,7 +4,6 @@ suppressPackageStartupMessages({
   requireNamespace("tidyr")
   library(drake)
   requireNamespace("matrixStats")
-  library(raster)
   library(dplyr)
   library(readr)
   library(readxl)
@@ -138,55 +137,6 @@ make_howe_pairs <- function (famhist, resid_scores) {
   howe_pairs
 }
 
-compute_sunshine <- function (famhist, sun_dir) {
-  years <- 1941:1970
-  sun_files <- list.files(sun_dir, pattern = ".nc$", full.names = TRUE)
-  famhist$birth_sun <- famhist$trim_2_sun <- famhist$trim_3_sun <- NA_real_
-  
-  for (year in years) {
-    prev_ras <- if (exists("sun_ras")) {
-                    sun_ras
-                  } else {
-                    prev_file <- grep(paste0("mon_", year - 1), sun_files, value = TRUE)
-                    raster::stack(prev_file)
-                  }
-    sun_file <- grep(paste0("mon_", year), sun_files, value = TRUE)
-    sun_ras <- raster::stack(sun_file)
-    
-    sun_array <- as.array(sun_ras)
-    prev_array <- as.array(prev_ras)
-    # a very high value used for NA
-    sun_array[sun_array == max(sun_array)] <- NA
-    prev_array[prev_array == max(prev_array)] <- NA
-    sun_array <- abind(prev_array, sun_array, along = 3)
-    
-    # the second dimension (columns) of sun_array is latitude (y)
-    # the first dimension (rows) is latitude (x)
-    fh_yr <- famhist %>% filter(birth_year == year)
-    fh_yr$col <- raster::colFromX(sun_ras, fh_yr$birth_lon.0.0)
-    fh_yr$row <- raster::rowFromY(sun_ras, fh_yr$birth_lat.0.0)
-    fh_yr %<>% filter(! is.na(row), ! is.na(col), ! is.na(birth_mon))
-    fh_yr$trim_2_sun <- fh_yr$trim_3_sun <- 0 
-    for (mon in 1:6) {
-      # index into data. Current year starts at 13.
-      fh_yr$month <- fh_yr$birth_mon - mon + 12
-      indices <- fh_yr %>% 
-                    dplyr::select(row, col, month) %>% 
-                    as.matrix()  
-      month_sun <- sun_array[indices]
-      var_name <- if (mon <= 3) "trim_2_sun" else "trim_3_sun"
-      fh_yr[[var_name]] <- fh_yr[[var_name]] + month_sun
-    }
-    fh_yr$birth_sun <- fh_yr$trim_2_sun + fh_yr$trim_3_sun
-    famhist %<>% rows_update(fh_yr %>% 
-                               dplyr::select(f.eid, birth_sun, trim_2_sun, trim_3_sun), 
-                               by = "f.eid"
-                             )
-  }
-  
-  return(famhist)
-}
-
 
 filter_fake_pairs <- function (mf_pairs) {
   mf_pairs %<>% 
@@ -213,6 +163,15 @@ filter_fake_pairs <- function (mf_pairs) {
 }
 
 
+weight_van_alten <- function (weights_file) {
+  weight_df <- readr::read_table(weights_file)
+  names(weight_df) <- c("f.eid", "weights")
+  
+  weight_df
+}
+
+van_alten_weights_file <- "UKBSelectionWeights.tab"
+
 plan <- drake_plan(
   score_names  = target(import_score_names(file_in(!! pgs_dir)), format = "rds"),
   
@@ -224,10 +183,12 @@ plan <- drake_plan(
   
   ashe_income = import_ashe_income(file_in(!! ashe_income_file)),
   
+  van_alten_weights = weight_van_alten(file_in(!! van_alten_weights_file)),
+  
   famhist = {
     famhist <- clean_famhist(famhist_raw, score_names, sib_groups)
     famhist <- add_ashe_income(famhist, ashe_income)
-    famhist <- compute_sunshine(famhist, file_in(!! sun_dir))
+    famhist <- left_join(famhist, van_alten_weights, by = "f.eid")
     famhist
   },
 

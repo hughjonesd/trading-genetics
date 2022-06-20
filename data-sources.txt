@@ -7,3 +7,7 @@ http://data.ceda.ac.uk/badc/ukmo-hadobs/data/insitu/MOHC/HadOBS/HadUK-Grid/v1.0.
 
 ASHE occupational incomes:
 https://www.ons.gov.uk/file?uri=%2femploymentandlabourmarket%2fpeopleinwork%2fearningsandworkinghours%2fdatasets%2foccupation4digitsoc2010ashetable14%2f2007/2007-table-14.zip
+
+Weights:
+Van Alten et al. 2022. Code to create at
+https://github.com/sjoerdvanalten/UKBWeights
