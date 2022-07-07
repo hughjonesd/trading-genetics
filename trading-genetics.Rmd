@@ -1672,14 +1672,24 @@ education and income are important mediators. However, the effects of education
 on spouse PSEA in Table \@ref(tab:tbl-bo-psea), and of birth order on education in 
 Table \@ref(tab:tbl-bo-first-stage), are both large and highly significant. In other 
 literature on spouse matching, education is a common, robust and significant 
-predictor. For these admittedly informal reasons, we think that our results
-are unlikely to be driven wholly by other unobserved mediators.
+predictor. For these reasons, we think that our results are unlikely to be 
+driven wholly by other, unobserved mediators.
 
-The appendix reports other robustness checks, including a specification with
-separate dummies for each value of birth order, and replacing university
-attendance with age of leaving full-time education. The basic pattern that birth
-order coefficients shrink after adding SES mediators appears robust across our
-variations.
+Our main specification is linear in birth order. Tables
+\@ref(tab:tbl-bo-psea-dummies) and \@ref(tab:tbl-bo-subset-dummies) in the
+appendix run specifications with separate dummies for each birth order. The
+pattern that birth order coefficients shrink after controlling for SES mediators
+holds robustly across all birth orders and sample subsets.
+
+UK Biobank is not a representative sample of the UK population. Table
+\@ref(tab:tbl-bo-psea-weights) in the appendix weights cases to match the
+Biobank's sampling frame. Results are similar to those in the main text. 
+Although this is still not representative of the population as a whole, it 
+provides some assurance that our results are not driven by volunteering bias.
+
+The appendix reports other robustness checks, including replacing university
+attendance with age of leaving full-time education. 
+
 
 # Conclusion
 
@@ -1797,7 +1807,7 @@ pattern as in the main text: the coefficient for birth order is
 negative, but changes sign when university attendance is added as a
 potential mediator. However, the birth order effect is smaller overall,
 and is never significant. We also ran regressions using father's age
-only; results are similar to those in the main text.
+only: results are similar to those in the main text.
 
 Table \@ref(tab:tbl-bo-psea-dummies) reruns our central regressions but
 includes a separate coefficient for each position in the birth order
@@ -1823,6 +1833,14 @@ confidence intervals for the birth order coefficients, from the column 2
 specification including height and IQ controls but no mediators. Not
 surprisingly, coefficients are imprecisely estimated. But most birth
 order coefficients are negative compared to the baseline for firstborns.
+
+Table \@ref(tab:tbl-bo-psea-weights) re-estimates Table \@ref(tab:tbl-bo-psea)
+using weights from @vanalten2022reweighting. These weight the UK Biobank sample
+to match its sampling frame of 40-69 year olds living close to 22 assessment
+centres. Although these weights probably bring the sample closer to the UK population, the sampling frame is still not representative of that population: 
+for instance, urban areas are oversampled. Results are similar to those in
+the main text, although birth order coefficients are absolutely larger in all
+the specifications. 
 
 Table \@ref(tab:tbl-bo-psea-pgs) reruns our regressions controlling for
 several polygenic scores. Results are very close to those in the main
@@ -2104,6 +2122,32 @@ suppressWarnings({
           xlab("Estimate")
   print(gg) # captures the warnings inside the suppressWarnings() call
 })
+
+```
+
+
+```{r tbl-bo-psea-weights}
+
+mod_bo_psea_weights <- purrr::map(fml_bo_psea, fixest::feols, 
+                                    data = mf_pairs_reg,
+                                    weights = mf_pairs_reg$weights.x, 
+                                    notes = FALSE
+                                  )
+
+
+huxreg(mod_bo_psea_weights, 
+         coefs     = reg_coefs,
+         note      = my_note,
+         stars     = my_stars,
+         tidy_args = tidy_args
+       ) %>% 
+       insert_row(after = 17, "Family size dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 18, "Birth month dummies", rep("Yes", 4)) %>% 
+       insert_row(after = 19, "Birth year dummies", rep("Yes", 4)) %>% 
+       set_bottom_border(18:19, everywhere, 0) %>% 
+       set_align(18:20, -1, "center") %>% 
+       set_number_format(2:17, -1, 4) %>% 
+       set_caption("Regressions of spouse PSEA, weighted to match UK Biobank sampling frame")
 
 ```
 
