@@ -21,6 +21,7 @@ header-includes:
 ```{r set-echo-off, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 
+#options(rgl.useNULL = TRUE)
 
 invisible(loadNamespace("rootSolve"))
 invisible(loadNamespace("rgl"))
@@ -489,14 +490,15 @@ rgl::par3d(cex = 1.4)
 
 rgl::plot3d(
              Vectorize(corr),
-             xlim = c(0, 0.95),
-             ylim = c(0, 0.99), # 1 gives an error
-             zlab = "",
-             xlab = "θ", 
-             col = "darkgreen",
+             xlim  = c(0, 0.95),
+             ylim  = c(0, 0.99), # 1 gives an error
+             zlab  = "",
+             xlab  = "θ", 
+             col   = "darkgreen",
              front = "lines",
-             lwd = 3,
-             n = 40
+             lwd   = 3,
+             n     = 40,
+             box   = FALSE
            )
 rgl::mtext3d("Corr(x₁, x₂)", "z-+", line = 6)
 
@@ -563,7 +565,7 @@ plots the correlation for $\gamma = 0.15$, by $a$ and $\theta$. However,
 computing the asymptotic correlation shows that it is increasing in $\theta$ for 
 all but values of $\theta$ very close to 1.
 
-```{r pic-gamma, fig.align = "center", fig.cap = "Correlation between children's genetics $x^\\prime_1$ and children's SES $x^\\prime_2$, by weight of genetics in matching $a$ and SES inheritance $\\theta$, for meritocracy $\\gamma$ = 0.15. Other parameters: $\\tau$ = 0.95, $s$ = $S$ = 1, $\\sigma$ = 0.", dpi = 300, out.height = "3.5in"}
+```{r pic-gamma, fig.align = "center", fig.cap = "Correlation between children's genetics $x^\\prime_1$ and children's SES $x^\\prime_2$, by weight of genetics in matching $a$ and SES inheritance $\\theta$, for meritocracy $\\gamma$ = 0.15. Other parameters: $\\tau$ = 0.95, $s$ = $S$ = 1, $\\sigma$ = 0.", dpi = 300, out.height = "4in"}
 
 # "if we compute the asymptotic correlation": see new-model-computation.R
 # for code
@@ -615,12 +617,13 @@ rgl::plot3d(\(theta, a) corr_x1_x2(s = 1, S = 1, sigma = 0, a = a, gamma = 0.15,
                                    tau = 0.95, theta = theta), 
             zlab  = "", 
             xlab  = "θ", 
-            col   = "cyan", 
+            col   = "darkred", 
             front = "lines",
-            back = "lines",
+            #back  = "lines",
             lwd   = 3,
             n     = 40,
-            zlim = c(0.1, 0.3)
+            zlim  = c(0.125, 0.3),
+            box   = FALSE
             )
 rgl::mtext3d("Corr(x₁', x₂')", "z-+", line = 6)
 ```
