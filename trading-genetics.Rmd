@@ -1113,6 +1113,7 @@ huxreg(mod_bo_1st,
        set_align(8:10, -1, "center") %>% 
        set_number_format(2:7, -1, 4) %>% 
        set_width(1) %>% 
+       set_font_size(10) %>%
        set_caption("Regressions of mediators on birth order")
        
 ```
@@ -1257,6 +1258,7 @@ huxreg(mod_bo_psea,
        set_tb_padding(2) %>% 
        set_width(0.9) %>% 
        set_font_size(10) %>%
+       set_font_size(final(1), everywhere, 8) %>%
        set_caption("Regressions of spouse PSEA on birth order and mediators")
 ```
 
@@ -1770,9 +1772,7 @@ Code to reproduce is available at https://github.com/hughjonesd/trading-genetics
 
 \newpage
 
-# Appendix
-
-## For online publication
+# Appendix: for online publication
 
 \localtableofcontents
 \clearpage
@@ -2136,6 +2136,7 @@ huxreg(mod_bo_psea_weights,
        set_bottom_border(18:19, everywhere, 0) %>% 
        set_align(18:20, -1, "center") %>% 
        set_number_format(2:17, -1, 4) %>% 
+       set_font_size(10) %>%
        set_caption("Regressions of spouse PSEA, weighted to match UK Biobank sampling frame")
 
 ```
@@ -2180,7 +2181,8 @@ huxreg(mod_bo_psea_pgs,
        set_number_format(2:19, -1, 4) %>% 
        set_width(1) %>% 
        set_wrap(final(1), everywhere, TRUE) %>% 
-       set_font_size(11) %>%
+       set_tb_padding(2) %>%
+       set_font_size(10) %>%
        set_caption("Regressions of spouse PSEA with controls for polygenic scores")
 ```
 
@@ -2216,7 +2218,7 @@ huxreg(mod_bo_psea_age_fte,
        set_align(20:22, -1, "center") %>% 
        set_number_format(2:19, -1, 4) %>% 
        set_width(0.9) %>% 
-       set_font_size(11) %>%
+       set_font_size(10) %>%
        set_caption("Regressions of spouse PSEA using age of leaving full-time education")
 ```
 
@@ -2241,6 +2243,7 @@ huxreg(mod_bo_psea_no3,
        set_bottom_border(20:21, everywhere, 0) %>% 
        set_align(20:22, -1, "center") %>% 
        set_number_format(2:19, -1, 4) %>% 
+       set_font_size(10) %>%
        set_caption("Regressions of spouse PSEA, excluding family size 3")
 ```
 

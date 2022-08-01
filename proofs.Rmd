@@ -500,7 +500,7 @@ S^{2}\left(1-\frac{1}{2}\theta^{2}\right) & =\frac{1}{2}C^{2}\theta^{2}+1
 \end{align*}
 give
 \begin{align*}
-s^{2}\left(1-\frac{1}{2}\tau^{2}\right)-\frac{1}{2}A^{2}\tau^{2} & =S^{2}\left(1-\frac{1}{2}\theta^{2}\right)-\frac{1}{2}C^{2}\theta^{2}\text{ therefore}\\
+s^{2}\left(1-\frac{1}{2}\tau^{2}\right)-\frac{1}{2}A^{2}\tau^{2} & =S^{2}\left(1-\frac{1}{2}\theta^{2}\right)-\frac{1}{2}C^{2}\theta^{2}\text{, therefore}\\
 \lambda\left(1-\frac{1}{2}\tau^{2}\right)-\frac{1}{2}\frac{A^{2}}{S^{2}}\tau^{2} & =\left(1-\frac{1}{2}\theta^{2}\right)-\frac{1}{2}\frac{C^{2}}{S^{2}}\theta^{2}
 \end{align*}
 
@@ -874,7 +874,7 @@ y_{2}
 \end{array}\right)
 \]
 to give
-\begin{align*}
+{\small\begin{align*}
 \mathbb{C}\left(\begin{array}{c}
 x_{2}^{\prime}\\
 x_{2}\\
@@ -903,7 +903,7 @@ AC & C^{2} & \sigma & S^{2}
 \frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2}) & S^{2} & C^{2}\\
 \frac{\gamma\tau}{2}(\sigma+AC)+\frac{\theta}{2}(S^{2}+C^{2}) & C^{2} & S^{2}
 \end{array}\right).
-\end{align*}
+\end{align*}}%
 
 Next
 \begin{align*}
