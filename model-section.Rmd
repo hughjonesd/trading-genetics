@@ -562,7 +562,7 @@ $\theta$ decreases the proportion of $x^\prime_2$ that comes via $\gamma$ from
 own genetics, and increases the proportion that comes from parents' SES, which
 may be less strongly correlated with own genetics. Figure \@ref(fig:pic-gamma)
 plots the correlation for $\gamma = 0.15$, by $a$ and $\theta$. However,
-computing the asymptotic correlation shows that it is increasing in $\theta$ for 
+computing the asymptotic correlation along the lines of Proposition \ref{prop-asymptotics-SGAM} shows that it is increasing in $\theta$ for 
 all but values of $\theta$ very close to 1.
 
 ```{r pic-gamma, fig.align = "center", fig.cap = "Correlation between children's genetics $x^\\prime_1$ and children's SES $x^\\prime_2$, by weight of genetics in matching $a$ and SES inheritance $\\theta$, for meritocracy $\\gamma$ = 0.15. Other parameters: $\\tau$ = 0.95, $s$ = $S$ = 1, $\\sigma$ = 0.", dpi = 300, out.height = "4in"}
@@ -681,10 +681,10 @@ under assortative mating, the regression coefficient of parents' wealth on own
 wealth exceeds the "direct" coefficient $\theta$, because parents' wealth
 correlates with parents' genetics and via that with own wealth.  Thus,
 regressions of wealth on wealth may include the effect of unobserved genetic
-variation. This may be a confound due to pre-existing gene-SES correlation
-(if $\sigma > 0$). But under SGAM it can also be a genuine cause, since changes 
-in someone's wealth may indeed affect the identity of their spouse, and therefore
-the genetics of their offspring.
+variation. This may be a confound due to pre-existing gene-SES correlation (if
+$\sigma > 0$). But under SGAM ($0 < a < 1$) it can also be a genuine cause,
+since changes in someone's wealth may indeed affect the identity of their
+spouse, and from that the genetics of their offspring.
 
 The converse also holds: regressions of children's characteristics on their
 genetics alone risk overestimating the effect of genetics, by confounding it

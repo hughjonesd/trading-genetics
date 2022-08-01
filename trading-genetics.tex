@@ -35,17 +35,6 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
-\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
-\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
-\hypersetup{
-  pdftitle={Trading social status for genetics in marriage markets: evidence from UK Biobank},
-  colorlinks=true,
-  linkcolor={blue},
-  filecolor={Maroon},
-  citecolor={Blue},
-  urlcolor={Blue},
-  pdfcreator={LaTeX via pandoc}}
-\urlstyle{same} % disable monospaced font for URLs
 \usepackage[margin=1in]{geometry}
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
@@ -123,6 +112,17 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Trading social status for genetics in marriage markets: evidence from UK Biobank},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
 
 \title{Trading social status for genetics in marriage markets: evidence from UK Biobank}
 \author{Abdel Abdellaoui\thanks{Department of Psychiatry, Amsterdam UMC, University 
@@ -133,7 +133,7 @@ Pierre-André Chiappori\thanks{Department of Economics, University of Columbia,
   New York. Email: pc2167@columbia.edu} \&
 David Hugh-Jones\thanks{Corresponding author. School of Economics, 
 University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}}
-\date{2022-07-09}
+\date{2022-08-01}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -171,10 +171,10 @@ among siblings. Spouses of earlier-born individuals have genetic variants that
 predict higher educational attainment. We provide evidence that this effect is
 mediated by individuals' own educational attainment and income. Thus,
 environmental shocks to socio-economic status are reflected in the DNA of
-subsequent generations. Our work uncovers a new channel by which economic
-institutions can affect long-run inequality, suggests that genes-SES
-gradients may be historically widespread, and shows that genetic variation
-is endogenous to social institutions.
+subsequent generations. SGAM provides a new channel by which assortative
+mating can affect long-run inequality, predicts that genes-SES gradients will
+be historically widespread, and shows that genetic variation is endogenous to
+economic institutions.
 \end{abstract}
 
 \normalem
@@ -182,24 +182,16 @@ is endogenous to social institutions.
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-Over the long run, inequality is surprisingly persistent across generations
-(Clark and Cummins 2015; Solon 2018). Intergenerational mobility
-correlates with cross-sectional inequality (Becker et al. 2018; Krueger 2012),
-which has risen dramatically in high-income countries, while intergenerational
-absolute mobility has declined (Western, Bloome, and Percheski 2008; Chetty et al. 2017).\footnote{Though relative mobility has been stable (Chetty et al. 2014). In the
-  United Kingdom the Gini coefficient has increased from 26\% to 34.6\% between 1977
-  and 2020. The United States has seen a 10 percentage point rise to 43.3\%
-  from 1962 to 2013.} Assortative mating in marriage markets can increase
-inequality across families (Breen and Salazar 2011; Greenwood et al. 2014), so how
-families are formed, and transmit traits and assets to their offspring, are
-critical for understanding inequality. These processes have been studied from
-both socio-economic and genetic angles. Educational homogamy is well
-established, while genetic assortative mating has only recently been
-demonstrated (Hugh-Jones et al. 2016; Robinson et al. 2017). Similarly, wealthy
+How families are formed, and transmit traits and assets to their offspring, is
+crucial for understanding inequality. Assortative mating in marriage markets can
+increase inequality across families (Breen and Salazar 2011; Greenwood et al. 2014)
+and can contribute to the persistence of inequality across generations, which
+is surprisingly high (Clark and Cummins 2015; Solon 2018). Assortative
+mating has been studied by both economists and geneticists: homogamy in education
+is well established, while genetic assortative mating has only been demonstrated
+recently (Hugh-Jones et al. 2016; Robinson et al. 2017). Similarly, wealthy
 families pass on advantages to their children through both genetic inheritance
-and environmental influence (Rimfeld et al. 2018; Björklund, Lindahl, and Plug 2006).\footnote{Sacerdote (2011) reviews the behavioural genetics and economics
-  literatures on the nature versus nurture debate; for a broader review of
-  intergenerational transmission of income see Black and Devereux (2010).}
+and environmental influence (Rimfeld et al. 2018; Björklund, Lindahl, and Plug 2006; Sacerdote 2011).
 
 This paper examines a plausible, not previously analysed aspect of the spouse
 matching process: that both social status and genetics contribute to a person's
@@ -211,7 +203,7 @@ social status may become associated in subsequent generations.\footnote{\emph{So
   Other examples include caste, class, income, and educational
   qualifications. \emph{Socio-economic status} (SES) is a specific type of
   social status which exists in economically stratified societies, covering
-  variables such as educational attainment, occupational class, income and
+  variables like educational attainment, occupational class, income and
   wealth (e.g. White 1982).} For
 example, suppose that wealth, intelligence and health are positive assets in a
 potential spouse. Then wealthy people are more likely to marry intelligent or
@@ -237,7 +229,7 @@ that is, the systematic genetic differences between high- and low-SES people
 dominant existing explanation for the gradient is meritocratic social mobility:
 if a genetic variant predicts success in the labour market, then it will
 become associated with high SES and will be inherited in high-SES families.
-Under meritocracy, genes causes SES. On the other hand, under SGAM,
+Under meritocracy, genes causes SES. By contrast, under SGAM,
 causality goes both ways, from genes to SES and vice versa. What's more, the
 strength of the genes-SES gradient depends on economic institutions. Under
 institutions which increase intergenerational mobility, like high inheritance
@@ -259,16 +251,16 @@ the effect of SES on the spouse's genetic endowment. For instance,
 individuals with high education qualifications tend to also have high PSEA, and
 as mentioned above, they may take partners based on genomic similarity. Indeed,
 recent studies show strong assortative mating on PSEA, much more than we would
-expect if spouses matched only on (our observed measures of) actual educational
+expect if spouses matched only on observed measures of actual educational
 attainment (Okbay et al. 2022). To isolate the causal link from own SES to
 partner's genes, we use the ``accident of birth'' as a shock to SES which is
-independent of own genetics. Specifically, we use an individual's birth order as
+independent of own genetics. Specifically, we use a person's \emph{birth order} as
 a ``treatment'' which affects the identity of their partner, partly by affecting
 their own SES. Earlier-born children are known to receive higher parental
 investment and have better life outcomes, including measures of SES such as
 educational attainment and occupational status (Black, Devereux, and Salvanes 2011; Booth and Kee 2009; Lindahl 2008). At the same time, the facts of biology, in
 particular the so-called ``lottery of meiosis'', guarantee that siblings' birth
-order is independent of their genetic endowments.\footnote{Though Muslimova et al. (2020) find that PSEA and birth order do
+order is independent of their genetic endowments.\footnote{Muslimova et al. (2020) find that PSEA and birth order
   \emph{interact} to produce human capital.}
 
 Birth order could affect partner choice through both SES and non-SES mechanisms.
@@ -276,8 +268,8 @@ So, we run a mediation analysis similar to Heckman, Pinto, and Savelyev (2013),
 decomposing the treatment effect into effects of measured and unmeasured
 mediating variables. Specifically, we estimate a reduced-form model with spouse
 polygenic scores for educational attainment (PSEA) as the dependent variable,
-and own birth order as the main independent variable. We then estimate a model
-which also includes measures of own socio-economic status, including university
+and own birth order as the main independent variable. We then add in to the
+model measures of own socio-economic status, including university
 attendance and estimated income in one's first job. Under certain assumptions,
 these variables can be interpreted as mediating the effect of birth order on
 spouse genetics.
@@ -293,40 +285,45 @@ several controls, including non-SES mediators, and a rich set of own genetic
 traits.
 
 Our paper contributes to several literatures. First, we study a new kind of
-assortative mating. The economics literature on spouse matching has
-typically focused on educational similarities (e.g. Pencavel 1998; Chiappori, Salanié, and Weiss 2017) or social class or caste (e.g. Abramitzky, Delavande, and Vasconcelos 2011; Banerjee et al. 2013), but also sorting based on age,
+assortative mating. The economics literature on spouse matching has typically
+focused on educational similarities (e.g. Pencavel 1998; Chiappori, Salanié, and Weiss 2017) or social class or caste (e.g. Abramitzky, Delavande, and Vasconcelos 2011; Banerjee et al. 2013), but also sorting based on age,
 physical traits and ethnicity (Hitsch, Hortaçsu, and Ariely 2010). Matching decisions on the
 marriage market follow multiple criteria, with some degree of substitutability
 between them.\footnote{Oreffice and Quintana-Domeque (2010) show that height and BMI are associated
   with spouse earnings. Dupuy and Galichon (2014) find spouse matching on multiple
   independent dimensions, including education, height, BMI and personality.} For instance, Chiappori, Oreffice, and Quintana-Domeque (2012) showed that
 individuals trade off BMI for partners' income or education and that the
-marginal rate of substitution between these characteristics is different for
-men and women. The genetics literature has focused on genetic assortative
-mating (GAM), the phenomenon that people with similar genes marry each other.
-Recent research has confirmed the long-standing conjecture that GAM takes place
-in contemporary human populations (Howe et al. 2019; Hugh-Jones et al. 2016; Robinson et al. 2017). Geneticists have also developed the concept of
-cross-trait assortative mating (Beauchamp et al. 2010; Sundet et al. 2005; Border et al. 2022). This happens when e.g.~people with genes for height marry
+marginal rate of substitution between these characteristics is different for men
+and women. The genetics literature has focused on genetic assortative mating
+(GAM), the phenomenon that people with similar genes marry each other. Recent
+research has confirmed the long-standing conjecture that GAM takes place in
+contemporary human populations (Hugh-Jones et al. 2016; Robinson et al. 2017; Howe et al. 2019). Geneticists have also developed the
+concept of cross-trait assortative mating (Beauchamp et al. 2010; Sundet et al. 2005; Border et al. 2022). This happens when e.g.~people with genes for height marry
 people with genes for intelligence, or people with genes for two different types
 of disease trait marry each other. As a result, the two types of genetic
-variation become associated. This paper brings the two literatures
-together, extending cross-trait assortative mating to encompass social status as
-well as genetic variants. Our results confirm that individuals with higher
-social status attract spouses with genetics for higher educational attainment.
+variation become associated. This paper brings the two literatures together,
+extending cross-trait assortative mating to encompass social status as well as
+genetic variants. Our results confirm that individuals with higher social status
+attract spouses with genetics for higher educational attainment.
 
 Secondly, SGAM may affect economic inequality and intergenerational mobility.
-Clark and Cummins (2015) show using a database of surnames that long-run
-intergenerational persistence of wealth, over five generations, is much higher
-than would be predicted by the statistics for parent-child correlations in
-wealth. Clark (2021) argues that the data can be explained by an underlying
-process where unobserved genetic variation determines wealth. We show below
-that SGAM could also generate these patterns. The mechanism again is
-unobserved genetic variation, but the interpretation is different, since we
-view genetic endowments not an exogenous source of variation, but as an asset
-effectively ``traded'' in marriage markets in exchange for wealth and social
-status. Put another way, for Clark, in analysing the effect of ancestral wealth
-on descendant wealth, genetics is a \emph{confound}; under SGAM, it can be a
-\emph{mediator}.
+Intergenerational mobility correlates with cross-sectional inequality
+(Becker et al. 2018; Krueger 2012), which has risen dramatically in
+high-income countries, while intergenerational absolute mobility has declined
+(Western, Bloome, and Percheski 2008; Chetty et al. 2017).\footnote{Though relative mobility has been stable (Chetty et al. 2014). In the
+  United Kingdom the Gini coefficient has increased from 26\% to 34.6\% between 1977
+  and 2020. The United States has seen a 10 percentage point rise to 43.3\%
+  from 1962 to 2013.} Long-run estimates of
+intergenerational persistence of wealth are often surprisingly high, i.e.
+higher than would be predicted by parent-child correlations in wealth
+(Clark and Cummins 2015; Barone and Mocetti 2021; Solon 2018).@clark2021bell argues that this can be explained by an underlying
+process where unobserved genetic variation determines wealth. We show below that
+SGAM could also generate these patterns. The mechanism again is unobserved
+genetic variation, but the interpretation is different, since genetic endowments
+are not an exogenous source of variation, but an asset ``traded'' in marriage
+markets in exchange for wealth and social status. Put another way, for Clark, in
+analysing the effect of ancestral wealth on descendant wealth, genetics is a
+\emph{confound}; under SGAM, it may be a \emph{mediator}.
 
 SGAM also affects cross-sectional inequality, like other forms of assortative
 mating (Fernández and Rogerson 2001; Fernandez, Guner, and Knowles 2005; Eika, Mogstad, and Zafar 2019; Chiappori, Dias, and Meghir 2018). We know that there is a ``genes-SES gradient'': many
@@ -400,7 +397,7 @@ SES and genetics. If so, institutional reforms that increase \emph{intergenerati
 mobility}, like mass education or inheritance taxation, may in the long run
 affect not only economic but genetic inequality. Conversely, an increase in
 \emph{economic meritocracy} increases the association between SES and genetics in the
-long run.\footnote{See Proposition \ref{prop-gamma} below.} This poses the problem raised first by Young (1958), and more
+long run.\footnote{See Proposition \ref{prop-gamma} below.} This poses the problem raised by Young (1958), and more
 recently by Markovits (2019): meritocracy may be self-limiting or even
 self-undermining.
 
@@ -821,7 +818,7 @@ increasing in \(\theta\). The reason is that when \(\gamma\) is high, a higher
 own genetics, and increases the proportion that comes from parents' SES, which
 may be less strongly correlated with own genetics. Figure \ref{fig:pic-gamma}
 plots the correlation for \(\gamma = 0.15\), by \(a\) and \(\theta\). However,
-computing the asymptotic correlation shows that it is increasing in \(\theta\) for
+computing the asymptotic correlation along the lines of Proposition \ref{prop-asymptotics-SGAM} shows that it is increasing in \(\theta\) for
 all but values of \(\theta\) very close to 1.
 
 \begin{figure}
@@ -885,10 +882,10 @@ under assortative mating, the regression coefficient of parents' wealth on own
 wealth exceeds the ``direct'' coefficient \(\theta\), because parents' wealth
 correlates with parents' genetics and via that with own wealth. Thus,
 regressions of wealth on wealth may include the effect of unobserved genetic
-variation. This may be a confound due to pre-existing gene-SES correlation
-(if \(\sigma > 0\)). But under SGAM it can also be a genuine cause, since changes
-in someone's wealth may indeed affect the identity of their spouse, and therefore
-the genetics of their offspring.
+variation. This may be a confound due to pre-existing gene-SES correlation (if
+\(\sigma > 0\)). But under SGAM (\(0 < a < 1\)) it can also be a genuine cause,
+since changes in someone's wealth may indeed affect the identity of their
+spouse, and from that the genetics of their offspring.
 
 The converse also holds: regressions of children's characteristics on their
 genetics alone risk overestimating the effect of genetics, by confounding it
@@ -997,22 +994,21 @@ attainment even if they play no causal role (Selzam et al. 2019).
 
 Despite these points, PSEA has non-trivial estimated effects on educational
 attainment. PSEA correlates with measures of education, including university
-attendance and years of full-time education; within-siblings regressions, where
-PSEA is randomly assigned by the ``lottery of meiosis'', confirm this correlation
-is at least partly causal (Lee et al. 2018). We recheck these facts within the UK
-Biobank sample. In a simple linear regression (N = 408,524) of
-university attendance on PSEA, a one-standard-deviation increase in PSEA was
-associated with a 9.2 percentage point increase in the
-probability of university attendance (\(p < 2 \times 10^{-16}\)). In a
-within-siblings regression among genetic full siblings (N =
-36,748), the increase was
-4.5 percentage points (\(p < 2 \times 10^{-16}\)).
-This suggests that about half of the raw correlation of PSEA with
-university attendance is down to confounds like good environments or parental
-nurture, while the remainder is causal. Still, the causal effect remains
-substantial: for a rough comparison, the (ITT) effect on college attendance of
-the Moving To Opportunity experiment in the US was 2.5 percentage points
-(Chetty, Hendren, and Katz 2016).
+attendance and years of full-time education. Effect sizes are smaller but still
+non-trivial in within-siblings regressions (Lee et al. 2018). These effects can be
+interpreted as causal, since genetic variation across siblings is guaranteed to
+be random by the biological mechanism involved -- the ``lottery of meiosis'' (see
+below). We recheck these facts within the UK Biobank sample. In a simple linear
+regression (N = 408,524) of university attendance on PSEA, a
+one-standard-deviation increase in PSEA was associated with a
+9.2 percentage point increase in the probability of
+university attendance (\(p < 2 \times 10^{-16}\)). In a within-siblings regression
+among genetic full siblings (N = 36,748), the increase
+was 4.5 percentage points (\(p < 2 \times 10^{-16}\)). This suggests that about half of the raw correlation of PSEA with
+university attendance is down to environmental confounds like parental nurture,
+while the remainder is causal. Still, the causal effect remains substantial: for
+a rough comparison, the (ITT) effect on college attendance of the Moving To
+Opportunity experiment in the US was 2.5 percentage points (Chetty, Hendren, and Katz 2016).
 
 We use two measures of socio-economic status: income, and university attendance.
 Income is a direct measure of SES. University attendance is a predictor of
@@ -1094,15 +1090,14 @@ likely affects both measured and unmeasured aspects of SES. So, an instrumental
 variables approach would be likely to fall foul of the exclusion restriction.
 
 Instead, we conduct a mediation analysis, following the strategy of
-Heckman, Pinto, and Savelyev (2013). We first confirm statistically that birth
-order affects our measures of respondents' SES (income and education).
-Then, we regress spouse's PSEA on birth order, with and without
-controlling for SES. Under the assumption that birth order is exogenous
-to own genetics, these regressions identify the effect of birth order,
-plus other environmental variables that correlate with it, on own social
-status and spouse's genetics. Also, if the estimated effect of birth
-order on spouse's PSEA changes when SES is controlled for, that is
-evidence that SES mediates the effect of birth order.
+Heckman, Pinto, and Savelyev (2013). We first confirm that birth order affects our
+measures of respondents' SES (income and education). Then, we regress spouse's
+PSEA on birth order, with and without controlling for SES. Under the assumption
+that birth order is exogenous to own genetics, these regressions identify the
+effect of birth order, plus other environmental variables that correlate with
+it, on own social status and spouse's genetics. Most importantly, if the
+estimated effect of birth order on spouse's PSEA changes when SES is controlled
+for, that is evidence that SES mediates the effect of birth order.
 
 We follow Heckman, Pinto, and Savelyev (2013) to decompose the aggregate treatment
 effect into components due to observed and unobserved proximate channels
@@ -1175,7 +1170,7 @@ effect of a change from birth order \(b\) to \(b'\) into the effect of measured 
 \begin{equation}
 \label{eq:decomposition}
 E(Y_b' - Y_b) = \tau(b' - b) + \sum_{j \in J_m} \alpha^j E(m^j_{b'} - m^j_b) \\
-=\underbrace{\tau(b' - b)}_{\text{Effect of unmeasured mediators}} + \underbrace{\sum_{j \in J_m} \alpha^j \mu_{2,j} (b' - b)}_{\text{Effect of measured mediators}}
+=\underbrace{\tau(b' - b)}_{\text{Direct effect + unmeasured mediators}} + \underbrace{\sum_{j \in J_m} \alpha^j \mu_{2,j} (b' - b)}_{\text{Effect of measured mediators}}
 \end{equation}
 
 We are primarily interested in estimating the effect of SES on spouse PSEA,
@@ -2358,13 +2353,23 @@ Another concern is that our chosen SES mediators might not be exogenous. We have
 already seen that birth order affects intelligence, height, BMI
 and health. So there might be other unobserved variables which mediate the effect
 of birth order on spousal PSEA, and which correlate with education or income,
-but which do not themselves capture SES. If so, that would threaten our claim that
-education and income are important mediators. However, the effects of education
-on spouse PSEA in Table \ref{tab:tbl-bo-psea}, and of birth order on education in
-Table \ref{tab:tbl-bo-first-stage}, are both large and highly significant. In other
-literature on spouse matching, education is a common, robust and significant
-predictor. For these reasons, we think that our results are unlikely to be
-driven wholly by other, unobserved mediators.
+but which do not themselves capture SES. If so, that would threaten our claim
+that education and income are important mediators. However, the effects of
+education on spouse PSEA in Table \ref{tab:tbl-bo-psea}, and of birth order on
+education in Table \ref{tab:tbl-bo-first-stage}, are both large and highly
+significant. In other literature on spouse matching, education is a common,
+robust and significant predictor. For these reasons, we think that our results
+are unlikely to be driven wholly by other, unobserved mediators.
+
+A last concern is that polygenic scores, including PSEA, contain noise from
+correlated environments. (That is, effect sizes of individual SNPs may be
+confounded in the underlying statistical analyses used to create polygenic
+scores.) It is conceivable that birth order could only affect the noise
+component of spouse PSEA, rather than the component which is truly causal for
+education. We think this is unlikely, because it is hard to imagine an
+assortative mating process by which high-SES peoplewould match spouses with
+only genetic variants that correlate with, but do not cause, higher educational
+attainment.
 
 Our main specification is linear in birth order. Tables
 \ref{tab:tbl-bo-psea-dummies} and \ref{tab:tbl-bo-subset-dummies} in the
@@ -2406,37 +2411,29 @@ attracts ``good genes''. At the same time, SGAM changes the interpretation of
 genetics. As our model shows, genetic variation is not an exogenous input into
 the social system, but an endogenous outcome -- not a confound for wealth, but a mediator.
 
-SGAM also provides a new explanation for the observed association of genes with
-SES. Unlike meritocratic social mobility, the leading alternative explanation,
-SGAM may apply to a historically wide range of societies. Whilst a
-degree of meritocracy exists in modern capitalist economies, opportunities to
-earn status have been far more limited in most societies throughout history
+SGAM also provides a new explanation for the genes-SES gradient -- the observed
+association of genes with SES. The leading alternative explanation is
+meritocratic social mobility. Whilst meritocracy exists in modern capitalist
+economies, it has been far more limited in most societies throughout history
 (Smelser and Lipset 1966). On the other hand, assortative mating is likely to be a
-cultural universal (Buss 1989). Thus, SGAM predicts that genetic differences
-across social status should exist in all stratified societies. In fact, people
-in many societies have believed that innate traits do vary by social
-status. The ancient Greeks described the social elite as \emph{καλοί κἀγαθοί} (``fine
-and good''), while the Roman nobility were the \emph{optimates} (``best'').\footnote{The appendix contains a selection of relevant historical
-  quotations.} This
-belief has been explained by the tendency to believe in a just world
-(Furnham 1993), or as an ideology promoted by the dominant class (e.g. Gramsci 1971). However, it may also simply have been a recognition of
-(social) reality. In other words, the belief that elites are taller, stronger,
-better-looking, etc. is not much different from the belief that elites are
-richer and more powerful, and may be held for similar reasons. In future, it
-may be possible to directly test for genetic differences across social status
-in ancient DNA samples.
+cultural universal (Buss 1989). Thus, SGAM predicts that genes-SES gradients
+should exist in all stratified societies. In fact, people in many societies have
+believed that innate traits do vary by social status.\footnote{The appendix contains a selection of relevant historical quotations.} In future, it may be
+possible to directly test for genetic differences across social status in
+ancient DNA samples.
 
 In our model, the association between SES and genetic variation depends on
 economic and social institutions. Institutions that make wealth more persistent
 across generations also increase the correlation between SES and genetics. If
-so, then institutional differences may have long run effects over generations by
+so, then institutional differences may have long-run effects over generations by
 altering the genes-SES gradient. There could be hysteresis, with initial social
 differences cumulating over time via their effect on genetic inequality. On the
-other hand, increases in the level of meritocracy paradoxically also strengthen
-the genes-SES gradient, suggesting a deep conflict between meritocracy and
-egalitarianism. Lastly, the structure of marriage markets also affects the
-gradient. We have not been able to test these comparative statics here: doing
-so across societies is a challenge for future work.
+other hand, while lowering the intergenerational transmission of wealth may
+eventually flatten the genes-SES gradient, increases in the level of meritocracy
+paradoxically make it steeper, suggesting a deep conflict between meritocracy
+and egalitarianism (Young 1958; Markovits 2019). Lastly, the
+structure of marriage markets also affects the gradient. Testing these comparative
+statics across societies and time periods is an important challenge for future work.
 
 The broadest message of this paper is that genetics are a social
 outcome. Both popular and scientific discourse often parse genetics as
@@ -5765,8 +5762,6 @@ A noble and brave father gives in their begetting.
 
 -- Euripides \emph{Heracleidae}
 
-His looks are full of peaceful majesty,
-
 His head by nature fram'd to wear a crown,
 
 His hands to wield a sceptre\ldots.
@@ -5812,6 +5807,9 @@ Banerjee, Abhijit, Esther Duflo, Maitreesh Ghatak, and Jeanne Lafortune. 2013. {
 \leavevmode\vadjust pre{\hypertarget{ref-barban2021effect}{}}%
 Barban, Nicola, Elisabetta De Cao, Sonia Oreffice, and Climent Quintana-Domeque. 2021. {``The Effect of Education on Spousal Education: A Genetic Approach.''} \emph{Labour Economics} 71: 102023.
 
+\leavevmode\vadjust pre{\hypertarget{ref-barone2021intergenerational}{}}%
+Barone, Guglielmo, and Sauro Mocetti. 2021. {``Intergenerational Mobility in the Very Long Run: Florence 1427-2011.''} \emph{Review of Economic Studies} 88 (4): 1863--91.
+
 \leavevmode\vadjust pre{\hypertarget{ref-barth2020genetic}{}}%
 Barth, Daniel, Nicholas W Papageorge, and Kevin Thom. 2020. {``Genetic Endowments and Wealth Inequality.''} \emph{Journal of Political Economy} 128 (4): 1474--1522.
 
@@ -5835,9 +5833,6 @@ Benjamin, Daniel J, David Cesarini, Christopher F Chabris, Edward L Glaeser, Dav
 
 \leavevmode\vadjust pre{\hypertarget{ref-bjorklund2006origins}{}}%
 Björklund, Anders, Mikael Lindahl, and Erik Plug. 2006. {``The Origins of Intergenerational Associations: Lessons from Swedish Adoption Data.''} \emph{The Quarterly Journal of Economics} 121 (3): 999--1028.
-
-\leavevmode\vadjust pre{\hypertarget{ref-black2010recent}{}}%
-Black, Sandra E, and Paul J Devereux. 2010. {``Recent Developments in Intergenerational Mobility.''} National Bureau of Economic Research.
 
 \leavevmode\vadjust pre{\hypertarget{ref-black2011older}{}}%
 Black, Sandra E, Paul J Devereux, and Kjell G Salvanes. 2011. {``Older and Wiser? Birth Order and IQ of Young Men.''} \emph{CESifo Economic Studies} 57 (1): 103--20.
@@ -5925,12 +5920,6 @@ Fernandez, Raquel, Nezih Guner, and John Knowles. 2005. {``Love and Money: A The
 
 \leavevmode\vadjust pre{\hypertarget{ref-fernandez2001sorting}{}}%
 Fernández, Raquel, and Richard Rogerson. 2001. {``Sorting and Long-Run Inequality.''} \emph{The Quarterly Journal of Economics} 116 (4): 1305--41.
-
-\leavevmode\vadjust pre{\hypertarget{ref-furnham1993just}{}}%
-Furnham, Adrian. 1993. {``Just World Beliefs in Twelve Societies.''} \emph{The Journal of Social Psychology} 133 (3): 317--29.
-
-\leavevmode\vadjust pre{\hypertarget{ref-gramsci1971selections}{}}%
-Gramsci, Antonio. 1971. \emph{Selections from the Prison Notebooks}. Lawrence; Wishart London.
 
 \leavevmode\vadjust pre{\hypertarget{ref-greenwood2014marry}{}}%
 Greenwood, Jeremy, Nezih Guner, Georgi Kocharkov, and Cezar Santos. 2014. {``Marry Your Like: Assortative Mating and Income Inequality.''} \emph{American Economic Review} 104 (5): 348--53.
