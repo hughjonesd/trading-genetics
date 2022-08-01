@@ -15,8 +15,7 @@ abstract: |
   passed on together to future generations. This process provides a new 
   explanation for the surprising persistence of inequality across generations,
   and for the genes-SES gradient: the genetic differences we observe between 
-  high- and low-income people. We model social-genetic assortative mating. 
-  We model social-genetic assortative mating 
+  high- and low-income people. We model social-genetic assortative mating 
   (SGAM) and test for its existence in a large genetically-informed survey. We 
   compare spouses of individuals with different birth order, which is known to 
   affect socio-economic status and which is exogenous to own genetic endowments 
@@ -1672,7 +1671,7 @@ confounded in the underlying statistical analyses used to create polygenic
 scores.) It is conceivable that birth order could only affect the noise
 component of spouse PSEA, rather than the component which is truly causal for
 education. We think this is unlikely, because it is hard to imagine an
-assortative mating process by which high-SES peoplewould  match spouses with
+assortative mating process by which high-SES people would match spouses with
 only genetic variants that correlate with, but do not cause, higher educational
 attainment.
 
