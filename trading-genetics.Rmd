@@ -39,6 +39,7 @@ linkcolor: blue
 header-includes:
   - \usepackage{subfig}
   - \captionsetup[subfloat]{labelformat=empty}
+  - \captionsetup[figure]{width=5in}
   - \usepackage{setspace}\onehalfspacing
   - \usepackage{amsmath}
   - \usepackage{amsthm}
@@ -785,8 +786,8 @@ re-estimated excluding UK Biobank participants.[^5] We normalize the score to
 have mean 0 and variance 1. Because polygenic scores are created from estimates
 of many presumably tiny effects, they contain a large amount of noise relative
 to the true best estimator that could be derived from genetic data. For
-instance, PSEA explains only 11–13% of variance in educational attainment [out
-of sample, @lee2018gene], whereas the true proportion explained by genetic
+instance, PSEA explains only 11–13% of variance in educational attainment 
+[@lee2018gene], whereas the true proportion explained by genetic
 variation -- the heritability -- is estimated from twin studies to be about 40%
 [@branigan2013variation]. In addition, polygenic scores are no more guaranteed
 to be causal than any other independent variable. For example, social
@@ -813,11 +814,12 @@ one-standard-deviation increase in PSEA was associated with a
 university attendance ($p < 2 \times 10^{-16}$). In a within-siblings regression
 among genetic full siblings (N = `r pretty(n_own_psea_within)`), the increase
 was `r pretty(eff_own_psea_within * 100)` percentage points ($p < 2 \times
-10^{-16}$). This suggests that about half of the raw correlation of PSEA with
-university attendance is down to environmental confounds like parental nurture,
-while the remainder is causal. Still, the causal effect remains substantial: for
-a rough comparison, the (ITT) effect on college attendance of the Moving To
-Opportunity experiment in the US was 2.5 percentage points [@chetty2016effects].
+10^{-16}$). This suggests that about half of the raw
+correlation of PSEA with university attendance is down to environmental
+confounds like parental nurture, while the remainder is causal [cf. @lee2018gene]. Still, the
+causal effect remains substantial: for a rough comparison, the (ITT) effect on
+college attendance of the Moving To Opportunity experiment in the US was 2.5
+percentage points [@chetty2016effects].
 
 We use two measures of socio-economic status: income, and university attendance.
 Income is a direct measure of SES. University attendance is a predictor of
@@ -1186,8 +1188,8 @@ tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent"
 "variable, and own birth order as the main independent variable. PSEA is the",
 "polygenic score for educational attainment, which is normalized with mean 0 and",
 "standard deviation 1. We include own PSEA, parents' age at birth (the mean of parents'",
-"ages), and further controls (family size, birth year, and birth month dummies) 
-in columns 2-3 to ensure the balance of covariates",
+"ages), and further controls (family size, birth year, and birth month dummies)", 
+"in columns 2-3 to ensure the balance of covariates",
 "across birth order. All data is from the UK Biobank for a sample of UK",
 "individuals born between 1935 and 1970.", my_note)
 
@@ -1212,6 +1214,7 @@ huxreg(mod_bo_psea_base,
        set_align(8:10, -1, "center") %>% 
        set_number_format(2:7, -1, 4) %>% 
        set_width(0.9) %>% 
+       set_font_size(10) %>%
        set_caption("Regressions of spouse PSEA on birth order")
 
 
@@ -1256,9 +1259,9 @@ huxreg(mod_bo_psea,
        set_align(20:22, -1, "center") %>% 
        set_number_format(2:19, -1, 4) %>% 
        set_tb_padding(2) %>% 
-       set_width(0.9) %>% 
+       set_width(1) %>% 
        set_font_size(10) %>%
-       set_font_size(final(1), everywhere, 8) %>%
+       #set_font_size(final(1), everywhere, 8) %>%
        set_caption("Regressions of spouse PSEA on birth order and mediators")
 ```
 
@@ -1385,6 +1388,7 @@ as_huxtable(med_matrix, add_colnames = TRUE, add_rownames = "") %>%
       set_number_format(-1, -1, 1) %>% 
       set_tb_padding(3) %>% 
       set_bottom_border(1, 1, 0) %>% 
+      set_font_size(10) %>%
       set_caption(
         "Percent of birth order effects accounted for by mediators, models 2-4"
       )  
@@ -1690,7 +1694,7 @@ attendance with age of leaving full-time education.
 
 # Conclusion
 
-Our empirical analysis shows that in a contemporary developed society,
+Our empirical analysis shows that in a contemporary developed society, 
 individuals with fewer elder siblings had spouses with higher PSEA. We also provide
 evidence that these effects are mediated by socio-economic status, specifically
 income and education. We interpret this as evidence of social-genetic assortative

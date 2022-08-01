@@ -434,7 +434,7 @@ $\tau = 1$, the dynamics diverges and $\bar{s}^{2}$ goes to $+\infty$.
 Figure \@ref(fig:pic-asymptotic-corr) plots the asymptotic correlation
 between $x_1$ and $x_2$ for $\tau = 0.95$.
 
-```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between genetics $x_1$ and SES $x_2$, by weight of genetics in matching $a$ and SES inheritance $\\theta$. $\\tau$ = 0.95.", dpi = 300, out.height="3.5in"}
+```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between genetics $x_1$ and SES $x_2$, by weight of genetics in spouse matching ($a$) and SES inheritance ($\\theta$). $\\tau$ = 0.95.", dpi = 300, out.height="3.5in"}
 
 
 D <- function (a, lambda, mu) {
@@ -565,7 +565,7 @@ plots the correlation for $\gamma = 0.15$, by $a$ and $\theta$. However,
 computing the asymptotic correlation along the lines of Proposition \ref{prop-asymptotics-SGAM} shows that it is increasing in $\theta$ for 
 all but values of $\theta$ very close to 1.
 
-```{r pic-gamma, fig.align = "center", fig.cap = "Correlation between children's genetics $x^\\prime_1$ and children's SES $x^\\prime_2$, by weight of genetics in matching $a$ and SES inheritance $\\theta$, for meritocracy $\\gamma$ = 0.15. Other parameters: $\\tau$ = 0.95, $s$ = $S$ = 1, $\\sigma$ = 0.", dpi = 300, out.height = "4in"}
+```{r pic-gamma, fig.align = "center", fig.cap = "Correlation between children's genetics $x^\\prime_1$ and children's SES $x^\\prime_2$, by weight of genetics in spouse matching ($a$) and SES inheritance ($\\theta$), for meritocracy $\\gamma$ = 0.15. Other parameters: $\\tau$ = 0.95, $s$ = $S$ = 1, $\\sigma$ = 0.", dpi = 300, out.height = "4in"}
 
 # "if we compute the asymptotic correlation": see new-model-computation.R
 # for code
