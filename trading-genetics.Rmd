@@ -11,16 +11,15 @@ author: |
   University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}
 abstract: |
   Under social-genetic assortative mating (SGAM), socio-economic status (SES) and 
-  genetics are both assets in marriage markets. They become associated in spouse 
-  pairs, and are passed on together to future generations. This gives a new 
-  explanation for the surprising persistence of intergenerational inequality, and 
-  for observed genetic differences between high- and low-income people. 
-  We model SGAM and test  for it in a large survey. Earlier-born siblings have
-  spouses with genetic variants predicting more education. This effect is 
-  mediated by individuals' own education and income. Thus, environmental shocks 
-  to SES are reflected in the DNA of subsequent generations. SGAM provides a new
-  channel from assortative mating to long-run inequality, and shows 
-  that genetic variation is endogenous to economic institutions. 
+  genetics are both assets in marriage markets, become associated in spouse 
+  pairs, and are passed together to future generations. This gives a new 
+  explanation for persistent intergenerational inequality and 
+  observed genetic differences between rich and poor. We model SGAM and test  
+  for it in a large survey. Spouses of earlier-born siblings have genetics
+  predicting more education. This effect is mediated by individuals' own 
+  education and income. Thus, shocks to SES are reflected in the DNA of 
+  subsequent generations. Under SGAM, genetic variation is endogenous to economic
+  institutions. 
 date: "`r Sys.Date()`"
 output: 
   bookdown::pdf_document2:
@@ -139,10 +138,11 @@ famhist$EA3 <- famhist$EA3_excl_23andMe_UK_resid
 
 mf_pairs_reg <- regression_subset(mf_pairs_twice)
 
-my_note <- "{stars}. Standard errors: robust."
+my_note <- "Robust standard errors are in parentheses."
 
 # for p values
-my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
+# my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
+my_stars <- NULL
 
 # basic formulae
 fml_bo_psea <- list()
@@ -1276,7 +1276,7 @@ second measure of socio-economic status, income in first job. Column 4 includes
 both.
 
 When we add university attendance and other mediators (column 2), the effect of
-birth order drops and becomes insignificant, while the coefficient for
+birth order drops and becomes insignificant at 5%, while the coefficient for
 university is positive and highly significant. Fluid IQ, height and BMI are also
 positive and significant, while self-reported health has the right sign but is
 insignificant. Controlling for income instead of university attendance (column
