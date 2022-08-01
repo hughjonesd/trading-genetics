@@ -10,23 +10,17 @@ author: |
   David Hugh-Jones\thanks{Corresponding author. School of Economics, 
   University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}
 abstract: |
-  If socio-economic status (SES) and genetic variants are both assets in marriage 
-  markets, then the two will become associated in spouse pairs, and will be 
-  passed on together to future generations. This process provides a new 
-  explanation for the surprising persistence of inequality across generations,
-  and for the genes-SES gradient: the genetic differences we observe between 
-  high- and low-income people. We model social-genetic assortative mating 
-  (SGAM) and test for its existence in a large genetically-informed survey. We 
-  compare spouses of individuals with different birth order, which is known to 
-  affect socio-economic status and which is exogenous to own genetic endowments 
-  among siblings. Spouses of earlier-born individuals have genetic variants that 
-  predict higher educational attainment. We provide evidence that this effect is 
-  mediated by individuals' own educational attainment and income. Thus, 
-  environmental shocks to socio-economic status are reflected in the DNA of 
-  subsequent generations. SGAM provides a new channel by which assortative 
-  mating can affect long-run inequality, predicts that genes-SES gradients will 
-  be historically widespread, and shows that genetic variation is endogenous to
-  economic institutions. 
+  Under social-genetic assortative mating (SGAM), socio-economic status (SES) and 
+  genetics are both assets in marriage markets. They become associated in spouse 
+  pairs, and are passed on together to future generations. This gives a new 
+  explanation for the surprising persistence of intergenerational inequality, and 
+  for observed genetic differences between high- and low-income people. 
+  We model SGAM and test  for it in a large survey. Earlier-born siblings have
+  spouses with genetic variants predicting more education. This effect is 
+  mediated by individuals' own education and income. Thus, environmental shocks 
+  to SES are reflected in the DNA of subsequent generations. SGAM provides a new
+  channel from assortative mating to long-run inequality, and shows 
+  that genetic variation is endogenous to economic institutions. 
 date: "`r Sys.Date()`"
 output: 
   bookdown::pdf_document2:
@@ -39,13 +33,13 @@ editor_options:
   markdown: 
     wrap: 72
 bibliography: bibliography.bib
-spacing: double
 mainfont: Times
+fontsize: 12pt
 linkcolor: blue
 header-includes:
   - \usepackage{subfig}
   - \captionsetup[subfloat]{labelformat=empty}
-  - \usepackage{setspace}\doublespacing
+  - \usepackage{setspace}\onehalfspacing
   - \usepackage{amsmath}
   - \usepackage{amsthm}
   - \usepackage{placeins}
@@ -465,7 +459,7 @@ high-income countries, while intergenerational absolute mobility has declined
 intergenerational persistence of wealth are often surprisingly high, i.e.
 higher than would be predicted by parent-child correlations in wealth
 [@clark2015intergenerational; @barone2021intergenerational;
-@solon2018we].@clark2021bell argues that this can be explained by an underlying
+@solon2018we]. @clark2021bell argues that this can be explained by an underlying
 process where unobserved genetic variation determines wealth. We show below that
 SGAM could also generate these patterns. The mechanism again is unobserved
 genetic variation, but the interpretation is different, since genetic endowments
@@ -1260,8 +1254,9 @@ huxreg(mod_bo_psea,
        set_bottom_border(20:21, everywhere, 0) %>% 
        set_align(20:22, -1, "center") %>% 
        set_number_format(2:19, -1, 4) %>% 
-       set_tb_padding(3) %>% 
+       set_tb_padding(2) %>% 
        set_width(0.9) %>% 
+       set_font_size(10) %>%
        set_caption("Regressions of spouse PSEA on birth order and mediators")
 ```
 
@@ -1777,6 +1772,8 @@ Code to reproduce is available at https://github.com/hughjonesd/trading-genetics
 
 # Appendix
 
+## For online publication
+
 \localtableofcontents
 \clearpage
 
@@ -1892,6 +1889,7 @@ huxreg(mod_bo_no_par_age,
        set_bottom_border(18:19, everywhere, 0) %>% 
        set_align(18:20, -1, "center") %>% 
        set_number_format(2:17, -1, 4) %>% 
+       set_font_size(11) %>%
        set_caption("Regressions of spouse PSEA, without controls for parents' age at respondent's birth")
 
 ```
@@ -1950,7 +1948,7 @@ ht <- huxtable::huxreg(mod_bo_psea_dummies,
        set_align(21:24, -1, "center") %>% 
        set_number_format(2:20, -1, 4) %>% 
        set_caption("Regressions of spouse PSEA, separate birth order dummies") %>% 
-       set_tb_padding(3) %>% 
+       set_tb_padding(2) %>% 
        set_font_size(10) %>% 
        set_width(0.9)
 
@@ -2182,6 +2180,7 @@ huxreg(mod_bo_psea_pgs,
        set_number_format(2:19, -1, 4) %>% 
        set_width(1) %>% 
        set_wrap(final(1), everywhere, TRUE) %>% 
+       set_font_size(11) %>%
        set_caption("Regressions of spouse PSEA with controls for polygenic scores")
 ```
 
@@ -2216,7 +2215,8 @@ huxreg(mod_bo_psea_age_fte,
        set_bottom_border(20:21, everywhere, 0) %>% 
        set_align(20:22, -1, "center") %>% 
        set_number_format(2:19, -1, 4) %>% 
-       set_width(0.8) %>% 
+       set_width(0.9) %>% 
+       set_font_size(11) %>%
        set_caption("Regressions of spouse PSEA using age of leaving full-time education")
 ```
 
