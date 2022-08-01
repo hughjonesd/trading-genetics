@@ -15,10 +15,8 @@ abstract: |
   passed on together to future generations. This process provides a new 
   explanation for the surprising persistence of inequality across generations,
   and for the genes-SES gradient: the genetic differences we observe between 
-  high- and low-income people. The gradient includes differences related 
-  to human capital and to physical and mental health, so understanding its origins
-  is important for understanding inequality in general, and health inequalities
-  in particular. We model social-genetic assortative mating 
+  high- and low-income people. We model social-genetic assortative mating. 
+  We model social-genetic assortative mating 
   (SGAM) and test for its existence in a large genetically-informed survey. We 
   compare spouses of individuals with different birth order, which is known to 
   affect socio-economic status and which is exogenous to own genetic endowments 
@@ -503,17 +501,15 @@ contribute to the transmission of wealth and human capital [e.g.
 @bjorklund2006origins]. Thus, the genes-SES gradient is an important source of
 inequality. Genetic variation in human capital is key, since a likely cause of
 the recent rise in inequality is the increase in market returns to human capital
-[e.g. @kaplan2013s; @eika2019educational]. Another important aspect of the
-genes-SES gradient is in genetic associations with health. DNA-derived scores
+[e.g. @kaplan2013s; @eika2019educational]. There is also a
+genes-SES gradient in genetic predictors of health. DNA-derived scores
 predictive of several health outcomes are associated with regional economic
 deprivation [@abdellaoui2019genetic]. There is a correlation between education
 and health, which may be mediated by shared genetic causes [@amin2015schooling;
 @boardman2015can]. Family SES correlates with several health-related polygenic
 scores [@selzam2019comparing], and genetic effects associated with SES
 significantly alter the genetic relationships between many mental health
-outcomes [@marees2021genetic]. Understanding the aetiology of health and disease
-requires disentangling the effects of genetics and environments. In turn, that
-requires understanding how the two can become correlated.
+outcomes [@marees2021genetic].
 
 SGAM shows how marriage markets can lead high SES to be associated with
 different genetic variants, i.e. it can explain the genes-SES gradient. The
