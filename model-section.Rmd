@@ -9,7 +9,7 @@ output:
 bibliography: bibliography.bib
 header-includes:
   - \usepackage{subfig}
-  - \usepackage{setspace}\doublespacing
+  - \usepackage{setspace}\onehalfspacing
   - \usepackage{amsmath}
   - \usepackage{amsfonts}
   - \usepackage{amsthm}

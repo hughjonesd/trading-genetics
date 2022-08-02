@@ -8,7 +8,7 @@ output:
     keep_tex: true
 header-includes:
   - \usepackage{subfig}
-  - \usepackage{setspace}\doublespacing
+  - \usepackage{setspace}\onehalfspacing
   - \usepackage{amsmath}
   - \usepackage{amsfonts}
   - \usepackage{amsthm}
