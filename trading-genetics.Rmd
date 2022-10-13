@@ -187,6 +187,7 @@ reg_coefs <- c(
 
 # TODO - Apr 2022
 
+* Principal components, own correlation with birth order? Just to check.   Cf. Abdel's earlier critique of GAM papers.
 * Versions of first stage with sibling FE? I did this, they are the right
   sign except for BMI, but never significant and with big SEs. Maybe doesn't
   add much.
