@@ -1,6 +1,6 @@
 ---
 title: "Social Genetic Assortative Mating"
-author: "David Hugh-Jones and Abdel Abdellaoui"
+author: "David Hugh-Jones, Oana Borcan, Pierre Chiappori, and Abdel Abdellaoui"
 format: pdf
 editor: visual
 knitr:
@@ -13,11 +13,11 @@ bibliography: bibliography.bib
 
 ## Introduction
 
-*Introduce SGAM in the context of assortative mating, discuss the (lack of) previous work, mention Pierre's model & key results. Possibly extend model to include fertility and evolution.*
+*Possibly extend model to include fertility and evolution.*
 
-Humans mate assortatively on both genetic and phenotypic characteristics. This has important consequences for social structure and genetic architecture. Assortative mating on income, wealth or education can increase inequality (XXX econ papers). Genetic assortative mating (GAM) violates the assumptions of some models in statistical genetics (XXX which? Cite), meaning that researchers may need to take account of GAM. Cross-trait assortative mating, where people with one trait match to partners with a different trait, can lead the traits to become associated in the population.
+Humans mate assortatively on both genetics and phenotype. This has important consequences for social structure and genetic architecture. Assortative mating on income, wealth or education can increase inequality [@fernandez2001sorting ; @fernandez2005love; @eika2019educational; @chiappori2018marriage]. Genetic assortative mating (GAM) violates the assumptions of some models in statistical genetics (XXX which?), meaning that researchers may need to take account of GAM. Cross-trait assortative mating, where people with one trait match to partners with a different trait, can lead the traits to become associated in the population.
 
-Abdellaoui et al. (2022) introduce Social Genetic Assortative Mating (SGAM). Under SGAM, partners with a socially defined trait, such as socio-economic status (SES), match partners with certain genetic variants. This could happen if SES is valued in marriage markets, and if other valued features, like intelligence or physical attractiveness, are partly under genetic control. SGAM has important consequences for social structure, genetic statistics, and genetic architecture. It induces a correlation between SES and genetics -- the so-called "genes-SES gradient". Under SGAM, environmental shocks to a person's SES are reflected, via partner choice, in the genetics of their descendants. And the size of the genes-SES gradient depends upon social institutions.
+@abch2022 introduce Social Genetic Assortative Mating (SGAM). Under SGAM, partners with a socially defined trait, such as socio-economic status (SES), match partners with certain genetic variants. This could happen if SES is valued in marriage markets, and if other valued features, like intelligence or physical attractiveness, are partly under genetic control. SGAM has important consequences for social structure, genetic statistics, and genetic architecture. It induces a correlation between SES and genetics -- the so-called "genes-SES gradient". Under SGAM, environmental shocks to a person's SES are reflected, via partner choice, in the genetics of their descendants. And the size of the genes-SES gradient depends upon social institutions.
 
 This paper tests for SGAM on education, an important measure of SES, and across 33 genetic traits captured in polygenic indices (PGIs). We show that more educated people match with partners who are systematically different on many PGIs. Using birth order as an environmental shock to SES, we provide evidence that this is not due to purely genetic assortative mating. Lastly we discuss the implications of SGAM in detail.
 
@@ -58,8 +58,6 @@ regression_subset <- function (data) {
            ! is.na(university.x),
            ! is.na(bmi.x),
            ! is.na(sr_health.x)
-           # we don't demand first_job_pay.x is not NA, that would 
-           # shrink the N by a lot
          )
 }
 
@@ -176,8 +174,6 @@ mf_pairs_bo <- mf_pairs_reg |>
 
 ```
 
-*Describe our data of matched pairs. This would be a good chance to advertise the advantages of matching on precise geographical data - the higher accuracy with respect to genetic children that we achieve, compared to previous attempts.*
-
 ```{r calc-validate-pairs}
 prop_shared <- calc_prop_shared_children(mf_pairs)
 
@@ -199,13 +195,11 @@ We use respondents from UK Biobank [@bycroft2018uk]. UK Biobank does not include
 
 [^1]: A typical UK postcode contains about 15 properties.
 
-We also eliminate all pairs where either spouse appeared in more than one pair. This leaves a total of `r pretty(nrow(mf_pairs))` pairs. We validate our pairs by using genetic children who also happen to be UK Biobank respondents. Among our spouse pairs, `r n_one_has_kid` have a genetic child of at least one partner in the sample. `r pct(n_both_same_kid/n_one_has_kid)` of these are the genetic child of *both* partners. For comparison, 11% of families with dependent children included a stepchild in England and Wales in 2011 [@ons2011stepfamilies].
+We also eliminate all pairs where either spouse appeared in more than one pair. This leaves a total of `r pretty(nrow(mf_pairs))` pairs. We validate our pairs by using genetic children who also happen to be UK Biobank respondents. Among our spouse pairs, `r n_one_has_kid` have a genetic child of at least one partner in the sample. `r pct(n_both_same_kid/n_one_has_kid)` of these are the genetic child of *both* partners. This is a lower bound, since some of the remaining pairs may also have a shared genetic child not in the sample. For comparison, 11% of families with dependent children included a stepchild in England and Wales in 2011 [@ons2011stepfamilies].
 
 For our analyses we use pairs twice, once for each focal member. We cluster standard errors by pair. For analyses on birth order, we use focal members with between 1 and 5 siblings.
 
 # Results
-
-*Regress own education against 33 spouse traits. Control for own YOB. Plot the results. Show how they correlate with own education/own trait (the "genes-SES gradient").*
 
 ```{r}
 #| label: calc-mods-educ
@@ -235,6 +229,7 @@ regress_own_educ <- function (score) {
         dplyr::filter(term == "university.x")
 }
 
+
 mods_own_educ <- map_dfr(score_names, regress_own_educ, .id = "dep.var")
 
 mods_both <- left_join(mods_educ, mods_own_educ, by = "dep.var")
@@ -242,7 +237,7 @@ cor_spouse_own <- cor(mods_both$estimate.x, mods_both$estimate.y)
 prop_spouse_own <- mean(mods_both$estimate.x/mods_both$estimate.y)
 ```
 
-@fig-mods-educ plots coefficients of university attendance in regressions of 33 spousal PGIs, controlling for own corresponding PGI and own year born. PGIs are normalized, so that effect sizes are in standard deviations. @fig-cor-spouse-own plots these effect sizes against the coefficients of university attendance on the subject's *own* corresponding PGI. There is a large positive correlation ($\rho$ = `r cor_spouse_own`). So, assortative mating between education and spousal PGIs very accurately predicts the genes-SES gradient. On average, the effect size on spouse's PGI is `r pct(prop_spouse_own)` of the effect size on own PGI.
+@fig-mods-educ plots coefficients of university attendance in regressions of 33 spousal PGIs, controlling for own corresponding PGI and own year born. PGIs are normalized, so that effect sizes are in standard deviations. There is a large positive correlation between these coefficients, and coefficients of university attendance on the subject's *own* corresponding PGI ($\rho$ = `r cor_spouse_own`). So, assortative mating between education and spousal PGIs very accurately predicts the genes-SES gradient. On average, the effect size on spouse's PGI is `r pct(prop_spouse_own)` of the effect size on own PGI.
 
 ```{r}
 #| label: fig-mods-educ
@@ -253,20 +248,28 @@ plot_coefs(mods_educ, xlab = "Effect of university attendance")
 ```
 
 ```{r}
-#| label: fig-cor-spouse-own
-#| fig-cap: "Effects of university attendance on own PGI and spouse PGI for 33 PGIs. Controls: dummy variables for own year born; for spouse PGI, own PGI." 
-mods_both |> 
-  ggplot(aes(estimate.x, estimate.y)) + 
-    geom_point(color = "steelblue4") +
-    geom_hline(yintercept = 0, linetype = 2) + 
-    geom_vline(xintercept = 0, linetype = 2) + 
-    labs(x = "Effect on spouse PGI", y = "Effect on own PGI")
+#| label: calc-mods-own-bo
 
+regress_own_bo <- function (score) {
+  formula <- Formula::as.Formula(
+    sprintf("%s_resid.x ~ birth_order.x | YOB.x + n_sibs.x", score)
+    )
+  
+  mod <- fixest::feols(formula, data = mf_pairs_bo, notes = FALSE, 
+                       cluster = ~ couple_id)
+  broom::tidy(mod) |> 
+    dplyr::filter(term == "birth_order.x")
+}
+
+mods_own_bo <- map_dfr(score_names, regress_own_bo, .id = "dep.var")
+stopifnot(all(mods_own_bo$p.value > 0.1/33))
+stopifnot(sum(mods_own_bo$p.value < 0.05) == 2)
+stopifnot(all(abs(mods_own_bo$estimate) < 0.02))
 ```
 
-*Regress own birth order against traits. Control for own YOB, total number of siblings, parents' age at birth. Add controls for education & other mediators. Calculate percent of BO effect explained. Show that birth order systematically predicts same direction as education (non-parametric test across 33?)*
+These effects could be explained by pure genetic assortative mating (GAM). Partners might match on phenotypes which predict PGIs, e.g. intelligence for educational attainment PGIs, with socio-economic status playing no independent role. To demonstrate SGAM, we use birth order as an environmental shock to SES. Birth order is known to predict life outcomes including education and income [@black2011older; @booth2009birth; @Lindahl_2008]. At the same time, among sibling pairs, birth order is independent of genetic variation, due to the "lottery of meiosis". In the UK Biobank sample, birth order does not predict any of our 33 PGIs at $p$ \< 0.10/33.[^2]
 
-These effects could be explained by pure genetic assortative mating (GAM). Partners might match on phenotypes which predict PGIs, e.g. intelligence for educational attainment PGIs, with socio-economic status playing no independent role. To demonstrate SGAM, we use birth order as an environmental shock to SES. Birth order is known to predict life outcomes including education and income; at the same time, among sibling pairs, birth order is independent of genetic variation, due to the "lottery of meiosis". In the UK Biobank sample, birth order does not predict any of our 33 PGIs \[XXX check\].
+[^2]: Two scores are significant at *p* \< 0.05. No effect sizes are greater than 0.02 standard deviations.
 
 ```{r}
 #| label: calc-mods-bo
@@ -343,9 +346,7 @@ mods_first_med$mediated.effect <- mods_first_med$estimate.1st *
 #| fig-subcap: true
 #| layout-nrow: 2
 
-
 plot_coefs(mods_bo, xlab = "Effect of birth order")
-
 
 mods_first_med |> 
   filter(
@@ -367,19 +368,53 @@ mods_first_med |>
 
 @fig-mods-bo (a) shows coefficients of birth order in regressions of spouse PGIs. We control for number of siblings, since couples who have more children may genetically differ. We also control for parents' age at birth, which correlates with birth order but typically has an opposite-signed effect. Birth order is significant at the 5% level for several physical polygenic scores as well as caffeine and alcohol use. However, no coefficients are significant at 0.05/33 after correction for multiple testing, probably because the effect of birth order is relatively small. Nevertheless, across PGIs, coefficients on birth order are strongly negatively correlated with coefficients on university attendance from the previous regression ($\rho$ =`r cor_bo_educ`). This fits the hypothesis that higher birth order siblings have characteristics which are less attractive in marriage markets.
 
-Next, we add mediators to the birth order regression. These include university attendance, a measure of socio-economic status, and four non-SES mediators (IQ, height, self-reported health and body mass index). (XXX need first stage regs in appx) All these mediators are significantly predicted by birth order. @fig-mods-bo (b) shows the percent of the birth order effect that is mediated by university attendance, for PGIs where university attendance is significant at $p$ \< 0.05/33. This is calculated as
+Next, we add mediators to the birth order regression. These include university attendance, which is a measure of socio-economic status, and four non-SES mediators (IQ, height, self-reported health and body mass index). All these mediators are significantly predicted by birth order. @fig-mods-bo (b) shows the percent of the birth order effect that is mediated by university attendance, for PGIs where university attendance is significant at $p$ \< 0.05/33. This is calculated as
 
 $$
 \frac{\textrm{Coef. of birth order on university}\times\textrm{coef. of university on PGI}}{\textrm{Coef. of birth order on PGI}}
 $$
 
-where the coefficient of university on PGI is estimated controlling for birth order. In particular, university attendance is a significant mediator of the birth order effect on spousal PGIs for education.
+where the coefficient of university on PGI is estimated controlling for birth order and the other mediators. In particular, university attendance is a significant mediator of the birth order effect on spousal PGIs for education.
 
 # Discussion
 
 SGAM has important implications. For *statistical genetics*, SGAM leads to gene-environment correlation (rGE). Children of couples who mate according to SGAM will inherit both genetic variants biologically, and SES socially. This is like how cross-trait genetic assortative mating leads to genetic variants for different traits being correlated in the population. rGE from SGAM can arise in a single generation, meaning that it probably won't be captured by principal components of genetic data (which are commonly used to control for population stratification). As is well known, rGE is a potential confound for genetic analyses which fail to control for the environment, and equally for analyses of environmental effects which don't control for genetics.
 
-Specifically, SGAM leads to a genes-SES gradient, in which different genetic variants are associated with SES. Scores on many PGIs are associated with SES among UK Biobank respondents. The best known are PGIs for educational attainment, but we also see associations with several PGIs for health outcomes \[XXX say more: which\]. The leading explanation for the genes-SES gradient relies on labour markets. People with variants which predict high earnings will achieve higher SES, and will pass both genes and their SES to children. In this mechanism, causality goes from genetics to SES. It also relies on some degree of "meritocracy" or openness in labour markets. Indeed the heritability of SES increased after the fall of communism in Estonia, probably because SES became more determined by factors under genetic control \[XXX cite\].
+```{r}
+#| label: calc-mods-own-income
+
+drake::loadd(famhist)
+drake::loadd(resid_scores)
+famhist <- left_join(famhist, resid_scores, by = "f.eid")
+
+regress_income <- function (score) {
+  formula <- Formula::as.Formula(
+               sprintf("%s_resid ~ factor(income_cat)| YOB", score)
+             )
+  mod <- fixest::feols(formula, data = famhist, notes = FALSE)
+  
+  stats <- fixest::fitstat(mod, c("wf.p", "wr2"))
+  data.frame(
+    p.value  = stats$wf.p, 
+    r2       = stats$wr2, 
+    estimate = coef(mod)[["factor(income_cat)5"]]
+  )
+}
+
+mods_own_income <- map_dfr(score_names, regress_income, .id = "dep.var")
+
+n_sig_income <- sum(mods_own_income$p.value < 0.05/33)
+
+big <- abs(mods_own_income$estimate) > 0.1 
+scores_large_income <- mods_own_income$dep.var[big]
+
+```
+
+Specifically, SGAM leads to a genes-SES gradient, in which different genetic variants are associated with SES. Among the entire UK Biobank sample, `r n_sig_income` own PGIs are significantly associated with income at $p$ \< 0.05/33. This includes PGIs for educational attainment, but also PGIs for health outcomes, body phenotypes and behaviours. `r length(scores_large_income)` scores show effect sizes of more than 0.1 standard deviations for the difference between the highest and lowest income category.[^3]
+
+[^3]: Controlling for year of birth. Scores: `r paste(scores_large_income, collapse = ", ")` .
+
+The leading explanation for the genes-SES gradient relies on labour markets. People with variants which predict high earnings will achieve higher SES, and will pass both genes and their SES to children. In this mechanism, causality goes from genetics to SES. It also relies on some degree of "meritocracy" or openness in labour markets. Indeed the heritability of SES increased after the fall of communism in Estonia, probably because SES became more determined by factors under genetic control [@Rimfeld_2018].
 
 By contrast, SGAM works via assortative mating in marriage markets. Widespread meritocracy is historically recent: in most historical societies, status was determined at birth and was hard to alter. Assortative mating, on the other hand, is a historically widespread and may be a human universal. So, unlike the "labour market" explanation, SGAM predicts that genes-SES gradients should exist in pre-modern societies. This remains to be tested using ancient DNA data. Note that the phenotypes considered advantageous in marriage markets are likely to vary across societies, time periods and cultures. As a result, we may observe *different* genetic variants being associated with SES in different times and places.
 
@@ -387,10 +422,10 @@ Under SGAM, there is two-way causality between genes and SES. Environmental shoc
 
 Also, under SGAM, the strength of the genes-SES association, as well as the variance of income and wealth, vary according to social institutions. In particular, the correlation between genes and SES is higher in societies where SES is more (socially) heritable. (XXX and is SES variance also higher?) Genetic explanations of social inequality are often thought of fatalistically. But according to SGAM, policies like redistributive taxation or mass public education may affect the distribution not only of SES variables, but even of genetic variants themselves. The catch is that this is a long-run process, playing out over multiple generations. Clean comparisons of genes-SES gradients across societies (i.e. tests of "rGE x E") are difficult, but are an important direction for future research.
 
-SGAM could also drive gene-culture coevolution. If high-status individuals have greater fitness (as is presumed true in most historical societies XXX), then genes associated with high SES via SGAM could spread within a society. If standards of attractiveness vary across societies, this might lead to genetic differences. In this context, it is interesting that regions of the genome associated with visible physical differences vary more between ethnic groups than other regions (XXX cite). We speculate that SGAM could play a role in explaining this finding.
+SGAM could also drive *gene-culture coevolution*. If high-status individuals have greater fitness, as is presumed true in most historical societies [@hopcroft2006sex], then genes associated with high SES via SGAM could spread within a society. If standards of attractiveness vary across societies, this might lead to genetic differences. In this context, it is interesting that regions of the genome associated with visible physical differences vary more between ethnic groups than other regions (XXX trying to find this cite). We speculate that SGAM could play a role in explaining this finding.
 
-The broadest message of SGAM is that genetic variation is a social outcome. DNA affects humans by biological mechanisms: from the manufacture of RNA and then of proteins, to the effect of proteins on the human body, to resulting changes in physiology, psychology and behaviour. But if we step back and ask where DNA comes from, the answer is always a particular set of social institutions. One can even think of genetic variation as a resource, traded and competed for in marriage markets by individuals and lineages. That gives a good reason to be sceptical of mapping genes on to a dichotomy between nature and nurture, or nature and society.[^2] It also provides more impetus to pursue the integration of genetics and the social sciences, as an equal partnership between both sides.
+The broadest message of SGAM is that genetic variation is a social outcome. DNA affects humans by biological mechanisms: from the manufacture of RNA and then of proteins, to the effect of proteins on the human body, to resulting changes in physiology, psychology and behaviour. But if we step back and ask where DNA comes from, the answer is always a particular set of social institutions. One can even think of genetic variation as a resource, traded and competed for in marriage markets by individuals and lineages. That gives a good reason to be sceptical of mapping genes on to a dichotomy between nature and nurture, or nature and society.[^4] It also provides more impetus to pursue the integration of genetics and the social sciences, as an equal partnership between both sides.
 
-[^2]: This is in addition to other reasons, like the existence of gene-environment interactions.
+[^4]: This is in addition to other reasons, like the existence of gene-environment interactions.
 
 ## 
