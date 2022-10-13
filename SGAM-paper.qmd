@@ -15,7 +15,9 @@ bibliography: bibliography.bib
 
 *Possibly extend model to include fertility and evolution.*
 
+
 Humans mate assortatively on both genetics and phenotype. This has important consequences for social structure and genetic architecture. Assortative mating on income, wealth or education can increase inequality [@fernandez2001sorting; @fernandez2005love; @eika2019educational; @chiappori2018marriage]. Genetic assortative mating (GAM) violates the assumptions of some models in statistical genetics (XXX which?), meaning that researchers may need to take account of GAM. Cross-trait assortative mating, where people with one trait match to partners with a different trait, can lead the traits to become associated in the population.
+
 
 @abch2022 introduce Social Genetic Assortative Mating (SGAM). Under SGAM, partners with a socially defined trait, such as socio-economic status (SES), match partners with certain genetic variants. This could happen if SES is valued in marriage markets, and if other valued features, like intelligence or physical attractiveness, are partly under genetic control. SGAM has important consequences for social structure, genetic statistics, and genetic architecture. It induces a correlation between SES and genetics -- the so-called "genes-SES gradient". Under SGAM, environmental shocks to a person's SES are reflected, via partner choice, in the genetics of their descendants. And the size of the genes-SES gradient depends upon social institutions.
 
