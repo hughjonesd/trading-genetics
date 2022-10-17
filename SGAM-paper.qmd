@@ -11,17 +11,83 @@ execute:
 bibliography: bibliography.bib
 ---
 
+<!--# TODO How about we take the regressions and plug them into the model -->
+
+<!--# Assume a reasonable value for theta; back out a from the observed correlation between education and each spousal PGI; -->
+
+<!--# calculate the long-run correlation; compare it to the observed sigma -->
+
+<!--# we may need to take account of error in measured PGIs -->
+
 ## Introduction
 
 *Possibly extend model to include fertility and evolution.*
 
+Humans mate assortatively on both genetics and phenotype. This has important consequences for social structure and genetic architecture. Assortative mating on income, wealth or education can increase inequality [@fernandez2001sorting; @fernandez2005love; @eika2019educational; @chiappori2018marriage]. Genetic assortative mating (GAM) violates the assumptions of standard models in statistical genetics (XXX which?). Cross-trait assortative mating, where people with one trait match to partners with a different trait, can lead the traits to become associated in the population [@Beauchamp_2010; @Sundet_2005; @border2022cross].
 
-Humans mate assortatively on both genetics and phenotype. This has important consequences for social structure and genetic architecture. Assortative mating on income, wealth or education can increase inequality [@fernandez2001sorting; @fernandez2005love; @eika2019educational; @chiappori2018marriage]. Genetic assortative mating (GAM) violates the assumptions of some models in statistical genetics (XXX which?), meaning that researchers may need to take account of GAM. Cross-trait assortative mating, where people with one trait match to partners with a different trait, can lead the traits to become associated in the population.
+@abch2022 introduce Social Genetic Assortative Mating (SGAM). Under SGAM, partners with a socially defined trait, such as socio-economic status (SES), match partners with certain genetic variants. This could happen if SES is valued in marriage markets, and if other valued features, like intelligence or physical attractiveness, are partly under genetic control. SGAM has important consequences for statistical genetics, social structure, and genetic architecture. When SES is inherited, SGAM induces a correlation between SES and genetics -- the so-called "genes-SES gradient". Under SGAM, environmental shocks to a person's SES are reflected, via partner choice, in the genetics of their descendants; also, the size of the genes-SES gradient depends upon social institutions. SGAM can be a mechanism for the long-run transmission of social inequality.
 
+This paper tests for SGAM for education, an important measure of SES, against 33 genetic traits captured in polygenic indices (PGIs). We show that more educated people match with partners who are systematically different on many PGIs. Using birth order as an environmental shock to SES, we provide evidence that this is not purely due to genetic assortative mating. Lastly we discuss the implications of SGAM in detail.
 
-@abch2022 introduce Social Genetic Assortative Mating (SGAM). Under SGAM, partners with a socially defined trait, such as socio-economic status (SES), match partners with certain genetic variants. This could happen if SES is valued in marriage markets, and if other valued features, like intelligence or physical attractiveness, are partly under genetic control. SGAM has important consequences for social structure, genetic statistics, and genetic architecture. It induces a correlation between SES and genetics -- the so-called "genes-SES gradient". Under SGAM, environmental shocks to a person's SES are reflected, via partner choice, in the genetics of their descendants. And the size of the genes-SES gradient depends upon social institutions.
+# Theory
 
-This paper tests for SGAM on education, an important measure of SES, and across 33 genetic traits captured in polygenic indices (PGIs). We show that more educated people match with partners who are systematically different on many PGIs. Using birth order as an environmental shock to SES, we provide evidence that this is not due to purely genetic assortative mating. Lastly we discuss the implications of SGAM in detail.
+Population members have two characteristics: $x=( x_{1},x_{2})$, drawn from a normal distribution
+
+$$
+\mathcal{N}
+\left( 
+\begin{array}{c}
+0 \\ 
+0%
+\end{array}%
+,%
+\begin{array}{cc}
+s^{2} & \sigma \\ 
+\sigma & S^{2}%
+\end{array}%
+\right).
+$$
+
+where $x_1$ is a genetic measure, and $x_2$ is a measure of SES. They mate assortatively on attractiveness, given by $i(x) =ax_{1} + (1-a) x_{2}$ where $a \in [0, 1]$ reflects the relative importance of genetics to SES. Individuals match with a partner randomly selected from among the same quantile of the distribution of $i(x)$ as themselves. All couples have the same number of children. Children's characteristics are given by:
+
+```{=tex}
+\begin{eqnarray}
+x_{1}^{\prime } &=&\frac{\tau }{2}\left( x_{1}+y_{1}\right) +\varepsilon
+\label{Chil} \\
+x_{2}^{\prime } &=&\frac{\theta }{2}\left( x_{2}+y_{2}\right) +\eta 
+\nonumber
+\end{eqnarray}
+```
+where $x$ and $y$ are the child's parents, and $\varepsilon$ and $\eta$ are independent normal shocks with mean $0$ and variance $1$. Parameter $\tau \approx 1$ reflects genetic inheritance. We expect $\tau < 1$ due to stabilizing selection [@schmalhausen1949factors; @sanjak2018evidence]. Parameter $\theta \in [0, 1]$ reflects social inheritance of SES. Unlike $\tau$, it may vary between societies. $\theta$ is high when there is high intergenerational transmission of SES. Thus, $\theta$ captures social and economic institutions that affect this intergenerational transmission, such as inheritance taxation, public education or hereditary titles. We assume for now that a person's SES does not depend on their genetic endowment.
+
+***Claim**: under SGAM, if* $x_1$ *and* $x_2$ *are uncorrelated in the parents' generation, then they are positively correlated in the children's generation so long as* $0 < a < 1$*. The correlation is increasing in* $\theta$*.*
+
+***Proof**: @abch2022 Claim 4.*
+
+We now consider the asymptotic distribution of $x_1$ and $x_2$ when the matching process is repeated over many generations.
+
+***Proposition**: For* $\theta < 1$ *and* $\tau <1$*, the asymptotic distribution converges to a normal distribution with mean zero and covariance matrix*
+
+$$
+\mathbb{C}\left(\begin{array}{cc}
+x_1  \\
+x_2
+\end{array}
+\right)
+=
+\left(
+\begin{array}{cc}
+\bar{s}^{2} & \bar{\sigma} \\ 
+\bar{\sigma} & \bar{S}^{2}%
+\end{array}%
+\right) 
+$$
+
+*The asymptotic correlation between characteristics,* $corr = \bar{\sigma}/\bar{s}\bar{S}$*, is non-negative, positive for* $0 < a < 1$*, increasing in* $\theta$ *and increasing then decreasing in* $a$*.*
+
+***Proof**: @abch2022 Proposition 3.*
+
+The model can be extended to allow different $a$ parameters for men and women, direct dependency of SES on genetics ("meritocracy"), non-normal distributions of $x_1$ and $x_2$, and a nonlinear attractiveness function $i(\cdot)$.
 
 # Data
 
@@ -33,12 +99,12 @@ This paper tests for SGAM on education, an important measure of SES, and across 
 library(dplyr)
 library(ggplot2)
 library(purrr)
-library(scales) 
 library(forcats)
 requireNamespace("Formula", quietly = TRUE)
 requireNamespace("fixest", quietly = TRUE)
 requireNamespace("drake", quietly = TRUE)
 requireNamespace("patchwork", quietly = TRUE)
+requireNamespace("scales", quietly = TRUE)
 
 set.seed(27101975)
 
@@ -153,9 +219,11 @@ theme_update(
 drake::loadd(mf_pairs)
 drake::loadd(mf_pairs_twice)
 drake::loadd(score_names)
-
 names(score_names) <- pretty_names(score_names)
 
+drake::loadd(van_alten_weights)
+mf_pairs_twice <- mf_pairs_twice |> left_join(van_alten_weights, 
+                                             by = c("eid.x" = "f.eid"))
 # this helps when running regressions, to avoid coefficients named
 # "university.xTRUE":
 mf_pairs_twice$university.x <- as.numeric(mf_pairs_twice$university.x)
@@ -199,7 +267,7 @@ We use respondents from UK Biobank [@bycroft2018uk]. UK Biobank does not include
 
 We also eliminate all pairs where either spouse appeared in more than one pair. This leaves a total of `r pretty(nrow(mf_pairs))` pairs. We validate our pairs by using genetic children who also happen to be UK Biobank respondents. Among our spouse pairs, `r n_one_has_kid` have a genetic child of at least one partner in the sample. `r pct(n_both_same_kid/n_one_has_kid)` of these are the genetic child of *both* partners. This is a lower bound, since some of the remaining pairs may also have a shared genetic child not in the sample. For comparison, 11% of families with dependent children included a stepchild in England and Wales in 2011 [@ons2011stepfamilies].
 
-For our analyses we use pairs twice, once for each focal member. We cluster standard errors by pair. For analyses on birth order, we use focal members with between 1 and 5 siblings.
+For our analyses we use pairs twice, once for each focal member. We cluster standard errors by pair. For analyses on birth order, we use focal members with between 1 and 5 siblings. All regressions are weighted using weights from @vanalten2022reweighting, which aim to adjust for non-response bias and match the UK Biobank sampling frame.
 
 # Results
 
@@ -210,7 +278,8 @@ regress_educ <- function (score) {
                sprintf("%s_resid.y ~ university.x + %s_resid.x | YOB.x",
                        score, score)
              )
-  mod <- fixest::feols(formula, data = mf_pairs_reg, notes = FALSE,
+  mod <- fixest::feols(formula, data = mf_pairs_reg, notes = FALSE, 
+                       weights = ~ weights,
                        cluster = ~ couple_id)
   
   broom::tidy(mod, conf.int = TRUE) |> 
@@ -224,6 +293,7 @@ regress_own_educ <- function (score) {
                sprintf("%s_resid.x ~ university.x | YOB.x", score)
              )
   mod <- fixest::feols(formula, data = mf_pairs_reg, notes = FALSE,
+                       weights = ~ weights,
                        cluster = ~ couple_id)
   
   # conf.int = TRUE leads to empty dataset
@@ -234,12 +304,13 @@ regress_own_educ <- function (score) {
 
 mods_own_educ <- map_dfr(score_names, regress_own_educ, .id = "dep.var")
 
-mods_both <- left_join(mods_educ, mods_own_educ, by = "dep.var")
-cor_spouse_own <- cor(mods_both$estimate.x, mods_both$estimate.y)
-prop_spouse_own <- mean(mods_both$estimate.x/mods_both$estimate.y)
+mods_both <- left_join(mods_educ, mods_own_educ, by = "dep.var", 
+                       suffix = c(".spouse", ".own"))
+cor_spouse_own <- cor(mods_both$estimate.own, mods_both$estimate.spouse)
+beta_spouse_own <- coef(lm(mods_both$estimate.spouse ~ mods_both$estimate.own))[2]
 ```
 
-@fig-mods-educ plots coefficients of university attendance in regressions of 33 spousal PGIs, controlling for own corresponding PGI and own year born. PGIs are normalized, so that effect sizes are in standard deviations. There is a large positive correlation between these coefficients, and coefficients of university attendance on the subject's *own* corresponding PGI ($\rho$ = `r cor_spouse_own`). So, assortative mating between education and spousal PGIs very accurately predicts the genes-SES gradient. On average, the effect size on spouse's PGI is `r pct(prop_spouse_own)` of the effect size on own PGI.
+@fig-mods-educ plots coefficients of university attendance in regressions of 33 spousal PGIs, controlling for own corresponding PGI and own year born. PGIs are normalized, so that effect sizes are in standard deviations. There is a very large positive correlation between these coefficients, and coefficients of university attendance on the subject's *own* corresponding PGI ($\rho$ = `r cor_spouse_own`). So, assortative mating between education and spousal PGIs very accurately predicts the genes-SES gradient. Effect sizes are also quite similar: in a regression of spouse effect size on own effect size across the PGIs, the slope is `r beta_spouse_own`.
 
 ```{r}
 #| label: fig-mods-educ
@@ -258,6 +329,7 @@ regress_own_bo <- function (score) {
     )
   
   mod <- fixest::feols(formula, data = mf_pairs_bo, notes = FALSE, 
+                       weights = ~ weights,
                        cluster = ~ couple_id)
   broom::tidy(mod) |> 
     dplyr::filter(term == "birth_order.x")
@@ -266,23 +338,24 @@ regress_own_bo <- function (score) {
 mods_own_bo <- map_dfr(score_names, regress_own_bo, .id = "dep.var")
 stopifnot(all(mods_own_bo$p.value > 0.1/33))
 stopifnot(sum(mods_own_bo$p.value < 0.05) == 2)
-stopifnot(all(abs(mods_own_bo$estimate) < 0.02))
+stopifnot(all(abs(mods_own_bo$estimate) < 0.03))
 ```
 
-These effects could be explained by pure genetic assortative mating (GAM). Partners might match on phenotypes which predict PGIs, e.g. intelligence for educational attainment PGIs, with socio-economic status playing no independent role. To demonstrate SGAM, we use birth order as an environmental shock to SES. Birth order is known to predict life outcomes including education and income [@black2011older; @booth2009birth; @Lindahl_2008]. At the same time, among sibling pairs, birth order is independent of genetic variation, due to the "lottery of meiosis". In the UK Biobank sample, birth order does not predict any of our 33 PGIs at $p$ \< 0.10/33.[^2]
+These effects could be explained by pure genetic assortative mating (GAM). Partners might match on phenotypes which predict PGIs, e.g. intelligence for educational attainment PGIs, with socio-economic status playing no independent role. To demonstrate SGAM, we use birth order as an environmental shock to SES. Birth order is known to predict life outcomes including education and income [@black2011older; @booth2009birth; @Lindahl_2008]. At the same time, among sibling pairs, birth order is independent of genetic variation, due to the "lottery of meiosis". In the UK Biobank sample, a respondent's birth order does not predict any of their own 33 PGIs at $p$ \< 0.10/33.[^2]
 
-[^2]: Two scores are significant at *p* \< 0.05. No effect sizes are greater than 0.02 standard deviations.
+[^2]: Two scores are significant at *p* \< 0.05. No effect sizes are greater than 0.03 standard deviations.
 
 ```{r}
 #| label: calc-mods-bo
 
-regress_bo <- function (score) {
+regress_bo <- function (score, data = mf_pairs_bo) {
   formula <- Formula::as.Formula(
     sprintf("%s_resid.y ~ birth_order.x + par_age_birth.x + %s_resid.x | 
             YOB.x + n_sibs.x", score, score)
     )
   
-  mod <- fixest::feols(formula, data = mf_pairs_bo, notes = FALSE, 
+  mod <- fixest::feols(formula, data = data, notes = FALSE,
+                       weights = ~ weights,
                        cluster = ~ couple_id)
   broom::tidy(mod, conf.int = TRUE) |> 
     dplyr::filter(term == "birth_order.x")
@@ -297,6 +370,60 @@ mods_bo_own_educ <- left_join(mods_bo, mods_own_educ, by = "dep.var")
 cor_bo_own_educ <- cor(mods_bo_own_educ$estimate.x,
                        mods_bo_own_educ$estimate.y)
 
+
+
+```
+
+```{r}
+#| label: calc-boot-cor
+#| cache: true
+
+
+# Romano-Wolf stepwise testing. Controls FWER 
+# (prob of falsely rejecting at least one null)
+# This takes account of dependence between the hypotheses.
+# However, it still fails to reject any of the 33 nulls.
+#
+# Copyright (C) 2011-2015 Gray Calhoun; MIT license
+# From https://github.com/grayclhn/oosanalysis-R-library
+# 
+# stepm <- function(teststatistics, bootmatrix, lefttail, righttail) {
+#   nstatistics <- length(teststatistics)
+#   rejected <- rep(FALSE, nstatistics)
+#   nrejected.endofloop <- 0
+#   repeat {
+#     nrejected.topofloop <- nrejected.endofloop
+#     bootmax <- apply(bootmatrix[!rejected,, drop = FALSE], 2, max)
+#     bootmin <- apply(bootmatrix[!rejected,, drop = FALSE], 2, min)
+#     rightcrit <- if (is.na(righttail)) Inf else 
+#                    quantile(bootmax, 1 - righttail)
+#     leftcrit <- if (is.na(lefttail)) -Inf else 
+#                   quantile(bootmin[bootmax <= rightcrit], 
+#                            lefttail / (1 - righttail))
+#     rejected[teststatistics < leftcrit | teststatistics > rightcrit] <- TRUE
+#     nrejected.endofloop <- sum(rejected)
+#     if (nrejected.endofloop == nrejected.topofloop ||
+#         nrejected.endofloop >= nstatistics) break
+#   }
+#   return(list(leftcrit = leftcrit, rightcrit = rightcrit, 
+#               rejected = rejected))
+# }
+
+R <- 100
+boot_cor <- replicate(R, {
+  boot_sample <- mf_pairs_bo |> slice_sample(prop = 1, replace = TRUE)
+  boot_mods_bo <- map_dfr(score_names, regress_bo, data = boot_sample, 
+                          .id = "dep.var")
+  cor(boot_mods_bo$estimate, mods_educ$estimate)
+})
+
+boot_cor_ci <- quantile(boot_cor, c(0.025, 0.975))
+
+```
+
+```{r}
+#| label: calc-mods-med
+
 regress_med <- function (score, controls) {
   controls_string <- paste(controls, collapse = " + ")
   formula <- Formula::as.Formula(
@@ -305,6 +432,7 @@ regress_med <- function (score, controls) {
     )
   
   mod <- fixest::feols(formula, data = mf_pairs_bo, notes = FALSE,
+                       weights = ~ weights,
                        cluster = ~ couple_id)
   broom::tidy(mod, conf.int = TRUE) |> 
     dplyr::filter(term %in% c("birth_order.x", controls))
@@ -323,6 +451,7 @@ regress_first_stage <- function (dep.var) {
     )
   
   mod <- fixest::feols(formula, data = mf_pairs_bo, notes = FALSE,
+                       weights = ~ weights,
                        cluster = ~ couple_id)
   broom::tidy(mod, conf.int = TRUE) |> 
     dplyr::filter(term == "birth_order.x")
@@ -368,15 +497,15 @@ mods_first_med |>
 
 ```
 
-@fig-mods-bo (a) shows coefficients of birth order in regressions of spouse PGIs. We control for number of siblings, since couples who have more children may genetically differ. We also control for parents' age at birth, which correlates with birth order but typically has an opposite-signed effect. Birth order is significant at the 5% level for several physical polygenic scores as well as caffeine and alcohol use. However, no coefficients are significant at 0.05/33 after correction for multiple testing, probably because the effect of birth order is relatively small. Nevertheless, across PGIs, coefficients on birth order are strongly negatively correlated with coefficients on university attendance from the previous regression ($\rho$ =`r cor_bo_educ`). This fits the hypothesis that higher birth order siblings have characteristics which are less attractive in marriage markets.
+@fig-mods-bo (a) shows coefficients of birth order in regressions of spouse PGIs. We control for number of siblings, since couples who have more children may genetically differ. We also control for parents' age at birth, which correlates with birth order but typically has an opposite-signed effect. Birth order is significant at the 5% level for PGIs for waist circumference, waist-hip ratio and educational attainment (EA3). However, no coefficients are significant at Bonferroni-corrected $p$ = 0.05/33, probably because the effect of birth order is relatively small. The Bonferroni correction is likely to be conservative here since p values are positively correlated. Nevertheless, across PGIs, coefficients on birth order are strongly negatively correlated with coefficients on university attendance from the previous regression ($\rho$ =`r cor_bo_educ`, 95% confidence interval from 100 bootstraps `r boot_cor_ci[1]` to `r boot_cor_ci[2]` ). This fits the hypothesis that siblings later in the birth order have characteristics which are less attractive in marriage markets, while university attendance is an attractive characteristic. If the true birth order coefficients were zero, we would expect their estimated values to be uncorrelated with the education coefficients.
 
-Next, we add mediators to the birth order regression. These include university attendance, which is a measure of socio-economic status, and four non-SES mediators (IQ, height, self-reported health and body mass index). All these mediators are significantly predicted by birth order. @fig-mods-bo (b) shows the percent of the birth order effect that is mediated by university attendance, for PGIs where university attendance is significant at $p$ \< 0.05/33. This is calculated as
+Next, we add mediators to the birth order regression. These include university attendance, which is a measure of socio-economic status, and four non-SES mediators (IQ, height, self-reported health and body mass index). All these mediators are significantly predicted by birth order.The proportion of the birth order effect that is mediated by university attendance can be calculated as
 
 $$
-\frac{\textrm{Coef. of birth order on university}\times\textrm{coef. of university on PGI}}{\textrm{Coef. of birth order on PGI}}
+\frac{\textrm{Coef. of birth order on university}\times\textrm{coef. of university on spouse PGI}}{\textrm{Coef. of birth order on spouse PGI}}
 $$
 
-where the coefficient of university on PGI is estimated controlling for birth order and the other mediators. In particular, university attendance is a significant mediator of the birth order effect on spousal PGIs for education.
+where the coefficient of university on PGI is estimated controlling for birth order and the other mediators. @fig-mods-bo (b) shows this proportion for PGIs where university attendance predicts spouse PGI at $p$ \< 0.05/33. In particular, university attendance is a significant mediator of the birth order effect on spousal PGIs for education.
 
 # Discussion
 
@@ -385,7 +514,7 @@ SGAM has important implications. For *statistical genetics*, SGAM leads to gene-
 ```{r}
 #| label: calc-mods-own-income
 
-drake::loadd(famhist)
+drake::loadd(famhist) # already includes weights
 drake::loadd(resid_scores)
 famhist <- left_join(famhist, resid_scores, by = "f.eid")
 
@@ -393,7 +522,8 @@ regress_income <- function (score) {
   formula <- Formula::as.Formula(
                sprintf("%s_resid ~ factor(income_cat)| YOB", score)
              )
-  mod <- fixest::feols(formula, data = famhist, notes = FALSE)
+  mod <- fixest::feols(formula, data = famhist, 
+                       weights = ~ weights, notes = FALSE)
   
   stats <- fixest::fitstat(mod, c("wf.p", "wr2"))
   data.frame(
@@ -418,11 +548,11 @@ Specifically, SGAM leads to a genes-SES gradient, in which different genetic var
 
 The leading explanation for the genes-SES gradient relies on labour markets. People with variants which predict high earnings will achieve higher SES, and will pass both genes and their SES to children. In this mechanism, causality goes from genetics to SES. It also relies on some degree of "meritocracy" or openness in labour markets. Indeed the heritability of SES increased after the fall of communism in Estonia, probably because SES became more determined by factors under genetic control [@Rimfeld_2018].
 
-By contrast, SGAM works via assortative mating in marriage markets. Widespread meritocracy is historically recent: in most historical societies, status was determined at birth and was hard to alter. Assortative mating, on the other hand, is a historically widespread and may be a human universal. So, unlike the "labour market" explanation, SGAM predicts that genes-SES gradients should exist in pre-modern societies. This remains to be tested using ancient DNA data. Note that the phenotypes considered advantageous in marriage markets are likely to vary across societies, time periods and cultures. As a result, we may observe *different* genetic variants being associated with SES in different times and places.
+By contrast, SGAM works via assortative mating in marriage markets. Widespread meritocracy is historically recent: in most historical societies, status was determined at birth and was hard to alter. Assortative mating, on the other hand, is a historically widespread and may be a human universal. So, unlike the "labour market" explanation, SGAM predicts that genes-SES gradients should exist in pre-modern societies. This remains to be tested using ancient DNA data. Note that the phenotypes considered advantageous in marriage markets are likely to vary across societies, time periods and cultures. As a result, we may see different genetic variants being associated with SES in different times and places.
 
 Under SGAM, there is two-way causality between genes and SES. Environmental shocks to a person's SES may be reflected, via the identity of their partner, in the genetics of their descendants. This provides a new mechanism underlying *persistent social inequality*. Over the long run, measures of SES like income, wealth and education are highly persistent -- more persistent than single-generation correlations between parents and children would lead us to expect [@clark2015intergenerational; @clark2021bell; @barone2021intergenerational; @de2020lineages]. One explanation, put forward by Clark and others, is that SES is a noisy measure of an underlying genetic factor preserved by inheritance and strong genetic assortative mating. SGAM could also increase persistence of SES, but with a difference: under SGAM, genetic variation is not exogenous to SES. Instead, it can be a mediator linking initial SES to genetic differences in subsequent generations (and *vice versa*, from genetic differences to subsequent SES).
 
-Also, under SGAM, the strength of the genes-SES association, as well as the variance of income and wealth, vary according to social institutions. In particular, the correlation between genes and SES is higher in societies where SES is more (socially) heritable. (XXX and is SES variance also higher?) Genetic explanations of social inequality are often thought of fatalistically. But according to SGAM, policies like redistributive taxation or mass public education may affect the distribution not only of SES variables, but even of genetic variants themselves. The catch is that this is a long-run process, playing out over multiple generations. Clean comparisons of genes-SES gradients across societies (i.e. tests of "rGE x E") are difficult, but are an important direction for future research.
+Also, under SGAM, the strength of the genes-SES association, as well as the population variance of SES, varies according to social institutions. In our model, the correlation between genes and SES is stronger in societies where SES is more (socially) heritable, i.e. where $\theta$ is higher. Genetic explanations of social inequality are often thought of fatalistically. But according to SGAM, policies like redistributive taxation or mass public education may affect the distribution not only of SES variables, but even of genetic variants themselves. The catch is that this is a long-run process, playing out over multiple generations. Clean comparisons of genes-SES gradients across societies (i.e. tests of "rGE x E") are difficult, but are an important direction for future research.
 
 SGAM could also drive *gene-culture coevolution*. If high-status individuals have greater fitness, as is presumed true in most historical societies [@hopcroft2006sex], then genes associated with high SES via SGAM could spread within a society. If standards of attractiveness vary across societies, this might lead to genetic differences. In this context, it is interesting that regions of the genome associated with visible physical differences vary more between ethnic groups than other regions (XXX trying to find this cite). We speculate that SGAM could play a role in explaining this finding.
 
@@ -430,4 +560,4 @@ The broadest message of SGAM is that genetic variation is a social outcome. DNA 
 
 [^4]: This is in addition to other reasons, like the existence of gene-environment interactions.
 
-## 
+## References
