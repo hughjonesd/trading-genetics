@@ -261,6 +261,8 @@ order effects for outcomes such as IQ. That makes me wonder if the analysis was 
 controlling for parental age helps? Discussing the lit on birth order effects
 will help here maybe.
 
+> DONE - some bits for Oana to do
+
 3. It is unclear to me how the empirical exercise maps to the SGAM theory. What is it that SGAM predicts that other theories don’t and why? Or is SGAM being compared to a random-mating baseline?
 
 > Right.
@@ -277,13 +279,21 @@ score; (2) SNP summary statistics estimated without using UKBB, so in different
 countries, reducing chance of social stratification as a confound; (3) control
 for 100+ PCS, further reducing social stratification; anything else?
 
-Cloninger, C. R., J. Rice, and T. Reich. 1979. “Multifactorial Inheritance with Cultural Transmission and Assortative Mating. II. A General Model of Combined Polygenic and Cultural Inheritance.” American Journal of Human Genetics 31 (2): 176–98.
+Cloninger, C. R., J. Rice, and T. Reich. 1979. “Multifactorial Inheritance with
+Cultural Transmission and Assortative Mating. II. A General Model of Combined
+Polygenic and Cultural Inheritance.” American Journal of Human Genetics 31 (2):
+176–98.
 
-Fisher, Ronald Aylmer. 1918. “The Correlation between Relatives on the Supposition of Mendelian Inheritance.” Transactions of the Royal Society of Edinburgh 52: 399–433.
+Fisher, Ronald Aylmer. 1918. “The Correlation between Relatives on the
+Supposition of Mendelian Inheritance.” Transactions of the Royal Society of
+Edinburgh 52: 399–433.
 
-Otto, Sarah P, Freddy B Christiansen, and Marcus W Feldman. 1995. “Genetic and Cultural Inheritance of Continuous Traits, Morrison Institute for Population and Resource Studies Working Paper No 64.”
+Otto, Sarah P, Freddy B Christiansen, and Marcus W Feldman. 1995. “Genetic and
+Cultural Inheritance of Continuous Traits, Morrison Institute for Population and
+Resource Studies Working Paper No 64.”
 
-Rao, D. C., N. E. Morton, and C. R. Cloninger. 1979. “Path Analysis under Generalized Assortative Mating. I. Theory.” Genetics Research 33 (2): 175–78.
+Rao, D. C., N. E. Morton, and C. R. Cloninger. 1979. “Path Analysis under
+Generalized Assortative Mating. I. Theory.” Genetics Research 33 (2): 175–78.
 
 
 ## Reviewer 3
@@ -309,6 +319,10 @@ expect that anything, such as birth order, which changed the phenotype would
 result in a match to a higher genotype value spouse. So I think the paper needs
 clarification on what the value added of the empirical exercise is?
 
+> Need to focus on the implications a bit more I tink, maybe in the last
+para of the intro: not just "what's new" but also why this has large implications
+for e.g. transmission of inequality. But we've tried that already....
+
 Formal Model. I appreciate the attempt to model a process - social-genetic
 assortative mating (SGAM) – that combines genetic and social transmission of
 social attributes. However, the model as described seems to assume direct
@@ -319,7 +333,9 @@ answer the question of the significance of the empirical demonstration. But I do
 not see any such demonstration in your tables.
 
 > No, that's not correct. We just don't measure all the phenotypes via which
-matching takes place. Clarify with a footnote or discussion.
+matching takes place. Clarify with a footnote or discussion. 
+
+> Could Pierre think about what happens if there's noise in the matching?
 
 Birth order and social outcomes. Table 1 in the paper shows remarkably strong
 birth order effects on social outcomes in the sample used by the authors (p.
@@ -350,6 +366,8 @@ the magnitudes found here?
 
 > I think we can argue that more recent findings are definitive. We can
 also compare our effect sizes to the literature.
+
+> DONE, and these are indeed large.
 
 Olneck, Michael R., and Bills, David B. "Family Configuration and Achievement:
 Effect of Birth Order and Family Size in a Sample of Brothers." Social
@@ -389,5 +407,7 @@ Can you do anything to give the reader more confidence in the validity of the ta
 
 > Table 10 indeed insignificant. Table 9, no, significant at 5%. Table 6
 insignificant but this is without the parental age controls. And in all these
-places the pattern of the results is the same
+places the pattern of the results is the same.
+
+> DONE - pushed robustness of basic result and mentioned github.
 

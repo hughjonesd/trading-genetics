@@ -66,7 +66,12 @@ marriage markets are highly inegalitarian, such that only SES matters. If $a =
 1$, marriage markets are economically egalitarian and only genetics matter. We
 expect realistic societies to fall between these extremes, with $0 < a < 1$.
 Then, both genes and SES matter to attractiveness, and as a result,
-social-genetic assortative mating (SGAM) takes place.
+social-genetic assortative mating (SGAM) takes place.[^not-direct]
+
+[^not-direct]: Note that we do not assume that people match *directly* on 
+genetics, which most observers agree would be unlikely. Instead we assume that
+genetics may contribute to an attractive phenotype, and that is what is matched
+on.
 
 Attractiveness $i$ is
 distributed $N(0,\sigma_{I}^{2})$, where

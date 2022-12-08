@@ -138,11 +138,11 @@ famhist$EA3 <- famhist$EA3_excl_23andMe_UK_resid
 
 mf_pairs_reg <- regression_subset(mf_pairs_twice)
 
-my_note <- "Robust standard errors are in parentheses."
+my_note <- "{stars}. Robust standard errors are in parentheses."
 
 # for p values
-# my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
-my_stars <- NULL
+my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
+# my_stars <- NULL
 
 # basic formulae
 fml_bo_psea <- list()
@@ -908,17 +908,30 @@ changes to the school leaving age [@Davies_2018].
 We use *birth order*. It is known that earlier-born children receive more
 parental care and have better life outcomes, including measures of SES such as
 educational attainment and occupational status [@Lindahl_2008; @booth2009birth;
-@black2011older]. On the other hand, all full siblings have the same *ex ante*
-expected genetic endowment from their parents, irrespective of their birth
-order. This is guaranteed by the biological mechanism of meiosis, which ensures
-that any gene is transmitted from either the mother or the father to the 
-child, with independent 50% probability [@mendel1865experiments;@lawlor2008mendelian].
-For example, siblings' expected polygenic score is equal to the mean of
-their parents' polygenic scores.[^6] We can therefore use birth order as a
-"shock" to social status. We put "shock" in quotes because we do not claim that birth
+@black2011older].[^literature] On the other hand, all full siblings have the
+same *ex ante* expected genetic endowment from their parents, irrespective of
+their birth order. This is guaranteed by the biological mechanism of meiosis,
+which ensures that any gene is transmitted from either the mother or the father
+to the child, with independent 50% probability
+[@mendel1865experiments;@lawlor2008mendelian]. For example, siblings' expected
+polygenic score is equal to the mean of their parents' polygenic scores.[^6] We
+can therefore use birth order as a "shock" to social status. We put "shock" in
+quotes because we do not claim that birth
 order is exogenous to all other variables. For example, it naturally correlates
 with parental age, and it may also correlate with household SES at the time of
 birth. We only claim that birth order is exogenous to genetic variation.
+
+[^literature]: Earlier work was ambiguous on the effects of birth order 
+[e.g. @hauser1985birth;@hanushek1992trade]. However, this work often used
+unrepresentative samples and/or did not control for family size or parental age.
+More recent work improves on this and shows clear birth order effects.
+@black2005more show substantial birth order effects in the whole Norwegian
+population, even in a family fixed-effects specification, and after controlling
+for mother's age. @booth2009birth examine UK families, controlling for family
+size and for parental age at birth, and show significant and substantial birth
+order effects on education. Some studies e.g. @black2005more, @de2010birth, use
+twin births or the gender mix of children as instruments for family size. They
+too typically find that birth order has large negative effects.
 
 [^6]: Although genetic variation is randomly assigned to children at
     birth, genetics and birth order could be dependent if parents'
@@ -928,13 +941,23 @@ birth. We only claim that birth order is exogenous to genetic variation.
     not genetic.
 
 Our main independent variable is respondents' birth order, i.e. their
-number of elder siblings plus one. For controls we use family size, i.e.
-respondents' total number of siblings including themselves; month of birth; age
-at interview; respondents' own PSEA; and their father's and/or mother's age
-at their birth (calculated from parent's current age, only available if
-the parent was still alive). For most regressions, we use only
+number of elder siblings plus one. Although birth order within a given family is
+independent of genetics, birth order in the whole sample might be correlated with
+other environmental and genetic factors. In particular, birth order naturally
+correlates with family size, i.e. the total number of siblings born, because
+e.g. third-born children must be in a family of at least three siblings. It
+also correlates with parental age, which may affect the income and
+maturity of the parents. To control for family size, we use dummies for
+each possible value of family size.  In most regressions, we use only
 respondents with between 1 and 5 siblings, i.e. with a family size of
-2-6. 
+2-6: beyond that, estimation would get noisy because of small cell sizes.
+To control for parental age, we use father's and/or mother's age at the
+respondent's birth. This is calculated from the relevant
+parent's current age, which is only available if the parent was still alive.
+XXX comment on sample selection. For other controls we use respondent's month 
+of birth; age at interview; and own PSEA. Our claim is that controlling for
+these variables, birth order is independent of genetic variation. (XXX Oana 
+could talk about this aspect in model section?)
 
 
 ## Decomposing the birth order effect on spouse genetics
@@ -1672,10 +1695,18 @@ correlated environments. (That is, effect sizes of individual SNPs may be
 confounded in the underlying statistical analyses used to create polygenic
 scores.) It is conceivable that birth order could only affect the noise
 component of spouse PSEA, rather than the component which is truly causal for
-education. We think this is unlikely, because it is hard to imagine an
-assortative mating process by which high-SES people would match spouses with
-only genetic variants that correlate with, but do not cause, higher educational
-attainment.
+education. We think this is unlikely for several reasons. First, our polygenic 
+scores were calculated using per-SNP summary statistics estimated on non-UK
+populations. So they will only include noise that correlates with social
+environment insofar as this correlation holds across different countries.
+Second, we have residualized PSEA on 100 principal components of the genetic
+data, a standard technique in genetics to avoid confounding causal effects with
+population stratification. Third, a polygenic score estimated from a
+within-sibling design, which captures only true causal effects of individual
+SNPs, correlates at more than 0.9 with our score. (XXX Abdel.) Lastly, it is 
+hard to imagine an assortative mating process where high-SES people match
+spouses who have genetic variants that correlate with educational attainment,
+but not genetic variants that cause it.
 
 Our main specification is linear in birth order. Tables
 \@ref(tab:tbl-bo-psea-dummies) and \@ref(tab:tbl-bo-subset-dummies) in the
@@ -1690,7 +1721,16 @@ Although this is still not representative of the population as a whole, it
 provides some assurance that our results are not driven by volunteering bias.
 
 The appendix reports other robustness checks, including replacing university
-attendance with age of leaving full-time education. 
+attendance with age of leaving full-time education. Overall, while significance
+sometimes varies, the pattern of results is remarkably consistent. Birth order is
+always negatively associated with spouse PSEA, and this effect is always reduced
+in magnitude after adding mediators. Effect sizes are also consistent, with
+the exception that they are smaller if we do not control for parental age,
+(just as in Table \@ref(tab:tbl-bo-psea-basic)). 
+
+Lastly, to address worries about specification search, the full history of our
+project is publicly available at https://github.com/hughjonesd/trading-genetics,
+including all previous versions of the paper and code.
 
 
 # Conclusion
