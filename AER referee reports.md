@@ -68,11 +68,11 @@ that have “better” genes, conditional on their own genetic makeup.
 > don't think we can do much about this, except clarify the move from
 theory to empirics as which implication we test
 
-2.      While the data have considerable strengths, they also have some 
+2.  While the data have considerable strengths, they also have some 
 weaknesses. The sample is not a random sample and spouses are matched with some 
 error (which happily appears small). 
 
-3.      Figure 4 shows a general pattern that higher SES
+3. Figure 4 shows a general pattern that higher SES
 individuals have spouses with higher PSEA scores. As the authors point out, this
 is unsurprising given the findings from the large literature on assortative
 mating. What they want to test is, conditional on own genetic makeup, are higher
@@ -91,7 +91,7 @@ theoretical model in the paper.
 > I don't understand this  criticism but again need to clarify theory/empirics
 link.
 
-4.      I think the birth order specification
+4. I think the birth order specification
 would benefit from further discussion. There is now an enormous empirical
 literature on birth order and an effort should be made to match up the
 specification to best practice in the literature. One control variable that
@@ -124,7 +124,7 @@ What could deceased parents do? Presumably pushes our sample to be younger.
 Could we compare deceased to non-deceased?
 
 
-5.      It is good that the
+5. It is good that the
 authors do some robustness checking of the assumption that there is no
 correlation between genes and birth order. This is a nice contribution of the
 paper as much previous literature has suggested “optimal stopping” type models
