@@ -441,31 +441,32 @@ and women.
 with spouse earnings. @dupuy2014personality find spouse matching on multiple 
 independent dimensions, including education, height, BMI and personality.
 
-A rich literature in genetics studies assortative mating. The most common model
-is phenotypic assortative mating, where spouses match on phenotypes which are
-related to genetics, to family environment (possibly including cultural inheritance
-traits), and to non-shared environment. An alternative model focuses on social
+A rich literature in genetics studies assortative mating [@rao1976resolution;
+@heath1985resolving; @otto1995genetic]. The most common model is phenotypic
+assortative mating, where spouses match on phenotypes which are related to
+genetics, to family environment (possibly including culturally inherited
+traits), and to non-shared environment . An alternative model focuses on social
 homogamy, where spouses match on shared environment alone. Both kinds of models,
 like ours, predict that assortative mating leads to gene-environment correlation
-in individuals. Early empirical work used structural models to estimate parameters
-from correlations between twins and spouses of twins. (XXX be precise) Since
-the "genomics revolution", which has made individuals' DNA data directly available,
-empirical research has focused on genetic assortative mating
-(GAM), the phenomenon that people with similar genes marry each other. Recent
-research has confirmed the long-standing conjecture that GAM takes place in
-contemporary human populations [@hugh2016assortative; @robinson2017genetic;
-@howe2019genetic]. Other work has analysed cross-trait
-assortative mating, when e.g. people with genes for height marry people with 
-genes for intelligence [@Beauchamp_2010; @Sundet_2005; @border2022cross]. As a 
-result, the two types of genetic variation become associated. 
-
-We see our contribution as follows. First, our theoretical model links the economic
-and genetic literatures, basing spouse matching on a micro-founded choice model. 
-We focus specifically on the consequences of SGAM for inequality. In particular, 
-we can relate economic policy parameters to the size of the genes-SES gradient.
-Second, our research design gives us a clean pathway from environmental shocks
-to a person's SES, to the genetic endowment of their spouse. 
-
+in individuals. Early empirical work used structural models to estimate
+parameters from correlations between twins and spouses of twins
+[@eaves1999comparing]. (XXX be precise) Since the "genomics revolution", which
+has made individuals' DNA data directly available, empirical research has
+focused on genetic assortative mating (GAM), the phenomenon that people with
+similar genes marry each other. Recent research has confirmed the long-standing
+conjecture that GAM takes place in contemporary human populations
+[@hugh2016assortative; @robinson2017genetic; @howe2019genetic]. Other work has
+analysed cross-trait assortative mating, when e.g. people with genes for height
+marry people with genes for intelligence [@Beauchamp_2010; @Sundet_2005;
+@border2022cross]. As a result, the two types of genetic variation become
+associated. We see our contribution here as follows. First, our theoretical
+model links the economic and genetic literatures, basing spouse matching on a
+micro-founded choice model. In particular, we can relate economic policy
+parameters to the size of the genes-SES gradient. Second, our research design
+gives us a clean pathway from environmental shocks to a person's SES, to the
+genetic endowment of their spouse. This is helpful because it is usually
+difficult to separate the environmental and genetic components of the
+correlation between spouses.
 
 Secondly, SGAM may affect economic inequality and intergenerational mobility.
 Intergenerational mobility correlates with cross-sectional inequality

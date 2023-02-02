@@ -135,7 +135,7 @@ Pierre-André Chiappori\thanks{Department of Economics, University of Columbia,
   New York. Email: pc2167@columbia.edu} \&
 David Hugh-Jones\thanks{Corresponding author. School of Economics, 
 University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}}
-\date{2022-12-08}
+\date{2022-12-13}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -276,9 +276,9 @@ birth order on spouse genetics. The results are robust to the inclusion of
 several controls, including non-SES mediators, and a rich set of own genetic
 traits.
 
-Our paper contributes to several literatures. First, we study a new kind of
-assortative mating. The economics literature on spouse matching has typically
-focused on educational similarities (e.g. Pencavel 1998; Chiappori, Salanié, and Weiss 2017) or social class or caste (e.g. Abramitzky, Delavande, and Vasconcelos 2011; Banerjee et al. 2013), but also sorting based on age,
+Our paper contributes to several literatures. First, we study assortative mating
+between genetic variants and SES. The economics literature on spouse matching
+has typically focused on educational similarities (e.g. Pencavel 1998; Chiappori, Salanié, and Weiss 2017) or social class or caste (e.g. Abramitzky, Delavande, and Vasconcelos 2011; Banerjee et al. 2013), but also sorting based on age,
 physical traits and ethnicity (Hitsch, Hortaçsu, and Ariely 2010). Matching decisions on the
 marriage market follow multiple criteria, with some degree of substitutability
 between them.\footnote{Oreffice and Quintana-Domeque (2010) show that height and BMI are associated
@@ -286,17 +286,32 @@ between them.\footnote{Oreffice and Quintana-Domeque (2010) show that height and
   independent dimensions, including education, height, BMI and personality.} For instance, Chiappori, Oreffice, and Quintana-Domeque (2012) showed that
 individuals trade off BMI for partners' income or education and that the
 marginal rate of substitution between these characteristics is different for men
-and women. The genetics literature has focused on genetic assortative mating
-(GAM), the phenomenon that people with similar genes marry each other. Recent
-research has confirmed the long-standing conjecture that GAM takes place in
-contemporary human populations (Hugh-Jones et al. 2016; Robinson et al. 2017; Howe et al. 2019). Geneticists have also developed the
-concept of cross-trait assortative mating (Beauchamp et al. 2010; Sundet et al. 2005; Border et al. 2022). This happens when e.g.~people with genes for height marry
-people with genes for intelligence, or people with genes for two different types
-of disease trait marry each other. As a result, the two types of genetic
-variation become associated. This paper brings the two literatures together,
-extending cross-trait assortative mating to encompass social status as well as
-genetic variants. Our results confirm that individuals with higher social status
-attract spouses with genetics for higher educational attainment.
+and women.
+
+A rich literature in genetics studies assortative mating (Rao, Morton, and Yee 1976; Andrew C. Heath and Eaves 1985; Otto, Christiansen, and Feldman 1995). The most common model is phenotypic
+assortative mating, where spouses match on phenotypes which are related to
+genetics, to family environment (possibly including culturally inherited
+traits), and to non-shared environment . An alternative model focuses on social
+homogamy, where spouses match on shared environment alone. Both kinds of models,
+like ours, predict that assortative mating leads to gene-environment correlation
+in individuals. Early empirical work used structural models to estimate
+parameters from correlations between twins and spouses of twins
+(Eaves et al. 1999). (XXX be precise) Since the ``genomics revolution'', which
+has made individuals' DNA data directly available, empirical research has
+focused on genetic assortative mating (GAM), the phenomenon that people with
+similar genes marry each other. Recent research has confirmed the long-standing
+conjecture that GAM takes place in contemporary human populations
+(Hugh-Jones et al. 2016; Robinson et al. 2017; Howe et al. 2019). Other work has
+analysed cross-trait assortative mating, when e.g.~people with genes for height
+marry people with genes for intelligence (Beauchamp et al. 2010; Sundet et al. 2005; Border et al. 2022). As a result, the two types of genetic variation become
+associated. We see our contribution here as follows. First, our theoretical
+model links the economic and genetic literatures, basing spouse matching on a
+micro-founded choice model. In particular, we can relate economic policy
+parameters to the size of the genes-SES gradient. Second, our research design
+gives us a clean pathway from environmental shocks to a person's SES, to the
+genetic endowment of their spouse. This is helpful because it is usually
+difficult to separate the environmental and genetic components of the
+correlation between spouses.
 
 Secondly, SGAM may affect economic inequality and intergenerational mobility.
 Intergenerational mobility correlates with cross-sectional inequality
@@ -347,7 +362,7 @@ markets, also known as meritocracy. Parents with higher ability reap higher
 market returns, and they may then pass both higher socio-economic status and
 their genes to their children, leading to an association between the two
 (Belsky et al. 2018). This mechanism depends on the level of meritocracy in
-social institutions (Branigan, McCallum, and Freese 2013; Heath et al. 1985): in a society where
+social institutions (Branigan, McCallum, and Freese 2013; A. C. Heath et al. 1985): in a society where
 social status was ascribed rather than earned, it could not take effect. Indeed,
 after the fall of communism in Estonia, the heritability of SES increased,
 presumably because post-communist society allowed higher returns to talent
@@ -447,7 +462,7 @@ genetics to wealth in the marriage market.\footnote{Note that since the variance
 marriage markets are highly inegalitarian, such that only SES matters. If \(a = 1\), marriage markets are economically egalitarian and only genetics matter. We
 expect realistic societies to fall between these extremes, with \(0 < a < 1\).
 Then, both genes and SES matter to attractiveness, and as a result,
-social-genetic assortative mating (SGAM) takes place.\footnote{Note that we do not assume that people match \emph{directly} on
+social-genetic assortative mating (SGAM) takes place.\footnote{This model does not assume that people match \emph{directly} on
   genetics, which most observers agree would be unlikely. Instead we assume that
   genetics may contribute to an attractive phenotype, and that is what is matched
   on.}
@@ -1052,11 +1067,12 @@ educational attainment and occupational status (Lindahl 2008; Booth and Kee 2009
   (e.g. Hauser and Sewell 1985; Hanushek 1992). However, this work often used
   unrepresentative samples and/or did not control for family size or parental age.
   More recent work improves on this and shows clear birth order effects.
-  Black, Devereux, and Salvanes (2005) show substantial birth order effects in the whole Norwegian
+  Kantarevic and Mechoulan (2006) show that parental age is an important confound for birth
+  order. Black, Devereux, and Salvanes (2005) show substantial birth order effects in the whole Norwegian
   population, even in a family fixed-effects specification, and after controlling
   for mother's age. Booth and Kee (2009) examine UK families, controlling for family
   size and for parental age at birth, and show significant and substantial birth
-  order effects on education. Some studies e.g. Black, Devereux, and Salvanes (2005), De Haan (2010), use
+  order effects on education. Some studies (e.g. Black, Devereux, and Salvanes 2005; De Haan 2010) use
   twin births or the gender mix of children as instruments for family size. They
   too typically find that birth order has large negative effects.} On the other hand, all full siblings have the
 same \emph{ex ante} expected genetic endowment from their parents, irrespective of
@@ -1423,20 +1439,21 @@ seasonal effects. The effect size of birth order is not much changed.
 
 Column 3 reports results controlling for parents' age at birth. Within a family,
 later children have older parents by definition. Older parents have more life
-experience and may have higher income, which would presumably help later
-children.\footnote{We often only have data only for one parent. We use this, or take the mean
+experience and may have higher income, which may help later children.\footnote{We often only have data only for one parent. We use this, or take the mean
   if we have both. There are also potential genetic effects from parental age,
   though recent research has rejected these in favour of ``social'' explanations
   (Kristensen and Bjerkedal 2007; Black, Devereux, and Salvanes 2011). Cochran and Harpending (2013) report that
   mutational load is approximately linear in father's age, while it is constant in
   mother's age. We observe very similar results if we control only for father's
-  age at respondent's birth.} Including parents' age means we can separate the effect of
-parental age from birth order. This reduces the N by a lot, since only
-respondents with a live parent reported the necessary data. However, the effect
-of birth order jumps in size and becomes significant at the 5 per cent level.
-Meanwhile, parents' age has a positive effect. This suggests that estimates in
-columns 1-2 mixed two opposite-signed effects: having older parents versus being
-later in birth order.
+  age at respondent's birth.}
+Kantarevic and Mechoulan (2006) show that mother's age at childbirth indeed mechanically
+offsets the negative effect of birth order. Including parents' age means we can
+separate the effect of parental age from birth order. This reduces the N by a
+lot, since only respondents with a live parent reported the necessary data.
+However, the effect of birth order jumps in size and becomes significant at the
+5 per cent level. Meanwhile, parents' age has a positive effect. This suggests
+that estimates in columns 1-2 mixed two opposite-signed effects: having older
+parents versus being later in birth order.
 
  
   \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
@@ -2408,9 +2425,15 @@ provides some assurance that our results are not driven by volunteering bias.
 
 The appendix reports other robustness checks, including replacing university
 attendance with age of leaving full-time education. Overall, while significance
-sometimes varies, the pattern of results is remarkably robust. Birth order is
+sometimes varies, the pattern of results is remarkably consistent. Birth order is
 always negatively associated with spouse PSEA, and this effect is always reduced
-in magnitude after adding mediators.
+in magnitude after adding mediators. Effect sizes are also consistent, with
+the exception that they are smaller if we do not control for parental age,
+(just as in Table \ref{tab:tbl-bo-psea-basic}).
+
+Lastly, to address worries about specification search, the full history of our
+project is publicly available at \url{https://github.com/hughjonesd/trading-genetics},
+including all previous versions of the paper and code.
 
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
@@ -5855,7 +5878,7 @@ Belsky, Daniel W, Benjamin W Domingue, Robbee Wedow, Louise Arseneault, Jason D 
 Belsky, Daniel W, Terrie E Moffitt, David L Corcoran, Benjamin Domingue, HonaLee Harrington, Sean Hogan, Renate Houts, et al. 2016. {``The Genetics of Success: How Single-Nucleotide Polymorphisms Associated with Educational Attainment Relate to Life-Course Development.''} \emph{Psychological Science} 27 (7): 957--72.
 
 \leavevmode\vadjust pre{\hypertarget{ref-benjamin2011promises}{}}%
-Benjamin, Daniel J, David Cesarini, Christopher F Chabris, Edward L Glaeser, David I Laibson, Gene Age, Vilmundur Gunason, et al. 2011. {``The Promises and Pitfalls of Genoeconomics.''}
+Benjamin, Daniel J, David Cesarini, Christopher F Chabris, Edward L Glaeser, David I Laibson, Gene Age, Vilmundur Gudhnason, et al. 2011. {``The Promises and Pitfalls of Genoeconomics.''}
 
 \leavevmode\vadjust pre{\hypertarget{ref-bjorklund2006origins}{}}%
 Björklund, Anders, Mikael Lindahl, and Erik Plug. 2006. {``The Origins of Intergenerational Associations: Lessons from Swedish Adoption Data.''} \emph{The Quarterly Journal of Economics} 121 (3): 999--1028.
@@ -5941,6 +5964,9 @@ Demange, Perline A, Margherita Malanchini, Travis T Mallard, Pietro Biroli, Simo
 \leavevmode\vadjust pre{\hypertarget{ref-dupuy2014personality}{}}%
 Dupuy, Arnaud, and Alfred Galichon. 2014. {``Personality Traits and the Marriage Market.''} \emph{Journal of Political Economy} 122 (6): 1271--1319.
 
+\leavevmode\vadjust pre{\hypertarget{ref-eaves1999comparing}{}}%
+Eaves, Lindon, Andrew Heath, Nicholas Martin, Hermine Maes, Michael Neale, Kenneth Kendler, Katherine Kirk, and Linda Corey. 1999. {``Comparing the Biological and Cultural Inheritance of Personality and Social Attitudes in the Virginia 30 000 Study of Twins and Their Relatives.''} \emph{Twin Research and Human Genetics} 2 (2): 62--80.
+
 \leavevmode\vadjust pre{\hypertarget{ref-eika2019educational}{}}%
 Eika, Lasse, Magne Mogstad, and Basit Zafar. 2019. {``Educational Assortative Mating and Household Income Inequality.''} \emph{Journal of Political Economy} 127 (6): 2795--835.
 
@@ -5971,6 +5997,9 @@ Hauser, Robert M, and William H Sewell. 1985. {``Birth Order and Educational Att
 \leavevmode\vadjust pre{\hypertarget{ref-Heath_1985}{}}%
 Heath, A. C., K. Berg, L. J. Eaves, M. H. Solaas, L. A. Corey, J. Sundet, P. Magnus, and W. E. Nance. 1985. {``Education Policy and the Heritability of Educational Attainment.''} \emph{Nature} 314 (6013): 734--36. \url{https://doi.org/10.1038/314734a0}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-heath1985resolving}{}}%
+Heath, Andrew C, and Lindon J Eaves. 1985. {``Resolving the Effects of Phenotype and Social Background on Mate Selection.''} \emph{Behavior Genetics} 15 (1): 15--30.
+
 \leavevmode\vadjust pre{\hypertarget{ref-heckman2014economics}{}}%
 Heckman, James, and Stefano Mosso. 2014. {``The Economics of Human Development and Social Mobility.''} \emph{Annu. Rev. Econ.} 6 (1): 689--733.
 
@@ -5991,6 +6020,9 @@ Hugh-Jones, David, Karin JH Verweij, Beate St Pourcain, and Abdel Abdellaoui. 20
 
 \leavevmode\vadjust pre{\hypertarget{ref-isungset2021birth}{}}%
 Isungset, Martin Arstad, Jeremy Freese, Ole Andreassen, and Torkild Hovde Lyngstad. 2021. {``Birth Order Differences in Education Are Environmental in Origin.''} \emph{bioRxiv}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kantarevic2006birth}{}}%
+Kantarevic, Jasmin, and Stéphane Mechoulan. 2006. {``Birth Order, Educational Attainment, and Earnings an Investigation Using the PSID.''} \emph{Journal of Human Resources} 41 (4): 755--77.
 
 \leavevmode\vadjust pre{\hypertarget{ref-kaplan2013s}{}}%
 Kaplan, Steven N, and Joshua Rauh. 2013. {``It's the Market: The Broad-Based Rise in the Return to Top Talent.''} \emph{Journal of Economic Perspectives} 27 (3): 35--56.
@@ -6040,6 +6072,9 @@ Okbay, A, Y Wu, N Wang, H Jayashankar, M Bennett, SM Nehzati, J Sidorenko, et al
 \leavevmode\vadjust pre{\hypertarget{ref-oreffice2010anthropometry}{}}%
 Oreffice, Sonia, and Climent Quintana-Domeque. 2010. {``Anthropometry and Socioeconomics Among Couples: Evidence in the United States.''} \emph{Economics \& Human Biology} 8 (3): 373--84.
 
+\leavevmode\vadjust pre{\hypertarget{ref-otto1995genetic}{}}%
+Otto, Sarah P, Freddy B Christiansen, and Marcus W Feldman. 1995. {``Genetic and Cultural Inheritance of Continuous Traits.''} \emph{Morrison Institute for Population and Resource Studies Paper Number} 64.
+
 \leavevmode\vadjust pre{\hypertarget{ref-papageorge2020genes}{}}%
 Papageorge, Nicholas W, and Kevin Thom. 2020. {``Genes, Education, and Labor Market Outcomes: Evidence from the Health and Retirement Study.''} \emph{Journal of the European Economic Association} 18 (3): 1351--99.
 
@@ -6051,6 +6086,9 @@ Plomin, Robert. 2019. \emph{Blueprint: How DNA Makes Us Who We Are}. Mit Press.
 
 \leavevmode\vadjust pre{\hypertarget{ref-plomin2008behavioral}{}}%
 Plomin, Robert, John C DeFries, and Gerald E McClearn. 2008. \emph{Behavioral Genetics}. Macmillan.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rao1976resolution}{}}%
+Rao, DC, Newton E Morton, and S Yee. 1976. {``Resolution of Cultural and Biological Inheritance by Path Analysis.''} \emph{American Journal of Human Genetics} 28 (3): 228.
 
 \leavevmode\vadjust pre{\hypertarget{ref-Rimfeld_2018}{}}%
 Rimfeld, Kaili, Eva Krapohl, Maciej Trzaskowski, Jonathan R. I. Coleman, Saskia Selzam, Philip S. Dale, Tonu Esko, Andres Metspalu, and Robert Plomin. 2018. {``Genetic Influence on Social Outcomes During and After the Soviet Era in Estonia.''} \emph{Nature Human Behaviour} 2 (4): 269--75. \url{https://doi.org/10.1038/s41562-018-0332-5}.

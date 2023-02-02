@@ -221,7 +221,12 @@ just the treatment of assortative mating relative to the previous literature
 that requires some more discussion. The idea that transmission parameters may
 differ for men and women has been around for a while (Cloninger, Rice, and Reich
 1979) and it seems appropriate to acknowledge this when discussing this
-particular extension. The authors point out a number of limitations of models
+particular extension.
+
+> This is about a transmission parameter (e.g. mothers transmit more culture
+than fathers) but not about different attractiveness for males and females.
+
+The authors point out a number of limitations of models
 with random mating. My general reaction is that most of these limitations are
 already well-known. Thanks to proliferation of GWAS data, there is already
 overwhelming evidence that the simplest models, which rule out gene-environment
@@ -235,6 +240,8 @@ theory (though better theory is of course welcome too).
 
 > Consider carefully what we say about why the results matter. Though
 here, we can stress our research design & empirics.
+
+> Esp consider what we should say about the "simple models"
 
 ## Major Comment #2. Empirical Work
 

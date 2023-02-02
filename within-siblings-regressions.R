@@ -1,4 +1,6 @@
 
+# run setup chunk from trading-genetics.Rmd
+
 
 fml_bo_psea_fixef <- list()
 
@@ -9,11 +11,15 @@ fml_bo_psea_fixef[[2]] <- EA3.y ~ birth_order.x + EA3.x |
 fml_bo_psea_fixef[[3]] <- EA3.y ~ birth_order.x + EA3.x + 
                             moth_age_birth.x | n_sibs.x + sib_group.x
 
+# not a fixed effects model
+# fml_bo_psea_fixef[[4]] <- EA3.y ~ birth_order.x + EA3.x + 
+#                             moth_age_birth.x + moth_afb.x | n_sibs.x
+
 fml_bo_psea_fixef %<>% map(Formula::as.Formula)
 
 
 mod_bo_psea_fixef <- lapply(fml_bo_psea_fixef, fixest::feols, 
-                 data = mf_pairs_reg
+                 data = mf_pairs_twice
                )
 
 
@@ -28,10 +34,11 @@ huxreg(mod_bo_psea_fixef,
            "R2" = "r.squared"
           ),
          stars = my_stars,
-         note = "{stars}. Clusters: sib group, family size",
+         note = "{stars}. Robust SEs in brackets.",
          tidy_args = list(
            conf.int = FALSE, 
-           cluster  = list(mf_pairs_reg$sib_group.x, mf_pairs_reg$n_sibs.x)
+           se = "hetero"
+           #cluster  = list(mf_pairs_reg$sib_group.x, mf_pairs_reg$n_sibs.x)
          )
        ) %>% 
        insert_row(after = 7, "Family size dummies", rep("Yes", 3)) %>% 
