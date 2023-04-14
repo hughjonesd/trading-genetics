@@ -7,8 +7,7 @@ author: |
   UK. Email: O.Borcan@uea.ac.uk}, 
   Pierre-André Chiappori\thanks{Department of Economics, University of Columbia, 
     New York. Email: pc2167@columbia.edu} &
-  David Hugh-Jones\thanks{Corresponding author. School of Economics, 
-  University of East Anglia, Norwich, UK. Email: D.Hugh-Jones@uea.ac.uk}
+  David Hugh-Jones\thanks{Corresponding author. Email: davidhughjones@gmail.com}
 abstract: |
   Under social-genetic assortative mating (SGAM), socio-economic status (SES) and 
   genetics are both assets in marriage markets, become associated in spouse 
@@ -138,7 +137,7 @@ famhist$EA3 <- famhist$EA3_excl_23andMe_UK_resid
 
 mf_pairs_reg <- regression_subset(mf_pairs_twice)
 
-my_note <- "{stars}. Robust standard errors are in parentheses."
+my_note <- "{stars}. Standard errors clustered by spouse pair in parentheses."
 
 # for p values
 my_stars <- c(`***` = 0.001, `**` = 0.01, `*` = 0.05, `+` = 0.10)
@@ -166,8 +165,8 @@ fml_bo_psea[-1] <- lapply(fml_bo_psea[-1], update,
                             . ~ . + fluid_iq.x + height.x + bmi.x + sr_health.x)
 
 # basic tidy args
-# tidy_args <- list(se = "cluster", cluster = "couple_id", conf.int = FALSE)
-tidy_args <- list(se = "hetero", conf.int = FALSE)
+tidy_args <- list(se = "cluster", cluster = "couple_id", conf.int = FALSE)
+# tidy_args <- list(se = "hetero", conf.int = FALSE)
 
 reg_coefs <- c(
           "Birth order"           = "birth_order.x", 
@@ -585,6 +584,18 @@ earning capacity,” “professional status”) as well as traits that are partl
 under genetic influence (“intelligent,” “tall,” “kind,” “physically
 attractive”). Despite this, to our knowledge, this is the first paper in either
 genetics or economics to formally analyse SGAM and its consequences.[^prev-work]
+
+XXX rework above para
+* Existing work before genomics revolution, using an SEM framework, 
+  analysed cross-trait mating with
+  cultural and genetic inheritance, and predicted positive correlations between
+  the cultural and genetic trait. They But they did not specialize to SES as a culturally
+  inherited trait [what sort of things were they thinking of] and therefore 
+  didn't draw consequences for social inequality. 
+  - Maybe worth mentioning? they focus on culturally inherited traits (which may
+  nevertheless be biological, e.g. knowledge in the brain) while SES is 
+  socially *constituted* too. 
+* Empirics with twin studies did what?
 
 [^prev-work]: @halsey1958genetics showed in a two-class model that social
 mobility combined with assortative mating might increase the association between
@@ -2101,6 +2112,7 @@ reg_list <- list(
 wald_tests <- purrr::map(reg_list, fixest::wald, 
                            keep    = "birth_order",
                            se      = tidy_args$se,
+                           cluster = tidy_args$cluster,
                            print   = FALSE
                          )
 wald_pvals <- purrr::map_dbl(wald_tests, "p")
@@ -2188,7 +2200,8 @@ fml_bo_psea_full <- update(fml_bo_psea[[1]], . ~ . - birth_order.x +
 
 mod_bo_psea_full <- fixest::feols(fml_bo_psea_full, mf_pairs_reg, 
                                     notes = FALSE)
-coefs <- tidy(mod_bo_psea_full, conf.int = TRUE, se = "hetero")
+coefs <- tidy(mod_bo_psea_full, conf.int = TRUE, se = tidy_args$se,
+                cluster = tidy_args$cluster)
 
 suppressWarnings({
   coefs[["Family size"]] <- as.numeric(gsub("^nsf(.).*", "\\1", coefs$term))
