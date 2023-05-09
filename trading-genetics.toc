@@ -1,0 +1,20 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {section}{Introduction}{1}{section*.1}%
+\contentsline {section}{Model}{7}{section*.2}%
+\contentsline {subsection}{Children}{9}{section*.3}%
+\contentsline {subsection}{Extensions}{12}{section*.6}%
+\contentsline {subsection}{Discussion}{16}{section*.8}%
+\contentsline {section}{Data and methods}{17}{section*.9}%
+\contentsline {subsection}{Decomposing the birth order effect on spouse genetics}{22}{section*.11}%
+\contentsline {section}{Results: Great Britain}{24}{section*.12}%
+\contentsline {section}{Results: Norway}{32}{section*.23}%
+\contentsline {section}{Robustness}{36}{section*.30}%
+\contentsline {section}{Conclusion}{38}{section*.31}%
+\contentsline {section}{Acknowledgements}{39}{section*.32}%
+\contentsline {section}{Appendix: for online publication}{40}{section*.33}%
+\etoc@startlocaltoc {1}
+\contentsline {subsection}{Proofs}{41}{section*.35}%
+\contentsline {subsection}{More empirical results}{55}{section*.36}%
+\contentsline {subsubsection}{Testing the UK Biobank spouse pair matching}{66}{section*.56}%
+\contentsline {subsection}{Quotations on natural inequality}{68}{section*.59}%
+\contentsline {section}{References}{69}{section*.60}%
