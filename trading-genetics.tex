@@ -118,7 +118,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Trading social status for genetics in marriage markets: evidence from UK Biobank},
+  pdftitle={Trading social status for genetics in marriage markets: evidence from Great Britain and Norway},
   colorlinks=true,
   linkcolor={blue},
   filecolor={Maroon},
@@ -126,15 +126,20 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
-\title{Trading social status for genetics in marriage markets: evidence from UK Biobank}
+\title{Trading social status for genetics in marriage markets:
+evidence from Great Britain and Norway}
 \author{Abdel Abdellaoui\thanks{Department of Psychiatry, Amsterdam UMC, University 
 of Amsterdam, Amsterdam, The Netherlands. Email: a.abdellaoui@amsterdamumc.nl},
 Oana Borcan\thanks{School of Economics, University of East Anglia, Norwich, 
 UK. Email: O.Borcan@uea.ac.uk},
 Pierre-André Chiappori\thanks{Department of Economics, University of Columbia, 
-  New York. Email: pc2167@columbia.edu} \&
-David Hugh-Jones\thanks{Corresponding author. Email: davidhughjones@gmail.com}}
-\date{2023-04-14}
+  New York. Email: pc2167@columbia.edu},\\
+David Hugh-Jones\thanks{Corresponding author. Email: davidhughjones@gmail.com},
+Fartein Ask Torvik\thanks{Norwegian Institute of Public Health, Oslo. 
+  Email: f.a.torvik@psykologi.uio.no} \&
+Eivind Ystrøm\thanks{Norwegian Institute of Public Health, Oslo. 
+  Email: eivind.ystrom@psykologi.uio.no}}
+\date{2023-04-28}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -164,8 +169,13 @@ observed genetic differences between rich and poor. We model SGAM and test\\
 for it in a large survey. Spouses of earlier-born siblings have genetics
 predicting more education. This effect is mediated by individuals' own
 education and income. Thus, shocks to SES are reflected in the DNA of
-subsequent generations. Under SGAM, genetic variation is endogenous to economic
-institutions.
+subsequent generations. Under SGAM, genetic variation is endogenous to
+economic institutions.
+
+\par
+
+\textbf{Keywords:} Assortative mating,
+MoBa, UK Biobank.
 \end{abstract}
 
 \normalem
@@ -177,17 +187,14 @@ How families are formed, and transmit traits and assets to their offspring, is
 crucial for understanding inequality. Assortative mating in marriage markets can
 increase inequality across families (Breen and Salazar 2011; Greenwood et al. 2014)
 and can contribute to the persistence of inequality across generations, which
-is surprisingly high (Clark and Cummins 2015; Solon 2018). Assortative
-mating has been studied by both economists and geneticists: homogamy in education
-is well established, while genetic assortative mating has only been demonstrated
-recently (Hugh-Jones et al. 2016; Robinson et al. 2017). Similarly, wealthy
+is surprisingly high (Clark and Cummins 2015; Solon 2018). Wealthy
 families pass on advantages to their children through both genetic inheritance
 and environmental influence (Rimfeld et al. 2018; Björklund, Lindahl, and Plug 2006; Sacerdote 2011).
 
-This paper examines a plausible, not previously analysed aspect of the spouse
-matching process: that both social status and genetics contribute to a person's
-attractiveness in marriage markets, and as a result, genetics and inherited
-social status may become associated in subsequent generations.\footnote{\emph{Social status} refers to characteristics that an individual
+This paper examines a plausible aspect of marriage markets: that both social
+status and genetics contribute to a person's attractiveness, and as a result,
+genetics and inherited social status may become associated in subsequent
+generations.\footnote{\emph{Social status} refers to characteristics that an individual
   possesses in virtue of their social position. For example, my wealth
   is a fact about me that holds in virtue of my relationship to
   certain social institutions (bank deposits, title deeds et cetera).
@@ -195,20 +202,17 @@ social status may become associated in subsequent generations.\footnote{\emph{So
   qualifications. \emph{Socio-economic status} (SES) is a specific type of
   social status which exists in economically stratified societies, covering
   variables like educational attainment, occupational class, income and
-  wealth (e.g. White 1982).} For
-example, suppose that wealth, intelligence and health are positive assets in a
-potential spouse. Then wealthy people are more likely to marry intelligent or
-healthy people, and their children will inherit both wealth, and genetic
-variants associated with intelligence or health. We call this mechanism
-social-genetic assortative mating (SGAM). SGAM may be an important channel for
-the transmission of inequality. It leads to a hidden dimension of advantage for
-privileged families -- hidden because most social science datasets do not include
-genetic information. This dimension may help to explain the surprising long-run
-persistence of inequality. At the
-same time, this advantage is not an exogenous fact of biology, but endogenous to
-the social structure. Indeed, under SGAM, environmental shocks to an
-individual's social status may be reflected in the genetics of his or her
-children.
+  wealth (e.g. White 1982).} For example, suppose that wealth, intelligence and
+health are positive assets in a potential spouse. Then wealthy people are more
+likely to marry intelligent or healthy people, and their children will inherit
+both wealth, and genetic variants associated with intelligence or health. We
+call this mechanism social-genetic assortative mating (SGAM). SGAM may be an
+important channel for the transmission of inequality. It creates a genetic
+advantage for privileged families, which may help to explain the surprising
+long-run persistence of inequality. At the same time, this advantage is not a
+fact of biology, but is endogenous to the social structure. Indeed, under
+SGAM, environmental shocks to a person's social status may be reflected in
+the genetics of his or her children.
 
 Below, we first outline a theoretical framework where attractiveness in the
 marriage market is a function of both socio-economic status (SES) and genetic
@@ -221,33 +225,31 @@ dominant existing explanation for the gradient is meritocratic social mobility:
 if a genetic variant predicts success in the labour market, then it will
 become associated with high SES and will be inherited in high-SES families.
 Under meritocracy, genes causes SES. By contrast, under SGAM,
-causality goes both ways, from genes to SES and vice versa. What's more, the
+causality goes both ways, from genes to SES and vice versa. Also, the
 strength of the genes-SES gradient depends on economic institutions. Under
 institutions which increase intergenerational mobility, like high inheritance
 tax rates, the genes-SES gradient becomes weaker.
 
-Next, using data on matched spouses born between 1935 and 1970 from UK Biobank
-(a large genetically-informed survey), we test the hypothesis that an
-individual's higher social status attracts spouses with higher genetic potential
-for educational attainment. Our genetic measure, the polygenic score for
-educational attainment (PSEA), derives from large-scale genome-wide association
-studies (Lee et al. 2018). PSEA reflects a bundle of polygenic effects on
-underlying traits, including intelligence, personality, and physical and mental
-health (Demange et al. 2021). PSEA predicts, and causes, educational
-attainment itself, as well as intelligence and labour market outcomes. It is
-already known that humans mate assortatively on PSEA (Hugh-Jones et al. 2016; Robinson et al. 2017), which makes it a likely candidate for detecting SGAM.
+Next, using data on spouse pairs from two large genetically-informed surveys in
+Great Britain and Norway, we test the hypothesis that an individual's higher
+social status attracts spouses with higher genetic potential for educational
+attainment. Our genetic measure, the polygenic score for educational attainment
+(PSEA), derives from large-scale genome-wide association studies (Lee et al. 2018).
+PSEA reflects a bundle of polygenic effects on underlying traits, including
+intelligence, personality, and physical and mental health
+(Demange et al. 2021). PSEA predicts, and causes, educational attainment
+itself, as well as intelligence and labour market outcomes. It is already known
+that humans mate assortatively on PSEA (Hugh-Jones et al. 2016; Robinson et al. 2017), which makes it a likely candidate for detecting SGAM.
 
 The endogeneity of socio-economic status is the main challenge in identifying
-the effect of SES on the spouse's genetic endowment. For instance,
-individuals with high education qualifications tend to also have high PSEA, and
-as mentioned above, they may take partners based on genomic similarity. Indeed,
-recent studies show strong assortative mating on PSEA, much more than we would
-expect if spouses matched only on observed measures of actual educational
-attainment (Okbay et al. 2022). To isolate the causal link from own SES to
-partner's genes, we use the ``accident of birth'' as a shock to SES which is
-independent of own genetics. Specifically, we use a person's \emph{birth order} as
-a ``treatment'' which affects the identity of their partner, partly by affecting
-their own SES. Earlier-born children are known to receive higher parental
+the effect of SES on the spouse's genetic endowment. For instance, people with
+high educational qualifications tend to also have high PSEA, and as mentioned
+above, they may take partners based on genomic similarity. Indeed, recent
+studies show strong assortative mating on PSEA, much more than we would expect
+if spouses matched only on observed measures of actual educational attainment
+(Okbay et al. 2022). To isolate the causal link from own SES to partner's
+genes, we use a shock to SES which is independent of own genetics. Specifically,
+we use a person's \emph{birth order}. Earlier-born children receive higher parental
 investment and have better life outcomes, including measures of SES such as
 educational attainment and occupational status (Black, Devereux, and Salvanes 2011; Booth and Kee 2009; Lindahl 2008). At the same time, the facts of biology, in
 particular the so-called ``lottery of meiosis'', guarantee that siblings' birth
@@ -265,15 +267,20 @@ attendance and estimated income in one's first job. Under certain assumptions,
 these variables can be interpreted as mediating the effect of birth order on
 spouse genetics.
 
-We find that later-born children have spouses with significantly lower PSEA in
-the reduced-form regressions. When we add mediators, including university
-attendance and/or income, birth order is no longer independently significant,
-while the SES mediators increase the spouse's PSEA at 0.1\% significance.
-University attendance explains an estimated 38-55\% of the effect of birth order,
-and income explains about 10-13\%. Thus, SES appears to mediate the effect of
-birth order on spouse genetics. The results are robust to the inclusion of
-several controls, including non-SES mediators, and a rich set of own genetic
-traits.
+In both Britain and Norway, we find that later-born children have spouses with
+significantly lower PSEA in the reduced-form regressions. When we add mediators,
+including university attendance and/or income, the effect of birth order shrinks
+substantially, while the SES mediators increase the spouse's PSEA at 0.1\%
+significance. The results are robust to the inclusion of several controls,
+including non-SES mediators, and a rich set of own genetic traits. Thus, SES
+appears to mediate the effect of birth order on spouse genetics. The effects of
+individual mediators differ between the two countries. While university
+attendance explains more than a third of the effects of birth order in both
+Britain and Norway, income explains about 10\% of the effects in Britain but has
+little or no independent effect in Norway. Although our main focus is on testing
+the basic mechanism of SGAM, this provides suggestive evidence that in a more
+egalitarian society, some forms of SES are less important to the marriage
+market.
 
 Our paper contributes to several literatures. First, we study assortative mating
 between genetic variants and SES. The economics literature on spouse matching
@@ -290,29 +297,30 @@ and women.
 A rich literature in genetics studies assortative mating (Rao, Morton, and Yee 1976; Andrew C. Heath and Eaves 1985; Otto, Christiansen, and Feldman 1995). The most common model is phenotypic
 assortative mating, where spouses match on phenotypes which are related to
 genetics, to family environment (possibly including culturally inherited
-traits), and to non-shared environment . An alternative model focuses on social
+traits), and to non-shared environment. An alternative model focuses on social
 homogamy, where spouses match on shared environment alone. Both kinds of models,
 like ours, predict that assortative mating leads to gene-environment correlation
 in individuals. Early empirical work used structural models to estimate
 parameters from correlations between twins and spouses of twins
-(Eaves et al. 1999). (XXX be precise) Since the ``genomics revolution'', which
-has made individuals' DNA data directly available, empirical research has
-focused on genetic assortative mating (GAM), the phenomenon that people with
-similar genes marry each other. Recent research has confirmed the long-standing
-conjecture that GAM takes place in contemporary human populations
-(Hugh-Jones et al. 2016; Robinson et al. 2017; Howe et al. 2019). Other work has
-analysed cross-trait assortative mating, when e.g.~people with genes for height
-marry people with genes for intelligence (Beauchamp et al. 2010; Sundet et al. 2005; Border et al. 2022). As a result, the two types of genetic variation become
+(Eaves et al. 1999). Since the ``genomics revolution'', which has made
+individuals' DNA data directly available, empirical research has focused on
+genetic assortative mating (GAM), the phenomenon that people with similar genes
+marry each other. Recent research has confirmed the long-standing conjecture
+that GAM takes place in contemporary human populations (Hugh-Jones et al. 2016; Robinson et al. 2017; Howe et al. 2019). Other work has analysed cross-trait
+assortative mating, when e.g.~people with genes for height marry people with
+genes for intelligence (Beauchamp et al. 2010; Sundet et al. 2005; Border et al. 2022). As a result, the two types of genetic variation become
 associated. We see our contribution here as follows. First, our theoretical
 model links the economic and genetic literatures, basing spouse matching on a
-micro-founded choice model. In particular, we can relate economic policy
-parameters to the size of the genes-SES gradient. Second, our research design
-gives us a clean pathway from environmental shocks to a person's SES, to the
-genetic endowment of their spouse. This is helpful because it is usually
-difficult to separate the environmental and genetic components of the
-correlation between spouses.
+micro-founded choice model. Second, we focus specifically on inherited SES,
+rather than on more broadly defined culturally transmitted traits. This helps
+bridge the genetics and economics literatures. In particular, we can show how
+the genes-SES gradient is affected by economic institutions (see below). Lastly,
+our research design gives us a clean pathway from environmental shocks to a
+person's SES, to the genetic endowment of their spouse. This is helpful because
+it is usually difficult to separate the environmental and genetic components of
+assortative mating.
 
-Secondly, SGAM may affect economic inequality and intergenerational mobility.
+SGAM may affect economic inequality and intergenerational mobility.
 Intergenerational mobility correlates with cross-sectional inequality
 (Becker et al. 2018; Krueger 2012), which has risen dramatically in
 high-income countries, while intergenerational absolute mobility has declined
@@ -327,9 +335,9 @@ process where unobserved genetic variation determines wealth. We show below that
 SGAM could also generate these patterns. The mechanism again is unobserved
 genetic variation, but the interpretation is different, since genetic endowments
 are not an exogenous source of variation, but an asset ``traded'' in marriage
-markets in exchange for wealth and social status. Put another way, for Clark, in
-analysing the effect of ancestral wealth on descendant wealth, genetics is a
-\emph{confound}; under SGAM, it may be a \emph{mediator}.
+markets in exchange for wealth and social status. Put another way, in
+analysing the effect of ancestral wealth on descendant wealth, genetics need
+not be a \emph{confound}; under SGAM, it may be a \emph{mediator}.
 
 SGAM also affects cross-sectional inequality, like other forms of assortative
 mating (Fernández and Rogerson 2001; Fernandez, Guner, and Knowles 2005; Eika, Mogstad, and Zafar 2019; Chiappori, Dias, and Meghir 2018). We know that there is a ``genes-SES gradient'': many
@@ -416,23 +424,14 @@ psychology (Buss and Barnes 1986; Buss 1989; Buss and Schmitt 2019) confirms
 that attractive mate characteristics include aspects of social status (``high
 earning capacity,'' ``professional status'') as well as traits that are partly
 under genetic influence (``intelligent,'' ``tall,'' ``kind,'' ``physically
-attractive''). Despite this, to our knowledge, this is the first paper in either
-genetics or economics to formally analyse SGAM and its consequences.\footnote{Halsey (1958) showed in a two-class model that social
-  mobility combined with assortative mating might increase the association between
-  genetics and social class. Belsky et al. (2018) offer three reasons for the
-  association between education-linked genetics and SES, but do not consider SGAM.}
-
-XXX rework above para
-* Existing work before genomics revolution, using an SEM framework,
-analysed cross-trait mating with
-cultural and genetic inheritance, and predicted positive correlations between
-the cultural and genetic trait. They But they did not specialize to SES as a culturally
-inherited trait {[}what sort of things were they thinking of{]} and therefore
-didn't draw consequences for social inequality.
-- Maybe worth mentioning? they focus on culturally inherited traits (which may
-nevertheless be biological, e.g.~knowledge in the brain) while SES is
-socially \emph{constituted} too.
-* Empirics with twin studies did what?
+attractive''). Despite this, to our knowledge, ours is the first work to examine
+assortative mating between SES and genetics, and to model its social and
+economic consequences.\footnote{In addition to the work mentioned above on cultural and
+  genetic inheritance, Halsey (1958) showed in a two-class model that
+  social mobility combined with assortative mating might increase the association
+  between genetics and social class. Belsky et al. (2018) offer three reasons for
+  the association between education-linked genetics and SES, but do not consider
+  SGAM.}
 
 \hypertarget{model}{%
 \section{Model}\label{model}}
@@ -877,9 +876,7 @@ reduce the variance of traits in the children's generation and possibly also
 their covariance. Here, matching preferences, as summarized in the \(a\) parameter,
 are exogenous. It would be natural to model \(a\) as an equilibrium outcome.
 For example, if parents care about their children's wealth, \(a\) might decrease
-in \(\theta\) and increase in \(\gamma\). Lastly, a gene-environment \emph{interaction}
-(e.g.~\(x^\prime_2 = \gamma x^\prime_1 + \theta\frac{x_2+y_2}{2} + \zeta x'_1\frac{x_2+y_2}{2}\)) might increase the gene-environment
-correlation some more.
+in \(\theta\) and increase in \(\gamma\).
 
 \hypertarget{discussion}{%
 \subsection{Discussion}\label{discussion}}
@@ -902,9 +899,9 @@ wealth exceeds the ``direct'' coefficient \(\theta\), because parents' wealth
 correlates with parents' genetics and via that with own wealth. Thus,
 regressions of wealth on wealth may include the effect of unobserved genetic
 variation. This may be a confound due to pre-existing gene-SES correlation (if
-\(\sigma > 0\)). But under SGAM (\(0 < a < 1\)) it can also be a genuine cause,
-since changes in someone's wealth may indeed affect the identity of their
-spouse, and from that the genetics of their offspring.
+\(\sigma > 0\)). But under SGAM (\(0 < a < 1\)) it can also be a mediating
+variable, since changes in someone's wealth may indeed affect the identity of
+their spouse, and from that the genetics of their offspring.
 
 The converse also holds: regressions of children's characteristics on their
 genetics alone risk overestimating the effect of genetics, by confounding it
@@ -929,13 +926,14 @@ Harden (2021) calls the ``genetic lottery''.
 \section{Data and methods}\label{data-and-methods}}
 
 In modern societies, both SGAM and meritocratic mobility may be at play. Genetic
-variants that cause higher SES, e.g.~higher income and wealth,
-will be passed down along with that status. At the same time, higher SES and ``good
-genes'' will assort in the marriage market. To test this, we look at correlations
-among spouses between one partner's SES and the other partner's genetics.
+variants that cause higher SES, e.g.~higher income and wealth, will be passed
+down along with that status. At the same time, higher SES and ``good genes'' will
+assort in the marriage market. To test this, we look at correlations among
+spouses between one partner's SES and the other partner's genetics.
 
-We use data from the UK Biobank, a study of about 500,000 individuals born
-between 1935 and 1970 (Bycroft et al. 2018). The Biobank contains information on respondents'
+We use data from two sources: Great Britain and Norway. Our Great Britain data
+comes from the UK Biobank, a study of about 500,000 individuals born between
+1935 and 1970 (Bycroft et al. 2018). The Biobank contains information on respondents'
 genetics, derived from DNA microarrays, along with questionnaire data on health
 and social outcomes. The Biobank does not contain explicit information on spouse
 pairs. We categorize respondents as pairs if they:
@@ -956,28 +954,33 @@ pairs. We categorize respondents as pairs if they:
 \end{itemize}
 
 We also eliminate all pairs where either spouse appeared more than once
-in the data. This leaves a total of 35,682 pairs. Some of
-these could be false positives, i.e.~people who are not each others'
-spouse but simply live in the same postcode. To validate the accuracy of
-our pairs, we use genetic relationships. Some respondents in the UK
-Biobank sample have a child (inferred from genetic data) who is also in the
-sample. Among our spouse pairs, 511 have a genetic
-child of at least one partner in the sample. For 441 of
-these, the child is the genetic child of both partners. If this
-subsample is representative, then at least
-86\% of the pairs who have had a
-child, have had a child together. This is a lower bound, because those
-who had a child with someone else may also have had a child with their partner
-who is not in the UK Biobank sample. As a point of comparison, 11\% of families
-with dependent children included a stepchild in England and Wales in
-2011 (National Statistics 2014).
+in the data. This leaves a total of 35,682 pairs.\footnote{In the appendix, we test the validity of our matching process by
+  counting the proportion of pairs who had a shared genetic child, in a subsample
+  of the data. We also check whether any misidentified pairs might have biased our
+  results, by constructing a dataset of ``known fake pairs''.}
 
-It is still possible that some pairs in our data may not be actual spouses. In
-the appendix, to sign any possible bias in our estimates resulting from this, we
-use a dataset of ``known fake'' pairs. We show that estimated coefficients of
-interest are closer to zero among these fake pairs than among our candidate
-``real pairs''. Because of this, any fake pairs remaining in our data are likely
-to bias our coefficients towards zero.
+Our Norway data comes from the Norway Mother, Father and Child Cohort Study
+(MoBa), a study of pregnant women and their partners and children
+(Magnus et al. 2016; Paltiel et al. 2014). The Norwegian Mother, Father and Child
+Cohort Study (MoBa) is a population-based pregnancy cohort study conducted by
+the Norwegian Institute of Public Health. Participants were recruited from all
+over Norway from 1999-2008. The women consented to participation in 41\% of the
+pregnancies. The cohort includes approximately 114,500 children, 95,200 mothers
+and 75,200 fathers. (In this paper, we use about 100,000 genotyped individuals
+and about 45,000 genotyped spouse pairs.) The current study is based on version
+12 of the quality-assured data files released for research in 2019. The
+establishment of MoBa and initial data collection was based on a license from
+the Norwegian Data Protection Agency and approval from The Regional Committees
+for Medical and Health Research Ethics. The MoBa cohort is currently regulated
+by the Norwegian Health Registry Act. The current study was approved by The
+Regional Committees for Medical and Health Research Ethics XXX.\footnote{Parts of the above paragraph come from a standard template
+  which is required to be included by the MoBa study.}
+
+The Norway data has some advantages over UK Biobank, including higher
+participation, larger sample size, and spouse pairs which are known rather than
+inferred. On the other hand it is missing some variables, including IQ measures
+and self-reported health. Having two data sources also lets us make some
+-- admittedly rough -- comparisons between the two contexts.
 
 Our key dependent variable is spouse's \emph{Polygenic Score for Educational
 Attainment} (PSEA). A polygenic score is a DNA-derived summary measure
@@ -1001,7 +1004,7 @@ re-estimated excluding UK Biobank participants.\footnote{PSEA was computed by su
   the SNP array data. Further details can be found in
   Abdellaoui et al. (2019).} We normalize the score to
 have mean 0 and variance 1. Because polygenic scores are created from estimates
-of many presumably tiny effects, they contain a large amount of noise relative
+of many small effects, they contain a large amount of noise relative
 to the true best estimator that could be derived from genetic data. For
 instance, PSEA explains only 11--13\% of variance in educational attainment
 (Lee et al. 2018), whereas the true proportion explained by genetic
@@ -1054,7 +1057,7 @@ inherited, these people's children will also have higher PSEA.
 
 }
 
-\caption{Spouse PSEA against own university attendance and own income in first job. Lines show 95\% confidence intervals.}\label{fig:pic-basic-corr}
+\caption{Spouse polygenic score for educational attainment (PSEA) against own university attendance and own income in first job (Great Britain). Lines show 95\% confidence intervals. PSEA is normalized to have mean 0 and variance 1. Income is estimated from the respondent's first job, as the average income of the SOC job code.}\label{fig:pic-basic-corr}
 \end{figure}
 
 These figures do not prove that SGAM is taking place. Since an
@@ -1116,10 +1119,10 @@ respondents with between 1 and 5 siblings, i.e.~with a family size of
 2-6: beyond that, estimation would get noisy because of small cell sizes.
 To control for parental age, we use father's and/or mother's age at the
 respondent's birth. This is calculated from the relevant
-parent's current age, which is only available if the parent was still alive.
-XXX comment on sample selection. For other controls we use respondent's month
-of birth; age at interview; and own PSEA. Our claim is that controlling for
-these variables, birth order is independent of genetic variation. (XXX Oana
+parent's current age. In the UK Biobank, this data is only available if the
+respondent's parent was still alive. For other controls we use respondent's
+month of birth; age at interview; and own PSEA. Our claim is that controlling
+for these variables, birth order is independent of genetic variation. (XXX Oana
 could talk about this aspect in model section?)
 
 \hypertarget{decomposing-the-birth-order-effect-on-spouse-genetics}{%
@@ -1246,10 +1249,11 @@ measured mediator (in particular university attendance and income) on
 university attendance (or income) on spouse PSEA will be the coefficient of
 university/income in the regression of spouse PSEA in equation
 \eqref{eq:model-to-estimate}, multiplied by the coefficient of birth order on
-university/income from equation \eqref{eq:mediator-model}.
+university/income from equation \eqref{eq:mediator-model}. We now apply this
+framework to each of our two samples.
 
-\hypertarget{results}{%
-\section{Results}\label{results}}
+\hypertarget{results-great-britain}{%
+\section{Results: Great Britain}\label{results-great-britain}}
 
  
   \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
@@ -1261,7 +1265,7 @@ university/income from equation \eqref{eq:mediator-model}.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-first-stage} Regressions of mediators on birth order}
+\caption{\label{tab:tbl-bo-first-stage} Regressions of mediators on birth order (Great Britain)}
  \setlength{\tabcolsep}{0pt}
 \begin{tabularx}{1\textwidth}{p{0.142857142857143\textwidth} p{0.142857142857143\textwidth} p{0.142857142857143\textwidth} p{0.142857142857143\textwidth} p{0.142857142857143\textwidth} p{0.142857142857143\textwidth} p{0.142857142857143\textwidth}}
 
@@ -1401,7 +1405,7 @@ university/income from equation \eqref{eq:mediator-model}.
 \hhline{}
 \arrayrulecolor{black}
 
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont R2}\huxbpad{6pt}}} &
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont $R^2$}\huxbpad{6pt}}} &
 \multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.074\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
 \multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.026\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
 \multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.142857142857143\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.058\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
@@ -1476,7 +1480,7 @@ parents versus being later in birth order.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-psea-basic} Regressions of spouse PSEA on birth order}
+\caption{\label{tab:tbl-bo-psea-basic} Regressions of spouse PSEA on birth order (Great Britain)}
  \setlength{\tabcolsep}{0pt}
 \begin{tabularx}{0.9\textwidth}{p{0.225\textwidth} p{0.225\textwidth} p{0.225\textwidth} p{0.225\textwidth}}
 
@@ -1583,7 +1587,7 @@ parents versus being later in birth order.
 \hhline{}
 \arrayrulecolor{black}
 
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont R2}\huxbpad{6pt}}} &
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont $R^2$}\huxbpad{6pt}}} &
 \multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.003\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
 \multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.010\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
 \multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.013\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
@@ -1618,7 +1622,8 @@ which would bias our results towards zero.\footnote{The appendix reports results
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-psea} Regressions of spouse PSEA on birth order and mediators}
+\caption{\label{tab:tbl-bo-psea} Regressions of spouse PSEA on birth order and mediators 
+                   (Great Britain)}
  \setlength{\tabcolsep}{0pt}
 \begin{tabularx}{1\textwidth}{p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth}}
 
@@ -1856,37 +1861,17 @@ which would bias our results towards zero.\footnote{The appendix reports results
 \hhline{}
 \arrayrulecolor{black}
 
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont R2}\huxbpad{2pt}}} &
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont $R^2$}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.013\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.032\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.030\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.034\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
 
 
-\hhline{}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont logLik}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$14297.465\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$14197.703\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$4810.934\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$4802.396\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
-
-
-\hhline{}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont AIC}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 28694.930\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 28505.406\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 9731.869\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 9716.791\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
-
-
 \hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
 \arrayrulecolor{black}
 
-\multicolumn{5}{!{\huxvb{0, 0, 0}{0}}p{1\textwidth+8\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{1\textwidth+8\tabcolsep-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Estimates from OLS regressions with spouse PSEA as dependent variable, and own birth order and mediators (university attendance and income) as the main independent variables. Columns 2$-$4 correspond to model 7. PSEA is the polygenic score for educational attainment, which is normalized with mean 0 and standard deviation 1. We include own PSEA, mean of parents’ ages at birth, potential non-SES mediators (fluid IQ, height, BMI, self-reported health) and further controls (family size, birth year, and birth month dummies) to ensure the balance of covariates across birth order. All data is from the UK Biobank for a sample of UK individuals born between 1935 and 1970.  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. Standard errors clustered by spouse pair in parentheses.}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+\multicolumn{5}{!{\huxvb{0, 0, 0}{0}}p{1\textwidth+8\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{1\textwidth+8\tabcolsep-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Estimates from OLS regressions with spouse PSEA as dependent variable, and own birth order and mediators (university attendance and income) as the main independent variables. Columns 2$-$4 correspond to model (7). PSEA is the polygenic score for educational attainment, which is normalized with mean 0 and standard deviation 1. We include own PSEA, mean of parents’ ages at birth, potential non-SES mediators (fluid IQ, height, BMI, self-reported health) and further controls (family size, birth year, and birth month dummies) to ensure the balance of covariates across birth order. All data is from the UK Biobank for a sample of UK individuals born between 1935 and 1970.  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. Standard errors clustered by spouse pair in parentheses.}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -1926,7 +1911,7 @@ holds when we control for both university and income (column 4).
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-mediation-prop} Percent of birth order effects accounted for by mediators, models 2-4}
+\caption{\label{tab:tbl-mediation-prop} Percent of birth order effects accounted for by mediators (Great Britain)}
  \setlength{\tabcolsep}{0pt}
 \begin{tabularx}{0.7\textwidth}{p{0.28\textwidth} p{0.14\textwidth} p{0.14\textwidth} p{0.14\textwidth}}
 
@@ -2019,19 +2004,23 @@ than all the other mediators. Income, fluid IQ, height and BMI all explain
 between 6 and 17 percent of the effect, depending on the specification.
 
 These results provide evidence that birth order affects spouse PSEA via
-education and income, with education being especially important.
+education and income, with education being especially important. The effect
+size of birth order is small (a few percent of a standard deviation of PSEA),
+but what matters is the effect size of education and income. The effect of
+education in particular is quite large as measured here, and since it
+also appears to mediate the purely environmental shock of birth order, it
+cannot just be due to an unobserved correlation with own genetics.
 
-Our next regressions split up the data into subsets. Cultural
-stereotypes often assume that the link between status and genes is not
-symmetric across the genders, for example, that males with high SES are
-particularly likely to marry attractive spouses. Claim \ref{claim-men-women-different} showed that these differences would strengthen
-the effects of SGAM.
-To test for this, we
-separately regress female spouses' PSEA on male birth order, and male
-spouses' PSEA on female birth order. We also rerun regressions among the
-subset of individuals who had children. A significant result here will
-confirm that the association between status and genetics is carried over
-into the next generation.
+Our next regressions split up the data into subsets. Cultural stereotypes often
+assume that the link between status and genes is not symmetric across the
+genders, for example, that males with high SES are particularly likely to marry
+attractive spouses. Claim \ref{claim-men-women-different} showed that these
+differences would strengthen the effects of SGAM. To test for this, we
+separately regress female spouses' PSEA on male birth order, and male spouses'
+PSEA on female birth order. We also rerun regressions among the subset of
+individuals who had children. A significant result here will confirm that the
+association between status and genetics is carried over into the next
+generation.
 
 Table \ref{tab:tbl-bo-subsets} shows the results. Columns 1 and 2 present
 results using birth order of male respondents to predict female spouses' PSEA.
@@ -2041,7 +2030,8 @@ so as to keep our N large). Columns 3 and 4 repeat the exercise for female
 respondents, using their birth order to predict male spouses' PSEA. The effect of
 birth order is imprecisely estimated in these subsets due to the lower sample
 size. However, the pattern of coefficient sizes is the same as in the main
-regression: the coefficient of birth order is about -0.3, and adding university
+regression: the coefficient of birth order is about -0.3 (and very similar
+between the sexes), and adding university
 attendance reduces the absolute size of the birth order effect. Columns 5 and 6
 show results from regressions on the subsample of couples with children.
 Here, birth order is significant in the base specification, and again,
@@ -2057,7 +2047,7 @@ university attendance still seems to mediate the birth order effect.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-subsets} Regressions of spouse PSEA on birth order: subsets}
+\caption{\label{tab:tbl-bo-subsets} Regressions of spouse PSEA on birth order: subsets (Great Britain)}
  \setlength{\tabcolsep}{0pt}
 \begin{tabularx}{1\textwidth}{p{0.142857142857143\textwidth} p{0.142857142857143\textwidth} p{0.142857142857143\textwidth} p{0.142857142857143\textwidth} p{0.142857142857143\textwidth} p{0.142857142857143\textwidth} p{0.142857142857143\textwidth}}
 
@@ -2317,7 +2307,7 @@ university attendance still seems to mediate the birth order effect.
 \hhline{}
 \arrayrulecolor{black}
 
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.142857142857143\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont R2}\huxbpad{3pt}}} &
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.142857142857143\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont $R^2$}\huxbpad{3pt}}} &
 \multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.142857142857143\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.017\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
 \multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.142857142857143\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.043\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
 \multicolumn{1}{p{0.142857142857143\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.142857142857143\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.017\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
@@ -2342,8 +2332,570 @@ university attendance still seems to mediate the birth order effect.
 
 \FloatBarrier
 
+\hypertarget{results-norway}{%
+\section{Results: Norway}\label{results-norway}}
+
+Now we turn to the results from Norway. Tables \ref{tab:tbl-bo-psea-moba} and
+\ref{tab:tbl-mediation-moba} are the equivalent of Tables
+\ref{tab:tbl-bo-psea} and \ref{tab:tbl-mediation-prop} for respondents in the
+MoBa dataset. (Equivalents to Tables \ref{tab:tbl-bo-first-stage} and
+\ref{tab:tbl-bo-psea-basic} are in the appendix.)
+
+The broad pattern of results is similar to Britain. The larger N gives
+higher statistical significance. Effects of all the variables are in the
+expected direction, except that the coefficient on income changes sign when
+university is also included. In particular, the point estimate of the total
+effect of birth order is about twice as high as in Britain, and the estimated
+effect of university attendance is also higher. The effect of own PSEA is also
+about twice as high.
+
+Adding university attendance again substantially and significantly reduces
+the effect of birth order, though here, birth order remains independently
+significant and substantively large even controlling for university.
+In Norway, however, it is much less clear that income is an important mediator on its own. Adding income barely changes the effect of birth order (column 3).
+
+Table \ref{tab:tbl-mediation-moba} computes the percentages of the effects that
+are mediated by our variables. The percentage effects of education, when
+controlling for income, are about the same in both countries. But the effect of
+income is much smaller and very close to zero.
+
+Table \ref{tab:tbl-bo-subsets-moba} runs our regressions separately for focal
+males and focal females only.\footnote{We don't run separate regressions for families with children, since
+  MOBA only includes families with children by design.} As in Britain, coefficients look very
+similar across the sexes. The effects of birth order are highly significant in
+either sex, and adding the mediators significantly reduces them. Interestingly,
+the effect of BMI is about 50\% larger for women, as in Britain, and here the
+difference is significant. On the other hand, in Norway, there is no difference
+between the male and female coefficients on university attendance.
+
+Overall, the Norway results show two things. First, they clearly confirm that
+birth order affects spouse PSEA, with education a key mediator. Second, they
+suggest that the effects of SES in marriage markets vary between the two
+countries. Education has a similar effect on spouse PSEA in Norway, but income
+has a much smaller effect. Of course this is a loose comparison, since even
+conditioning on our controls, samples and measures in the two countries are
+different. Still, it is interesting that in Norway, a more egalitarian country
+than the UK, income seems to have a smaller effect on spouse PSEA, while own
+PSEA, a genetic characteristic, seems to have a higher effect. In terms of our
+theory, \(a\) appears larger in Norway. This might fit the idea that \(a\) is itself
+endogenous to economic institutions.
+
+ 
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[ht]
+\begin{centerbox}
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{\label{tab:tbl-bo-psea-moba} Regressions of spouse PSEA (Norway)}
+ \setlength{\tabcolsep}{0pt}
+\begin{tabularx}{1\textwidth}{p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth}}
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont }\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (1)}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (2)}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (3)}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (4)}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth order}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0684 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0426 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0652 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0428 ***}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0051)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0054)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0054)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0054)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont University}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.3049 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.3091 ***}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0075)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0076)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Income}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0053 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0043 **\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0013)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0014)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Height}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0033 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0061 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0032 ***}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0004)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0004)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0004)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont BMI}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0206 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0240 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0208 ***}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0009)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0009)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0009)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Own PSEA}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.1193 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0699 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.1068 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0704 ***}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0034)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0036)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0035)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0036)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Parents' age at birth}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0132 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0085 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0125 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0085 ***}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0008)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0008)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0008)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0008)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Family size dummies}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth month dummies}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth year dummies}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont N}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 89308\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 80465\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 80503\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 80465\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont $R^2$}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.032\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.060\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.041\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.060\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{5}{!{\huxvb{0, 0, 0}{0}}p{1\textwidth+8\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{1\textwidth+8\tabcolsep-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Estimates from OLS regressions with spouse PSEA as dependent variable, and own birth order and mediators (university attendance and income) as the main independent variables. Columns 2$-$4 correspond to model (7). PSEA is the polygenic score for educational attainment, which is normalized with mean 0 and standard deviation 1. We include own PSEA, mean of parents’ ages at birth, potential non-SES mediators (height and BMI) and further controls (family size, birth year, and birth month dummies) to ensure the balance of covariates across birth order. All data is from the MoBa dataset for a sample of spouse pairs with a child between 1999 and 2008.  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. Standard errors clustered by spouse pair in parentheses.}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+\end{tabularx}
+\end{threeparttable}\par\end{centerbox}
+
+\end{table}
+ 
+
+ 
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[ht]
+\begin{centerbox}
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{\label{tab:tbl-mediation-moba} Percent of birth order effects accounted for by mediators (Norway)}
+ \setlength{\tabcolsep}{0pt}
+\begin{tabularx}{0.7\textwidth}{p{0.28\textwidth} p{0.14\textwidth} p{0.14\textwidth} p{0.14\textwidth}}
+
+
+\hhline{>{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.28\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{0pt}\parbox[b]{0.28\textwidth-0pt-6pt}{\huxtpad{3pt + 1em}\raggedright \textbf{{\fontsize{10pt}{12pt}\selectfont }}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-6pt}{\huxtpad{3pt + 1em}\raggedleft \textbf{{\fontsize{10pt}{12pt}\selectfont Model  2 (\%)}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-6pt}{\huxtpad{3pt + 1em}\raggedleft \textbf{{\fontsize{10pt}{12pt}\selectfont Model  3 (\%)}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-0pt}{\huxtpad{3pt + 1em}\raggedleft \textbf{{\fontsize{10pt}{12pt}\selectfont Model  4 (\%)}}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.28\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{0pt}\parbox[b]{0.28\textwidth-0pt-6pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont University}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-6pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 35.5}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-6pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-0pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 36.0}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.28\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{0pt}\parbox[b]{0.28\textwidth-0pt-6pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Income}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-6pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-6pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont  0.9}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-0pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.7}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.28\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{0pt}\parbox[b]{0.28\textwidth-0pt-6pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Height}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-6pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont  2.3}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-6pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont  4.3}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-0pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont  2.3}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.28\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{0pt}\parbox[b]{0.28\textwidth-0pt-6pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont BMI}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-6pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont  0.7}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-6pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont  0.8}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.14\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.14\textwidth-6pt-0pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont  0.7}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{4}{!{\huxvb{0, 0, 0}{0}}p{0.7\textwidth+6\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.7\textwidth+6\tabcolsep-6pt-6pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Percentage of the effects of birth order in Table \ref{tab:tbl-bo-psea-moba}, columns 2 to 4, explained by by each mediating variable.}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+\end{tabularx}
+\end{threeparttable}\par\end{centerbox}
+
+\end{table}
+ 
+
+ 
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[ht]
+\begin{centerbox}
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{\label{tab:tbl-bo-subsets-moba} Regressions of spouse PSEA: subsets (Norway)}
+ \setlength{\tabcolsep}{0pt}
+\begin{tabularx}{1\textwidth}{p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth}}
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont }\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Male respondents}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Male respondents}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Female respondents}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Female respondents}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth order}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.069 ***}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.045 ***}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.067 ***}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.039 ***}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.007)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.008)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.007)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.008)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont University}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.315 ***}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.314 ***}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.010)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.011)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Height}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.008 ***}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.006 ***}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.001)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.001)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont BMI}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.016 ***}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.023 ***}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.001)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.002)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Own PSEA}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.123 ***}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.069 ***}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.115 ***}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.069 ***}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (0.005)}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (0.005)}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (0.005)}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (0.005)}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Parents' age at birth}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont 0.012 ***}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont 0.008 ***}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont 0.014 ***}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont 0.009 ***}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (0.001)}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (0.001)}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (0.001)}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (0.001)}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Family size dummies}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth month dummies}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth year dummies}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont Yes\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont N}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 44524\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 40090\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 44784\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 40375\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont $R^2$}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.033\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.063\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.034\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{0.2\textwidth-3pt-3pt}{\huxtpad{3pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.061\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{5}{!{\huxvb{0, 0, 0}{0}}p{1\textwidth+8\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{3pt}\parbox[b]{1\textwidth+8\tabcolsep-3pt-3pt}{\huxtpad{3pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Estimates from OLS regressions corresponding to columns 1 and 2 in Table \ref{tab:tbl-bo-psea}, separately for males, females and respondents with children. Spouse PSEA is the dependent variable, and own birth order and university attendance are the main independent variables. PSEA is the polygenic score for educational attainment, which is normalized with mean 0 and standard deviation 1. We include own PSEA, parents’ age at birth (the mean of parent’s ages) and further controls (family size, birth year, and birth month dummies) to ensure the balance of covariates across birth order. All data is from the MoBa dataset for a sample of spouse pairs with a child between 1999 and 2008.  *** p < 0.001;  ** p < 0.01;  * p < 0.05;  + p < 0.1. Standard errors clustered by spouse pair in parentheses.}\huxbpad{3pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+\end{tabularx}
+\end{threeparttable}\par\end{centerbox}
+
+\end{table}
+ 
+
+\FloatBarrier
+
 \hypertarget{robustness}{%
-\subsection{Robustness}\label{robustness}}
+\section{Robustness}\label{robustness}}
 
 Although all children of the same parents have the same polygenic scores
 in expectation, it might still be possible that genetics correlates with
@@ -2449,11 +3001,11 @@ including all previous versions of the paper and code.
 \hypertarget{conclusion}{%
 \section{Conclusion}\label{conclusion}}
 
-Our empirical analysis shows that in a contemporary developed society,
-individuals with fewer elder siblings had spouses with higher PSEA. We also provide
-evidence that these effects are mediated by socio-economic status, specifically
-income and education. We interpret this as evidence of social-genetic assortative
-mating (SGAM).
+Our empirical analysis shows that in Great Britain and Norway, two contemporary
+developed countries, earlier-born siblings had spouses with
+higher PSEA. We also provide evidence that these effects are mediated by
+socio-economic status, specifically income and education. We interpret this as
+evidence of social-genetic assortative mating (SGAM).
 
 There are multiple mechanisms by which advantage is transmitted across
 generations. High-income parents may invest more in their children's human
@@ -2472,15 +3024,16 @@ genetics. As our model shows, genetic variation is not an exogenous input into
 the social system, but an endogenous outcome -- not a confound for wealth, but a mediator.
 
 SGAM also provides a new explanation for the genes-SES gradient -- the observed
-association of genes with SES. The leading alternative explanation is
-meritocratic social mobility. Whilst meritocracy exists in modern capitalist
-economies, it has been far more limited in most societies throughout history
-(Smelser and Lipset 1966). On the other hand, assortative mating is likely to be a
-cultural universal (Buss 1989). Thus, SGAM predicts that genes-SES gradients
-should exist in all stratified societies. In fact, people in many societies have
-believed that innate traits do vary by social status.\footnote{The appendix contains a selection of relevant historical quotations.} In future, it may be
-possible to directly test for genetic differences across social status in
-ancient DNA samples.
+association of genes with SES -- which is an important cause of educational
+and occupational inequality, and perhaps also of health inequalities. The
+leading alternative explanation is meritocratic social mobility. Whilst
+meritocracy exists in modern capitalist economies, it has been far more limited
+in most societies throughout history (Smelser and Lipset 1966). On the other hand,
+assortative mating is likely to be a cultural universal (Buss 1989). Thus,
+SGAM predicts that genes-SES gradients should exist in all stratified societies.
+In fact, people in many societies have believed that innate traits do vary by
+social status.\footnote{The appendix contains a selection of relevant historical quotations.} In future, it may be possible to directly test for
+genetic differences across social status in ancient DNA samples.
 
 In our model, the association between SES and genetic variation depends on
 economic and social institutions. Institutions that make wealth more persistent
@@ -2492,8 +3045,9 @@ other hand, while lowering the intergenerational transmission of wealth may
 eventually flatten the genes-SES gradient, increases in the level of meritocracy
 paradoxically make it steeper, suggesting a deep conflict between meritocracy
 and egalitarianism (Young 1958; Markovits 2019). Lastly, the
-structure of marriage markets also affects the gradient. Testing these comparative
-statics across societies and time periods is an important challenge for future work.
+structure of marriage markets also affects the gradient. Our empirical analysis
+suggests that in relatively egalitarian Norway, income plays a less important role in assortative mating than it does in the UK. However, fuller tests of these comparative
+statics across societies and time periods are an important challenge for future work.
 
 The broadest message of this paper is that genetics are a social
 outcome. Both popular and scientific discourse often parse genetics as
@@ -2520,6 +3074,17 @@ AA is supported by the Foundation Volksbond Rotterdam and by ZonMw grant
 849200011 from The Netherlands Organisation for Health Research and Development.
 This study was conducted using UK Biobank resources under application number
 40310.
+
+We thank the Norwegian Institute of Public Health (NIPH) for generating high-quality
+genomic data. This research is part of the HARVEST collaboration, supported by the
+Research Council of Norway (\#229624). We also thank the NORMENT Centre for providing
+genotype data, funded by the Research Council of Norway (\#223273), South East Norway
+Health Authorities and Stiftelsen Kristian Gerhard Jebsen. We further thank the Center for
+Diabetes Research, the University of Bergen for providing genotype data and performing
+quality control and imputation of the data funded by the ERC AdG project
+SELECTionPREDISPOSED, Stiftelsen Kristian Gerhard Jebsen, Trond Mohn Foundation,
+the Research Council of Norway, the Novo Nordisk Foundation, the University of Bergen,
+and the Western Norway Health Authorities.
 
 Code to reproduce is available at \url{https://github.com/hughjonesd/trading-genetics}.
 
@@ -3503,8 +4068,20 @@ by assumption, this completes the proof.
 
 \newpage
 
-\hypertarget{robustness-checks}{%
-\subsection{Robustness checks}\label{robustness-checks}}
+\hypertarget{more-empirical-results}{%
+\subsection{More empirical results}\label{more-empirical-results}}
+
+Table \ref{tab:tbl-bo-first-stage-moba} shows regressions of birth order on
+mediators for the MOBA data. Birth order predicts all the mediators significantly
+and with large effect sizes, except for BMI.
+
+Table \ref{tab:tbl-bo-psea-basic-moba} regresses birth order on spouse PSEA
+for the MOBA data, starting with a simple bivariate regression and adding
+controls as in Table \ref{tab:tbl-bo-psea-basic}. Interestingly, here,
+the negative effect of birth order is highly significant even before we
+control for parental age. As in Britain, though, the effect is greatly increased
+by controlling for parental age, and parental age has the same positive sign
+and about the same size.
 
 Table \ref{tab:tbl-bo-psea-no-par-age} reruns our central regressions,
 dropping the control for parents' age at birth. Results show the same
@@ -3572,7 +4149,293 @@ main text.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-psea-no-par-age} Regressions of spouse PSEA, without controls for parents' age at respondent's birth}
+\caption{\label{tab:tbl-bo-first-stage-moba} Regressions of mediators on birth order (Norway)}
+ \setlength{\tabcolsep}{0pt}
+\begin{tabularx}{1\textwidth}{p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth}}
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont University}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Income}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Height}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont BMI}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth order}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0797 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.1133 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.4862 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0222\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0022)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0123)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0448)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0195)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Own PSEA}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.1317 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.2550 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.3262 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.2546 ***}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0013)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0080)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0293)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0127)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Parents' age at birth}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0142 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0149 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0661 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0075 *\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0003)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0019)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0070)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0031)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Family size dummies}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth month dummies}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth year dummies}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont N}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 108960\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 109013\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 99924\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 98399\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont R2}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.120\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.017\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.025\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.2\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.2\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.006\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{5}{!{\huxvb{0, 0, 0}{0}}p{1\textwidth+8\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{1\textwidth+8\tabcolsep-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Estimates from OLS regressions with the  mediators (university attendance, income, height, BMI)  as dependent variables, and own birth order as the main independent variable. PSEA is the polygenic score for educational attainment, which is normalized with mean 0 and standard deviation 1. We include parents' age at birth and further controls to ensure the balance of covariates across birth order. All data is from the MoBa dataset for a sample of spouse pairs with a child between 1999 and 2008.  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. Standard errors clustered by spouse pair in parentheses.}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+\end{tabularx}
+\end{threeparttable}\par\end{centerbox}
+
+\end{table}
+ 
+
+ 
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[ht]
+\begin{centerbox}
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{\label{tab:tbl-bo-psea-basic-moba} Regressions of spouse PSEA on birth order (Norway)}
+ \setlength{\tabcolsep}{0pt}
+\begin{tabularx}{0.9\textwidth}{p{0.225\textwidth} p{0.225\textwidth} p{0.225\textwidth} p{0.225\textwidth}}
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (1)}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (2)}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont (3)}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth order}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0108 **}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0174 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0684 ***}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0038)\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0041)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0051)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Own PSEA}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.1272 ***}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.1193 ***}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0033)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0034)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Parents' age at birth}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0132 ***}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont }\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont (0.0008)\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Family size dummies}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth month dummies}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont No}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth year dummies}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont No}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering {\fontsize{10pt}{12pt}\selectfont Yes}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont N}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 108834\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 89950\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 89308\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont R2}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.000\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.029\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.225\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.225\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.032\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{4}{!{\huxvb{0, 0, 0}{0}}p{0.9\textwidth+6\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.9\textwidth+6\tabcolsep-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Estimates from OLS regressions with spouse PSEA as dependent variable, and own birth order as the main independent variable. PSEA is the polygenic score for educational attainment, which is normalized with mean 0 and standard deviation 1. We include own PSEA, parents' age at birth (the mean of parents' ages), and further controls (family size, birth year, and birth month dummies) in columns 2$-$3 to ensure the balance of covariates across birth order. All data is from the MoBa dataset for a sample of spouse pairs with a child between 1999 and 2008.  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. Standard errors clustered by spouse pair in parentheses.}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+\end{tabularx}
+\end{threeparttable}\par\end{centerbox}
+
+\end{table}
+ 
+
+ 
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[ht]
+\begin{centerbox}
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{\label{tab:tbl-bo-psea-no-par-age} Regressions of spouse PSEA, without controls for parents' age at respondent's birth (Great Britain)}
  \setlength{\tabcolsep}{0pt}
 \begin{tabular}{l l l l l}
 
@@ -3841,7 +4704,7 @@ main text.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-psea-dummies} Regressions of spouse PSEA, separate birth order dummies}
+\caption{\label{tab:tbl-bo-psea-dummies} Regressions of spouse PSEA, separate birth order dummies (Great Britain)}
  \setlength{\tabcolsep}{0pt}
 \begin{tabularx}{0.9\textwidth}{p{0.18\textwidth} p{0.18\textwidth} p{0.18\textwidth} p{0.18\textwidth} p{0.18\textwidth}}
 
@@ -4150,7 +5013,7 @@ main text.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-subset-dummies} Regressions of spouse PSEA, separate birth order dummies: subsets}
+\caption{\label{tab:tbl-bo-subset-dummies} Regressions of spouse PSEA, separate birth order dummies: subsets (Great Britain)}
  \setlength{\tabcolsep}{0pt}
 \begin{tabularx}{0.95\textwidth}{p{0.135714285714286\textwidth} p{0.135714285714286\textwidth} p{0.135714285714286\textwidth} p{0.135714285714286\textwidth} p{0.135714285714286\textwidth} p{0.135714285714286\textwidth} p{0.135714285714286\textwidth}}
 
@@ -4500,7 +5363,8 @@ main text.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-psea-weights} Regressions of spouse PSEA, weighted to match UK Biobank sampling frame}
+\caption{\label{tab:tbl-bo-psea-weights} Regressions of spouse PSEA, weighted to match 
+                   UK Biobank sampling frame (Great Britain)}
  \setlength{\tabcolsep}{0pt}
 \begin{tabular}{l l l l l}
 
@@ -4789,7 +5653,8 @@ main text.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-psea-pgs} Regressions of spouse PSEA with controls for polygenic scores}
+\caption{\label{tab:tbl-bo-psea-pgs} Regressions of spouse PSEA with controls for polygenic 
+                   scores (Great Britain)}
  \setlength{\tabcolsep}{0pt}
 \begin{tabularx}{1\textwidth}{p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth}}
 
@@ -5068,7 +5933,8 @@ main text.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-psea-age-fte} Regressions of spouse PSEA using age of leaving full-time education}
+\caption{\label{tab:tbl-bo-psea-age-fte} Regressions of spouse PSEA using age of leaving full-time 
+                   education (Great Britain)}
  \setlength{\tabcolsep}{0pt}
 \begin{tabularx}{0.9\textwidth}{p{0.225\textwidth} p{0.225\textwidth} p{0.225\textwidth} p{0.225\textwidth}}
 
@@ -5331,7 +6197,8 @@ main text.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-psea-no3} Regressions of spouse PSEA, excluding family size 3}
+\caption{\label{tab:tbl-bo-psea-no3} Regressions of spouse PSEA, excluding family size 3 
+                   (Great Britain)}
  \setlength{\tabcolsep}{0pt}
 \begin{tabular}{l l l l l}
 
@@ -5613,18 +6480,30 @@ main text.
 \FloatBarrier
 \newpage
 
-\hypertarget{regressions-with-fake-pairs}{%
-\subsubsection{Regressions with ``fake pairs''}\label{regressions-with-fake-pairs}}
+\hypertarget{testing-the-uk-biobank-spouse-pair-matching}{%
+\subsubsection{Testing the UK Biobank spouse pair matching}\label{testing-the-uk-biobank-spouse-pair-matching}}
 
-Our dataset of pairs could still contain pairs who live in the same
-postcode but are not spouses. These pairs might still show a
-relationship between one partner's phenotype and the other's genotype.
-For example, maybe early-born children grow up to live in richer
-postcodes, along with people who have higher PSEA scores
-(Abdellaoui et al. 2019). This could then bias the results. If the
-coefficient for ``fake pairs'' is absolutely larger (smaller) than for
-real pairs, then our results will be biased away from zero (towards
-zero).
+Some of our spouse pairs in UK Biobank could be false positives, i.e.~people who
+are not each others' spouse but simply live in the same postcode. To validate
+the accuracy of our pairs, we use genetic relationships. Some respondents in the
+UK Biobank sample have a child (inferred from genetic data) who is also in the
+sample. Among our spouse pairs, 463 have a genetic child of at
+least one partner in the sample. For 425 of these, at least one
+child is the genetic child of both partners. If this subsample is
+representative, then about 92\% of the
+pairs who have had a child, have had a child together. This is a lower bound
+estimate, because some of the remaining couples may have had a genetically
+shared child who is not in the UK Biobank sample. As a point of comparison, 11\%
+of families with dependent children included a stepchild in England and Wales in
+2011 (National Statistics 2014).
+
+It is still possible that some pairs in our data may not be actual spouses.
+These pairs might show a relationship between one partner's phenotype and the
+other's genotype. For example, maybe early-born children grow up to live in
+richer postcodes, along with people who have higher PSEA scores
+(Abdellaoui et al. 2019). This could then bias the results. If the coefficient
+for ``fake pairs'' is absolutely larger (smaller) than for real pairs, then our
+results will be biased away from zero (towards zero).
 
 To sign the bias, we create a dataset of ``known fake pairs''. These are
 opposite-sexed pairs who live in the same postcode, but do not share all
@@ -5636,8 +6515,8 @@ reported living with spouse, wife reported living with spouse) the fake
 pairs ticked exactly 5 out of 7 boxes.
 
 We again use genetic children to confirm that the fake pairs are ``real
-fakes''. Out of 817 genetic children of the fake pairs, only
-33 were children of both parents. Thus, the vast majority of
+fakes''. Out of 786 genetic children of the fake pairs, only
+32 were children of both parents. Thus, the vast majority of
 fake pairs do not appear to be spouses. Table
 \ref{tab:tbl-bo-psea-fake} reruns the regressions of Table
 \ref{tab:tbl-bo-psea-basic} using the fake pairs. Although the
@@ -5657,7 +6536,7 @@ results towards zero.
 \begin{centerbox}
 \begin{threeparttable}
 \captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-bo-psea-fake} Regressions of PSEA on birth order: fake pairs}
+\caption{\label{tab:tbl-bo-psea-fake} Regressions of PSEA on birth order: fake pairs (Great Britain)}
  \setlength{\tabcolsep}{0pt}
 \begin{tabularx}{0.8\textwidth}{p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth} p{0.2\textwidth}}
 
@@ -6056,6 +6935,9 @@ Lee, James J, Robbee Wedow, Aysu Okbay, Edward Kong, Omeed Maghzian, Meghan Zach
 \leavevmode\vadjust pre{\hypertarget{ref-Lindahl_2008}{}}%
 Lindahl, Lena. 2008. {``Do Birth Order and Family Size Matter for Intergenerational Income Mobility? Evidence from Sweden.''} \emph{Applied Economics} 40 (17): 2239--57. \url{https://doi.org/10.1080/00036840600949421}.
 
+\leavevmode\vadjust pre{\hypertarget{ref-magnus2016cohort}{}}%
+Magnus, Per, Charlotte Birke, Kristine Vejrup, Anita Haugan, Elin Alsaker, Anne Kjersti Daltveit, Marte Handal, et al. 2016. {``Cohort Profile Update: The Norwegian Mother and Child Cohort Study (MoBa).''} \emph{International Journal of Epidemiology} 45 (2): 382--88.
+
 \leavevmode\vadjust pre{\hypertarget{ref-marees2021genetic}{}}%
 Marees, Andries T, Dirk JA Smit, Abdel Abdellaoui, Michel G Nivard, Wim Van Den Brink, Damiaan Denys, Titus J Galama, Karin JH Verweij, and Eske M Derks. 2021. {``Genetic Correlates of Socio-Economic Status Influence the Pattern of Shared Heritability Across Mental Health Traits.''} \emph{Nature Human Behaviour} 5 (8): 1065--73.
 
@@ -6085,6 +6967,9 @@ Oreffice, Sonia, and Climent Quintana-Domeque. 2010. {``Anthropometry and Socioe
 
 \leavevmode\vadjust pre{\hypertarget{ref-otto1995genetic}{}}%
 Otto, Sarah P, Freddy B Christiansen, and Marcus W Feldman. 1995. {``Genetic and Cultural Inheritance of Continuous Traits.''} \emph{Morrison Institute for Population and Resource Studies Paper Number} 64.
+
+\leavevmode\vadjust pre{\hypertarget{ref-paltiel2014biobank}{}}%
+Paltiel, Liv, Haugan Anita, Trine Skjerden, Kari Harbak, Siri Bækken, Stensrud Nina Kristin, Gun Peggy Knudsen, and Per Magnus. 2014. {``The Biobank of the Norwegian Mother and Child Cohort Study--Present Status.''} \emph{Norsk Epidemiologi} 24 (1-2).
 
 \leavevmode\vadjust pre{\hypertarget{ref-papageorge2020genes}{}}%
 Papageorge, Nicholas W, and Kevin Thom. 2020. {``Genes, Education, and Labor Market Outcomes: Evidence from the Health and Retirement Study.''} \emph{Journal of the European Economic Association} 18 (3): 1351--99.

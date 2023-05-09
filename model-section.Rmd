@@ -661,9 +661,7 @@ reduce the variance of traits in the children's generation and possibly also
 their covariance. Here, matching preferences, as summarized in the $a$ parameter,
 are exogenous. It would be natural to model $a$ as an equilibrium outcome.
 For example, if parents care about their children's wealth, $a$ might decrease
-in $\theta$ and increase in $\gamma$. Lastly, a gene-environment *interaction*
-(e.g. $x^\prime_2 = \gamma x^\prime_1 + \theta\frac{x_2+y_2}{2} + \zeta x'_1\frac{x_2+y_2}{2}$) might increase the gene-environment
-correlation some more.
+in $\theta$ and increase in $\gamma$.
 
 
 ## Discussion
@@ -687,9 +685,9 @@ wealth exceeds the "direct" coefficient $\theta$, because parents' wealth
 correlates with parents' genetics and via that with own wealth.  Thus,
 regressions of wealth on wealth may include the effect of unobserved genetic
 variation. This may be a confound due to pre-existing gene-SES correlation (if
-$\sigma > 0$). But under SGAM ($0 < a < 1$) it can also be a genuine cause,
-since changes in someone's wealth may indeed affect the identity of their
-spouse, and from that the genetics of their offspring.
+$\sigma > 0$). But under SGAM ($0 < a < 1$) it can also be a mediating
+variable, since changes in someone's wealth may indeed affect the identity of 
+their spouse, and from that the genetics of their offspring.
 
 The converse also holds: regressions of children's characteristics on their
 genetics alone risk overestimating the effect of genetics, by confounding it
