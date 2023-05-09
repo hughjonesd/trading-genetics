@@ -1,19 +1,13 @@
 ---
-title: |
-  Trading social status for genetics in marriage markets: 
-  evidence from Great Britain and Norway
+title: "Trading social status for genetics in marriage markets: evidence from UK Biobank"
 author: |
   Abdel Abdellaoui\thanks{Department of Psychiatry, Amsterdam UMC, University 
   of Amsterdam, Amsterdam, The Netherlands. Email: a.abdellaoui@amsterdamumc.nl},
   Oana Borcan\thanks{School of Economics, University of East Anglia, Norwich, 
   UK. Email: O.Borcan@uea.ac.uk}, 
   Pierre-André Chiappori\thanks{Department of Economics, University of Columbia, 
-    New York. Email: pc2167@columbia.edu},\
-  David Hugh-Jones\thanks{Corresponding author. Email: davidhughjones@gmail.com},
-  Fartein Ask Torvik\thanks{Norwegian Institute of Public Health, Oslo. 
-    Email: f.a.torvik@psykologi.uio.no} &
-  Eivind Ystrøm\thanks{Norwegian Institute of Public Health, Oslo. 
-    Email: eivind.ystrom@psykologi.uio.no}
+    New York. Email: pc2167@columbia.edu} &
+  David Hugh-Jones\thanks{Corresponding author. Email: davidhughjones@gmail.com}
 abstract: |
   Under social-genetic assortative mating (SGAM), socio-economic status (SES) and 
   genetics are both assets in marriage markets, become associated in spouse 
@@ -23,9 +17,8 @@ abstract: |
   for it in a large survey. Spouses of earlier-born siblings have genetics
   predicting more education. This effect is mediated by individuals' own 
   education and income. Thus, shocks to SES are reflected in the DNA of 
-  subsequent generations. Under SGAM, genetic variation is endogenous to
-  economic institutions. \par\textbf{Keywords:} Assortative mating, 
-  MoBa, UK Biobank.
+  subsequent generations. Under SGAM, genetic variation is endogenous to economic
+  institutions. 
 date: "`r Sys.Date()`"
 output: 
   bookdown::pdf_document2:
@@ -97,20 +90,17 @@ regression_subset <- function (data) {
 calc_prop_shared_children <- function (mf_pairs) {
   drake::loadd(parent_child)
   # all pairs where at least 1 parent has a genetic child in the sample
-  # note that this creates multiple parent-child relationships
   mf_w_parent <- mf_pairs %>% 
-        left_join(parent_child, by = c("ID.m" = "parent_id"), 
-                  relationship = "many-to-many") %>% 
+        left_join(parent_child, by = c("ID.m" = "parent_id")) %>% 
         left_join(parent_child, by = c("ID.f" = "parent_id"), 
-                  relationship = "many-to-many",
                   suffix = c(".m", ".f")) %>% 
         filter(! is.na(child_id.m) | ! is.na(child_id.f))
   
   
-  n_one_has_kid <- length(unique(mf_w_parent$ID.m)) # using ID.f gives same
-  mf_w_both_parents <-  mf_w_parent %>% 
-                        filter(child_id.m == child_id.f) # NAs excluded
-  n_both_same_kid <- length(unique(mf_w_both_parents$ID.m))
+  n_one_has_kid <- nrow(mf_w_parent)
+  n_both_same_kid <- mf_w_parent %>% 
+                        filter(child_id.m == child_id.f) %>% # NAs excluded
+                        nrow()
   return(list(one = n_one_has_kid, both = n_both_same_kid))
 }
 
@@ -122,11 +112,6 @@ pretty <- function (n, digits = 2, ...) {
 
 update_with_birth_order_dummies <- function (fml) {
   update(fml, . ~ . - birth_order.x + factor(birth_order.x))
-}
-
-
-convert_moba_for_huxreg <- function (tidy, glance) {
-  huxtable::tidy_replace(tidy, tidied = tidy, glance = glance)
 }
 
 
@@ -195,29 +180,9 @@ reg_coefs <- c(
           "Parents' age at birth" = "par_age_birth.x"
         )
 
-moba_reg_coefs <- c(
-          "Birth order"           = "parity", 
-          "University"            = "university", 
-          "Income"                = "income",
-          "Height"                = "height",
-          "BMI"                   = "bmi",
-          "Own PSEA"              = "eapgsresid",
-          "Parents' age at birth" = "parentalage"
-        )
-# load moba results
-load("moba-results/tradinggenetics_moba.Rdata")
 ```
 
 ```{r TODO-NOTES, eval = FALSE}
-
-* TODO - April 2023
-
-- work on integrating the model with the theory, esp. now we have two societies.
-  Can we estimate $a$? And plug in estimates of $\theta$ so as to calculate
-  the long-run genes-SES correlation? (And we could also estimate this
-  within our data...)
-- do something about Norway over time?
-- see also narrow TODO list in the Norway data section
 
 # TODO - Apr 2022
 
@@ -354,24 +319,30 @@ How families are formed, and transmit traits and assets to their offspring, is
 crucial for understanding inequality. Assortative mating in marriage markets can
 increase inequality across families [@breen2011educational; @greenwood2014marry]
 and can contribute to the persistence of inequality across generations, which
-is surprisingly high [@clark2015intergenerational;@solon2018we]. Wealthy
+is surprisingly high [@clark2015intergenerational;@solon2018we]. Assortative
+mating has been studied by both economists and geneticists: homogamy in education
+is well established, while genetic assortative mating has only been demonstrated
+recently [@hugh2016assortative;@robinson2017genetic]. Similarly, wealthy
 families pass on advantages to their children through both genetic inheritance
 and environmental influence [@Rimfeld_2018; @bjorklund2006origins; @sacerdote2011nature].
 
-This paper examines a plausible aspect of marriage markets: that both social
-status and genetics contribute to a person’s attractiveness, and as a result,
-genetics and inherited social status may become associated in subsequent
-generations.[^status-SES] For example, suppose that wealth, intelligence and
-health are positive assets in a potential spouse. Then wealthy people are more
-likely to marry intelligent or healthy people, and their children will inherit
-both wealth, and genetic variants associated with intelligence or health. We
-call this mechanism social-genetic assortative mating (SGAM). SGAM may be an
-important channel for the transmission of inequality. It creates a genetic
-advantage for privileged families, which may help to explain the surprising
-long-run persistence of inequality. At the same time, this advantage is not a 
-fact of biology, but is endogenous to the social structure. Indeed, under
-SGAM, environmental shocks to a person’s social status may be reflected in
-the genetics of his or her children.
+This paper examines a plausible, not previously analysed aspect of the spouse
+matching process: that both social status and genetics contribute to a person’s
+attractiveness in marriage markets, and as a result, genetics and inherited
+social status may become associated in subsequent generations.[^status-SES] For
+example, suppose that wealth, intelligence and health are positive assets in a
+potential spouse. Then wealthy people are more likely to marry intelligent or
+healthy people, and their children will inherit both wealth, and genetic
+variants associated with intelligence or health. We call this mechanism
+social-genetic assortative mating (SGAM). SGAM may be an important channel for
+the transmission of inequality. It leads to a hidden dimension of advantage for
+privileged families – hidden because most social science datasets do not include
+genetic information. This dimension may help to explain the surprising long-run
+persistence of inequality. At the
+same time, this advantage is not an exogenous fact of biology, but endogenous to
+the social structure. Indeed, under SGAM, environmental shocks to an
+individual’s social status may be reflected in the genetics of his or her
+children.
 
 [^status-SES]: *Social status* refers to characteristics that an individual
   possesses in virtue of their social position. For example, my wealth
@@ -395,32 +366,34 @@ dominant existing explanation for the gradient is meritocratic social mobility:
 if a genetic variant predicts success in the labour market, then it will 
 become associated with high SES and will be inherited in high-SES families.
 Under meritocracy, genes causes SES. By contrast, under SGAM, 
-causality goes both ways, from genes to SES and vice versa. Also, the
+causality goes both ways, from genes to SES and vice versa. What's more, the
 strength of the genes-SES gradient depends on economic institutions. Under
 institutions which increase intergenerational mobility, like high inheritance
 tax rates, the genes-SES gradient becomes weaker.
 
-Next, using data on spouse pairs from two large genetically-informed surveys in
-Great Britain and Norway, we test the hypothesis that an individual’s higher
-social status attracts spouses with higher genetic potential for educational
-attainment. Our genetic measure, the polygenic score for educational attainment
-(PSEA), derives from large-scale genome-wide association studies [@lee2018gene].
-PSEA reflects a bundle of polygenic effects on underlying traits, including
-intelligence, personality, and physical and mental health
-[@demange2021investigating]. PSEA predicts, and causes, educational attainment
-itself, as well as intelligence and labour market outcomes. It is already known
-that humans mate assortatively on PSEA [@hugh2016assortative;
+Next, using data on matched spouses born between 1935 and 1970 from UK Biobank
+(a large genetically-informed survey), we test the hypothesis that an
+individual’s higher social status attracts spouses with higher genetic potential
+for educational attainment. Our genetic measure, the polygenic score for
+educational attainment (PSEA), derives from large-scale genome-wide association
+studies [@lee2018gene]. PSEA reflects a bundle of polygenic effects on
+underlying traits, including intelligence, personality, and physical and mental
+health [@demange2021investigating]. PSEA predicts, and causes, educational
+attainment itself, as well as intelligence and labour market outcomes. It is
+already known that humans mate assortatively on PSEA [@hugh2016assortative;
 @robinson2017genetic], which makes it a likely candidate for detecting SGAM.
 
 The endogeneity of socio-economic status is the main challenge in identifying
-the effect of SES on the spouse’s genetic endowment. For instance, people with
-high educational qualifications tend to also have high PSEA, and as mentioned
-above, they may take partners based on genomic similarity. Indeed, recent
-studies show strong assortative mating on PSEA, much more than we would expect
-if spouses matched only on observed measures of actual educational attainment
-[@okbay2022polygenic]. To isolate the causal link from own SES to partner's
-genes, we use a shock to SES which is independent of own genetics. Specifically,
-we use a person's *birth order*. Earlier-born children receive higher parental
+the effect of SES on the spouse’s genetic endowment. For instance,
+individuals with high education qualifications tend to also have high PSEA, and
+as mentioned above, they may take partners based on genomic similarity. Indeed,
+recent studies show strong assortative mating on PSEA, much more than we would
+expect if spouses matched only on observed measures of actual educational
+attainment [@okbay2022polygenic]. To isolate the causal link from own SES to
+partner's genes, we use the “accident of birth” as a shock to SES which is
+independent of own genetics. Specifically, we use a person's *birth order* as
+a “treatment” which affects the identity of their partner, partly by affecting
+their own SES. Earlier-born children are known to receive higher parental
 investment and have better life outcomes, including measures of SES such as
 educational attainment and occupational status [@black2011older;
 @booth2009birth; @Lindahl_2008]. At the same time, the facts of biology, in
@@ -441,20 +414,15 @@ attendance and estimated income in one's first job. Under certain assumptions,
 these variables can be interpreted as mediating the effect of birth order on
 spouse genetics.
 
-In both Britain and Norway, we find that later-born children have spouses with
-significantly lower PSEA in the reduced-form regressions. When we add mediators,
-including university attendance and/or income, the effect of birth order shrinks
-substantially, while the SES mediators increase the spouse’s PSEA at 0.1%
-significance. The results are robust to the inclusion of several controls,
-including non-SES mediators, and a rich set of own genetic traits. Thus, SES
-appears to mediate the effect of birth order on spouse genetics. The effects of
-individual mediators differ between the two countries. While university
-attendance explains more than a third of the effects of birth order in both
-Britain and Norway, income explains about 10% of the effects in Britain but has
-little or no independent effect in Norway. Although our main focus is on testing
-the basic mechanism of SGAM, this provides suggestive evidence that in a more
-egalitarian society, some forms of SES are less important to the marriage
-market.
+We find that later-born children have spouses with significantly lower PSEA in
+the reduced-form regressions. When we add mediators, including university
+attendance and/or income, birth order is no longer independently significant,
+while the SES mediators increase the spouse’s PSEA at 0.1% significance.
+University attendance explains an estimated 38-55% of the effect of birth order,
+and income explains about 10-13%. Thus, SES appears to mediate the effect of
+birth order on spouse genetics. The results are robust to the inclusion of
+several controls, including non-SES mediators, and a rich set of own genetic
+traits.
 
 Our paper contributes to several literatures. First, we study assortative mating
 between genetic variants and SES. The economics literature on spouse matching
@@ -476,32 +444,30 @@ A rich literature in genetics studies assortative mating [@rao1976resolution;
 @heath1985resolving; @otto1995genetic]. The most common model is phenotypic
 assortative mating, where spouses match on phenotypes which are related to
 genetics, to family environment (possibly including culturally inherited
-traits), and to non-shared environment. An alternative model focuses on social
+traits), and to non-shared environment . An alternative model focuses on social
 homogamy, where spouses match on shared environment alone. Both kinds of models,
 like ours, predict that assortative mating leads to gene-environment correlation
 in individuals. Early empirical work used structural models to estimate
 parameters from correlations between twins and spouses of twins
-[@eaves1999comparing]. Since the "genomics revolution", which has made
-individuals' DNA data directly available, empirical research has focused on
-genetic assortative mating (GAM), the phenomenon that people with similar genes
-marry each other. Recent research has confirmed the long-standing conjecture
-that GAM takes place in contemporary human populations [@hugh2016assortative;
-@robinson2017genetic; @howe2019genetic]. Other work has analysed cross-trait
-assortative mating, when e.g. people with genes for height marry people with
-genes for intelligence [@Beauchamp_2010; @Sundet_2005;
+[@eaves1999comparing]. (XXX be precise) Since the "genomics revolution", which
+has made individuals' DNA data directly available, empirical research has
+focused on genetic assortative mating (GAM), the phenomenon that people with
+similar genes marry each other. Recent research has confirmed the long-standing
+conjecture that GAM takes place in contemporary human populations
+[@hugh2016assortative; @robinson2017genetic; @howe2019genetic]. Other work has
+analysed cross-trait assortative mating, when e.g. people with genes for height
+marry people with genes for intelligence [@Beauchamp_2010; @Sundet_2005;
 @border2022cross]. As a result, the two types of genetic variation become
 associated. We see our contribution here as follows. First, our theoretical
 model links the economic and genetic literatures, basing spouse matching on a
-micro-founded choice model. Second, we focus specifically on inherited SES,
-rather than on more broadly defined culturally transmitted traits. This helps
-bridge the genetics and economics literatures. In particular, we can show how
-the genes-SES gradient is affected by economic institutions (see below). Lastly,
-our research design gives us a clean pathway from environmental shocks to a
-person's SES, to the genetic endowment of their spouse. This is helpful because
-it is usually difficult to separate the environmental and genetic components of
-assortative mating.
+micro-founded choice model. In particular, we can relate economic policy
+parameters to the size of the genes-SES gradient. Second, our research design
+gives us a clean pathway from environmental shocks to a person's SES, to the
+genetic endowment of their spouse. This is helpful because it is usually
+difficult to separate the environmental and genetic components of the
+correlation between spouses.
 
-SGAM may affect economic inequality and intergenerational mobility.
+Secondly, SGAM may affect economic inequality and intergenerational mobility.
 Intergenerational mobility correlates with cross-sectional inequality
 [@becker2018theory;@krueger2012rise], which has risen dramatically in
 high-income countries, while intergenerational absolute mobility has declined
@@ -514,9 +480,9 @@ process where unobserved genetic variation determines wealth. We show below that
 SGAM could also generate these patterns. The mechanism again is unobserved
 genetic variation, but the interpretation is different, since genetic endowments
 are not an exogenous source of variation, but an asset "traded" in marriage
-markets in exchange for wealth and social status. Put another way, in
-analysing the effect of ancestral wealth on descendant wealth, genetics need
-not be a *confound*; under SGAM, it may be a *mediator*.
+markets in exchange for wealth and social status. Put another way, for Clark, in
+analysing the effect of ancestral wealth on descendant wealth, genetics is a
+*confound*; under SGAM, it may be a *mediator*.
 
 [^stats]: Though relative mobility has been stable [@chetty2014united]. In the 
 United Kingdom the Gini coefficient has increased from 26% to 34.6% between 1977 
@@ -616,16 +582,25 @@ psychology [@buss1986preferences; @buss1989sex; @buss2019mate] confirms
 that attractive mate characteristics include aspects of social status (“high
 earning capacity,” “professional status”) as well as traits that are partly
 under genetic influence (“intelligent,” “tall,” “kind,” “physically
-attractive”). Despite this, to our knowledge, ours is the first work to examine
-assortative mating between SES and genetics, and to model its social and
-economic consequences.[^prev-work]
+attractive”). Despite this, to our knowledge, this is the first paper in either
+genetics or economics to formally analyse SGAM and its consequences.[^prev-work]
 
-[^prev-work]: In addition to the work mentioned above on cultural and 
-  genetic inheritance, @halsey1958genetics showed in a two-class model that 
-  social mobility combined with assortative mating might increase the association 
-  between genetics and social class. @belsky2018genetic offer three reasons for 
-  the association between education-linked genetics and SES, but do not consider 
-  SGAM.
+XXX rework above para
+* Existing work before genomics revolution, using an SEM framework, 
+  analysed cross-trait mating with
+  cultural and genetic inheritance, and predicted positive correlations between
+  the cultural and genetic trait. They But they did not specialize to SES as a culturally
+  inherited trait [what sort of things were they thinking of] and therefore 
+  didn't draw consequences for social inequality. 
+  - Maybe worth mentioning? they focus on culturally inherited traits (which may
+  nevertheless be biological, e.g. knowledge in the brain) while SES is 
+  socially *constituted* too. 
+* Empirics with twin studies did what?
+
+[^prev-work]: @halsey1958genetics showed in a two-class model that social
+mobility combined with assortative mating might increase the association between
+genetics and social class. @belsky2018genetic offer three reasons for the
+association between education-linked genetics and SES, but do not consider SGAM.
 
 
 ```{r literature-notes, eval = FALSE}
@@ -709,17 +684,26 @@ Others to look at:
 
 # Data and methods
 
-In modern societies, both SGAM and meritocratic mobility may be at play. Genetic
-variants that cause higher SES, e.g. higher income and wealth, will be passed
-down along with that status. At the same time, higher SES and "good genes" will
-assort in the marriage market. To test this, we look at correlations among
-spouses between one partner's SES and the other partner's genetics. 
+In modern societies, both SGAM and meritocratic mobility may be at play. Genetic 
+variants that cause higher SES, e.g. higher income and wealth,
+will be passed down along with that status. At the same time, higher SES and "good
+genes" will assort in the marriage market. To test this, we look at correlations
+among spouses between one partner's SES and the other partner's genetics.
 
-We use data from two sources: Great Britain and Norway. Our Great Britain data
-comes from the UK Biobank, a study of about 500,000 individuals born between
-1935 and 1970 [@bycroft2018uk]. The Biobank contains information on respondents'
+
+```{r calc-validate-pairs}
+
+prop_shared <- calc_prop_shared_children(mf_pairs)
+n_one_has_kid <- prop_shared$one
+n_both_same_kid <- prop_shared$both
+
+```
+
+
+We use data from the UK Biobank, a study of about 500,000 individuals born
+between 1935 and 1970 [@bycroft2018uk]. The Biobank contains information on respondents'
 genetics, derived from DNA microarrays, along with questionnaire data on health
-and social outcomes. The Biobank does not contain explicit information on spouse
+and social outcomes. The Biobank does not contain explicit information on spouse 
 pairs. We categorize respondents as pairs if they:
 
 -   had the same home postcode on at least one occasion;[^4]
@@ -731,38 +715,95 @@ pairs. We categorize respondents as pairs if they:
 
 [^4]: A typical UK postcode contains about 15 properties.
 
+```{r estimate-false-positives, eval = FALSE}
+# We can use the number of duplicates to estimate our "false positive"
+#   ratio. Suppose that a proportion x of our pairs are false positives who 
+#   just live in the
+#   same postcode. Suppose UKBB samples a proportion y of people in each postcode. 
+#   Then the number of duplicates will be xy. 
+#
+# Note to calculate xy we need to count *whenever* they 
+# appear in the mf_pairs file. I.e. if they are false positives, we want
+# to catch them matching with someone else.
+
+
+# code to estimate y:
+# in the alto_file, count how many people are observed at the same coordinate
+alto <-readr::read_csv(alto_file)
+
+# count how many people are *not* in the alto file (i.e. for them,
+# people_at_same_coordinate should be 1. Indeed in alto, the min is 2.)
+# 500K is about right :-)
+not_in_alto <- 500000 - length(unique(alto$ID))
+
+all_per_coord <- c(alto$people_at_same_coordinate[! duplicated(alto$coordinate_ID)]
+                   , rep(1, not_in_alto))
+n_at_same <- mean(all_per_coord)
+
+# this is "y" above:
+sample_prop_per_coord <- n_at_same / 15 # 15 people in a postcode on average
+
+# to calculate xy:
+# start with our "purified" sample mf_pairs, but without deleting any duplicates
+# count how many are duplicates in the sense that they are ever at the 
+# same coordinate with someone else
+
+mf_pairs_tmp <- readr::read_csv(mf_pairs_file)
+
+mf_pairs_tmp$eid.x <- mf_pairs_tmp$ID.m
+mf_pairs_tmp$eid.y <- mf_pairs_tmp$ID.f
+mf_pairs_tmp <- add_data_to_pairs(mf_pairs_tmp, famhist, resid_scores, 
+                                suffix = c(".m", ".f"))
+
+mf_pairs_tmp %<>% filter(
+                f.680.0.0.f  == f.680.0.0.m,  # same rent/own status
+                f.699.0.0.f  == f.699.0.0.m,  # same length of time in hh
+                f.709.0.0.f  == f.709.0.0.m,  # same n occupants of hh
+                n_children.f == n_children.m, # same n kids
+                f.54.0.0.f   == f.54.0.0.m,   # same assessment center 
+                f.53.0.0.f   == f.53.0.0.m,   # attended assessment same day
+                f.6141.0.0.f == 1,            # both living with spouse
+                f.6141.0.0.m == 1,            #   "     "     "    "
+                female.m != female.f,         # heterosexual couples only
+              )
+
+mf_pairs_ids <- unique(c(mf_pairs_tmp$ID.m, mf_pairs_tmp$ID.f))
+
+# observed duplicate proportion, using the alto ID. This also counts
+# people of the same sex, is that right?
+
+dupe_ids <- intersect(mf_pairs_ids, alto$ID[duplicated(alto$ID)])
+# this is "xy" above
+observed_dupe_prop <- length(dupe_ids)/length(mf_pairs_ids)
+
+# so "x" above is: hmm, not quite right yet, this is > 1!!
+estimated_false_pos <- observed_dupe_prop/sample_prop_per_coord
+
+```
+
 We also eliminate all pairs where either spouse appeared more than once
-in the data. This leaves a total of `r pretty(nrow(mf_pairs))` pairs.[^matching]
+in the data. This leaves a total of `r pretty(nrow(mf_pairs))` pairs. Some of
+these could be false positives, i.e. people who are not each others'
+spouse but simply live in the same postcode. To validate the accuracy of
+our pairs, we use genetic relationships. Some respondents in the UK
+Biobank sample have a child (inferred from genetic data) who is also in the 
+sample. Among our spouse pairs, `r n_one_has_kid` have a genetic
+child of at least one partner in the sample. For `r n_both_same_kid` of
+these, the child is the genetic child of both partners. If this
+subsample is representative, then at least
+`r percent(n_both_same_kid/n_one_has_kid)` of the pairs who have had a
+child, have had a child together. This is a lower bound, because those
+who had a child with someone else may also have had a child with their partner
+who is not in the UK Biobank sample. As a point of comparison, 11% of families
+with dependent children included a stepchild in England and Wales in
+2011 [@ons2011stepfamilies].
 
-[^matching]: In the appendix, we test the validity of our matching process by 
-counting the proportion of pairs who had a shared genetic child, in a subsample
-of the data. We also check whether any misidentified pairs might have biased our 
-results, by constructing a dataset of "known fake pairs".
-
-Our Norway data comes from the Norway Mother, Father and Child Cohort Study
-(MoBa), a study of pregnant women and their partners and children
-[@magnus2016cohort; @paltiel2014biobank]. The Norwegian Mother, Father and Child
-Cohort Study (MoBa) is a population-based pregnancy cohort study conducted by
-the Norwegian Institute of Public Health. Participants were recruited from all
-over Norway from 1999-2008. The women consented to participation in 41% of the
-pregnancies. The cohort includes approximately 114,500 children, 95,200 mothers
-and 75,200 fathers. (In this paper, we use about 100,000 genotyped individuals
-and about 45,000 genotyped spouse pairs.) The current study is based on version
-12 of the quality-assured data files released for research in 2019. The
-establishment of MoBa and initial data collection was based on a license from
-the Norwegian Data Protection Agency and approval from The Regional Committees
-for Medical and Health Research Ethics. The MoBa cohort is currently regulated
-by the Norwegian Health Registry Act. The current study was approved by The
-Regional Committees for Medical and Health Research Ethics XXX.[^boilerplate]
-
-[^boilerplate]: Parts of the above paragraph come from a standard template 
-which is required to be included by the MoBa study.
-
-The Norway data has some advantages over UK Biobank, including higher
-participation, larger sample size, and spouse pairs which are known rather than
-inferred. On the other hand it is missing some variables, including IQ measures
-and self-reported health. Having two data sources also lets us make some
--- admittedly rough -- comparisons between the two contexts.
+It is still possible that some pairs in our data may not be actual spouses. In
+the appendix, to sign any possible bias in our estimates resulting from this, we
+use a dataset of "known fake" pairs. We show that estimated coefficients of
+interest are closer to zero among these fake pairs than among our candidate
+"real pairs". Because of this, any fake pairs remaining in our data are likely
+to bias our coefficients towards zero.
 
 Our key dependent variable is spouse's *Polygenic Score for Educational
 Attainment* (PSEA). A polygenic score is a DNA-derived summary measure
@@ -809,7 +850,7 @@ n_with_job_codes <- sum(! is.na(mf_pairs_reg$first_job_pay.x))
 We calculate PSEA using per-SNP summary statistics from @lee2018gene,
 re-estimated excluding UK Biobank participants.[^5] We normalize the score to
 have mean 0 and variance 1. Because polygenic scores are created from estimates
-of many small effects, they contain a large amount of noise relative
+of many presumably tiny effects, they contain a large amount of noise relative
 to the true best estimator that could be derived from genetic data. For
 instance, PSEA explains only 11–13% of variance in educational attainment 
 [@lee2018gene], whereas the true proportion explained by genetic
@@ -864,7 +905,7 @@ Both males and females who went to university had spouses with higher PSEA. So
 did males and females with higher income in their first job. Since DNA is
 inherited, these people's children will also have higher PSEA.
 
-```{r pic-basic-corr, fig.cap = "Spouse polygenic score for educational attainment (PSEA) against own university attendance and own income in first job (Great Britain). Lines show 95\\% confidence intervals. PSEA is normalized to have mean 0 and variance 1. Income is estimated from the respondent's first job, as the average income of the SOC job code.", fig.subcap = rep("", 4), fig.align = "center", fig.width = 3, fig.height = 3, fig.ncol = 2}
+```{r pic-basic-corr, fig.cap = "Spouse PSEA against own university attendance and own income in first job. Lines show 95\\% confidence intervals.", fig.subcap = rep("", 4), fig.align = "center", fig.width = 3, fig.height = 3, fig.ncol = 2}
 
 pic_ss <- stat_summary(fun.data = mean_cl_normal, na.rm = TRUE)
 pic_cc <- coord_cartesian(ylim = c(-0.15, 0.25))
@@ -938,7 +979,7 @@ their birth order. This is guaranteed by the biological mechanism of meiosis,
 which ensures that any gene is transmitted from either the mother or the father
 to the child, with independent 50% probability
 [@mendel1865experiments;@lawlor2008mendelian]. For example, siblings' expected
-polygenic score is equal to the mean of their parents' polygenic scores.[^endog] We
+polygenic score is equal to the mean of their parents' polygenic scores.[^6] We
 can therefore use birth order as a "shock" to social status. We put "shock" in
 quotes because we do not claim that birth
 order is exogenous to all other variables. For example, it naturally correlates
@@ -946,19 +987,19 @@ with parental age, and it may also correlate with household SES at the time of
 birth. We only claim that birth order is exogenous to genetic variation.
 
 [^literature]: Earlier work was ambiguous on the effects of birth order 
-  [e.g. @hauser1985birth;@hanushek1992trade]. However, this work often used
-  unrepresentative samples and/or did not control for family size or parental age.
-  More recent work improves on this and shows clear birth order effects.
-  @kantarevic2006birth show that parental age is an important confound for birth
-  order. @black2005more show substantial birth order effects in the whole Norwegian
-  population, even in a family fixed-effects specification, and after controlling
-  for mother's age. @booth2009birth examine UK families, controlling for family
-  size and for parental age at birth, and show significant and substantial birth
-  order effects on education. Some studies [e.g. @black2005more; @de2010birth] use
-  twin births or the gender mix of children as instruments for family size. They
-  too typically find that birth order has large negative effects. 
+[e.g. @hauser1985birth;@hanushek1992trade]. However, this work often used
+unrepresentative samples and/or did not control for family size or parental age.
+More recent work improves on this and shows clear birth order effects.
+@kantarevic2006birth show that parental age is an important confound for birth
+order. @black2005more show substantial birth order effects in the whole Norwegian
+population, even in a family fixed-effects specification, and after controlling
+for mother's age. @booth2009birth examine UK families, controlling for family
+size and for parental age at birth, and show significant and substantial birth
+order effects on education. Some studies [e.g. @black2005more; @de2010birth] use
+twin births or the gender mix of children as instruments for family size. They
+too typically find that birth order has large negative effects. 
 
-[^endog]: Although genetic variation is randomly assigned to children at
+[^6]: Although genetic variation is randomly assigned to children at
     birth, genetics and birth order could be dependent if parents'
     choice of whether to have more children is endogenous to the genetic
     endowment of their earlier children. We check for this below. 
@@ -978,10 +1019,10 @@ respondents with between 1 and 5 siblings, i.e. with a family size of
 2-6: beyond that, estimation would get noisy because of small cell sizes.
 To control for parental age, we use father's and/or mother's age at the
 respondent's birth. This is calculated from the relevant
-parent's current age. In the UK Biobank, this data is only available if the
-respondent's parent was still alive. For other controls we use respondent's
-month of birth; age at interview; and own PSEA. Our claim is that controlling
-for these variables, birth order is independent of genetic variation. (XXX Oana
+parent's current age, which is only available if the parent was still alive.
+XXX comment on sample selection. For other controls we use respondent's month 
+of birth; age at interview; and own PSEA. Our claim is that controlling for
+these variables, birth order is independent of genetic variation. (XXX Oana 
 could talk about this aspect in model section?)
 
 
@@ -1112,10 +1153,9 @@ $\mathbf{X}$ and $B$. The part of the birth order effect that is due to
 university attendance (or income) on spouse PSEA will be the coefficient of
 university/income in the regression of spouse PSEA in equation
 \@ref(eq:model-to-estimate), multiplied by the coefficient of birth order on
-university/income from equation \@ref(eq:mediator-model). We now apply this
-framework to each of our two samples.
+university/income from equation \@ref(eq:mediator-model).
 
-# Results: Great Britain
+# Results
 
 
 ```{r tbl-bo-first-stage}
@@ -1152,7 +1192,7 @@ huxreg(mod_bo_1st,
          ),
          statistics = c(
            "N"  = "nobs", 
-           "$R^2$" = "r.squared"
+           "R2" = "r.squared"
           ),
          note = tbl_note,
          stars = my_stars,
@@ -1166,8 +1206,7 @@ huxreg(mod_bo_1st,
        set_number_format(2:7, -1, 4) %>% 
        set_width(1) %>% 
        set_font_size(10) %>%
-       set_escape_contents(12, 1, FALSE) %>%
-       set_caption("Regressions of mediators on birth order (Great Britain)")
+       set_caption("Regressions of mediators on birth order")
        
 ```
 
@@ -1253,7 +1292,7 @@ huxreg(mod_bo_psea_base,
          ),
          statistics = c(
            "N"  = "nobs", 
-           "$R^2$" = "r.squared"
+           "R2" = "r.squared"
           ),
          note = tbl_note,
          stars = my_stars,
@@ -1267,8 +1306,7 @@ huxreg(mod_bo_psea_base,
        set_number_format(2:7, -1, 4) %>% 
        set_width(0.9) %>% 
        set_font_size(10) %>%
-       set_escape_contents(12, 1, FALSE) %>%
-       set_caption("Regressions of spouse PSEA on birth order (Great Britain)")
+       set_caption("Regressions of spouse PSEA on birth order")
 
 
 ```
@@ -1281,7 +1319,7 @@ which would bias our results towards zero.[^9]
 [^9]: The appendix reports results without controlling for parents' age.
 
 ```{r tbl-bo-psea}
- 
+
 
 mod_bo_psea <- lapply(fml_bo_psea, fixest::feols, 
                  data = mf_pairs_reg,
@@ -1290,7 +1328,7 @@ mod_bo_psea <- lapply(fml_bo_psea, fixest::feols,
 
 tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent",
 "variable, and own birth order and mediators (university attendance and income)",
-"as the main independent variables. Columns 2-4 correspond to model (7). PSEA is", 
+"as the main independent variables. Columns 2-4 correspond to model 7. PSEA is", 
 "the polygenic score for educational attainment, which is normalized with mean 0",
 "and standard deviation 1. We include own PSEA, mean of parents’ ages at birth,",
 "potential non-SES mediators (fluid IQ, height, BMI, self-reported health)",
@@ -1301,10 +1339,6 @@ tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent"
 
 huxreg(mod_bo_psea, 
          coefs = reg_coefs,
-         statistics = c(
-             "N"  = "nobs", 
-             "$R^2$" = "r.squared"
-            ),
          note = tbl_note,
          stars = my_stars,
          tidy_args = tidy_args
@@ -1318,10 +1352,8 @@ huxreg(mod_bo_psea,
        set_tb_padding(2) %>% 
        set_width(1) %>% 
        set_font_size(10) %>%
-       set_escape_contents(24, 1, FALSE) %>%
        #set_font_size(final(1), everywhere, 8) %>%
-       set_caption("Regressions of spouse PSEA on birth order and mediators 
-                   (Great Britain)")
+       set_caption("Regressions of spouse PSEA on birth order and mediators")
 ```
 
 Table \@ref(tab:tbl-bo-psea) shows the results. Column 1 shows the
@@ -1343,7 +1375,7 @@ insignificant. Controlling for income instead of university attendance (column
 income has a positive and highly significant effect. Lastly, the same pattern
 holds when we control for both university and income (column 4).
 
-```{r tbl-mediation-prop}
+```{r tbl-mediation-prop, cache = FALSE}
 
 # percent of main effect that is mediated by uni:
 # uni effect of BO (first stage) * PSEA effect of uni (column 2)
@@ -1449,7 +1481,7 @@ as_huxtable(med_matrix, add_colnames = TRUE, add_rownames = "") %>%
       set_bottom_border(1, 1, 0) %>% 
       set_font_size(10) %>%
       set_caption(
-        "Percent of birth order effects accounted for by mediators (Great Britain)"
+        "Percent of birth order effects accounted for by mediators, models 2-4"
       )  
 
 ```
@@ -1466,23 +1498,19 @@ than all the other mediators. Income, fluid IQ, height and BMI all explain
 between 6 and 17 percent of the effect, depending on the specification.
 
 These results provide evidence that birth order affects spouse PSEA via
-education and income, with education being especially important. The effect
-size of birth order is small (a few percent of a standard deviation of PSEA),
-but what matters is the effect size of education and income. The effect of
-education in particular is quite large as measured here, and since it
-also appears to mediate the purely environmental shock of birth order, it
-cannot just be due to an unobserved correlation with own genetics.
+education and income, with education being especially important.
 
-Our next regressions split up the data into subsets. Cultural stereotypes often
-assume that the link between status and genes is not symmetric across the
-genders, for example, that males with high SES are particularly likely to marry
-attractive spouses. Claim \@ref(claim-men-women-different) showed that these
-differences would strengthen the effects of SGAM. To test for this, we
-separately regress female spouses' PSEA on male birth order, and male spouses'
-PSEA on female birth order. We also rerun regressions among the subset of
-individuals who had children. A significant result here will confirm that the
-association between status and genetics is carried over into the next
-generation.
+Our next regressions split up the data into subsets. Cultural
+stereotypes often assume that the link between status and genes is not
+symmetric across the genders, for example, that males with high SES are
+particularly likely to marry attractive spouses. Claim \@ref(claim-men-women-different) showed that these differences would strengthen
+the effects of SGAM.
+To test for this, we
+separately regress female spouses' PSEA on male birth order, and male
+spouses' PSEA on female birth order. We also rerun regressions among the
+subset of individuals who had children. A significant result here will
+confirm that the association between status and genetics is carried over
+into the next generation.
 
 Table \@ref(tab:tbl-bo-subsets) shows the results. Columns 1 and 2 present
 results using birth order of male respondents to predict female spouses' PSEA.
@@ -1492,8 +1520,7 @@ so as to keep our N large). Columns 3 and 4 repeat the exercise for female
 respondents, using their birth order to predict male spouses' PSEA. The effect of
 birth order is imprecisely estimated in these subsets due to the lower sample
 size. However, the pattern of coefficient sizes is the same as in the main
-regression: the coefficient of birth order is about -0.3 (and very similar 
-between the sexes), and adding university
+regression: the coefficient of birth order is about -0.3, and adding university
 attendance reduces the absolute size of the birth order effect. Columns 5 and 6
 show results from regressions on the subsample of couples with children. 
 Here, birth order is significant in the base specification, and again, 
@@ -1546,12 +1573,12 @@ tbl_note <- paste("Estimates from OLS regressions corresponding to",
 
 huxreg(reg_list,
          coefs      = reg_coefs[reg_coefs != "first_job_pay.x"],
-         statistics = c("N" = "nobs", "$R^2$" = "r.squared"),
+         statistics = c("N" = "nobs", "R2" = "r.squared"),
          note       = tbl_note,
          stars      = my_stars,
          tidy_args  = tidy_args
        ) %>% 
-       set_escape_contents(final(2), everywhere, FALSE) %>% 
+       set_escape_contents(final(1), everywhere, FALSE) %>% 
        insert_row(after = 17, "Family size dummies", rep("Yes", 6)) %>% 
        insert_row(after = 18, "Birth month dummies", rep("Yes", 6)) %>% 
        insert_row(after = 19, "Birth year dummies", rep("Yes", 6)) %>% 
@@ -1561,221 +1588,13 @@ huxreg(reg_list,
        set_width(1) %>% 
        set_tb_padding(3) %>% 
        set_lr_padding(3) %>% 
-       set_caption("Regressions of spouse PSEA on birth order: subsets (Great Britain)")
+       set_caption("Regressions of spouse PSEA on birth order: subsets")
 
 ```
 
 \FloatBarrier
 
-# Results: Norway
-
-Now we turn to the results from Norway. Tables \@ref(tab:tbl-bo-psea-moba) and
-\@ref(tab:tbl-mediation-moba) are the equivalent of Tables
-\@ref(tab:tbl-bo-psea) and \@ref(tab:tbl-mediation-prop) for respondents in the
-MoBa dataset. (Equivalents to Tables \@ref(tab:tbl-bo-first-stage) and
-\@ref(tab:tbl-bo-psea-basic) are in the appendix.)
-
-The broad pattern of results is similar to Britain. The larger N gives
-higher statistical significance. Effects of all the variables are in the
-expected direction, except that the coefficient on income changes sign when
-university is also included. In particular, the point estimate of the total
-effect of birth order is about twice as high as in Britain, and the estimated
-effect of university attendance is also higher. The effect of own PSEA is also
-about twice as high.
-
-Adding university attendance again substantially and significantly reduces 
-the effect of birth order, though here, birth order remains independently
-significant and substantively large even controlling for university. 
-In Norway, however, it is much less clear that income is an important mediator on its own. Adding income barely changes the effect of birth order (column 3). 
-
-Table \@ref(tab:tbl-mediation-moba) computes the percentages of the effects that
-are mediated by our variables. The percentage effects of education, when
-controlling for income, are about the same in both countries. But the effect of
-income is much smaller and very close to zero.
-
-Table \@ref(tab:tbl-bo-subsets-moba) runs our regressions separately for focal
-males and focal females only.[^no-kids] As in Britain, coefficients look very
-similar across the sexes. The effects of birth order are highly significant in
-either sex, and adding the mediators significantly reduces them. Interestingly,
-the effect of BMI is about 50% larger for women, as in Britain, and here the
-difference is significant. On the other hand, in Norway, there is no difference
-between the male and female coefficients on university attendance.
-
-[^no-kids]: We don't run separate regressions for families with children, since
-MOBA only includes families with children by design.
-
-Overall, the Norway results show two things. First, they clearly confirm that
-birth order affects spouse PSEA, with education a key mediator. Second, they
-suggest that the effects of SES in marriage markets vary between the two
-countries. Education has a similar effect on spouse PSEA in Norway, but income
-has a much smaller effect. Of course this is a loose comparison, since even
-conditioning on our controls, samples and measures in the two countries are
-different. Still, it is interesting that in Norway, a more egalitarian country
-than the UK, income seems to have a smaller effect on spouse PSEA, while own
-PSEA, a genetic characteristic, seems to have a higher effect. In terms of our
-theory, $a$ appears larger in Norway. This might fit the idea that $a$ is itself
-endogenous to economic institutions.
-
-```{r tbl-bo-psea-moba}
-
-# Notes. 
-# - Regressions use se = hetero, ask him to do them by pair (or did he?)
-# - Ask to preremove those with missing height, BMI, uni, income so
-#   that N is standardized
-# - What's a good equivalent to self-reported health?
-# - Can we get income in the same units (or similar) to the UK?
-#   (UK it was £1000, rescaled, from first job pay?) Perhaps doesn't matter,
-#   but get real income not deciles if poss... can we get earlier than 30?
-#   need to ask about this.
-# - Why no income in the subsets regressions?
-# - Details of how PSEA was created. In partic, what's its R2 on university
-#   attendance in this data? (Want to see if coef of PSEA is comparable; or
-#   indeed all coefficients, as spouse PSEA is the DV!) Also, did they
-#   exclude Norway from the estimation of the summary stats?
-#   - In the end we might want Abdel to replicate Norway v. closely...
-# - Can we get a subset of actual siblings? Would be so coool....
-# - (Data for a) pic along the lines of Fig 4. Could merge with
-#   diff colours?
-# - research ethics approval number for boilerplate
-# - are there weights?
-# - Balance tests on PGS?
-
-# Robustness checks todo:
-# - balance tests on some pgs?
-# - birth order dummies
-# - education (can already)
-mod_bo_psea_moba <- purrr::map2(export_table3_tidyse,
-                                  export_table3_glance,
-                                  convert_moba_for_huxreg)
-names(mod_bo_psea_moba) <- NULL
-
-
-tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent",
-"variable, and own birth order and mediators (university attendance and income)",
-"as the main independent variables. Columns 2-4 correspond to model (7). PSEA is", 
-"the polygenic score for educational attainment, which is normalized with mean 0",
-"and standard deviation 1. We include own PSEA, mean of parents’ ages at birth,",
-"potential non-SES mediators (height and BMI)",
-"and further controls (family size, birth year, and birth month dummies)",
-"to ensure the balance of",
-"covariates across birth order. All data is from the MoBa dataset for a sample of", 
-"spouse pairs with a child between 1999 and 2008.", my_note)
-
-huxreg(mod_bo_psea_moba,
-         coefs = moba_reg_coefs,
-         statistics = c("N" = "nobs", "$R^2$" = "r.squared"),
-         note       = tbl_note,
-         stars      = my_stars
-       ) %>% 
-       insert_row(after = 15, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 16, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 17, "Birth year dummies", rep("Yes", 4)) %>% 
-       set_bottom_border(16:17, everywhere, 0) %>% 
-       set_align(16:18, -1, "center") %>% 
-       set_number_format(2:15, -1, 4) %>% 
-       set_tb_padding(2) %>% 
-       set_width(1) %>% 
-       set_font_size(10) %>%
-       set_escape_contents(20, 1, FALSE) %>%
-       set_caption("Regressions of spouse PSEA (Norway)")
-```
-
-
-
-```{r tbl-mediation-moba}
-
-mediator_effect_bo <- purrr::map_dbl(export_table1_tidyse[-1], 
-                                     function (x) {
-                                       x$estimate[x$term == "parity"]
-                                     })
-
-mediators <- c("university", "income", "height", "bmi")
-psea_effect_mediators <- purrr::map(export_table3_tidyse[2:4],
-                                        function (x){
-                                          rows <- match(mediators, x$term)
-                                          x$estimate[rows]
-                                        })
-psea_effect_mediators <- matrix(unlist(psea_effect_mediators), 4, 3)
-rownames(psea_effect_mediators) <- mediators
-
-psea_effect_bo <- export_table3_tidyse$column1 %>% 
-                    filter(term == "parity") %>%
-                    pull(estimate)
-
-mediated_effects <- mediator_effect_bo * psea_effect_mediators
-
-mediated_effects_pct <- mediated_effects / psea_effect_bo * 100
-
-mediated_effects_pct <- format(mediated_effects_pct, digits = 1) 
-mediated_effects_pct <- gsub(".*NA", "", mediated_effects_pct)
-colnames(mediated_effects_pct) <- paste("Model ", 2:4, "(%)")
-rownames(mediated_effects_pct) <- c("University", "Income", "Height", "BMI")
-
-
-tbl_note <- paste("Percentage of the effects of birth order in Table", 
-"\\ref{tab:tbl-bo-psea-moba}, columns 2 to 4, explained by by each mediating variable.")
-
-as_hux(mediated_effects_pct, add_colnames = TRUE, add_rownames = "") %>%
-      theme_article() %>% 
-      add_footnote(tbl_note) %>% 
-      set_escape_contents(final(1), everywhere, FALSE) %>% 
-      set_width(0.7) %>% 
-      set_col_width(c(.4, .2, .2, .2)) %>% 
-      set_align(1, -1, "right") %>% 
-      set_align(-1, -1 , ".") %>% 
-      set_number_format(-1, -1, 1) %>% 
-      set_tb_padding(3) %>% 
-      set_bottom_border(1, 1, 0) %>% 
-      set_font_size(10) %>%
-      set_caption(
-        "Percent of birth order effects accounted for by mediators (Norway)"
-      )  
-```
-
-
-```{r tbl-bo-subsets-moba}
-
-mod_bo_subsets_moba <- purrr::map2(export_table5_tidyse,
-                                     export_table5_glance, 
-                                     convert_moba_for_huxreg)
-
-names(mod_bo_subsets_moba) <- rep(c("Male respondents", "Female respondents"), 
-                                    each = 2)
-
-tbl_note <- paste("Estimates from OLS regressions corresponding to",
-"columns 1 and 2 in Table \\ref{{tab:tbl-bo-psea}}, separately for males, females",
-"and respondents with children. Spouse PSEA is the dependent variable, and own",
-"birth order and university attendance are the main independent variables. PSEA",
-"is the polygenic score for educational attainment, which is normalized with",
-"mean 0 and standard deviation 1. We include own PSEA, parents’ age at birth (the mean of",
-"parent’s ages) and further controls (family size, birth year, and birth month",
-"dummies) to ensure the balance of", 
-"covariates across birth order. All data is from the MoBa dataset for a sample of", 
-"spouse pairs with a child between 1999 and 2008.", my_note)
-
-huxreg(mod_bo_subsets_moba,
-         coefs = moba_reg_coefs[moba_reg_coefs != "income"],
-         statistics = c("N" = "nobs", "$R^2$" = "r.squared"),
-         note       = tbl_note,
-         stars      = my_stars
-       ) %>%
-       set_escape_contents(final(1), everywhere, FALSE) %>% 
-       insert_row(after = 13, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 14, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 15, "Birth year dummies", rep("Yes", 4)) %>% 
-       set_bottom_border(14:15, everywhere, 0) %>% 
-       set_align(11:13, -1, "center") %>% 
-       set_font_size(10) %>% 
-       set_width(1) %>% 
-       set_tb_padding(3) %>% 
-       set_lr_padding(3) %>% 
-       set_escape_contents(18, 1, FALSE) %>%
-       set_caption("Regressions of spouse PSEA: subsets (Norway)")
-```
-
-\FloatBarrier
-
-# Robustness
+## Robustness
 
 Although all children of the same parents have the same polygenic scores
 in expectation, it might still be possible that genetics correlates with
@@ -1983,11 +1802,11 @@ including all previous versions of the paper and code.
 
 # Conclusion
 
-Our empirical analysis shows that in Great Britain and Norway, two contemporary
-developed countries, earlier-born siblings had spouses with
-higher PSEA. We also provide evidence that these effects are mediated by
-socio-economic status, specifically income and education. We interpret this as
-evidence of social-genetic assortative mating (SGAM). 
+Our empirical analysis shows that in a contemporary developed society, 
+individuals with fewer elder siblings had spouses with higher PSEA. We also provide
+evidence that these effects are mediated by socio-economic status, specifically
+income and education. We interpret this as evidence of social-genetic assortative
+mating (SGAM). 
 
 There are multiple mechanisms by which advantage is transmitted across
 generations. High-income parents may invest more in their children's human
@@ -2006,16 +1825,15 @@ genetics. As our model shows, genetic variation is not an exogenous input into
 the social system, but an endogenous outcome -- not a confound for wealth, but a mediator. 
 
 SGAM also provides a new explanation for the genes-SES gradient -- the observed
-association of genes with SES -- which is an important cause of educational
-and occupational inequality, and perhaps also of health inequalities. The
-leading alternative explanation is meritocratic social mobility. Whilst
-meritocracy exists in modern capitalist economies, it has been far more limited
-in most societies throughout history [@smelser1966social]. On the other hand,
-assortative mating is likely to be a cultural universal [@buss1989sex]. Thus,
-SGAM predicts that genes-SES gradients should exist in all stratified societies.
-In fact, people in many societies have believed that innate traits do vary by
-social status.[^quotes] In future, it may be possible to directly test for
-genetic differences across social status in ancient DNA samples.
+association of genes with SES. The leading alternative explanation is
+meritocratic social mobility. Whilst meritocracy exists in modern capitalist
+economies, it has been far more limited in most societies throughout history
+[@smelser1966social]. On the other hand, assortative mating is likely to be a
+cultural universal [@buss1989sex]. Thus, SGAM predicts that genes-SES gradients
+should exist in all stratified societies. In fact, people in many societies have
+believed that innate traits do vary by social status.[^quotes] In future, it may be
+possible to directly test for genetic differences across social status in
+ancient DNA samples.
 
 [^quotes]: The appendix contains a selection of relevant historical quotations.
 
@@ -2029,9 +1847,8 @@ other hand, while lowering the intergenerational transmission of wealth may
 eventually flatten the genes-SES gradient, increases in the level of meritocracy
 paradoxically make it steeper, suggesting a deep conflict between meritocracy
 and egalitarianism [@young1958rise; @markovits2019meritocracy]. Lastly, the
-structure of marriage markets also affects the gradient. Our empirical analysis
-suggests that in relatively egalitarian Norway, income plays a less important role in assortative mating than it does in the UK. However, fuller tests of these comparative 
-statics across societies and time periods are an important challenge for future work.
+structure of marriage markets also affects the gradient. Testing these comparative 
+statics across societies and time periods is an important challenge for future work.
 
 The broadest message of this paper is that genetics are a social
 outcome. Both popular and scientific discourse often parse genetics as
@@ -2058,18 +1875,7 @@ economists and geneticists.
 AA is supported by the Foundation Volksbond Rotterdam and by ZonMw grant 
 849200011 from The Netherlands Organisation for Health Research and Development. 
 This study was conducted using UK Biobank resources under application number 
-40310. 
-
-We thank the Norwegian Institute of Public Health (NIPH) for generating high-quality
-genomic data. This research is part of the HARVEST collaboration, supported by the
-Research Council of Norway (#229624). We also thank the NORMENT Centre for providing
-genotype data, funded by the Research Council of Norway (#223273), South East Norway
-Health Authorities and Stiftelsen Kristian Gerhard Jebsen. We further thank the Center for
-Diabetes Research, the University of Bergen for providing genotype data and performing
-quality control and imputation of the data funded by the ERC AdG project
-SELECTionPREDISPOSED, Stiftelsen Kristian Gerhard Jebsen, Trond Mohn Foundation,
-the Research Council of Norway, the Novo Nordisk Foundation, the University of Bergen,
-and the Western Norway Health Authorities.
+40310.
 
 Code to reproduce is available at https://github.com/hughjonesd/trading-genetics.
 
@@ -2093,19 +1899,7 @@ Code to reproduce is available at https://github.com/hughjonesd/trading-genetics
 
 \newpage
 
-## More empirical results
-
-Table \@ref(tab:tbl-bo-first-stage-moba) shows regressions of birth order on
-mediators for the MOBA data. Birth order predicts all the mediators significantly
-and with large effect sizes, except for BMI.
-
-Table \@ref(tab:tbl-bo-psea-basic-moba) regresses birth order on spouse PSEA
-for the MOBA data, starting with a simple bivariate regression and adding
-controls as in Table \@ref(tab:tbl-bo-psea-basic). Interestingly, here, 
-the negative effect of birth order is highly significant even before we 
-control for parental age. As in Britain, though, the effect is greatly increased
-by controlling for parental age, and parental age has the same positive sign
-and about the same size.
+## Robustness checks
 
 Table \@ref(tab:tbl-bo-psea-no-par-age) reruns our central regressions,
 dropping the control for parents' age at birth. Results show the same
@@ -2164,92 +1958,6 @@ excluding families of size 3. Results are very similar to those in the
 main text.
 
 
-```{r tbl-bo-first-stage-moba}
-
-mod_bo_1st_moba <- purrr::map2(export_table1_tidyse[-1],
-                                     export_table1_glance[-1], 
-                                     convert_moba_for_huxreg)
-
-names(mod_bo_1st_moba) <- c("University", "Income", "Height", "BMI")
-
-
-tbl_note <- paste("Estimates from OLS regressions with the ",
-"mediators (university attendance, income, height, BMI)",
-" as dependent",
-"variables, and own birth order as the main independent variable. PSEA is the",
-"polygenic score for educational attainment, which is normalized with mean 0 and",
-"standard deviation 1. We include parents' age at birth",
-"and further controls to ensure the balance of covariates across birth", 
-"order. All data is from the MoBa dataset for a sample of", 
-"spouse pairs with a child between 1999 and 2008.", my_note)
-
-coefs_1st <- c("Birth order", "Own PSEA", "Parents' age at birth")
-huxreg(mod_bo_1st_moba, 
-         coefs = moba_reg_coefs[coefs_1st],
-         statistics = c(
-           "N"  = "nobs", 
-           "R2" = "r.squared"
-          ),
-         note = tbl_note,
-         stars = my_stars,
-         tidy_args = tidy_args
-       ) %>% 
-       insert_row(after = 7, "Family size dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 8, "Birth month dummies", rep("Yes", 4)) %>% 
-       insert_row(after = 9, "Birth year dummies", rep("Yes", 4)) %>% 
-       set_bottom_border(8:9, everywhere, 0) %>% 
-       set_align(8:10, -1, "center") %>% 
-       set_number_format(2:7, -1, 4) %>% 
-       set_width(1) %>% 
-       set_font_size(10) %>%
-       set_caption("Regressions of mediators on birth order (Norway)")
-       
-```
-
-```{r tbl-bo-psea-basic-moba}
-mod_bo_psea_basic_moba <- purrr::map2(export_table2_tidyse,
-                                     export_table2_glance, 
-                                     convert_moba_for_huxreg)
-
-names(mod_bo_psea_basic_moba) <- NULL
-
-
-tbl_note <- paste("Estimates from OLS regressions with spouse PSEA as dependent",
-"variable, and own birth order as the main independent variable. PSEA is the",
-"polygenic score for educational attainment, which is normalized with mean 0 and",
-"standard deviation 1. We include own PSEA, parents' age at birth (the mean of parents'",
-"ages), and further controls (family size, birth year, and birth month dummies)", 
-"in columns 2-3 to ensure the balance of covariates",
-"across birth order. All data is from the MoBa dataset for a sample of", 
-"spouse pairs with a child between 1999 and 2008.", my_note)
-
-coefs_basic <-  c("Birth order", "Own PSEA", "Parents' age at birth")
-huxreg(mod_bo_psea_basic_moba, 
-         coefs = moba_reg_coefs[coefs_basic],
-         statistics = c(
-           "N"  = "nobs", 
-           "R2" = "r.squared"
-          ),
-         note = tbl_note,
-         stars = my_stars,
-         tidy_args = tidy_args
-       ) %>% 
-       insert_row(after = 7, "Family size dummies", rep("Yes", 3)) %>% 
-       insert_row(after = 8, "Birth month dummies", "No", "Yes", "Yes") %>% 
-       insert_row(after = 9, "Birth year dummies", "No", "Yes", "Yes") %>% 
-       set_bottom_border(8:9, everywhere, 0) %>% 
-       set_align(8:10, -1, "center") %>% 
-       set_number_format(2:7, -1, 4) %>% 
-       set_width(0.9) %>% 
-       set_font_size(10) %>%
-       set_caption("Regressions of spouse PSEA on birth order (Norway)")
-
-
-```
-
-
-
-
 ```{r tbl-bo-psea-no-par-age}
 
 
@@ -2294,7 +2002,7 @@ huxreg(mod_bo_no_par_age,
        set_align(18:20, -1, "center") %>% 
        set_number_format(2:17, -1, 4) %>% 
        set_font_size(11) %>%
-       set_caption("Regressions of spouse PSEA, without controls for parents' age at respondent's birth (Great Britain)")
+       set_caption("Regressions of spouse PSEA, without controls for parents' age at respondent's birth")
 
 ```
 
@@ -2351,7 +2059,7 @@ ht <- huxtable::huxreg(mod_bo_psea_dummies,
        set_bottom_border(21:23, everywhere, 0) %>% 
        set_align(21:24, -1, "center") %>% 
        set_number_format(2:20, -1, 4) %>% 
-       set_caption("Regressions of spouse PSEA, separate birth order dummies (Great Britain)") %>% 
+       set_caption("Regressions of spouse PSEA, separate birth order dummies") %>% 
        set_tb_padding(2) %>% 
        set_font_size(10) %>% 
        set_width(0.9)
@@ -2439,7 +2147,7 @@ ht <- huxtable::huxreg(reg_list,
        set_bottom_border(19:21, everywhere, 0) %>%
        set_align(19:22, -1, "center") %>% 
        set_number_format(2:18, -1, 4) %>% 
-       set_caption("Regressions of spouse PSEA, separate birth order dummies: subsets (Great Britain)") %>% 
+       set_caption("Regressions of spouse PSEA, separate birth order dummies: subsets") %>% 
        set_tb_padding(3) %>% 
        set_lr_padding(2) %>% 
        set_font_size(9) %>% 
@@ -2543,8 +2251,7 @@ huxreg(mod_bo_psea_weights,
        set_align(18:20, -1, "center") %>% 
        set_number_format(2:17, -1, 4) %>% 
        set_font_size(10) %>%
-       set_caption("Regressions of spouse PSEA, weighted to match 
-                   UK Biobank sampling frame (Great Britain)")
+       set_caption("Regressions of spouse PSEA, weighted to match UK Biobank sampling frame")
 
 ```
 
@@ -2590,8 +2297,7 @@ huxreg(mod_bo_psea_pgs,
        set_wrap(final(1), everywhere, TRUE) %>% 
        set_tb_padding(2) %>%
        set_font_size(10) %>%
-       set_caption("Regressions of spouse PSEA with controls for polygenic 
-                   scores (Great Britain)")
+       set_caption("Regressions of spouse PSEA with controls for polygenic scores")
 ```
 
 
@@ -2627,8 +2333,7 @@ huxreg(mod_bo_psea_age_fte,
        set_number_format(2:19, -1, 4) %>% 
        set_width(0.9) %>% 
        set_font_size(10) %>%
-       set_caption("Regressions of spouse PSEA using age of leaving full-time 
-                   education (Great Britain)")
+       set_caption("Regressions of spouse PSEA using age of leaving full-time education")
 ```
 
 
@@ -2653,47 +2358,24 @@ huxreg(mod_bo_psea_no3,
        set_align(20:22, -1, "center") %>% 
        set_number_format(2:19, -1, 4) %>% 
        set_font_size(10) %>%
-       set_caption("Regressions of spouse PSEA, excluding family size 3 
-                   (Great Britain)")
+       set_caption("Regressions of spouse PSEA, excluding family size 3")
 ```
 
 
 \FloatBarrier
 \newpage
 
-### Testing the UK Biobank spouse pair matching 
+### Regressions with "fake pairs"
 
-
-```{r calc-validate-pairs}
-
-prop_shared <- calc_prop_shared_children(mf_pairs)
-n_one_has_kid <- prop_shared$one
-n_both_same_kid <- prop_shared$both
-
-```
-
-
-Some of our spouse pairs in UK Biobank could be false positives, i.e. people who
-are not each others' spouse but simply live in the same postcode. To validate
-the accuracy of our pairs, we use genetic relationships. Some respondents in the
-UK Biobank sample have a child (inferred from genetic data) who is also in the
-sample. Among our spouse pairs, `r n_one_has_kid` have a genetic child of at
-least one partner in the sample. For `r n_both_same_kid` of these, at least one
-child is the genetic child of both partners. If this subsample is
-representative, then about `r percent(n_both_same_kid/n_one_has_kid)` of the
-pairs who have had a child, have had a child together. This is a lower bound
-estimate, because some of the remaining couples may have had a genetically
-shared child who is not in the UK Biobank sample. As a point of comparison, 11%
-of families with dependent children included a stepchild in England and Wales in
-2011 [@ons2011stepfamilies].
-
-It is still possible that some pairs in our data may not be actual spouses.
-These pairs might show a relationship between one partner's phenotype and the
-other's genotype. For example, maybe early-born children grow up to live in
-richer postcodes, along with people who have higher PSEA scores
-[@abdellaoui2019genetic]. This could then bias the results. If the coefficient
-for "fake pairs" is absolutely larger (smaller) than for real pairs, then our
-results will be biased away from zero (towards zero).
+Our dataset of pairs could still contain pairs who live in the same
+postcode but are not spouses. These pairs might still show a
+relationship between one partner's phenotype and the other's genotype.
+For example, maybe early-born children grow up to live in richer
+postcodes, along with people who have higher PSEA scores
+[@abdellaoui2019genetic]. This could then bias the results. If the
+coefficient for "fake pairs" is absolutely larger (smaller) than for
+real pairs, then our results will be biased away from zero (towards
+zero).
 
 To sign the bias, we create a dataset of "known fake pairs". These are
 opposite-sexed pairs who live in the same postcode, but do not share all
@@ -2755,7 +2437,7 @@ huxreg(mod_bo_psea_fake,
        set_align(8:10, -1, "center") %>% 
        set_number_format(2:7, -1, 4) %>% 
        set_width(0.8) %>% 
-       set_caption("Regressions of PSEA on birth order: fake pairs (Great Britain)")
+       set_caption("Regressions of PSEA on birth order: fake pairs")
 
 ```
 
