@@ -198,14 +198,14 @@ reg_coefs <- c(
 moba_reg_coefs <- c(
           "Birth order"           = "parity", 
           "University"            = "university", 
-          "Income"                = "income",
+          "Income"                = "incomez",
           "Height"                = "height",
           "BMI"                   = "bmi",
           "Own PSEA"              = "eapgsresid",
           "Parents' age at birth" = "parentalage"
         )
 # load moba results
-load("moba-results/tradinggenetics_moba.Rdata")
+load("moba-results/tradinggenetics_moba_v04.Rdata")
 ```
 
 ```{r TODO-NOTES, eval = FALSE}
