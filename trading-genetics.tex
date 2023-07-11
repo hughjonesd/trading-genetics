@@ -142,7 +142,7 @@ Fartein Ask Torvik\thanks{Norwegian Institute of Public Health, Oslo.
   Email: f.a.torvik@psykologi.uio.no} \&
 Eivind Ystrøm\thanks{Norwegian Institute of Public Health, Oslo. 
   Email: eivind.ystrom@psykologi.uio.no}}
-\date{2023-07-06}
+\date{2023-07-11}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -169,11 +169,11 @@ genetically inherited traits are both assets in marriage markets, become
 associated in spouse pairs, and are passed together to future generations.
 This gives a new explanation for persistent intergenerational inequality and
 observed genetic differences between rich and poor. We model SGAM and test\\
-for it in a large survey. Spouses of earlier-born siblings have genetics
-predicting more education. This effect is mediated by individuals' own
-education and income. Thus, shocks to SES are reflected in the DNA of
-subsequent generations. Under SGAM, genetic variation is endogenous to
-economic institutions.
+for it in two large surveys from Great Britain and Norway. Spouses of
+earlier-born siblings have genetics predicting more education. This effect is
+mediated by individuals' own education and income. Thus, shocks to SES are
+reflected in the DNA of subsequent generations. Under SGAM, genetic variation
+is endogenous to economic institutions.
 
 \par
 
@@ -401,8 +401,10 @@ complementarities between genetic and environmental components of human capital,
 for example if higher-ability parents make more productive investments in
 children's human capital (Cunha and Heckman 2007; Cunha, Heckman, and Schennach 2010; Heckman and Mosso 2014; Kong et al. 2018), or if high-income parents are able to
 invest more in transmitting their human capital (Becker et al. 2018). Thus, by
-bringing ``good genes'' and enriched environments together, SGAM may increase
-inequality in the next generation.
+bringing ``good genes''\footnote{Throughout, ``good genes'' simply mean genetic variants
+  associated with characteristics considered desirable in a society's marriage
+  markets. No ethical valuation is implied.} and enriched environments together, SGAM may
+increase inequality in the next generation.
 
 Lastly, we contribute to a literature in economics that examines the
 relationship between genetic and economic variables. Benjamin et al. (2011) is an
@@ -942,8 +944,8 @@ Harden (2021) calls the ``genetic lottery''.
 
 The central insight in our model is that higher SES and good genes assort in the
 marriage market. In particular, own SES and spouses' genes can become positively
-correlated even if own genes and SES are not correlated (Proposition 1). To
-test this, we look at correlations among spouses between one partner's SES
+correlated even if own genes and SES are not correlated (Proposition 1). In what
+follows, we test for correlations among spouses between one partner's SES
 and the other partner's genetics.
 
 We use data from two sources: Great Britain and Norway. Our Great Britain data
@@ -954,8 +956,8 @@ and social outcomes. The Biobank does not contain explicit information on spouse
 pairs. We categorize respondents as pairs if they had the same home postcode on at least
 one occasion;\footnote{A typical UK postcode contains about 15 properties.} both reported the same homeownership/renting status, length of time
 at the address, and number of children; attended the same UK Biobank assessment
-center on the same day; both reported living with their spouse (``husband, wife or partner''); and consisted of one male and one female.
-
+center on the same day; both reported living with their spouse (``husband, wife or
+partner''); and consisted of one male and one female.
 We also eliminate all pairs where either spouse appeared more than once
 in the data. This leaves a total of 35,682 pairs.\footnote{In the appendix, we test the validity of our matching process by
   counting the proportion of pairs who had a shared genetic child, in a subsample
@@ -1027,8 +1029,9 @@ percentage points (Chetty, Hendren, and Katz 2016).
 
 We use two measures of socio-economic status: income, and university attendance.
 Income is a direct measure of SES. University attendance is a predictor of
-income over the whole life course, and a form of SES in itself. The UK Biobank
-data only contains a direct measure of current household income, which is
+income over the whole life course, and a form of SES in itself. The MoBa data
+includes both university attendance and income. UK Biobank includes university
+attendance, but only has a direct measure of current household income, which is
 inappropriate for our purposes because it includes income from both spouses and
 is measured after marriage. Instead, we estimate income in £000s in the
 respondent's first job, by matching the job's Standard Occupational
@@ -1123,7 +1126,7 @@ Birth order offers a way to test the central assumption in our theoretical model
 which is exogenous to own genetics. Ideally, we might prefer to use birth order
 as an instrument for SES. However, our measures of social status are noisy and
 incomplete. For example, we know whether subjects attended university, but not
-which university. Birth orderlikely affects both measured and unmeasured aspects
+which university. Birth order likely affects both measured and unmeasured aspects
 of SES. So, an instrumental variables approach would fall foul of the exclusion
 restriction.
 
@@ -1231,10 +1234,10 @@ generated by birth order. Failing this, the estimates of \(\alpha^j\) will be
 conflated with the effects of unmeasured investments. Second, (b) the measured
 investments should be uncorrelated with other shocks \(\tilde{\varepsilon}_b\).
 With respect to assumption (a), in our regressions we control for a set of
-potential alternative mediators available in the data: height, fluid IQ, BMI and
-general health. With respect to assumption (b), we use further controls, such
-as parental age, year of birth, and own PSEA, to reduce unobserved variation in
-the error term.
+potential alternative mediators available in the data: height,
+BMI, and (in UK Biobank only) fluid IQ and self-reported general health.\\
+With respect to assumption (b), we use further controls, such as parental age,
+year of birth, and own PSEA, to reduce unobserved variation in the error term.
 
 By running a least square regression of \eqref{eq:model-to-estimate}, we can
 estimate \(\tau\) and \(\alpha^j\). If assumption (a) holds, the part of the birth
@@ -2029,11 +2032,11 @@ respondents, using their birth order to predict male spouses' PSEA. The effect o
 birth order is imprecisely estimated in these subsets due to the lower sample
 size. However, the pattern of coefficient sizes is the same as in the main
 regression: the coefficient of birth order is about -0.3 (and very similar
-between the sexes), and adding university
-attendance reduces the absolute size of the birth order effect. Columns 5 and 6
-show results from regressions on the subsample of couples with children.
-Here, birth order is significant in the base specification, and again,
-university attendance still seems to mediate the birth order effect.
+between the sexes), and adding university attendance reduces the absolute size
+of the birth order effect. Columns 5 and 6 show results from regressions on
+the subsample of couples with children. Here, birth order is significant in the
+base specification, and again, university attendance still seems to mediate the
+birth order effect.
 
  
   \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
@@ -2335,14 +2338,17 @@ university attendance still seems to mediate the birth order effect.
 
 Now we turn to the results from MoBa in Norway. Some of the variables are
 different from those for UK Biobank. Spouse PSEA is calculated using summary
-statistics from Okbay et al. (2022), aka ``EA4'', rather than ``EA3''. Income is
-from all sources, reported at age 30, converted to a z score. In particular,
+statistics from Okbay et al. (2022), aka ``EA4'', rather than ``EA3''.\footnote{The \(R^2\) on own university attendance is
+  0.0814 for EA4 in MoBa, compared to
+  0.04 for EA3 in UK Biobank.}
+Income is from all sources, reported at age 30, converted to a z score. In particular,
 some low-income individuals may be in continuing education or in relationships
-already.\footnote{We also tried income at age 25. This gave weird results, with a
-  significant negative beta on spouse PSEA. It correlated only at 0.1 with
-  income at age 30, and was negatively correlated with educational attainment.
-  Many people in Norway are still in higher education at age 25. Overall, we think
-  income at 30 is more informative as a measure of SES.} Data on IQ and self-reported health is unavailable. The sample
+already.\footnote{We also tried income at age 25. This gave odd results, with a
+  significant negative beta on spouse PSEA. A possible reason is that in Norway many
+  potential high earners are still in higher education at age 25. Income at age 25
+  correlated only at 0.1 with income at age 30, and was negatively correlated with
+  educational attainment. Overall, we think income at 30 is more informative as a
+  measure of SES.} Data on IQ and self-reported health is unavailable. The sample
 is also younger than UK Biobank, spouse pairs are given rather than constructed,
 and all couples have at least one child.
 
@@ -3000,7 +3006,7 @@ Second, we have residualized PSEA on 100 principal components of the genetic
 data, a standard technique in genetics to avoid confounding causal effects with
 population stratification. Third, true causal effects of individual
 SNPs are highly correlated (r = 0.74) with their ``population effects''
-including noise (A. I. Young et al. 2022). Lastly, it is hard to imagine an
+including noise (A. Young et al. 2022). Lastly, it is hard to imagine an
 assortative mating process by which people match spouses who have genetic
 variants that correlate with educational attainment, but not genetic variants
 that cause it.
@@ -7268,7 +7274,7 @@ Western, Bruce, Deirdre Bloome, and Christine Percheski. 2008. {``Inequality Amo
 White, Karl R. 1982. {``The Relation Between Socioeconomic Status and Academic Achievement.''} \emph{Psychological Bulletin} 91 (3): 461.
 
 \leavevmode\vadjust pre{\hypertarget{ref-young2022mendelian}{}}%
-Young, Alexander I, Seyed Moeen Nehzati, Stefania Benonisdottir, Aysu Okbay, Hariharan Jayashankar, Chanwook Lee, David Cesarini, Daniel J Benjamin, Patrick Turley, and Augustine Kong. 2022. {``Mendelian Imputation of Parental Genotypes Improves Estimates of Direct Genetic Effects.''} \emph{Nature Genetics} 54 (6): 897--905.
+Young, Alexander, Seyed Moeen Nehzati, Stefania Benonisdottir, Aysu Okbay, Hariharan Jayashankar, Chanwook Lee, David Cesarini, Daniel J Benjamin, Patrick Turley, and Augustine Kong. 2022. {``Mendelian Imputation of Parental Genotypes Improves Estimates of Direct Genetic Effects.''} \emph{Nature Genetics} 54 (6): 897--905.
 
 \leavevmode\vadjust pre{\hypertarget{ref-young1958rise}{}}%
 Young, Michael. 1958. \emph{The Rise of the Meritocracy}. Thames; Hudson.

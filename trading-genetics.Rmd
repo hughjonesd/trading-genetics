@@ -20,11 +20,11 @@ abstract: |
   associated in spouse pairs, and are passed together to future generations. 
   This gives a new explanation for persistent intergenerational inequality and 
   observed genetic differences between rich and poor. We model SGAM and test  
-  for it in a large survey. Spouses of earlier-born siblings have genetics
-  predicting more education. This effect is mediated by individuals' own 
-  education and income. Thus, shocks to SES are reflected in the DNA of 
-  subsequent generations. Under SGAM, genetic variation is endogenous to
-  economic institutions. \par\textbf{Keywords:} Assortative mating, 
+  for it in two large surveys from Great Britain and Norway. Spouses of 
+  earlier-born siblings have genetics predicting more education. This effect is 
+  mediated by individuals' own education and income. Thus, shocks to SES are 
+  reflected in the DNA of subsequent generations. Under SGAM, genetic variation 
+  is endogenous to economic institutions. \par\textbf{Keywords:} Assortative mating, 
   MoBa, UK Biobank.
 date: "`r Sys.Date()`"
 output: 
@@ -586,8 +586,12 @@ for example if higher-ability parents make more productive investments in
 children’s human capital [@cunha2007technology; @cunha2010estimating;
 @heckman2014economics; @kong2018nature], or if high-income parents are able to
 invest more in transmitting their human capital [@becker2018theory]. Thus, by
-bringing "good genes" and enriched environments together, SGAM may increase
-inequality in the next generation.
+bringing "good genes"[^language] and enriched environments together, SGAM may
+increase inequality in the next generation.
+
+[^language]: Throughout, "good genes" simply mean genetic variants
+associated with characteristics considered desirable in a society's marriage
+markets. No ethical valuation is implied.
 
 Lastly, we contribute to a literature in economics that examines the
 relationship between genetic and economic variables. @benjamin2011promises is an
@@ -724,8 +728,8 @@ Others to look at:
 
 The central insight in our model is that higher SES and good genes assort in the 
 marriage market. In particular, own SES and spouses' genes can become positively
-correlated even if own genes and SES are not correlated (Proposition 1). To 
-test this, we look at correlations among spouses between one partner's SES 
+correlated even if own genes and SES are not correlated (Proposition 1). In what
+follows, we test for correlations among spouses between one partner's SES 
 and the other partner's genetics. 
 
 We use data from two sources: Great Britain and Norway. Our Great Britain data
@@ -736,12 +740,12 @@ and social outcomes. The Biobank does not contain explicit information on spouse
 pairs. We categorize respondents as pairs if they had the same home postcode on at least 
 one occasion;[^4] both reported the same homeownership/renting status, length of time
 at the address, and number of children; attended the same UK Biobank assessment 
-center on the same day; both reported living with their spouse ("husband, wife or partner"); and consisted of one male and one female.
-
-[^4]: A typical UK postcode contains about 15 properties.
-
+center on the same day; both reported living with their spouse ("husband, wife or
+partner"); and consisted of one male and one female. 
 We also eliminate all pairs where either spouse appeared more than once
 in the data. This leaves a total of `r pretty(nrow(mf_pairs))` pairs.[^matching]
+
+[^4]: A typical UK postcode contains about 15 properties.
 
 [^matching]: In the appendix, we test the validity of our matching process by 
 counting the proportion of pairs who had a shared genetic child, in a subsample
@@ -784,6 +788,9 @@ mod_own_psea_within <- feols(university ~ EA3 | sib_group, data = famhist,
 
 n_own_psea <- glance(mod_own_psea)[["nobs"]]
 n_own_psea_within <- glance(mod_own_psea_within)[["nobs"]]
+
+r2_own_psea <- glance(mod_own_psea)[["r.squared"]]
+r2_own_psea_moba <- 0.08136 # calculated by Fartein
 
 mod_own_psea <- tidy(mod_own_psea)
 mod_own_psea_within <- tidy(mod_own_psea_within)
@@ -844,8 +851,9 @@ percentage points [@chetty2016effects].
 
 We use two measures of socio-economic status: income, and university attendance.
 Income is a direct measure of SES. University attendance is a predictor of
-income over the whole life course, and a form of SES in itself. The UK Biobank
-data only contains a direct measure of current household income, which is
+income over the whole life course, and a form of SES in itself. The MoBa data
+includes both university attendance and income. UK Biobank includes university
+attendance, but only has a direct measure of current household income, which is
 inappropriate for our purposes because it includes income from both spouses and
 is measured after marriage. Instead, we estimate income in £000s in the
 respondent's first job, by matching the job's Standard Occupational
@@ -986,7 +994,7 @@ Birth order offers a way to test the central assumption in our theoretical model
 which is exogenous to own genetics. Ideally, we might prefer to use birth order 
 as an instrument for SES. However, our measures of social status are noisy and
 incomplete. For example, we know whether subjects attended university, but not 
-which university. Birth orderlikely affects both measured and unmeasured aspects 
+which university. Birth order likely affects both measured and unmeasured aspects 
 of SES. So, an instrumental variables approach would fall foul of the exclusion
 restriction.
 
@@ -1098,10 +1106,10 @@ generated by birth order. Failing this, the estimates of $\alpha^j$ will be
 conflated with the effects of unmeasured investments. Second, (b) the measured
 investments should be uncorrelated with other shocks $\tilde{\varepsilon}_b$.
 With respect to assumption (a), in our regressions we control for a set of
-potential alternative mediators available in the data: height, fluid IQ, BMI and 
-general health.  With respect to assumption (b), we use further controls, such 
-as parental age, year of birth, and own PSEA, to reduce unobserved variation in 
-the error term. 
+potential alternative mediators available in the data: height,
+BMI, and (in UK Biobank only) fluid IQ and self-reported general health.  
+With respect to assumption (b), we use further controls, such as parental age, 
+year of birth, and own PSEA, to reduce unobserved variation in the error term. 
 
 By running a least square regression of \@ref(eq:model-to-estimate), we can
 estimate $\tau$ and $\alpha^j$. If assumption (a) holds, the part of the birth
@@ -1495,11 +1503,11 @@ respondents, using their birth order to predict male spouses' PSEA. The effect o
 birth order is imprecisely estimated in these subsets due to the lower sample
 size. However, the pattern of coefficient sizes is the same as in the main
 regression: the coefficient of birth order is about -0.3 (and very similar 
-between the sexes), and adding university
-attendance reduces the absolute size of the birth order effect. Columns 5 and 6
-show results from regressions on the subsample of couples with children. 
-Here, birth order is significant in the base specification, and again, 
-university attendance still seems to mediate the birth order effect.
+between the sexes), and adding university attendance reduces the absolute size 
+of the birth order effect. Columns 5 and 6 show results from regressions on 
+the subsample of couples with children. Here, birth order is significant in the 
+base specification, and again, university attendance still seems to mediate the 
+birth order effect.
 
 
 ```{r tbl-bo-subsets}
@@ -1573,18 +1581,23 @@ huxreg(reg_list,
 
 Now we turn to the results from MoBa in Norway. Some of the variables are
 different from those for UK Biobank. Spouse PSEA is calculated using summary
-statistics from @okbay2022polygenic, aka "EA4", rather than "EA3". Income is
-from all sources, reported at age 30, converted to a z score. In particular, 
+statistics from @okbay2022polygenic, aka "EA4", rather than "EA3".[^r2-comparison]
+Income is from all sources, reported at age 30, converted to a z score. In particular, 
 some low-income individuals may be in continuing education or in relationships
 already.[^age-25] Data on IQ and self-reported health is unavailable. The sample
 is also younger than UK Biobank, spouse pairs are given rather than constructed,
 and all couples have at least one child.
 
-[^age-25]: We also tried income at age 25. This gave weird results, with a
-significant negative beta on spouse PSEA.  It correlated only at 0.1 with 
-income at age 30, and was negatively correlated with educational attainment. 
-Many people in Norway are still in higher education at age 25. Overall, we think 
-income at 30 is more informative as a measure of SES.
+[^r2-comparison]: The $R^2$ on own university attendance is 
+`r pretty(r2_own_psea_moba, 3)` for EA4 in MoBa, compared to 
+`r pretty(r2_own_psea, 3)` for EA3 in UK Biobank.
+
+[^age-25]: We also tried income at age 25. This gave odd results, with a
+significant negative beta on spouse PSEA. A possible reason is that in Norway many
+potential high earners are still in higher education at age 25. Income at age 25
+correlated only at 0.1 with income at age 30, and was negatively correlated with
+educational attainment. Overall, we think income at 30 is more informative as a 
+measure of SES.
 
 Tables \@ref(tab:tbl-bo-psea-moba) and \@ref(tab:tbl-mediation-moba) are the
 equivalent of Tables \@ref(tab:tbl-bo-psea) and \@ref(tab:tbl-mediation-prop)
