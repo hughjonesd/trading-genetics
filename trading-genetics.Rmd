@@ -151,6 +151,11 @@ rm(resid_scores)
 famhist$EA3 <- famhist$EA3_excl_23andMe_UK_resid
 
 mf_pairs_reg <- regression_subset(mf_pairs_twice)
+mf_pairs_reg <- mf_pairs_reg %>%
+                group_by(female.x, YOB.x) %>%
+                mutate(
+                  first_job_pay.x = c(scale(first_job_pay.x))
+                )
 
 my_note <- "{stars}. Standard errors clustered by spouse pair in parentheses."
 
@@ -851,11 +856,12 @@ income over the whole life course, and a form of SES in itself. The MoBa data
 includes both university attendance and income. UK Biobank includes university
 attendance, but only has a direct measure of current household income, which is
 inappropriate for our purposes because it includes income from both spouses and
-is measured after marriage. Instead, we estimate income in £000s in the
+is measured after marriage. Instead, we estimate income in the
 respondent's first job, by matching the job's Standard Occupational
 Classification (SOC) code with average earnings by SOC from @ONS2007ASHE. Job
 codes are only available for a subset of `r n_with_job_codes` respondents among
-our pairs.
+our pairs. We convert income to its z score among respondents with the same gender 
+and year of birth.
 
 Figure \@ref(fig:pic-basic-corr) illustrates the core idea of SGAM within our
 pair data. The X axis shows a measure of one partner's socio-economic status:
@@ -1187,7 +1193,7 @@ control for respondent's own PSEA and their parents' age at birth (see below). T
 these variables. Effect sizes are quite substantial: on average, one extra elder
 sibling reduces the chance of attending university by about 
 `r pretty(-coef_bo["University"] * 100)` percentage points, income by about 
-£`r pretty(-coef_bo["Income"] * 1000, format = "d")`, fluid IQ by about 
+`r pretty(-coef_bo["Income"])` standard deviations, fluid IQ by about 
 `r pretty(-coef_bo["Fluid IQ"])` points on a 13 point test, height by about 
 `r pretty(-coef_bo["Height"])` centimeters, and self reported health by 
 `r pretty(-coef_bo["Health"])` points on a 4-point scale; and increases BMI by 
