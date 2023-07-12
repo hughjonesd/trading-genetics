@@ -151,6 +151,11 @@ rm(resid_scores)
 famhist$EA3 <- famhist$EA3_excl_23andMe_UK_resid
 
 mf_pairs_reg <- regression_subset(mf_pairs_twice)
+mf_pairs_reg <- mf_pairs_reg %>%
+                group_by(female.x, YOB.x) %>%
+                mutate(
+                  first_job_pay.x = c(scale(first_job_pay.x))
+                )
 
 my_note <- "{stars}. Standard errors clustered by spouse pair in parentheses."
 
@@ -853,10 +858,12 @@ income over the whole life course, and a form of SES in itself. The MoBa data
 includes both university attendance and income. UK Biobank includes university
 attendance, but only has a direct measure of current household income, which is
 inappropriate for our purposes because it includes income from both spouses and
-is measured after marriage. Instead, we estimate income in £000s in the
+is measured after marriage. Instead, we estimate income in the
 respondent's first job, by matching the job's Standard Occupational
 Classification (SOC) code with average earnings by SOC from @ONS2007ASHE. Job
-codes are only available for a subset of respondents among our pairs.
+codes are only available for a subset of respondents. We convert income to a z 
+score among each group of respondents with the same gender and year of birth.
+
 
 Figure \@ref(fig:pic-basic-corr) illustrates the core idea of SGAM within the UK
 Biobank data. The X axis shows a measure of one partner's socio-economic status:
@@ -1192,7 +1199,7 @@ control for respondent's own PSEA and their parents' age at birth (see below). T
 these variables. Effect sizes are quite substantial: on average, one extra elder
 sibling reduces the chance of attending university by about 
 `r pretty(-coef_bo["University"] * 100)` percentage points, income by about 
-£`r pretty(-coef_bo["Income"] * 1000, format = "d")`, fluid IQ by about 
+`r pretty(-coef_bo["Income"])` standard deviations, fluid IQ by about 
 `r pretty(-coef_bo["Fluid IQ"])` points on a 13 point test, height by about 
 `r pretty(-coef_bo["Height"])` centimeters, and self reported health by 
 `r pretty(-coef_bo["Health"])` points on a 4-point scale; and increases BMI by 
@@ -1584,11 +1591,12 @@ huxreg(reg_list,
 Now we turn to the results from MoBa in Norway. Some of the variables are
 different from those for UK Biobank. Spouse PSEA is calculated using summary
 statistics from @okbay2022polygenic, aka "EA4", rather than "EA3".[^r2-comparison]
-Income is from all sources, reported at age 30, converted to a z score. In particular, 
-some low-income individuals may be in continuing education or in relationships
-already.[^age-25] Data on IQ and self-reported health is unavailable. The sample
-is also younger than UK Biobank, spouse pairs are given rather than constructed,
-and all couples have at least one child.
+Income is from all sources, reported at age 30, converted to a z score among
+respondents with the same gender, year of birth and year of reported income. 
+In particular, some low-income individuals may be in continuing education or in
+relationships already.[^age-25] Data on IQ and self-reported health is 
+unavailable. The sample is also younger than UK Biobank, spouse pairs are given 
+rather than constructed, and all couples have at least one child.
 
 [^r2-comparison]: The $R^2$ on own university attendance is 
 `r pretty(r2_own_psea_moba, 3)` for EA4 in MoBa, compared to 
@@ -2574,8 +2582,8 @@ huxreg(mod_bo_psea_weights,
        insert_row(after = 20, "Birth month dummies", rep("Yes", 4)) %>% 
        insert_row(after = 21, "Birth year dummies", rep("Yes", 4)) %>% 
        set_bottom_border(20:21, everywhere, 0) %>% 
-       set_align(18:20, -1, "center") %>% 
-       set_number_format(2:17, -1, 4) %>% 
+       set_align(20:22, -1, "center") %>% 
+       set_number_format(2:19, -1, 4) %>% 
        set_font_size(10) %>%
        set_caption("Regressions of spouse PSEA, weighted to match 
                    UK Biobank sampling frame (Great Britain)")
