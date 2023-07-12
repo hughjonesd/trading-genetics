@@ -70,8 +70,7 @@ social-genetic assortative mating (SGAM) takes place.[^not-direct]
 
 [^not-direct]: This model does not assume that people match *directly* on 
 genetics, which most observers agree would be unlikely. Instead we assume that
-genetics may contribute to an attractive phenotype, and that is what is matched
-on.
+genetics may contribute to an attractive phenotype which is matched on.
 
 Attractiveness $i$ is
 distributed $N(0,\sigma_{I}^{2})$, where
@@ -158,10 +157,11 @@ See Appendix.
 We consider the distribution of couples' wealth. Under random matching this has 
 mean $0$ and variance $2S^2$. Under SGAM, the variance is:
 \[
-V(x_{2}+y_{2}) = 2S^{2} + 2C^{2} > 2S^{2} 
+V(x_{2}+y_{2}) = 2S^{2} + 2C^{2} \ge 2S^{2} 
 \]
-This is decreasing in $a$ and equals $4S^2$ if $a = 0$. Thus, SGAM increases
-cross-sectional inequality, but less so than pure matching on wealth.
+with strict inequality if $a < 1$ or $\sigma > 0$. The variance is decreasing in 
+$a$ and equals $4S^2$ if $a = 0$. Thus, SGAM increases cross-sectional inequality, 
+but less so than pure matching on wealth.
 
 
 ## Children
@@ -189,7 +189,7 @@ between societies. $\theta$ is high when there is high intergenerational
 transmission of SES. Thus, $\theta$ captures social and economic institutions 
 that affect this intergenerational transmission, from taxation and
 public education to hereditary nobility. If we interpret $x_2$ narrowly as 
-wealth, $(1 - \theta)$ can be thought of as the rate of inheritance tax. 
+wealth, $1 - \theta$ can be thought of as the rate of inheritance tax. 
 
 For the time being, we assume that a person's genetic endowment has no impact on
 their SES. Technically, thus, $x_{2}^\prime$ does not directly depend on
@@ -439,7 +439,7 @@ $\tau = 1$, the dynamics diverges and $\bar{s}^{2}$ goes to $+\infty$.
 Figure \@ref(fig:pic-asymptotic-corr) plots the asymptotic correlation
 between $x_1$ and $x_2$ for $\tau = 0.95$.
 
-```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between genetics $x_1$ and SES $x_2$, by weight of genetics in spouse matching ($a$) and SES inheritance ($\\theta$). $\\tau$ = 0.95.", dpi = 300, out.height="3.5in"}
+```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between genetics $x_1$ and SES $x_2$, by weight of genetics in spouse matching ($a$) and strength of inheritance of SES ($\\theta$). $\\tau$ = 0.95.", dpi = 300, out.height="3.5in"}
 
 
 D <- function (a, lambda, mu) {
@@ -513,7 +513,7 @@ rgl::mtext3d("Corr(x₁, x₂)", "z-+", line = 6)
 Note that both $\bar{S}^{2}$ and $\bar{\sigma}$, as well as the correlation
 between characteristics and the conditional expectation of genetics given
 wealth, are increasing in $\theta$, i.e. decreasing in the tax rate. Higher
-taxation reduces the asymptotic variance of wealth (not surprisingly), but
+taxation reduces the asymptotic variance of wealth (unsurprisingly), but
 also the correlation between genetics and wealth. 
 
 ## Extensions
@@ -565,73 +565,10 @@ Surprisingly, in this case, the children's genes-SES correlation is not always
 increasing in $\theta$. The reason is that when $\gamma$ is high, a higher
 $\theta$ decreases the proportion of $x^\prime_2$ that comes via $\gamma$ from
 own genetics, and increases the proportion that comes from parents' SES, which
-may be less strongly correlated with own genetics. Figure \@ref(fig:pic-gamma)
-plots the correlation for $\gamma = 0.15$, by $a$ and $\theta$. However,
-computing the asymptotic correlation along the lines of Proposition \ref{prop-asymptotics-SGAM} shows that it is increasing in $\theta$ for 
+may be less strongly correlated with own genetics. However,
+computing the long-run asymptotic correlation along the lines of Proposition
+\ref{prop-asymptotics-SGAM} shows that it is increasing in $\theta$ for 
 all but values of $\theta$ very close to 1.
-
-```{r pic-gamma, fig.align = "center", fig.cap = "Correlation between children's genetics $x^\\prime_1$ and children's SES $x^\\prime_2$, by weight of genetics in spouse matching ($a$) and SES inheritance ($\\theta$), for meritocracy $\\gamma$ = 0.15. Other parameters: $\\tau$ = 0.95, $s$ = $S$ = 1, $\\sigma$ = 0.", dpi = 300, out.height = "4in"}
-
-# "if we compute the asymptotic correlation": see new-model-computation.R
-# for code
-
-sigma_I <- function (s, S, sigma, a) {
-  sqrt(
-    a^2 * s^2 + (1-a)^2 * S^2 + 2*a*(1-a)*sigma
-  )
-}
-
-A <- function (s, S, sigma, a) (a*s^2 + (1-a)*sigma)/sigma_I(s, S, sigma, a)
-
-C <- function (s, S, sigma, a) (a*sigma + (1-a)*S^2)/sigma_I(s, S, sigma, a)
-
-
-cov_x1_x2 <- function (s, S, sigma, a, gamma, tau, theta) {
-  A <- A(s, S, sigma, a)
-  C <- C(s, S, sigma, a)
-  
-  gamma * tau^2/2 * (s^2 + A^2) + 
-  theta * tau/2 *(sigma + A*C) + 
-  gamma
-}
-
-corr_x1_x2 <- function (s, S, sigma, a, gamma, tau, theta) {
-  A <- A(s, S, sigma, a)
-  C <- C(s, S, sigma, a)
-  
-  cov_x1_x2 <- cov_x1_x2(s, S, sigma, a, gamma, tau, theta)
-  
-  var_x1 <- tau^2/2 * (s^2+A^2) + 1
-  
-  var_x2 <- gamma^2 * tau^2/2 * (s^2 + A^2) +
-            gamma * tau * theta * (sigma + A*C) +
-            theta^2/2 * (S^2 + C^2) +
-            1 + gamma^2
-  
-  cov_x1_x2/sqrt(var_x1 * var_x2)
-}
-
-invisible(rgl::open3d(
-              userMatrix = rgl::rotate3d(rgl::r3dDefaults$userMatrix,
-                                           angle = pi/5, x = 0, y = 0,
-                                           z = 1)
-            ))
-rgl::par3d(cex=1.4)
-
-rgl::plot3d(\(theta, a) corr_x1_x2(s = 1, S = 1, sigma = 0, a = a, gamma = 0.15,
-                                   tau = 0.95, theta = theta), 
-            zlab  = "", 
-            xlab  = "θ", 
-            col   = "darkred", 
-            front = "lines",
-            #back  = "lines",
-            lwd   = 3,
-            n     = 40,
-            zlim  = c(0.125, 0.3),
-            box   = FALSE
-            )
-rgl::mtext3d("Corr(x₁', x₂')", "z-+", line = 6)
-```
 
 Third, we consider non-normal distributions of $x_1$ and $x_2$, non-normal
 shocks $\varepsilon$ and $\eta$, and non-linear attractiveness functions. Suppose
@@ -640,15 +577,16 @@ i(x) = f(ax_1, (1-a)x_2)
 \end{equation}
 with $f$ strictly increasing in both its arguments. Our sole condition on the
 distribution of $x$ is that a positive measure of the population has
-attractiveness $i(x) = i$ where the distribution of $(x_1, x_2)|i$ is
-non-degenerate, i.e. not everybody with attractiveness $i$ is both genetically
+attractiveness $i(x) = i$ where the conditional distribution of $(x_1, x_2)$ given
+$i$ is non-degenerate, i.e. not everybody with attractiveness $i$ is both genetically
 and socially identical. In particular, this allows for discrete distributions, 
-like some kinds of social status.
+like some kinds of social status for $x_2$, and monogenic or oligogenic attractiveness
+phenotypes for $x_1$.
 
 \begin{proposition}\label{prop-non-normal}
 Let attractiveness be given by \eqref{non-linear-f}. Let $(x_1, x_2)$ have
 any distribution such that a positive measure of the population has
-$i(x) = i$ where the conditional distribution of $(x_1, x_2)|i(x) = i$ is 
+$i(x) = i$ where the conditional distribution of $(x_1, x_2)$ given $i(x) = i$ is 
 non-degenerate. Let $\eta$ and $\varepsilon$ be mean 0 and independent of
 $x$ and each other. If genetics and SES are uncorrelated for the parents, then
 the correlation among children is non-negative, and strictly positive if 
@@ -678,7 +616,8 @@ whatever those characteristics, in the long run they will become correlated with
 SES.
 
 Recent empirical work shows high persistence of SES over time, in particular at
-the top. @clark2021bell argues that this is due to unobserved genetic variation.
+the top. @clark2023inheritance argue that this could be explained by unobserved 
+genetic variation.
 Proposition \ref{prop-gamma} shows that if genes affect own wealth directly,
 under assortative mating, the regression coefficient of parents' wealth on own
 wealth exceeds the "direct" coefficient $\theta$, because parents' wealth
@@ -687,7 +626,8 @@ regressions of wealth on wealth may include the effect of unobserved genetic
 variation. This may be a confound due to pre-existing gene-SES correlation (if
 $\sigma > 0$). But under SGAM ($0 < a < 1$) it can also be a mediating
 variable, since changes in someone's wealth may indeed affect the identity of 
-their spouse, and from that the genetics of their offspring.
+their spouse, hence the genetics of their offspring, and from that their 
+offspring's adult wealth.
 
 The converse also holds: regressions of children's characteristics on their
 genetics alone risk overestimating the effect of genetics, by confounding it
@@ -697,14 +637,20 @@ in between-sibling regressions, where between-family variation in SES is
 partialled out and where genetic variants are guaranteed to be randomly
 allocated, than in regressions which pool the whole sample [@howe2021within].
 Parents' genetic variants which are *not* passed on to children predict
-children's characteristics, via environmental effects [@kong2018nature].
+children's characteristics, via environmental effects or social stratification[^meaning]
+[@kong2018nature].
+
+[^meaning]: Used in the geneticists' sense to mean non-random mating.
 
 The model predicts variation in the strength of SGAM. In particular, in
 "caste societies" where there is complete endogamy within social status
 groups, there is no scope for SGAM, because marriage partners do not
-trade off genetics for social status. Also, SGAM is increased by the institutional variable $\theta$, which captures intergenerational persistence of SES. This
-implies that policy has long-run effects on the social structure: reducing
+trade off genetics for social status ($a = 0$). Also, SGAM is increased by the 
+institutional variable $\theta$, which captures intergenerational persistence of 
+SES. This implies that policy has long-run effects on social structure: reducing
 $\theta$ not only increases intergenerational mobility, but reduces
 the correlation of genes with SES, and hence the unfairness of what
-@harden2021genetic calls the "genetic lottery".
+@harden2021genetic calls the "genetic lottery". Conversely, reforms that
+increase meritocracy ($\gamma$, Proposition \ref{prop-gamma}) may strengthen the
+genes-SES gradient.
 
