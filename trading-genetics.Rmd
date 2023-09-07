@@ -513,7 +513,8 @@ the variance of socioeconomic characteristics, i.e. economic inequality, in
 future generations. In particular, our model shows how
 the genes-SES gradient is affected by economic institutions (see below).
 Our second key innovation is to use the "shock" of birth order to provide
-evidence of substitutability between SES and genes. This gives a clean demonstration of an environmental input to assortative mating.
+evidence of substitutability between SES and genes. This gives a clean 
+demonstration of an environmental input to assortative mating.
 Note that our econometric identification remains agnostic on the precise
 mechanism of assortative mating: individuals can trade SES for genes because they
 meet in groups determined jointly by genes and SES [in the spirit of
@@ -736,14 +737,30 @@ Others to look at:
 
 
 The central insight in our model is that higher SES and good genes assort in the 
-marriage market. In particular, own SES and spouses' genes can become positively
-correlated even if own genes and SES are not correlated (Proposition 1). In what
-follows, we test for correlations among spouses between one partner's SES 
-and the other partner's genetics. 
+marriage market. We wish to test this directly, i.e. to test whether $0 < a < 1$
+in the attractiveness equation
+
+$$
+i(x) = a x_1 + (1-a) x_2
+$$
+where $x_2$ is social status and $x_1$ is genetic endowment. Consider the effect of a 
+change in $x_2$ holding $x_1$ constant. If $a = 1$ then this will not change $i(x)$ 
+and therefore will not change the expected characteristics of the spouse. So, if we 
+regress spouse's $x_1$ on own $x_2$, and reject the null of no effect, we can reject 
+$a = 1$.
+
+Conceivably, if $a = 0$ but there is a pre-existing correlation between $x_1$
+and $x_2$ in the population, then an increase in own $x_2$ will increase
+spouse's expected $x_2$ and therefore spouse's expected $x_1$, even though the
+latter does not enter the attractiveness equation. We can separately test the
+null that $a = 0$ by regressing spouse's $x_2$ on own $x_1$, holding own $x_2$
+constant. Existing work already shows that own genetics affect spouse's SES,
+e.g. education, so we focus on the other direction and treat this direction as a
+robustness check.
 
 We use data from two sources: Great Britain and Norway. Doing so allows us to
-check our basic result in two different societies, and also to make some 
-(admittedly tentative) comparisons between them. Our Great Britain data
+check our basic result in two different societies, and also to make 
+(tentative) comparisons between them. Our Great Britain data
 comes from the UK Biobank, a study of about 500,000 individuals born between
 1935 and 1970 [@bycroft2018uk]. The Biobank contains information on respondents'
 genetics, derived from DNA microarrays, along with questionnaire data on health
@@ -1964,7 +1981,7 @@ significant. In other literature on spouse matching, education is a common,
 robust and significant predictor. For these reasons, we think that our results
 are unlikely to be driven wholly by other, unobserved mediators.
 
-A last concern is that polygenic scores, including PSEA, contain noise from
+A final concern is that polygenic scores, including PSEA, contain noise from
 correlated environments. (That is, effect sizes of individual SNPs may be
 confounded in the underlying statistical analyses used to create polygenic
 scores.) It is conceivable that birth order could only affect the noise
@@ -1994,6 +2011,22 @@ UK Biobank is not a representative sample of the population. Table
 Biobank's sampling frame. Results are similar to those in the main text. 
 Although this is still not representative of the population as a whole, it 
 provides some assurance that our results are not driven by volunteering bias.
+
+As noted earlier, our results could conceivably be explained by spouses *only*
+mating on SES ($a = 0$ in our model), but with a pre-existing correlation
+between SES and PSEA in the population. That said, existing work strongly
+suggests that own PSEA affects spouse's education [@robinson2017genetic;
+@torvik2022modeling]. To confirm this we use a sample of siblings from the MoBa
+data[^why-not-ukbb], and regress spouse's university attendance on own PSEA,
+including sibling group fixed effects. Again, this uses the lottery of meiosis
+to guarantee that between-sibling differences in PSEA are exogenous to
+environmental characteristics including SES. Table \@ref(tab:tbl-psea-bo-moba)
+in the appendix shows that spouses of higher-PSEA siblings were more likely
+to have attended university, and had higher income, allowing us to rule out 
+$a = 0$.
+
+[^why-not-ukbb]: The UK Biobank sample has too few siblings with spouses for
+this analysis to be informative.
 
 The appendix reports other robustness checks, including replacing university
 attendance with age of leaving full-time education. Overall, while significance
@@ -2076,7 +2109,7 @@ man".
 
 The theory of evolution suggests that two motivations are likely to be
 central for fitness-maximizing organisms: acquiring material resources so as to
-survive and raise offspring, and pursuing sexual partners who themselves have
+survive and raise offspring, and pursuing reproductive partners who themselves have
 high fitness value. Arguably, these two motives structure nearly all of human society.
 On this view, the genetics-SES trade in marriage markets is the most basic trade
 there is. Genetic endowments can be thought of as another form of capital,
@@ -2202,6 +2235,10 @@ leaving full-time education shrinks the effect of birth order substantially.
 Table \@ref(tab:tbl-bo-psea-no3) reruns Table \@ref(tab:tbl-bo-psea)
 excluding families of size 3. Results are very similar to those in the
 main text.
+
+Table \@ref(tab:tbl-psea-bo-moba) regresses spouse university attendance and
+income on own PSEA among a subset of siblings within the MoBa dataset. XXX
+TODO.
 
 ```{r pic-basic-corr-moba, fig.cap = "Spouse polygenic score for educational attainment (PSEA) against own university attendance and own income at age 30 (Norway). Lines show 95\\% confidence intervals. PSEA is normalized to have mean 0 and variance 1.", fig.subcap = rep("", 4), fig.align = "center", fig.width = 3, fig.height = 3, fig.ncol = 2}
 
@@ -2734,6 +2771,10 @@ huxreg(mod_bo_psea_no3,
                    (Great Britain)")
 ```
 
+```{r tbl-psea-bo-moba}
+ 
+
+```
 
 \FloatBarrier
 \newpage
