@@ -1923,52 +1923,6 @@ indeed exogenous to genetics.
     and polygenic scores.
 
 
-```{r calc-oster-2019, eval = FALSE}
-# Plan:
-# 1. pick the max R2 of spousal PSEA, backing it out
-
-# 2. for each SES mediator (university, first_job_pay):
-#   run the "short regression" including only BO, the SES mediator and controls
-#   run the "medium regression" including these + non-SES mediators
-#   using these statistics and the max R2, calculate the delta 
-#   (degree of selection into treatment on unobservables, compared to 
-#   selection on observables)
-#   that would lead the effect of the SES mediator to be zero
-
-# we need the max R2 of spousal PSEA *from an unobserved environmental factor*, 
-# given that we know birth order's effect could only be via the environment.
-# So, sources of error are (1) limits to assortative mating
-# (2) error in measured PSEA (3) only environmental factors can contribute
-# to the R2
-# 
-
-mod_ea_psea <- fixest::feols(age_fulltime_edu ~ EA3_excl_23andMe_UK, 
-                               data = famhist, notes = FALSE)
-R2_ea_psea <- fixest::r2(mod_ea_psea, type = "r2")
-prop_systematic_psea <- R2_ea_psea/0.4 
-
-true_psea_R2_max <- 0.5
-R2max <- prop_systematic_psea * true_psea_R2_max
-
-res_uni <- robomit::o_delta(y = "EA3.y", x = "university.x", 
-                            con = "fluid_iq.x + height.x + 
-                                   bmi.x + sr_health.x", 
-                            m = "EA3.x + par_age_birth.x + factor(n_sibs.x) +
-                                 factor(YOB.x) + factor(birth_mon.x)", 
-                            R2max = R2max, type = "lm", data = mf_pairs_reg)
-res_fjp <- robomit::o_delta(y = "EA3.y", x = "first_job_pay.x", 
-                            con = "fluid_iq.x + height.x + bmi.x +
-                                   sr_health.x", 
-                            m = "EA3.x + par_age_birth.x + factor(n_sibs.x) +
-                                 factor(YOB.x) + factor(birth_mon.x)", 
-                            R2max = R2max, type = "lm", data = mf_pairs_reg)
-
-delta_uni <- round(res_uni[[1, 2]], 3)
-delta_fjp <- round(res_fjp[[1, 2]], 3)
-
-```
-
-
 Another concern is that our chosen SES mediators might not be exogenous. We have
 already seen that birth order affects intelligence, height, BMI
 and health. So there might be other unobserved variables which mediate the effect
@@ -1979,7 +1933,10 @@ education on spouse PSEA in Table \@ref(tab:tbl-bo-psea), and of birth order on
 education in Table \@ref(tab:tbl-bo-first-stage), are both large and highly
 significant. In other literature on spouse matching, education is a common,
 robust and significant predictor. For these reasons, we think that our results
-are unlikely to be driven wholly by other, unobserved mediators.
+are unlikely to be driven wholly by other, unobserved mediators. In the appendix
+we run @oster2019unobservable style robustness checks where we formally ask
+how strong selection on unobservables would need to be to reduce the effect of 
+our key mediators to zero.
 
 A final concern is that polygenic scores, including PSEA, contain noise from
 correlated environments. (That is, effect sizes of individual SNPs may be
@@ -2020,10 +1977,11 @@ suggests that own PSEA affects spouse's education [@robinson2017genetic;
 data[^why-not-ukbb], and regress spouse's university attendance on own PSEA,
 including sibling group fixed effects. Again, this uses the lottery of meiosis
 to guarantee that between-sibling differences in PSEA are exogenous to
-environmental characteristics including SES. Table \@ref(tab:tbl-psea-bo-moba)
-in the appendix shows that spouses of higher-PSEA siblings were more likely
-to have attended university, and had higher income, allowing us to rule out 
-$a = 0$.
+environmental characteristics including SES. Table \@ref(tab:tbl-reversed-moba)
+in the appendix shows that spouses of higher-PSEA siblings were substantially 
+more likely to have attended university, allowing us to rule out $a = 0$.
+Interestingly, they did not have higher income, which again suggests that 
+income is not an important form of SES in Norway marriage markets.
 
 [^why-not-ukbb]: The UK Biobank sample has too few siblings with spouses for
 this analysis to be informative.
@@ -2236,9 +2194,104 @@ Table \@ref(tab:tbl-bo-psea-no3) reruns Table \@ref(tab:tbl-bo-psea)
 excluding families of size 3. Results are very similar to those in the
 main text.
 
-Table \@ref(tab:tbl-psea-bo-moba) regresses spouse university attendance and
-income on own PSEA among a subset of siblings within the MoBa dataset. XXX
-TODO.
+Table \@ref(tab:tbl-reversed-moba) regresses spouse university attendance and
+income z-score on own PSEA on a subset of sibling within the MoBa dataset. This
+tests the null hypothesis $a = 0$ in our model. If $a = 0$, own polygenic score
+has no effect on spouse matching. To ensure that PSEA is exogenously varied,
+we again rely on the lottery of meiosis by including sibling fixed effects. 
+Analogously to our main results in MoBa, own PSEA significantly increases the
+probability of spouse university attendance, by about 5% per standard
+deviation; but its effect on spouse income is insignificant and tightly bounded
+around zero. Overall, these results confirm that PSEA affects the set of 
+potential spouses.
+
+```{r calc-oster-2019}
+# Plan:
+# 1. pick the max R2 of spousal PSEA, backing it out
+
+# 2. for each SES mediator (university, first_job_pay):
+#   run the "short regression" including only BO, the SES mediator and controls
+#   run the "medium regression" including these + non-SES mediators
+#   using these statistics and the max R2, calculate the delta 
+#   (degree of selection into treatment on unobservables, compared to 
+#   selection on observables)
+#   that would lead the effect of the SES mediator to be zero
+
+# we need the max R2 of spousal PSEA *from an unobserved environmental factor*, 
+# given that we know birth order's effect could only be via the environment.
+# So, sources of error are (1) limits to assortative mating
+# (2) error in measured PSEA (3) only environmental factors can contribute
+# to the R2
+# 
+
+mod_ea_psea <- fixest::feols(age_fulltime_edu ~ EA3_excl_23andMe_UK, 
+                               data = famhist, notes = FALSE)
+R2_ea_psea <- fixest::r2(mod_ea_psea, type = "r2")
+prop_systematic_psea <- R2_ea_psea/0.4 
+
+true_psea_R2_max <- 0.5
+R2max <- prop_systematic_psea * true_psea_R2_max
+R2max <- round(R2max, 3)
+
+res_uni <- robomit::o_delta(y = "EA3.y", x = "university.x", 
+                            con = "fluid_iq.x + height.x + 
+                                   bmi.x + sr_health.x", 
+                            m = "EA3.x + par_age_birth.x + factor(n_sibs.x) +
+                                 factor(YOB.x) + factor(birth_mon.x)", 
+                            R2max = R2max, type = "lm", data = mf_pairs_reg)
+res_fjp <- robomit::o_delta(y = "EA3.y", x = "first_job_pay.x", 
+                            con = "fluid_iq.x + height.x + bmi.x +
+                                   sr_health.x", 
+                            m = "EA3.x + par_age_birth.x + factor(n_sibs.x) +
+                                 factor(YOB.x) + factor(birth_mon.x)", 
+                            R2max = R2max, type = "lm", data = mf_pairs_reg)
+
+delta_uni <- round(res_uni[[1, 2]], 3)
+delta_fjp <- round(res_fjp[[1, 2]], 3)
+
+# from Fartein's email 4 Oct 2023
+# XXX TODO: needs correcting for noise estimates
+R2max_moba <- 0.131
+delta_uni_moba <- 0.990
+delta_inc_moba <- 0.275
+```
+
+
+Lastly, we run an @oster2019unobservable style robustness analysis on the
+effect of education and income on spouse PSEA. This is a formalization of the 
+informal idea that if a coefficient does not change much when a known set of 
+controls is added, it may be robust to other, unobserved controls. The method 
+works by comparing a "short" regression, without alternative controls like BMI 
+and height, to a "medium" regression with those controls. An important input is 
+the maximum $R^2$ of independent variables on the dependent variable. Here,
+we use our knowledge about the noise in measured PSEA. We take the ratio of
+the $R^2$ of measured PSEA on education to the maximum $R^2$ of all genetic
+variables on education, a.k.a. the heritability. We assume that this ratio 
+$s$ gives the proportion of "signal" in measured PSEA, with the rest being
+noise (from sampling error in the construction of the polygenic score). We then
+make an assumption about the maximum $R^2$ of any own variable on 
+spouse's true PSEA - i.e., about how random the spouse matching
+process is. We take this to be 50%. Multiplying $s$ by 50%
+gives the maximum possible $R^2$ of own variables on spouse's measured PSEA.
+The output of the analysis is a value $\delta^*$ representing the degree of
+selection on unobservables relative to observables (with respect to the treatment
+variable) that would be necessary to eliminate the effect of the independent 
+variable. A $\delta^*$ of about 1 is considered a reasonable threshold for
+robustness, if we assume that measured control variables ought to be at least as
+important as unmeasured ones.
+ 
+In UK Biobank, we calculate the maximum $R^2$ as `r R2max`.[^comparison] For university
+attendance, $\delta^*$ is `r delta_uni`, and for income in first job 
+$\delta^*$ is `r delta_fjp`. In MoBa, we calculate the maximum $R^2$ as 
+`r R2max_moba`. For university attendance, $\delta^*$ is `r delta_uni_moba`, 
+and for income at age 30, $\delta^*$ is `r delta_inc_moba`. These results 
+confirm that the results on university attendance are relatively robust, except
+for results on income in MoBa. Of course, this technique depends crucially 
+on the input assumptions, especially about noise in measured PSEA, the true 
+heritability, and the maximum possible $R^2$ in spouse matching.
+
+[^comparison]: In other regressions of spouse traits on
+PSEA, $R^2$ are indeed below this value [@hugh2016assortative; @okbay2022polygenic].
 
 ```{r pic-basic-corr-moba, fig.cap = "Spouse polygenic score for educational attainment (PSEA) against own university attendance and own income at age 30 (Norway). Lines show 95\\% confidence intervals. PSEA is normalized to have mean 0 and variance 1.", fig.subcap = rep("", 4), fig.align = "center", fig.width = 3, fig.height = 3, fig.ncol = 2}
 
@@ -2771,8 +2824,68 @@ huxreg(mod_bo_psea_no3,
                    (Great Britain)")
 ```
 
-```{r tbl-psea-bo-moba}
- 
+```{r tbl-reversed-moba}
+
+# "exported" by literally pasting in coefficients for now :-)
+# see Fartein's email of 4 oct
+
+tidy_uni_psea_moba <- data.frame(
+  term      = c("eapgsresid"),
+  estimate  = c(0.04768),
+  std.error = c(0.009798),
+  statistic = c(4.86618),
+  p.value   = c(1.1743e-6)
+)
+
+glance_uni_psea_moba <- data.frame(
+  adj.r.squared = 0.182223,
+  nobs          = 9729L
+)
+
+tidy_inc_psea_moba <- data.frame(
+  term      = c("eapgsresid"),
+  estimate  = c(-0.000734),
+  std.error = c(0.017402),
+  statistic = c(-0.042185),
+  p.value   = c(0.96635)
+)
+
+glance_inc_psea_moba <- data.frame(
+  adj.r.squared = 0.083474,
+  nobs          = 9755L
+)
+
+tidy_uni_psea_moba <- convert_moba_for_huxreg(tidy_uni_psea_moba,
+                                              glance_uni_psea_moba)
+tidy_inc_psea_moba <- convert_moba_for_huxreg(tidy_inc_psea_moba,
+                                              glance_inc_psea_moba)
+
+reversed_note <- paste0(
+  "Estimates from within-sibling-group regressions. PSEA is the polygenic score ",
+  "for educational attainment, which is normalized with mean 0 and standard ",
+  "deviation 1. Sibling group dummies are included to ensure exogeneity of ",
+  "PSEA. {stars}. Standard errors in parentheses.")
+
+suppressWarnings(
+  huxreg(list("University" = tidy_uni_psea_moba, "Income" = tidy_inc_psea_moba),
+       coefs = c("Own PSEA" = "eapgsresid"),
+       statistics = c(N = "nobs", "Adj. $R^2$" = "adj.r.squared"),
+       note      = reversed_note,
+       stars     = my_stars,
+       tidy_args = tidy_args
+       )) %>% 
+       insert_row(after = 3, "Sibling group dummies", "Yes", "Yes") %>% 
+       insert_row(after = 4, "Birth month dummies", "Yes", "Yes") %>% 
+       insert_row(after = 5, "Birth year dummies", "Yes", "Yes") %>% 
+       set_bottom_border(4:5, everywhere, 0) %>% 
+       set_align(4:6, -1, "center") %>% 
+       set_number_format(2:3, -1, 4) %>% 
+       set_escape_contents(everywhere, 1, FALSE) %>%
+       set_width(0.75) %>%
+       set_caption(paste0(
+        "Within-siblings regressions of spouse university attendance ",
+        "and income on own PSEA (Norway)"))
+  
 
 ```
 

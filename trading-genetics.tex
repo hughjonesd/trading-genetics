@@ -142,7 +142,7 @@ Fartein Ask Torvik\thanks{Norwegian Institute of Public Health, Oslo.
   Email: f.a.torvik@psykologi.uio.no} \&
 Eivind Ystrøm\thanks{Norwegian Institute of Public Health, Oslo. 
   Email: eivind.ystrom@psykologi.uio.no}}
-\date{2023-09-07}
+\date{2023-10-04}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -3007,7 +3007,10 @@ education on spouse PSEA in Table \ref{tab:tbl-bo-psea}, and of birth order on
 education in Table \ref{tab:tbl-bo-first-stage}, are both large and highly
 significant. In other literature on spouse matching, education is a common,
 robust and significant predictor. For these reasons, we think that our results
-are unlikely to be driven wholly by other, unobserved mediators.
+are unlikely to be driven wholly by other, unobserved mediators. In the appendix
+we run Oster (2019) style robustness checks where we formally ask
+how strong selection on unobservables would need to be to reduce the effect of
+our key mediators to zero.
 
 A final concern is that polygenic scores, including PSEA, contain noise from
 correlated environments. (That is, effect sizes of individual SNPs may be
@@ -3048,10 +3051,11 @@ data\footnote{The UK Biobank sample has too few siblings with spouses for
   this analysis to be informative.}, and regress spouse's university attendance on own PSEA,
 including sibling group fixed effects. Again, this uses the lottery of meiosis
 to guarantee that between-sibling differences in PSEA are exogenous to
-environmental characteristics including SES. Table \ref{tab:tbl-psea-bo-moba}
-in the appendix shows that spouses of higher-PSEA siblings were more likely
-to have attended university, and had higher income, allowing us to rule out
-\(a = 0\).
+environmental characteristics including SES. Table \ref{tab:tbl-reversed-moba}
+in the appendix shows that spouses of higher-PSEA siblings were substantially
+more likely to have attended university, allowing us to rule out \(a = 0\).
+Interestingly, they did not have higher income, which again suggests that
+income is not an important form of SES in Norway marriage markets.
 
 The appendix reports other robustness checks, including replacing university
 attendance with age of leaving full-time education. Overall, while significance
@@ -4219,9 +4223,50 @@ Table \ref{tab:tbl-bo-psea-no3} reruns Table \ref{tab:tbl-bo-psea}
 excluding families of size 3. Results are very similar to those in the
 main text.
 
-Table \ref{tab:tbl-psea-bo-moba} regresses spouse university attendance and
-income on own PSEA among a subset of siblings within the MoBa dataset. XXX
-TODO.
+Table \ref{tab:tbl-reversed-moba} regresses spouse university attendance and
+income z-score on own PSEA on a subset of sibling within the MoBa dataset. This
+tests the null hypothesis \(a = 0\) in our model. If \(a = 0\), own polygenic score
+has no effect on spouse matching. To ensure that PSEA is exogenously varied,
+we again rely on the lottery of meiosis by including sibling fixed effects.
+Analogously to our main results in MoBa, own PSEA significantly increases the
+probability of spouse university attendance, by about 5\% per standard
+deviation; but its effect on spouse income is insignificant and tightly bounded
+around zero. Overall, these results confirm that PSEA affects the set of
+potential spouses.
+
+Lastly, we run an Oster (2019) style robustness analysis on the
+effect of education and income on spouse PSEA. This is a formalization of the
+informal idea that if a coefficient does not change much when a known set of
+controls is added, it may be robust to other, unobserved controls. The method
+works by comparing a ``short'' regression, without alternative controls like BMI
+and height, to a ``medium'' regression with those controls. An important input is
+the maximum \(R^2\) of independent variables on the dependent variable. Here,
+we use our knowledge about the noise in measured PSEA. We take the ratio of
+the \(R^2\) of measured PSEA on education to the maximum \(R^2\) of all genetic
+variables on education, a.k.a. the heritability. We assume that this ratio
+\(s\) gives the proportion of ``signal'' in measured PSEA, with the rest being
+noise (from sampling error in the construction of the polygenic score). We then
+make an assumption about the maximum \(R^2\) of any own variable on
+spouse's true PSEA - i.e., about how random the spouse matching
+process is. We take this to be 50\%. Multiplying \(s\) by 50\%
+gives the maximum possible \(R^2\) of own variables on spouse's measured PSEA.
+The output of the analysis is a value \(\delta^*\) representing the degree of
+selection on unobservables relative to observables (with respect to the treatment
+variable) that would be necessary to eliminate the effect of the independent
+variable. A \(\delta^*\) of about 1 is considered a reasonable threshold for
+robustness, if we assume that measured control variables ought to be at least as
+important as unmeasured ones.
+
+In UK Biobank, we calculate the maximum \(R^2\) as 0.056.\footnote{In other regressions of spouse traits on
+  PSEA, \(R^2\) are indeed below this value (Hugh-Jones et al. 2016; Okbay et al. 2022).} For university
+attendance, \(\delta^*\) is 0.941, and for income in first job
+\(\delta^*\) is 2.03. In MoBa, we calculate the maximum \(R^2\) as
+0.131. For university attendance, \(\delta^*\) is 0.99,
+and for income at age 30, \(\delta^*\) is 0.275. These results
+confirm that the results on university attendance are relatively robust, except
+for results on income in MoBa. Of course, this technique depends crucially
+on the input assumptions, especially about noise in measured PSEA, the true
+heritability, and the maximum possible \(R^2\) in spouse matching.
 
 \begin{figure}
 
@@ -6766,6 +6811,99 @@ TODO.
 \end{table}
  
 
+ 
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[ht]
+\begin{centerbox}
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{\label{tab:tbl-reversed-moba} Within-siblings regressions of spouse university attendance and income on own PSEA (Norway)}
+ \setlength{\tabcolsep}{0pt}
+\begin{tabularx}{0.75\textwidth}{p{0.25\textwidth} p{0.25\textwidth} p{0.25\textwidth}}
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering \huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering University\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Income\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Own PSEA\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.0477 ***\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.0007\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright \huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft (0.0098)\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft (0.0174)\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Sibling group dummies\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Birth month dummies\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Birth year dummies\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright N\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 9729\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 9755\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Adj. $R^2$\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.182\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.083\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{3}{!{\huxvb{0, 0, 0}{0}}p{0.75\textwidth+4\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.75\textwidth+4\tabcolsep-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Estimates from within-sibling-group regressions. PSEA is the polygenic score for educational attainment, which is normalized with mean 0 and standard deviation 1. Sibling group dummies are included to ensure exogeneity of PSEA.  *** p < 0.001;  ** p < 0.01;  * p < 0.05;  + p < 0.1. Standard errors in parentheses.\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+\end{tabularx}
+\end{threeparttable}\par\end{centerbox}
+
+\end{table}
+ 
+
 \FloatBarrier
 \newpage
 
@@ -7259,6 +7397,9 @@ Okbay, A, Y Wu, N Wang, H Jayashankar, M Bennett, SM Nehzati, J Sidorenko, et al
 
 \leavevmode\vadjust pre{\hypertarget{ref-oreffice2010anthropometry}{}}%
 Oreffice, Sonia, and Climent Quintana-Domeque. 2010. {``Anthropometry and Socioeconomics Among Couples: Evidence in the United States.''} \emph{Economics \& Human Biology} 8 (3): 373--84.
+
+\leavevmode\vadjust pre{\hypertarget{ref-oster2019unobservable}{}}%
+Oster, Emily. 2019. {``Unobservable Selection and Coefficient Stability: Theory and Evidence.''} \emph{Journal of Business \& Economic Statistics} 37 (2): 187--204.
 
 \leavevmode\vadjust pre{\hypertarget{ref-otto1995genetic}{}}%
 Otto, Sarah P, Freddy B Christiansen, and Marcus W Feldman. 1995. {``Genetic and Cultural Inheritance of Continuous Traits.''} \emph{Morrison Institute for Population and Resource Studies Paper Number} 64.
