@@ -48,7 +48,7 @@ s^{2} & \sigma \\
 \end{array}%
 \right).
 \]
-We interpret $x_1$ as a genetic measure, for example of genes predictive of
+We interpret $x_1$ as a genetic measure, for example of genetic variants predicting
 height, physical attractiveness, health or intelligence. $x_2$ is a measure of 
 socio-economic status, such as income or wealth, or social status more generally
 (we sometimes use "wealth" as a shorthand). The correlation between 
@@ -88,8 +88,8 @@ between $x$ and $y$ is $S(i(x), i(y))$ such that $\partial^{2}S/\partial
 i\partial j > 0$, i.e. $S$ is supermodular. As a result there is positive
 assortative mating on attractiveness: $x$ matches with $y$ only if they are at
 the same quantile of attractiveness, i.e. if $i(x_{1},x_{2}) = i(y_{1},y_{2})$.
-Within attractiveness quantiles, matching is random. We describe this as
-social-genetic assortative mating (SGAM). 
+Within attractiveness quantiles, matching is random. This is the
+SGAM mechanism.
 
 We also consider random matching as a benchmark to compare against SGAM. Under
 random matching, the distribution of couples' characteristics is normal with
@@ -301,7 +301,7 @@ positive correlation between genetics and SES. The correlation between $x^\prime
 and $x^\prime_2$ is 0 when $a = 0$ or $a = 1$, because then spouses don't trade off
 SES for genes. It is highest for intermediate values of $a$.
 
-```{r pic-intuition, fig.subcap = c("Parents", "Children"), fig.cap = "Theory. The shaded area is the population distribution. Parents (solid circles) match along attractiveness isoquants (dotted lines). Children (hollow circles) are between them. As a result, in the children's generation, the distribution is squeezed along attractiveness isoquants.", fig.ncol = 2, fig.width = 2.75, fig.height = 2.4, fig.align='center', echo = FALSE}
+```{r pic-intuition, fig.subcap = c("Parents", "Children"), fig.cap = "Theory. The shaded area is the population distribution. Parents (solid circles) match along attractiveness isoquants (dotted lines). Children (hollow circles) are between them. As a result, the children's distribution is squeezed along attractiveness isoquants, and $x_1$ and $x_2$ become associated.", fig.ncol = 2, fig.width = 2.75, fig.height = 2.4, fig.align='center', echo = FALSE}
 setup_plot <- function () {
   par(mar = rep(2.1, 4))
   plot.new()
@@ -313,7 +313,7 @@ setup_plot <- function () {
 }
 draw_dist <- function (w) {
   if (! is.matrix(w)) w <- matrix(c(w, 0, 0, 1), nrow = 2)
-  mygrey <- grey(.85, .03)
+  mygrey <- grey(.8, .03)
   for (rad in seq(0.2, 1, 0.1)) {
     v <- car::ellipse(c(0, 0), shape = w, radius = rad, add = TRUE, center.pch = NULL,
                fill = TRUE, col = mygrey, lwd = 0, segments = 241)
@@ -576,12 +576,10 @@ shocks $\varepsilon$ and $\eta$, and non-linear attractiveness functions. Suppos
 i(x) = f(ax_1, (1-a)x_2) 
 \end{equation}
 with $f$ strictly increasing in both its arguments. Our sole condition on the
-distribution of $x$ is that a positive measure of the population has
-attractiveness $i(x) = i$ where the conditional distribution of $(x_1, x_2)$ given
-$i$ is non-degenerate, i.e. not everybody with attractiveness $i$ is both genetically
-and socially identical. In particular, this allows for discrete distributions, 
-like some kinds of social status for $x_2$, and monogenic or oligogenic attractiveness
-phenotypes for $x_1$.
+distribution of $x$ is that not everybody with attractiveness $i$ is both 
+genetically and socially identical. In particular, this allows for discrete
+distributions, like some kinds of social status for $x_2$, and monogenic or
+oligogenic attractiveness phenotypes for $x_1$.
 
 \begin{proposition}\label{prop-non-normal}
 Let attractiveness be given by \eqref{non-linear-f}. Let $(x_1, x_2)$ have
@@ -596,10 +594,11 @@ $0 < a < 1$.
 Other extensions are possible. We assumed that all couples have the same number
 of children. If fertility increased with $x_1$ or $x_2$, we would expect this to
 reduce the variance of traits in the children's generation and possibly also
-their covariance. Here, matching preferences, as summarized in the $a$ parameter,
-are exogenous. It would be natural to model $a$ as an equilibrium outcome.
+their covariance. Here, matching preferences, summarized by the $a$ parameter,
+are exogenous; it would be natural to model $a$ as an equilibrium outcome.
 For example, if parents care about their children's wealth, $a$ might decrease
-in $\theta$ and increase in $\gamma$.
+in $\theta$ and increase in $\gamma$. Indeed, below we see suggestive evidence that
+income is valued differently in Norwegian and British marriage markets.
 
 
 ## Discussion
@@ -616,7 +615,7 @@ whatever those characteristics, in the long run they will become correlated with
 SES.
 
 Recent empirical work shows high persistence of SES over time, in particular at
-the top. @clark2023inheritance argue that this could be explained by unobserved 
+the top. @clark2023inheritance argues that this could be explained by unobserved 
 genetic variation.
 Proposition \ref{prop-gamma} shows that if genes affect own wealth directly,
 under assortative mating, the regression coefficient of parents' wealth on own
@@ -637,17 +636,15 @@ in between-sibling regressions, where between-family variation in SES is
 partialled out and where genetic variants are guaranteed to be randomly
 allocated, than in regressions which pool the whole sample [@howe2021within].
 Parents' genetic variants which are *not* passed on to children predict
-children's characteristics, via environmental effects or social stratification[^meaning]
-[@kong2018nature].
-
-[^meaning]: Used in the geneticists' sense to mean non-random mating.
+children's characteristics, partly due to social stratification in the geneticists'
+sense of non-random mating [@kong2018nature; @young2023estimation].
 
 The model predicts variation in the strength of SGAM. In particular, in
 "caste societies" where there is complete endogamy within social status
 groups, there is no scope for SGAM, because marriage partners do not
 trade off genetics for social status ($a = 0$). Also, SGAM is increased by the 
 institutional variable $\theta$, which captures intergenerational persistence of 
-SES. This implies that policy has long-run effects on social structure: reducing
+SES. This implies that policy has long-run effects on biosocial structure: reducing
 $\theta$ not only increases intergenerational mobility, but reduces
 the correlation of genes with SES, and hence the unfairness of what
 @harden2021genetic calls the "genetic lottery". Conversely, reforms that
