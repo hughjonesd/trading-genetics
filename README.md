@@ -2,7 +2,7 @@
 # Trading genetics
 
 This is the git repository for the paper "Trading social status for genetics 
-in marriage markets: evidence from UK Biobank" by Abdel Abdellaoui, Oana
+in marriage markets: evidence from Great Britain and Norway" by Abdel Abdellaoui, Oana
 Borcan, Pierre-André Chiappori and David Hugh-Jones.
 
 The current version of the paper is at https://github.com/hughjonesd/trading-genetics/blob/master/trading-genetics.pdf.
