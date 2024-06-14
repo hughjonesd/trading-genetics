@@ -3,6 +3,7 @@ suppressPackageStartupMessages({
   requireNamespace("tibble")
   requireNamespace("tidyr")
   library(drake)
+  requireNamespace("fst")
   requireNamespace("matrixStats")
   library(dplyr)
   library(readr)

@@ -634,7 +634,7 @@ with the effects of correlated socio-economic status. Recent work in genetics
 has shown this. Polygenic scores for educational attainment have smaller effects
 in between-sibling regressions, where between-family variation in SES is
 partialled out and where genetic variants are guaranteed to be randomly
-allocated, than in regressions which pool the whole sample [@howe2021within].
+allocated, than in regressions which pool the whole sample [@howe2022within].
 Parents' genetic variants which are *not* passed on to children predict
 children's characteristics, partly due to social stratification in the geneticists'
 sense of non-random mating [@kong2018nature; @young2023estimation].
