@@ -487,8 +487,6 @@ is suggestive evidence that in a more egalitarian society, some forms of
 SES are less important to the marriage market, with long-run
 implications for the genes-SES gradient.
 
-XXX
-
 Both economists and geneticists study assortative mating. The economics
 literature has typically focused on educational similarities [e.g.
 @pencavel1998assortative; @chiappori2017partner] or social class or
@@ -528,8 +526,8 @@ transmitted to the child correlate with child outcomes
 parents with different genes providing different family environments,
 but more recent work suggests that it is due to "dynastic effects", in
 other words, long-term associations between genes and environments
-[@young2023estimation]. (3) Correlations between spouses' polygenic
-scores for education are higher than can be explained by assortative
+[@young2023estimation; @nivard2024more]. (3) Correlations between spouses' 
+polygenic scores for education are higher than can be explained by assortative
 mating on measured phenotypic education alone [@okbay2022polygenic;
 @robinson2017genetic; @torvik2022modeling]. These results suggest that
 it is important to understand how genes and environments affect the
@@ -537,17 +535,33 @@ spouse matching process.
 
 Existing empirical studies of assortative mating in genetics identify
 environmental and genetic contributions to mate value within a
-structural model [@eaves1999comparing; @torvik2022modeling]. We take a
-different approach, by cleanly identifying environmental and genetic
-contributions to assortative mating: environmental contributions using
-birth order, genetic contributions by comparing polygenic scores within
-siblings.
+structural model [@eaves1999comparing; @torvik2022modeling; 
+@collado2023estimating]. Because both cultural and genetic inheritance
+proceed from parents to children, it can be hard to differentiate
+them. For example, @collado2023estimating derive extremely low estimates
+for heritability of education, within a model in which all genetic similarity
+between spouses is driven by matching either on the measured phenotype, or
+on a shared cultural factor; whereas @torvik2022modeling estimate partner
+correlation between "true" polygenic scores for education of 0.37, and 
+heritability above 50%, in a model where environment is shared between siblings 
+but not across generations.[^okbay] We take a different approach, by cleanly
+identifying separate environmental and genetic contributions to assortative 
+mating: environmental contributions using birth order, genetic contributions by
+comparing polygenic scores within siblings.
+
+[^okbay]: As @okbay2022polygenic put it: "Because the parameters of a general
+biometric model cannot be separately identified from a small number of 
+phenotypic correlations among different types of relatives, researchers
+typically have to assume that some of the parameters equal zero in order to
+estimate other parameters."
 
 SGAM has consequences for long-run inequality. Long-run estimates of
 intergenerational persistence of wealth and status are often
 surprisingly higher than would be predicted from parent-child
 correlations [@clark2015intergenerational; @barone2021intergenerational;
-@solon2018we]. @clark2023inheritance argues that this can be explained
+@solon2018we], and distant relatives in the same generation are also more
+similar than parent-child and spousal correlations would predict
+[@collado2023estimating]. @clark2023inheritance argues that this can be explained
 by an underlying process where unobserved genetic variation determines
 wealth. This requires a high degree of assortative mating. Our model
 shows that genetics may itself be a mediator for the transmission of
@@ -619,10 +633,11 @@ education in a marital matching model. These papers, like much of the
 behavior genetics literature, take genetic endowments as exogenous and
 examine how they affect individual outcomes, perhaps in interaction with
 the environment. We take a different approach by putting genetics on the
-"left hand side". Assortative mating and cultural inheritance are social
-processes, so we think there are good prospects for social scientists to
-contribute to understanding how genetic variants get distributed in
-society – what geneticists call "stratification" and "dynastic effects".
+left hand side of the estimating equation. Assortative mating and cultural
+inheritance are social processes, so we think there are good prospects for 
+social scientists to contribute to understanding how genetic variants get
+distributed in society – what geneticists call "stratification" and "dynastic
+effects".
 
 The observations behind SGAM are not new. That status and physical
 attractiveness assort in marriage markets is a commonplace and a
@@ -637,8 +652,9 @@ earning capacity,” “professional status”) as well as traits that are
 partly under genetic influence (“intelligent,” “tall,” “kind,”
 “physically attractive”). Despite this, to our knowledge, ours is the
 first work to model the socio-economic consequences of assortative
-mating between SES and genetics, and to show how these vary with social
-institutions. XXX
+mating between SES and genetics. In particular, no previous work has modelled 
+how institutional variables moderate gradients between genes and SES, or how
+SGAM affects economic inequality.
 
 
 ```{r literature-notes, eval = FALSE}

@@ -152,7 +152,7 @@ Fartein Ask Torvik\thanks{Norwegian Institute of Public Health, Oslo.
   Email: f.a.torvik@psykologi.uio.no} \&
 Eivind Ystrøm\thanks{Norwegian Institute of Public Health, Oslo. 
   Email: eivind.ystrom@psykologi.uio.no}}
-\date{2024-06-14}
+\date{2024-06-16}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -300,8 +300,6 @@ is suggestive evidence that in a more egalitarian society, some forms of
 SES are less important to the marriage market, with long-run
 implications for the genes-SES gradient.
 
-XXX
-
 Both economists and geneticists study assortative mating. The economics
 literature has typically focused on educational similarities (e.g. Pencavel 1998; Chiappori, Salanié, and Weiss 2017) or social class or
 caste (e.g. Abramitzky, Delavande, and Vasconcelos 2011; Banerjee et al. 2013), but also
@@ -338,24 +336,37 @@ transmitted to the child correlate with child outcomes
 parents with different genes providing different family environments,
 but more recent work suggests that it is due to ``dynastic effects'', in
 other words, long-term associations between genes and environments
-(A. S. Young 2023). (3) Correlations between spouses' polygenic
-scores for education are higher than can be explained by assortative
+(A. S. Young 2023; Nivard et al. 2024). (3) Correlations between spouses'
+polygenic scores for education are higher than can be explained by assortative
 mating on measured phenotypic education alone (Okbay et al. 2022; Robinson et al. 2017; Torvik et al. 2022). These results suggest that
 it is important to understand how genes and environments affect the
 spouse matching process.
 
 Existing empirical studies of assortative mating in genetics identify
 environmental and genetic contributions to mate value within a
-structural model (Eaves et al. 1999; Torvik et al. 2022). We take a
-different approach, by cleanly identifying environmental and genetic
-contributions to assortative mating: environmental contributions using
-birth order, genetic contributions by comparing polygenic scores within
-siblings.
+structural model (Eaves et al. 1999; Torvik et al. 2022; Collado, Ortuño-Ortı́n, and Stuhler 2023). Because both cultural and genetic inheritance
+proceed from parents to children, it can be hard to differentiate
+them. For example, Collado, Ortuño-Ortı́n, and Stuhler (2023) derive extremely low estimates
+for heritability of education, within a model in which all genetic similarity
+between spouses is driven by matching either on the measured phenotype, or
+on a shared cultural factor; whereas Torvik et al. (2022) estimate partner
+correlation between ``true'' polygenic scores for education of 0.37, and
+heritability above 50\%, in a model where environment is shared between siblings
+but not across generations.\footnote{As Okbay et al. (2022) put it: ``Because the parameters of a general
+  biometric model cannot be separately identified from a small number of
+  phenotypic correlations among different types of relatives, researchers
+  typically have to assume that some of the parameters equal zero in order to
+  estimate other parameters.''} We take a different approach, by cleanly
+identifying separate environmental and genetic contributions to assortative
+mating: environmental contributions using birth order, genetic contributions by
+comparing polygenic scores within siblings.
 
 SGAM has consequences for long-run inequality. Long-run estimates of
 intergenerational persistence of wealth and status are often
 surprisingly higher than would be predicted from parent-child
-correlations (Clark and Cummins 2015; Barone and Mocetti 2021; Solon 2018). Clark (2023) argues that this can be explained
+correlations (Clark and Cummins 2015; Barone and Mocetti 2021; Solon 2018), and distant relatives in the same generation are also more
+similar than parent-child and spousal correlations would predict
+(Collado, Ortuño-Ortı́n, and Stuhler 2023). Clark (2023) argues that this can be explained
 by an underlying process where unobserved genetic variation determines
 wealth. This requires a high degree of assortative mating. Our model
 shows that genetics may itself be a mediator for the transmission of
@@ -420,10 +431,11 @@ education in a marital matching model. These papers, like much of the
 behavior genetics literature, take genetic endowments as exogenous and
 examine how they affect individual outcomes, perhaps in interaction with
 the environment. We take a different approach by putting genetics on the
-``left hand side''. Assortative mating and cultural inheritance are social
-processes, so we think there are good prospects for social scientists to
-contribute to understanding how genetic variants get distributed in
-society -- what geneticists call ``stratification'' and ``dynastic effects''.
+left hand side of the estimating equation. Assortative mating and cultural
+inheritance are social processes, so we think there are good prospects for
+social scientists to contribute to understanding how genetic variants get
+distributed in society -- what geneticists call ``stratification'' and ``dynastic
+effects''.
 
 The observations behind SGAM are not new. That status and physical
 attractiveness assort in marriage markets is a commonplace and a
@@ -438,8 +450,9 @@ earning capacity,'' ``professional status'') as well as traits that are
 partly under genetic influence (``intelligent,'' ``tall,'' ``kind,''
 ``physically attractive''). Despite this, to our knowledge, ours is the
 first work to model the socio-economic consequences of assortative
-mating between SES and genetics, and to show how these vary with social
-institutions. XXX
+mating between SES and genetics. In particular, no previous work has modelled
+how institutional variables moderate gradients between genes and SES, or how
+SGAM affects economic inequality.
 
 \section{Model}\label{model}
 
@@ -7307,6 +7320,9 @@ Cloninger, C Robert, John Rice, and Theodore Reich. 1979. {``Multifactorial Inhe
 \bibitem[\citeproctext]{ref-cochran2013paternal}
 Cochran, Gregory, and Henry Harpending. 2013. {``Paternal Age and Genetic Load.''} \emph{Human Biology} 85 (4): 515--28.
 
+\bibitem[\citeproctext]{ref-collado2023estimating}
+Collado, M Dolores, Ignacio Ortuño-Ortı́n, and Jan Stuhler. 2023. {``Estimating Intergenerational and Assortative Processes in Extended Family Data.''} \emph{The Review of Economic Studies} 90 (3): 1195--1227.
+
 \bibitem[\citeproctext]{ref-Davies_2018}
 Davies, Neil M., Matt Dickson, George Davey Smith, Gerard J. van den Berg, and Frank Windmeijer. 2018. {``The Causal Effects of Education on Health Outcomes in the {UK} Biobank.''} \emph{Nature Human Behaviour} 2 (2): 117--25. \url{https://doi.org/10.1038/s41562-017-0279-y}.
 
@@ -7402,6 +7418,9 @@ National Statistics, Office for. 2007. {``Annual Survey of Hours and Earnings.''
 
 \bibitem[\citeproctext]{ref-ons2011stepfamilies}
 ---------. 2014. {``Stepfamilies in 2011.''} 2014. \url{https://webarchive.nationalarchives.gov.uk/20160105222243/http://www.ons.gov.uk/ons/rel/family-demography/stepfamilies/2011/stepfamilies-rpt.html}.
+
+\bibitem[\citeproctext]{ref-nivard2024more}
+Nivard, Michel G, Daniel W Belsky, K Paige Harden, Tina Baier, Ole A Andreassen, Eivind Ystrøm, Elsje van Bergen, and Torkild H Lyngstad. 2024. {``More Than Nature and Nurture, Indirect Genetic Effects on Children's Academic Achievement Are Consequences of Dynastic Social Processes.''} \emph{Nature Human Behaviour}, 1--8.
 
 \bibitem[\citeproctext]{ref-okbay2022polygenic}
 Okbay, A, Y Wu, N Wang, H Jayashankar, M Bennett, SM Nehzati, J Sidorenko, et al. 2022. {``Polygenic Prediction of Educational Attainment Within and Between Families from Genome-Wide Association Analyses in 3 Million Individuals.''} \emph{Nature Genetics}.
