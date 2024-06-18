@@ -579,8 +579,10 @@ skills, which might be related to their genetics. So, let
 x^\prime_1 &= \tau \frac{x_{1} + y_{1}}{2} + \varepsilon   \nonumber \\
 x^\prime_2 &= \gamma x^\prime_1 + \theta \frac{x_{2}+y_{2}}{2}+\eta \label{eqn-gamma}
 \end{align}
-where $\gamma > 0$ represents the effect of own genetics on own SES. 
-The basic result continues to hold, and also, the degree of meritocracy $\gamma$ 
+where $\gamma > 0$ represents the effect of own genetics on own SES. $\gamma$
+can be thought of as measuring meritocratic mobility, but alternatively as the
+degree of overlap between genes that matter in marriage markets and in labour
+markets. The basic result continues to hold, and also, $\gamma$ 
 increases the correlation between genes and SES; a highly meritocratic
 society may in the long run lead to a steep genes-SES gradient.
 
@@ -833,15 +835,15 @@ Parents' genetic variants which are *not* passed on to children predict
 children's characteristics, partly due to social stratification in the geneticists'
 sense of non-random mating [@kong2018nature; @young2023estimation].
 
-The model predicts variation in the strength of SGAM. In particular, in
+The model predicts variation in the effects of SGAM. In particular, in
 "caste societies" where there is complete endogamy within social status
-groups, there is no scope for SGAM, because marriage partners do not
-trade off genetics for social status ($a = 0$). Also, SGAM is increased by the 
-institutional variable $\theta$, which captures intergenerational persistence of 
-SES. This implies that policy has long-run effects on biosocial structure: reducing
-$\theta$ not only increases intergenerational mobility, but reduces
-the correlation of genes with SES, and hence the unfairness of what
-@harden2021genetic calls the "genetic lottery". Conversely, reforms that
-increase meritocracy ($\gamma$, Proposition \ref{prop-gamma}) may strengthen the
-genes-SES gradient.
+groups, there is no scope for SGAM, because marriage partners do not trade off
+genetics for social status ($a = 0$). Also, the association between genes and
+SES is increased by the institutional variable $\theta$, which captures
+intergenerational persistence of SES. This implies that policy has long-run
+effects on biosocial structure: reducing $\theta$ not only increases
+intergenerational mobility, but reduces the correlation of genes with SES, and
+hence the bias of what @harden2021genetic calls the "genetic lottery".
+Conversely, reforms that increase meritocracy ($\gamma$, Proposition 
+\ref{prop-gamma}) may strengthen the genes-SES gradient.
 

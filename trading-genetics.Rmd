@@ -19,7 +19,7 @@ abstract: |
   genetically inherited traits are both assets in marriage markets, become
   associated in spouse pairs, and are passed together to future generations.
   This gives a new explanation for persistent intergenerational inequality and
-  the "genes-SES gradient" -- observed genetic differences between high- and
+  "genes-SES gradients" -- observed genetic differences between high- and
   low-SES people. We model SGAM and test for it in two large surveys from Great 
   Britain and Norway. Spouses of earlier-born siblings have genetics predicting 
   more education. This effect is mediated by individuals' own education and 
@@ -413,19 +413,19 @@ Below, we first write down a theory where attractiveness in the marriage
 market is a function of both socio-economic status (SES) and genetic
 variants. We show that social-genetic assortative mating in one
 generation increases the correlation between SES and genetic variants in
-the offspring generation. This result provides a new explanation of the
-*genes-SES gradient* -- the systematic genetic differences between high-
+the offspring generation. This result provides a new explanation of
+*genes-SES gradients* -- systematic genetic differences between high-
 and low-SES people [@belsky2018genetic; @Rimfeld_2018;
-@bjorklund2006origins]. The dominant existing explanation for the
-gradient is meritocratic social mobility: if a genetic variant predicts
+@bjorklund2006origins]. The dominant existing explanation for these
+gradients is meritocratic social mobility: if a genetic variant predicts
 success in the labour market, then it will become associated with high
 SES and will be inherited in high-SES families. While under meritocracy,
 genes causes SES, under SGAM causality goes both ways, from genes to SES
-and vice versa. Also, the size of the genes-SES gradient depends on
+and vice versa. Also, the size of genes-SES gradients depends on
 economic institutions. Under institutions which increase
-intergenerational mobility, like high inheritance tax rates, the
-genes-SES gradient becomes weaker. On the other hand, an increase in
-meritocracy can make the gradient stronger.
+intergenerational mobility, like high inheritance tax rates,
+genes-SES gradients become weaker. On the other hand, an increase in
+meritocracy can make them stronger.
 
 Next, using data on spouse pairs from two large genetically-informed
 surveys in Great Britain and Norway, we test the hypothesis that a
@@ -485,7 +485,7 @@ effects in Britain but has little or no independent effect in Norway.
 Although our main focus is on testing the basic mechanism of SGAM, this
 is suggestive evidence that in a more egalitarian society, some forms of
 SES are less important to the marriage market, with long-run
-implications for the genes-SES gradient.
+implications for genes-SES gradients.
 
 Both economists and geneticists study assortative mating. The economics
 literature has typically focused on educational similarities [e.g.
@@ -538,7 +538,7 @@ heritability above 50%, in a model where environment is shared between siblings
 but not across generations.[^okbay] We get round this problem by cleanly
 identifying separate environmental and genetic contributions to assortative 
 mating: environmental contributions using birth order, genetic contributions by
-comparing polygenic scores within siblings.
+comparing polygenic scores within siblings.^[tbl-rev]
 
 [^okbay]: As @okbay2022polygenic put it: "Because the parameters of a general
 biometric model cannot be separately identified from a small number of 
@@ -546,29 +546,39 @@ phenotypic correlations among different types of relatives, researchers
 typically have to assume that some of the parameters equal zero in order to
 estimate other parameters."
 
-SGAM has consequences for long-run inequality. Long-run estimates of
-intergenerational persistence of wealth and status are often
-surprisingly higher than would be predicted from parent-child
-correlations [@clark2015intergenerational; @barone2021intergenerational;
-@solon2018we], and distant relatives in the same generation are also more
-similar than parent-child and spousal correlations would predict
-[@collado2023estimating]. @clark2023inheritance argues that this can be explained
-by an underlying process where unobserved genetic variation determines
-wealth. This requires a high degree of assortative mating. Our model
-shows that genetics may itself be a mediator for the transmission of
-SES, via "trading" in marriage markets. We also show how different
-social and economic institutions can affect that process. When SES is
-highly transmissible across generations, this increases the long-run
-association between SES and genetics. If so, institutional reforms that
-increase *intergenerational mobility*, like mass education or
-inheritance taxation, may affect not only economic but genetic
-inequality. Conversely, an increase in *economic meritocracy* increases
-the long-run association between SES and genetics,[^4] posing the
-problem raised by @young1958rise and more recently
-@markovits2019meritocracy: meritocracy may be self-limiting or even
-self-undermining.
+[^tbl-rev]: See Table \@ref(tab:tbl-reversed-moba) in the appendix.
 
-[^4]: See Proposition \@ref(prop-gamma) below.
+SGAM has consequences for inequality and social mobility. Long-run estimates of
+intergenerational persistence of wealth and status are surprisingly higher than
+would be predicted from parent-child correlations [@clark2015intergenerational;
+@barone2021intergenerational;@solon2018we], and distant relatives in the same
+generation are also more similar than parent-child and spousal correlations
+would predict [@collado2023estimating]. @clark2023inheritance argues that this
+can be explained by an underlying process where unobserved genetic variation
+determines wealth. This requires a high degree of assortative mating. Our model
+shows that genetics may itself be a mediator for the transmission of SES, via
+"trading" in marriage markets. We also show how different social and economic
+institutions can affect that process. When SES is highly transmissible across
+generations, this increases the long-run association between SES and genetics.
+If so, institutional reforms that increase *intergenerational mobility*, like
+mass education or inheritance taxation, may affect not only economic but genetic
+inequality. Conversely, an increase in *economic meritocracy* increases the
+long-run association between SES and genetics,[^4] posing the problem raised by
+@young1958rise and more recently @markovits2019meritocracy: meritocracy may be
+self-limiting or even self-undermining.
+
+[^4]: See Proposition \@ref(prop-gamma).
+
+In terms of cross-sectional inequality, the conventional wisdom is that it is 
+increased by assortative mating on SES [@fernandez2001sorting; 
+@breen2011educational; @greenwood2014marry]. But that depends what else people 
+assort on. As we show below[^ineq], if the same genes that are relevant in marriage 
+markets also affect economic outcomes, then an increase in the role of genes 
+vis-à-vis SES in marriage markets may increase economic inequality: it makes 
+households more unequal in genetics, and these are passed on to their children 
+with high reliability.
+
+[^ineq]: See Figure \@ref(fig:pic-asymptotic-inequality).
 
 SGAM can also explain a large body of evidence for cross-sectional
 associations between genetics and social status. For example: from twin
@@ -644,8 +654,7 @@ partly under genetic influence (“intelligent,” “tall,” “kind,”
 “physically attractive”). Despite this, to our knowledge, ours is the
 first work to model the socio-economic consequences of assortative
 mating between SES and genetics. In particular, no previous work has modelled 
-how institutional variables moderate gradients between genes and SES, or how
-SGAM affects economic inequality.
+how SGAM interacts with institutions to affect both economic inequality and  associations between genes and SES.
 
 
 ```{r literature-notes, eval = FALSE}
@@ -2243,7 +2252,7 @@ excluding families of size 3. Results are very similar to those in the
 main text.
 
 Table \@ref(tab:tbl-reversed-moba) regresses spouse university
-attendance and income z-score on own PSEA on a subset of sibling within
+attendance and income z-score on own PSEA on a subset of siblings within
 the MoBa dataset. This tests the null hypothesis $a = 0$ in our model.
 If $a = 0$, own polygenic score has no effect on spouse matching. To
 ensure that PSEA is exogenously varied, we again rely on the lottery of
