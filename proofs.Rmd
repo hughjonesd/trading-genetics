@@ -448,11 +448,11 @@ s^{2} & \sigma \\
 where%
 \begin{eqnarray*}
 A &=&\frac{as^{2}+\left( 1-a\right) \sigma}{\sqrt{a^{2}%
-s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \bar{\sigma%
-}}}\textrm{ \ and} \\
+s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma%
+}}\textrm{ \ and} \\
 C &=&\frac{a\sigma+\left( 1-a\right) S^{2}}{\sqrt{a^{2}%
-s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \bar{\sigma%
-}}},
+s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma%
+}},
 \end{eqnarray*}%
 
 Note that if the distribution converges, $s^{2}$ and $S^{2}$

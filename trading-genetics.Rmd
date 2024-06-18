@@ -494,7 +494,7 @@ caste [e.g. @abramitzky2011marrying; @banerjee2013marry], but also
 sorting based on age, physical traits and ethnicity
 [@hitsch2010matching]. Some papers have studied substitution between
 different traits.[^3] For instance, @chiappori2012fatter showed that
-individuals trade off BMI for partners’ income or education.
+individuals trade off BMI for partners’ income or education. 
 
 [^3]: @oreffice2010anthropometry show that height and BMI are associated
     with spouse earnings. @dupuy2014personality find spouse matching on
@@ -508,35 +508,26 @@ assortative mating might increase the association between genetics and
 social class. @cloninger1979multifactorial model genetic and cultural
 transmission, where assortative mating is based directly on phenotype
 and culture is transmitted from parents. Assortative mating, modeled
-simply as a correlation coefficient, leads to a culture and genetics to
+simply as a correlation coefficient, leads culture and genetics to
 be associated in offspring. @heath1985resolving, following earlier
 papers [@rao1976resolution; @rao1979path], introduce "social homogamy",
 i.e. assortative mating by social background. @otto1995genetic extend
-assortative mating to include both phenotypic and social homogamy. More
-recently, interest in these topics has been revived by empirical
-findings from genomics. In particular, (1) "direct" effects of genetic
-variants, estimated by within-family studies, are different from
-"indirect" effects, i.e. associations found in the whole sample, and
-direct effects of polygenic scores can be smaller than population-wide
-associations [@howe2022within; @young2022mendelian]. This suggests there
-is confounding from gene-environment correlation, and assortative mating
-may play a role [@border2022cross]. (2) parental alleles which are *not*
-transmitted to the child correlate with child outcomes
-[@kong2018nature]. This could result from "genetic nurture", i.e.
-parents with different genes providing different family environments,
-but more recent work suggests that it is due to "dynastic effects", in
-other words, long-term associations between genes and environments
-[@young2023estimation; @nivard2024more]. (3) Correlations between spouses' 
+assortative mating to include both phenotypic and social homogamy.
+
+More recently, interest in these topics has been revived by empirical
+findings from genomics. "Direct" effects of individual genetic variants, estimated by
+within-family studies, are different from "indirect" effects, i.e. associations 
+found in the whole sample, and direct effects of polygenic scores can be smaller 
+than population-wide associations [@howe2022within; @young2022mendelian]. 
+Also, parental alleles which are *not* transmitted to the child correlate with 
+child outcomes [@kong2018nature]. Both these phenomena could be explained
+by confounding from gene-environment correlation, or by assortative mating
+[@young2023estimation; @nivard2024more]. Lastly, correlations between spouses' 
 polygenic scores for education are higher than can be explained by assortative
 mating on measured phenotypic education alone [@okbay2022polygenic;
-@robinson2017genetic; @torvik2022modeling]. These results suggest that
-it is important to understand how genes and environments affect the
-spouse matching process.
-
-Existing empirical studies of assortative mating in genetics identify
-environmental and genetic contributions to mate value within a
-structural model [@eaves1999comparing; @torvik2022modeling; 
-@collado2023estimating]. Because both cultural and genetic inheritance
+@robinson2017genetic; @torvik2022modeling]. To address this, several recent papers
+papers have estimated structural models of assortative mating in family data
+[@eaves1999comparing; @torvik2022modeling; @collado2023estimating; @rustichini2023educational]. Because both cultural and genetic inheritance
 proceed from parents to children, it can be hard to differentiate
 them. For example, @collado2023estimating derive extremely low estimates
 for heritability of education, within a model in which all genetic similarity
@@ -544,7 +535,7 @@ between spouses is driven by matching either on the measured phenotype, or
 on a shared cultural factor; whereas @torvik2022modeling estimate partner
 correlation between "true" polygenic scores for education of 0.37, and 
 heritability above 50%, in a model where environment is shared between siblings 
-but not across generations.[^okbay] We take a different approach, by cleanly
+but not across generations.[^okbay] We get round this problem by cleanly
 identifying separate environmental and genetic contributions to assortative 
 mating: environmental contributions using birth order, genetic contributions by
 comparing polygenic scores within siblings.
