@@ -779,19 +779,18 @@ $\tau = 1$, the dynamics diverges and $\bar{s}^{2}$ goes to $+\infty$.
 
 \end{proposition}
 
-Figure \ref{fig:pic-asymptotic-corr} plots the asymptotic correlation
-between \(x_1\) and \(x_2\) for \(\tau = 0.95\).
-
 \begin{figure}
 
-{\centering \subfloat[Gene-SES correlation\label{fig:pic-asymptotic-corr-1}]{\includegraphics[width=0.5\linewidth,height=6in]{trading-genetics_files/figure-latex/pic-asymptotic-corr-1-rgl} }\subfloat[SES inequality\label{fig:pic-asymptotic-corr-2}]{\includegraphics[width=0.5\linewidth,height=6in]{trading-genetics_files/figure-latex/pic-asymptotic-corr-2-rgl} }
+{\centering \includegraphics{trading-genetics_files/figure-latex/pic-asymptotic-corr-1-rgl} 
 
 }
 
-\caption{Long-run correlation between genetics $x_1$ and SES $x_2$, and long-run inequality (standard deviation of $x_2$), by weight of genetics in spouse matching ($a$) and strength of inheritance of SES ($\theta$). $\tau$ = 0.95.}\label{fig:pic-asymptotic-corr}
+\caption{Long-run correlation between genetics $x_1$ and SES $x_2$, by weight of genetics in spouse matching ($a$) and strength of inheritance of SES ($\theta$). $\tau$ = 0.95.}\label{fig:pic-asymptotic-corr}
 \end{figure}
 
-Note that both \(\bar{S}^{2}\) and \(\bar{\sigma}\), as well as the correlation
+Figure \ref{fig:pic-asymptotic-corr} plots the asymptotic correlation between
+\(x_1\) and \(x_2\), for \(\tau = 0.95\). It is maximized for intermediate levels of
+\(a\). Note that both \(\bar{S}^{2}\) and \(\bar{\sigma}\), as well as the correlation
 between characteristics and the conditional expectation of genetics given
 wealth, are increasing in \(\theta\), i.e.~decreasing in the tax rate. Higher
 taxation reduces the asymptotic variance of wealth (unsurprisingly), but
@@ -831,7 +830,7 @@ x^\prime_2 &= \gamma x^\prime_1 + \theta \frac{x_{2}+y_{2}}{2}+\eta \label{eqn-g
 where \(\gamma > 0\) represents the effect of own genetics on own SES.
 The basic result continues to hold, and also, the degree of meritocracy \(\gamma\)
 increases the correlation between genes and SES; a highly meritocratic
-society may in the long run lead to a highly unfair genes-SES gradient.
+society may in the long run lead to a steep genes-SES gradient.
 
 \begin{proposition}\label{prop-gamma}
 Under SGAM and equation \eqref{eqn-gamma}, if genetics and SES are 
@@ -850,6 +849,26 @@ may be less strongly correlated with own genetics. However,
 computing the long-run asymptotic correlation along the lines of Proposition
 \ref{prop-asymptotics-SGAM} shows that it is increasing in \(\theta\) for
 all but values of \(\theta\) very close to 1.
+
+Of interest to economists, Figure \ref{fig:pic-asymptotic-inequality} shows
+how meritocracy, wealth transmission and assortative mating interact to
+produce economic inequality as measured by the equilibrium standard deviation
+of wealth \(x_2\). In a `status-based' society with persistent wealth and no
+meritocracy (solid line, \(\theta\) = 0.9, \(\gamma\) = 0), inequality is highest
+for assortative mating on wealth alone (\(a = 0\)). In a society with less
+persistent wealth and more meritocracy (dashed line, \(\theta\) = 0.3, \(\gamma\) =
+0.3), inequality is highest when people assort on genetics (\(a = 1\)).
+Assortative matching on genetics can also change the rankings of the two
+societies with respect to inequality.
+
+\begin{figure}
+
+{\centering \includegraphics{trading-genetics_files/figure-latex/pic-asymptotic-inequality-1} 
+
+}
+
+\caption{Meritocracy, assortative mating and economic inequality. Curves show equilibrium standard deviation of wealth $x_2$ for different parameter combinations.}\label{fig:pic-asymptotic-inequality}
+\end{figure}
 
 Third, we consider non-normal distributions of \(x_1\) and \(x_2\), non-normal
 shocks \(\varepsilon\) and \(\eta\), and non-linear attractiveness functions. Suppose
@@ -996,32 +1015,6 @@ PSEA predicts a set of important socioeconomic variables, including not
 only education but also social and geographic mobility, IQ, future
 income and wealth (Belsky et al. 2016; Barth, Papageorge, and Thom 2020; Papageorge and Thom 2020).\footnote{See Papageorge and Thom (2020) for a detailed discussion of polygenic
   scores aimed at economists.}
-
-\begin{verbatim}
-## Warning in feols(university ~ EA3, data = famhist, note = FALSE): partial
-## argument match of 'note' to 'notes'
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in match.call(definition, call, expand.dots, envir): partial argument
-## match of 'note' to 'notes'
-
-## Warning in match.call(definition, call, expand.dots, envir): partial argument
-## match of 'note' to 'notes'
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in feols(university ~ EA3 | sib_group, data = famhist, note = FALSE):
-## partial argument match of 'note' to 'notes'
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in match.call(definition, call, expand.dots, envir): partial argument
-## match of 'note' to 'notes'
-
-## Warning in match.call(definition, call, expand.dots, envir): partial argument
-## match of 'note' to 'notes'
-\end{verbatim}
 
 PSEA in the UK was calculated using per-SNP summary statistics from
 Lee et al. (2018), re-estimated excluding UK Biobank participants; in Norway,
@@ -5526,19 +5519,6 @@ maximum possible \(R^2\) in spouse matching.
 
 \end{table}
  
-
-\begin{verbatim}
-## Warning in fixest::feols(fml_bo_mediator_interact, data = mf_pairs_reg, :
-## partial argument match of 'note' to 'notes'
-\end{verbatim}
-
-\begin{verbatim}
-## Warning in match.call(definition, call, expand.dots, envir): partial argument
-## match of 'note' to 'notes'
-
-## Warning in match.call(definition, call, expand.dots, envir): partial argument
-## match of 'note' to 'notes'
-\end{verbatim}
 
 \begin{figure}
 

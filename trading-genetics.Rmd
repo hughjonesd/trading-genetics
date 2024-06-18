@@ -804,9 +804,9 @@ income and wealth [@belsky2016genetics; @barth2020genetic;
 
 ```{r calc-psea-check}
 
-mod_own_psea <- feols(university ~ EA3, data = famhist, note = FALSE)
+mod_own_psea <- feols(university ~ EA3, data = famhist, notes = FALSE)
 mod_own_psea_within <- feols(university ~ EA3 | sib_group, data = famhist,
-                               note = FALSE)
+                               notes = FALSE)
 
 n_own_psea <- glance(mod_own_psea)[["nobs"]]
 n_own_psea_within <- glance(mod_own_psea_within)[["nobs"]]
@@ -2651,7 +2651,7 @@ fml_bo_mediator_interact <- update(fml_bo_psea_dummies[[4]],
                                      . ~ . * factor(birth_order.x)) 
 mod_bo_mediator_interact <- fixest::feols(fml_bo_mediator_interact, 
                                             data = mf_pairs_reg, 
-                                            note = FALSE)
+                                            notes = FALSE)
 
 tidy_bo_mediator <- do.call(broom::tidy, c(list(x = mod_bo_mediator_interact), 
                                            tidy_args))

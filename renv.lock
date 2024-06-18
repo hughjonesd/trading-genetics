@@ -1648,7 +1648,7 @@
     },
     "rootSolve": {
       "Package": "rootSolve",
-      "Version": "1.8.2.3",
+      "Version": "1.8.2.4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1657,7 +1657,7 @@
         "graphics",
         "stats"
       ],
-      "Hash": "b8fbe639ed0e0e4f4c80498f4411ec5f"
+      "Hash": "c6fa270a97604238a5ce5fe5d327fdad"
     },
     "rpart": {
       "Package": "rpart",
