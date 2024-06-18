@@ -152,7 +152,7 @@ Fartein Ask Torvik\thanks{Norwegian Institute of Public Health, Oslo.
   Email: f.a.torvik@psykologi.uio.no} \&
 Eivind Ystrøm\thanks{Norwegian Institute of Public Health, Oslo. 
   Email: eivind.ystrom@psykologi.uio.no}}
-\date{2024-06-16}
+\date{2024-06-18}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -318,33 +318,25 @@ assortative mating might increase the association between genetics and
 social class. Cloninger, Rice, and Reich (1979) model genetic and cultural
 transmission, where assortative mating is based directly on phenotype
 and culture is transmitted from parents. Assortative mating, modeled
-simply as a correlation coefficient, leads to a culture and genetics to
+simply as a correlation coefficient, leads culture and genetics to
 be associated in offspring. Heath and Eaves (1985), following earlier
 papers (Rao, Morton, and Yee 1976; Rao, Morton, and Cloninger 1979), introduce ``social homogamy'',
 i.e.~assortative mating by social background. Otto, Christiansen, and Feldman (1995) extend
-assortative mating to include both phenotypic and social homogamy. More
-recently, interest in these topics has been revived by empirical
-findings from genomics. In particular, (1) ``direct'' effects of genetic
-variants, estimated by within-family studies, are different from
-``indirect'' effects, i.e.~associations found in the whole sample, and
-direct effects of polygenic scores can be smaller than population-wide
-associations (Howe et al. 2022; A. Young et al. 2022). This suggests there
-is confounding from gene-environment correlation, and assortative mating
-may play a role (Border et al. 2022). (2) parental alleles which are \emph{not}
-transmitted to the child correlate with child outcomes
-(Kong et al. 2018). This could result from ``genetic nurture'', i.e.
-parents with different genes providing different family environments,
-but more recent work suggests that it is due to ``dynastic effects'', in
-other words, long-term associations between genes and environments
-(A. S. Young 2023; Nivard et al. 2024). (3) Correlations between spouses'
-polygenic scores for education are higher than can be explained by assortative
-mating on measured phenotypic education alone (Okbay et al. 2022; Robinson et al. 2017; Torvik et al. 2022). These results suggest that
-it is important to understand how genes and environments affect the
-spouse matching process.
+assortative mating to include both phenotypic and social homogamy.
 
-Existing empirical studies of assortative mating in genetics identify
-environmental and genetic contributions to mate value within a
-structural model (Eaves et al. 1999; Torvik et al. 2022; Collado, Ortuño-Ortı́n, and Stuhler 2023). Because both cultural and genetic inheritance
+More recently, interest in these topics has been revived by empirical
+findings from genomics. ``Direct'' effects of individual genetic variants, estimated by
+within-family studies, are different from ``indirect'' effects, i.e.~associations
+found in the whole sample, and direct effects of polygenic scores can be smaller
+than population-wide associations (Howe et al. 2022; A. Young et al. 2022).
+Also, parental alleles which are \emph{not} transmitted to the child correlate with
+child outcomes (Kong et al. 2018). Both these phenomena could be explained
+by confounding from gene-environment correlation, or by assortative mating
+(A. S. Young 2023; Nivard et al. 2024). Lastly, correlations between spouses'
+polygenic scores for education are higher than can be explained by assortative
+mating on measured phenotypic education alone (Okbay et al. 2022; Robinson et al. 2017; Torvik et al. 2022). To address this, several recent papers
+papers have estimated structural models of assortative mating in family data
+(Eaves et al. 1999; Torvik et al. 2022; Collado, Ortuño-Ortı́n, and Stuhler 2023; Rustichini et al. 2023). Because both cultural and genetic inheritance
 proceed from parents to children, it can be hard to differentiate
 them. For example, Collado, Ortuño-Ortı́n, and Stuhler (2023) derive extremely low estimates
 for heritability of education, within a model in which all genetic similarity
@@ -356,7 +348,7 @@ but not across generations.\footnote{As Okbay et al. (2022) put it: ``Because th
   biometric model cannot be separately identified from a small number of
   phenotypic correlations among different types of relatives, researchers
   typically have to assume that some of the parameters equal zero in order to
-  estimate other parameters.''} We take a different approach, by cleanly
+  estimate other parameters.''} We get round this problem by cleanly
 identifying separate environmental and genetic contributions to assortative
 mating: environmental contributions using birth order, genetic contributions by
 comparing polygenic scores within siblings.
@@ -792,11 +784,11 @@ between \(x_1\) and \(x_2\) for \(\tau = 0.95\).
 
 \begin{figure}
 
-{\centering \includegraphics[height=3.5in]{trading-genetics_files/figure-latex/pic-asymptotic-corr-1-rgl} 
+{\centering \subfloat[Gene-SES correlation\label{fig:pic-asymptotic-corr-1}]{\includegraphics[width=0.5\linewidth,height=6in]{trading-genetics_files/figure-latex/pic-asymptotic-corr-1-rgl} }\subfloat[SES inequality\label{fig:pic-asymptotic-corr-2}]{\includegraphics[width=0.5\linewidth,height=6in]{trading-genetics_files/figure-latex/pic-asymptotic-corr-2-rgl} }
 
 }
 
-\caption{Long-run correlation between genetics $x_1$ and SES $x_2$, by weight of genetics in spouse matching ($a$) and strength of inheritance of SES ($\theta$). $\tau$ = 0.95.}\label{fig:pic-asymptotic-corr}
+\caption{Long-run correlation between genetics $x_1$ and SES $x_2$, and long-run inequality (standard deviation of $x_2$), by weight of genetics in spouse matching ($a$) and strength of inheritance of SES ($\theta$). $\tau$ = 0.95.}\label{fig:pic-asymptotic-corr}
 \end{figure}
 
 Note that both \(\bar{S}^{2}\) and \(\bar{\sigma}\), as well as the correlation
@@ -1004,6 +996,32 @@ PSEA predicts a set of important socioeconomic variables, including not
 only education but also social and geographic mobility, IQ, future
 income and wealth (Belsky et al. 2016; Barth, Papageorge, and Thom 2020; Papageorge and Thom 2020).\footnote{See Papageorge and Thom (2020) for a detailed discussion of polygenic
   scores aimed at economists.}
+
+\begin{verbatim}
+## Warning in feols(university ~ EA3, data = famhist, note = FALSE): partial
+## argument match of 'note' to 'notes'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in match.call(definition, call, expand.dots, envir): partial argument
+## match of 'note' to 'notes'
+
+## Warning in match.call(definition, call, expand.dots, envir): partial argument
+## match of 'note' to 'notes'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in feols(university ~ EA3 | sib_group, data = famhist, note = FALSE):
+## partial argument match of 'note' to 'notes'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in match.call(definition, call, expand.dots, envir): partial argument
+## match of 'note' to 'notes'
+
+## Warning in match.call(definition, call, expand.dots, envir): partial argument
+## match of 'note' to 'notes'
+\end{verbatim}
 
 PSEA in the UK was calculated using per-SNP summary statistics from
 Lee et al. (2018), re-estimated excluding UK Biobank participants; in Norway,
@@ -3662,11 +3680,11 @@ s^{2} & \sigma \\
 where%
 \begin{eqnarray*}
 A &=&\frac{as^{2}+\left( 1-a\right) \sigma}{\sqrt{a^{2}%
-s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \bar{\sigma%
-}}}\textrm{ \ and} \\
+s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma%
+}}\textrm{ \ and} \\
 C &=&\frac{a\sigma+\left( 1-a\right) S^{2}}{\sqrt{a^{2}%
-s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \bar{\sigma%
-}}},
+s^{2}+\left( 1-a\right) ^{2}S^{2}+2a\left( 1-a\right) \sigma%
+}},
 \end{eqnarray*}%
 
 Note that if the distribution converges, $s^{2}$ and $S^{2}$
@@ -5509,6 +5527,19 @@ maximum possible \(R^2\) in spouse matching.
 \end{table}
  
 
+\begin{verbatim}
+## Warning in fixest::feols(fml_bo_mediator_interact, data = mf_pairs_reg, :
+## partial argument match of 'note' to 'notes'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in match.call(definition, call, expand.dots, envir): partial argument
+## match of 'note' to 'notes'
+
+## Warning in match.call(definition, call, expand.dots, envir): partial argument
+## match of 'note' to 'notes'
+\end{verbatim}
+
 \begin{figure}
 
 {\centering \includegraphics{trading-genetics_files/figure-latex/pic-bo-psea-interactions-1} 
@@ -7272,9 +7303,6 @@ Boardman, Jason D, Benjamin W Domingue, and Jonathan Daw. 2015. {``What Can Gene
 \bibitem[\citeproctext]{ref-booth2009birth}
 Booth, Alison L, and Hiau Joo Kee. 2009. {``Birth Order Matters: The Effect of Family Size and Birth Order on Educational Attainment.''} \emph{Journal of Population Economics} 22 (2): 367--97.
 
-\bibitem[\citeproctext]{ref-border2022cross}
-Border, Richard, Georgios Athanasiadis, Alfonso Buil, Andrew Schork, Na Cai, Alexander Young, Thomas Werge, et al. 2022. {``Cross-Trait Assortative Mating Is Widespread and Inflates Genetic Correlation Estimates.''} \emph{bioRxiv}.
-
 \bibitem[\citeproctext]{ref-branigan2013variation}
 Branigan, Amelia R, Kenneth J McCallum, and Jeremy Freese. 2013. {``Variation in the Heritability of Educational Attainment: An International Meta-Analysis.''} \emph{Social Forces} 92 (1): 109--40.
 
@@ -7460,6 +7488,9 @@ Robinson, Matthew R, Aaron Kleinman, Mariaelisa Graff, Anna AE Vinkhuyzen, David
 
 \bibitem[\citeproctext]{ref-ronda2020family}
 Ronda, Victor, Esben Agerbo, Dorthe Bleses, Preben Bo Mortensen, Anders Børglum, David M Hougaard, Ole Mors, Merete Nordentoft, Thomas Werge, and Michael Rosholm. 2020. {``Family Disadvantage, Gender and the Returns to Genetic Human Capital.''} Institute of Labor Economics (IZA).
+
+\bibitem[\citeproctext]{ref-rustichini2023educational}
+Rustichini, Aldo, William G Iacono, James J Lee, and Matt McGue. 2023. {``Educational Attainment and Intergenerational Mobility: A Polygenic Score Analysis.''} \emph{Journal of Political Economy} 131 (10): 2724--79.
 
 \bibitem[\citeproctext]{ref-sacerdote2011nature}
 Sacerdote, Bruce. 2011. {``Nature and Nurture Effects on Children's Outcomes: What Have We Learned from Studies of Twins and Adoptees?''} In \emph{Handbook of Social Economics}, 1:1--30. Elsevier.

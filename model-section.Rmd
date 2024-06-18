@@ -435,56 +435,84 @@ $\tau = 1$, the dynamics diverges and $\bar{s}^{2}$ goes to $+\infty$.
 \end{proposition}
 
 
+```{r calc-compute-asymptotics}
 
-Figure \@ref(fig:pic-asymptotic-corr) plots the asymptotic correlation
-between $x_1$ and $x_2$ for $\tau = 0.95$.
-
-```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between genetics $x_1$ and SES $x_2$, by weight of genetics in spouse matching ($a$) and strength of inheritance of SES ($\\theta$). $\\tau$ = 0.95.", dpi = 300, out.height="3.5in"}
-
-
+# this is D in the proof of prop-asymptotics-SGAM in the appendix
 D <- function (a, lambda, mu) {
   a^2 * lambda + (1-a)^2 + 2*a*(1-a)*mu
 }
 
+# this is A^2/S^2 in the proof 
 Astar <- function (a, lambda, mu) {
   D <- D(a, lambda, mu)
   (a*lambda + (1-a)*mu)^2/D
 }
 
+# this is sqrt(Astar * Cstar) = AC/S^2
 Bstar <- function (a, lambda, mu) {
   D <- D(a, lambda, mu)
   (a*lambda + (1-a)*mu)*(a*mu + (1-a))/D
 }
 
+# this is C^2/S^2 in the proof
 Cstar <- function (a, lambda, mu) {
   D <- D(a, lambda, mu)
   (a*mu + (1-a))^2/D
 }
 
+# A zero of H is a fixed point of the invariant matrix at the
+# start of the proof, rewritten in terms of lambda and mu
+# where lambda = s^2/S^2, mu = sigma/S^2
+# x is (lambda, mu)
+# aa is a (renamed to avoid a partial match in rootSolve::multiroot)
+H <- function (x, tau, aa, theta) {
+  a <- aa
+  lambda <- x[1]
+  mu <- x[2]
+  Astar <- Astar(a, lambda, mu)
+  Bstar <- Bstar(a, lambda, mu)
+  Cstar <- Cstar(a, lambda, mu)
+  root1 <- tau^2/2 * (Astar + lambda) -
+           theta^2/2 * (Cstar + 1) + 1 - lambda
+  root2 <- theta*tau/2 * (mu + Bstar) - mu
+  
+  c(root1, root2)
+}
+
 
 corr <- function (theta, a) {
   tau <- 0.95
-  # x is (lambda, mu)
-  H <- function (x) {
-    lambda <- x[1]
-    mu <- x[2]
-    Astar <- Astar(a, lambda, mu)
-    Bstar <- Bstar(a, lambda, mu)
-    Cstar <- Cstar(a, lambda, mu)
-    root1 <- tau^2/2 * (Astar + lambda) -
-                   theta^2/2 * (Cstar + 1) - 
-                   lambda + 1
-    root2     <- theta*tau/2 * (mu + Bstar) - mu
-    
-    c(root1, root2)
-  }
-  
-  res <- rootSolve::multiroot(H, start = c(0, 0))
-  res <- res$root
-  corr <- res[2]/sqrt(res[1])
+  # find a zero of H
+  res <- rootSolve::multiroot(H, start = c(0, 0), tau = tau, aa = a, theta = theta)
+  root <- res$root
+  # mu/sqrt(lambda) = sigma/Ss = correlation of x1 and x2
+  corr <- root[2]/sqrt(root[1])
   
   return(corr)
 }
+
+
+# this calculates the equilibrium standard deviation of x_2 "wealth"
+equilibrium_S <- function (theta, a) {
+  tau <- 0.95
+  # find a zero of H
+  res <- rootSolve::multiroot(H, start = c(0, 0), tau = tau, 
+                              aa = a, theta = theta)
+  root <- res$root
+  lambda <- root[1]
+  mu <- root[2]
+  
+  # Cstar = C^2/S^2; this equation is at the end of the proof
+  S_squared <- 1/(1 - theta^2/2 - theta^2 * Cstar(a, lambda, mu) / 2)
+  
+  S <- sqrt(S_squared)
+
+  return(S)
+}
+```
+
+
+```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between genetics $x_1$ and SES $x_2$, by weight of genetics in spouse matching ($a$) and strength of inheritance of SES ($\\theta$). $\\tau$ = 0.95.", dpi = 300}
 
 invisible(rgl::open3d(
               userMatrix = rgl::rotate3d(rgl::r3dDefaults$userMatrix, 
@@ -509,7 +537,35 @@ rgl::mtext3d("Corr(x₁, x₂)", "z-+", line = 6)
 
 ```
 
+```{r pic-asymptotic-ineq, fig.align = "center", fig.cap = "Long-run inequality in SES (standard deviation of $x_2$) by weight of genetics in spouse matching ($a$) and strength of inheritance of SES ($\\theta$). $\\tau$ = 0.95.", dpi = 300}
 
+invisible(rgl::open3d(
+              userMatrix = rgl::rotate3d(rgl::r3dDefaults$userMatrix, 
+                                           angle = pi/5, x = 0, y = 0, 
+                                           z = 1)
+            ))
+rgl::par3d(cex = 1.4)
+
+rgl::plot3d(
+             Vectorize(equilibrium_S),
+             xlim  = c(0, 0.95),
+             ylim  = c(0, 0.99), # 1 gives an error
+             zlab  = "",
+             xlab  = "θ", 
+             col   = "darkred",
+             front = "lines",
+             lwd   = 3,
+             n     = 40,
+             box   = FALSE
+           )
+rgl::mtext3d("Std. dev. x₂", "z-+", line = 6)
+```
+
+
+Figures \@ref(fig:pic-asymptotic-corr) and \@ref(fig:pic-asymptotic-ineq) plot the asymptotic correlation between $x_1$ and $x_2$, and the
+asymptotic standard deviation of $x_2$, for $\tau = 0.95$. The correlation 
+between $x_1$ and $x_2$ is maximized for intermediate levels of $a$, but economic
+inequality is highest when assortative mating is purely on SES and $a = 0$.
 Note that both $\bar{S}^{2}$ and $\bar{\sigma}$, as well as the correlation
 between characteristics and the conditional expectation of genetics given
 wealth, are increasing in $\theta$, i.e. decreasing in the tax rate. Higher
