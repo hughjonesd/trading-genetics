@@ -658,7 +658,7 @@ how SGAM interacts with institutional variables to affect economic inequality,
 mobility and associations between genes and SES, and the first to cleanly
 identify an environmental effect on spouse genetics.
 
-[^papers] Specifically, @halsey1958genetics and @rustichini2023educational.
+[^papers]: Specifically, @halsey1958genetics and @rustichini2023educational.
 
 
 ```{r literature-notes, eval = FALSE}
