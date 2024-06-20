@@ -27,6 +27,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 invisible(loadNamespace("rootSolve"))
 invisible(loadNamespace("rgl"))
+library(ggplot2)
+library(dplyr)
+
 rgl::setupKnitr(
         autoprint = TRUE, 
         rgl.newwindow = FALSE, 
@@ -482,7 +485,7 @@ H <- function (x, tau, aa, theta) {
 }
 
 
-corr <- function (theta, a) {
+heritability <- function (theta, a) {
   tau <- 0.95
   # find a zero of H
   res <- rootSolve::multiroot(H, start = c(0, 0), tau = tau, aa = a, theta = theta)
@@ -490,7 +493,7 @@ corr <- function (theta, a) {
   # mu/sqrt(lambda) = sigma/Ss = correlation of x1 and x2
   corr <- root[2]/sqrt(root[1])
   
-  return(corr)
+  return(corr^2)
 }
 
 
@@ -524,7 +527,7 @@ invisible(rgl::open3d(
 rgl::par3d(cex = 1.4)
 
 rgl::plot3d(
-             Vectorize(corr),
+             Vectorize(heritability),
              xlim  = c(0, 0.95),
              ylim  = c(0, 0.99), # 1 gives an error
              zlab  = "",
@@ -535,18 +538,18 @@ rgl::plot3d(
              n     = 40,
              box   = FALSE
            )
-rgl::mtext3d("Corr(x₁, x₂)", "z-+", line = 6)
+rgl::mtext3d("Heritability", "z-+", line = 6)
 
 ```
 
 
-Figure \@ref(fig:pic-asymptotic-corr) plots the asymptotic correlation between 
-$x_1$ and $x_2$, for $\tau = 0.95$. It is maximized for intermediate levels of 
-$a$. Note that both $\bar{S}^{2}$ and $\bar{\sigma}$, as well as the correlation
-between characteristics and the conditional expectation of genetics given
-wealth, are increasing in $\theta$, i.e. decreasing in the tax rate. Higher
-taxation reduces the asymptotic variance of wealth (unsurprisingly), but
-also the correlation between genetics and wealth. 
+Figure \@ref(fig:pic-asymptotic-corr) plots the asymptotic squared correlation
+between $x_1$ and $x_2$. In genetic terms, this is the heritability of SES. It is
+maximized for intermediate levels of $a$. Note that both $\bar{S}^{2}$ and
+$\bar{\sigma}$, as well as the correlation between characteristics and the
+conditional expectation of genetics given wealth, are increasing in $\theta$.
+Higher transmission of SES increases inequality of SES in equilibrium
+(unsurprisingly), but also the heritability of SES.
 
 ## Extensions
 
@@ -595,25 +598,24 @@ long as $\gamma > 0$ and either $0 < a < 1$ or $\sigma > 0$, the coefficient
 of parents' wealth on children's wealth exceeds $\theta$.
 \end{proposition}
 
-Surprisingly, in this case, the children's genes-SES correlation is not always
-increasing in $\theta$. The reason is that when $\gamma$ is high, a higher
-$\theta$ decreases the proportion of $x^\prime_2$ that comes via $\gamma$ from
-own genetics, and increases the proportion that comes from parents' SES, which
-may be less strongly correlated with own genetics. However,
-computing the long-run asymptotic correlation along the lines of Proposition
-\ref{prop-asymptotics-SGAM} shows that it is increasing in $\theta$ for 
-all but values of $\theta$ very close to 1.
+Figure \@ref(fig:pic-heritability-inequality) plots computed equilibrium values
+of two interesting outcomes: economic inequality, i.e. the standard deviation of
+$x_2$, and heritability of SES, i.e. the squared correlation between $x_1$ and $x_2$.
+Meritocratic mobility $\gamma$, which opens a pathway from highly transmissible
+genetics to SES, always increases both inequality and heritability 
+[cf. @Rimfeld_2018]. The effect of $a$ is more complex. At low levels of 
+meritocracy, increasing $a$ decreases inequality by reducing assortative mating 
+by SES, and intermediate values of $a$ increase heritability by assorting
+SES with genetics. As meritocratic mobility increases, it acts as a multiplier
+for the effects of $a$ on both outcomes, and $a$ starts to increase both
+heritability and inequality, for almost all values. Again, this is because 
+$a$ increases assortation by highly transmissible genetics which in turn
+affect SES. In particular, consider a broad social "modernization", in which
+the direct transmission of SES and the role of SES in matching decrease, while
+meritocratic mobility increases since careers become open to talents. If the 
+decrease in $\theta$ does not outweigh the increase in $a$ and $\gamma$, both 
+equilibrium heritability and inequality of SES may increase.
 
-Of interest to economists, Figure \@ref(fig:pic-asymptotic-inequality) shows 
-how meritocracy, wealth transmission and assortative mating interact to 
-produce economic inequality as measured by the equilibrium standard deviation
-of SES $x_2$. In a society with persistent wealth and no
-meritocracy (solid line, $\theta$ = 0.9, $\gamma$ = 0), inequality is highest
-for assortative mating on wealth alone ($a = 0$). In a society with less
-persistent wealth and more meritocracy (dashed line, $\theta$ = 0.3, $\gamma$ =
-0.3), inequality is highest when people assort on genetics ($a = 1$).
-Assortative matching on genetics can also change the rankings of the two 
-societies with respect to inequality.
 
 ```{r calc-inequality-corr-gamma-theta}
 
@@ -676,9 +678,10 @@ eqm_covariance <- function (a, tau, theta, gamma) {
 }
 
 
-eqm_correlation <- function (a, tau, theta, gamma) {
+eqm_heritability <- function (a, tau, theta, gamma) {
   eqm_cov <- eqm_covariance(a, tau, theta, gamma)
-  eqm_cov["sigma"] / sqrt(eqm_cov["s2"] * eqm_cov["S2"])
+  corr <- eqm_cov["sigma"] / sqrt(eqm_cov["s2"] * eqm_cov["S2"])
+  corr^2
 }
 
 
@@ -687,83 +690,50 @@ eqm_sd_x2 <- function (a, tau, theta, gamma) {
   sqrt(eqm_cov["S2"])
 }
 
-
-eqm_sd_x1 <- function (a, tau, theta, gamma) {
-  eqm_cov <- eqm_covariance(a, tau, theta, gamma)
-  sqrt(eqm_cov["s2"])
-}
+eqm_heritability <- Vectorize(eqm_heritability)
+eqm_sd_x2 <- Vectorize(eqm_sd_x2)
 ```
 
 
-```{r pic-asymptotic-inequality, fig.align = "center", fig.cap = "Meritocracy, assortative mating and economic inequality. Curves show equilibrium standard deviation of SES $x_2$ for different parameter combinations, by importance of genetics in spouse matching ($a$). Solid line: persistent wealth ($\\theta$ = 0.9, $\\gamma$ = 0). Dashed line: meritocracy ($\\theta$ = 0.3, $\\gamma$ = 0.3).", fig.height = 3.5, fig.width = 3.5}
+```{r pic-heritability-inequality, fig.align = "center", fig.cap = "Equilibrium inequality (standard deviation of $x_2$) and heritability (squared correlation of $x_1$ and $x_2$) for different values of assortative mating $a$, meritocratic mobility $\\gamma$ and transmission of SES $\\theta$. $\\tau = 0.95$. The x axis is scaled differently between the left and right plots.", out.width = "100%"}
 
-# These curves show that in the presence of assortative mating, 
-# a small amount of meritocracy induces a large G-E correlation:
-# curve(Vectorize(eqm_correlation)(a = 0.5, tau = 0.95, theta = x, gamma = 0),
-#       xlim = c(0, 0.9), ylim = c(0, 1), 
-#       ylab = "Corr(x1, x2)", xlab = "θ", cex.axis = 0.8, las = 1)
-# curve(Vectorize(eqm_correlation)(a = 0.5, tau = 0.95, theta = x, gamma = 0.2),
-#       add = TRUE, lty = 2)
-# legend("topleft", legend = c("θ = 0", "θ = 0.2"), lty = 1:2, cex = 0.6)
-# curve(Vectorize(eqm_correlation)(a = 0.5, tau = 0.95, theta = 0, gamma = x),
-#       xlim = c(0, 0.9), ylim = c(0, 1), 
-#       ylab = "Corr(x1, x2)", xlab = "γ", cex.axis = 0.8, las = 1)
-# curve(Vectorize(eqm_correlation)(a = 0.5, tau = 0.95, theta = 0.2, gamma = x),
-#       add = TRUE, lty = 2)
-# legend("topleft", legend = c("γ = 0", "γ = 0.2"), lty = 1:2, cex = 0.6)
+params <- expand.grid(
+  a = 0:20/20, 
+  theta = c(0.4, 0.7), 
+  gamma = seq(0, 0.2, 0.05), 
+  tau = 0.95
+)
 
-# These curves show that a small amount of meritocracy induces a large 
-# G-E correlation even compared to assortative mating, and even when 
-# persistence of wealth is very high
-# curve(Vectorize(eqm_correlation)(a = x, tau = 0.95, theta = 0.9, gamma = 0),
-#       xlim = c(0, 1), ylim = c(0, 1), 
-#       ylab = "Corr(x₁, x₂)", xlab = "a", cex.axis = 0.8, las = 1)
-# curve(Vectorize(eqm_correlation)(a = x, tau = 0.95, theta = 0.2, gamma = 0),
-#       add = TRUE, lty = 2)
-# curve(Vectorize(eqm_correlation)(a = x, tau = 0.95, theta = 0.2, gamma = 0.2),
-#       add = TRUE, lty = 3)
-# legend("topleft", 
-#        legend = c("θ = 0.9, γ = 0", "θ = 0.2, γ = 0", "θ = 0.2, γ = 0.2"), 
-#        lty = 1:3, cex = 0.6)
+sd_x2 <- do.call(eqm_sd_x2, as.list(params))
+heritability <- do.call(eqm_heritability, as.list(params))
 
+params$sd_x2 <- sd_x2
+params$heritability <- heritability
 
-# These graphs show:
-# (1) If you reduce persistence of income (second line), inequality decreases
-# (2) But if you simultaneously increase meritocratic mobility,
-#     inequality need not decrease.
-# (3) In particular, meritocracy interacts with the importance of genetics
-#     in matching markets to increase inequality.
-old_par <- par(mar = c(4, 4, 0.1, 0.1))
-curve(Vectorize(eqm_sd_x2)(a = x, tau = 0.95, theta = 0.9, gamma = 0),
-      xlim = c(0, 1), ylim = c(1, 3), 
-      ylab = expression(sd(x[2])), xlab = "a", cex.axis = 0.8, las = 1, lwd = 2)
-# curve(Vectorize(eqm_sd_x2)(a = x, tau = 0.95, theta = 0.3, gamma = 0),
-#       add = TRUE, lty = 2, col = "red2", lwd = 2)
-curve(Vectorize(eqm_sd_x2)(a = x, tau = 0.95, theta = 0.3, gamma = 0.3),
-      add = TRUE, lty = 2, col = "steelblue", lwd = 2)
+label_greek <- function (x) paste("theta", x)
 
-legend("topleft", 
-       legend = expression(list(theta == 0.9, gamma == 0), 
-                           list(theta == 0.3, gamma == 0.3)), 
-       lty = 1:2, col = c("black", "steelblue"),
-       y.intersp = 0.85, cex = 0.85, lwd = 2)
-
-par(old_par)
-
-# f <- function (x, y) eqm_sd_x2(a = x, tau = 0.95, theta = 0.3, gamma = y)
-# rgl::plot3d(Vectorize(f),
-#              xlim  = c(0, 1),
-#              ylim  = c(0, 0.8), # 1 gives an error
-#              zlab  = "",
-#              xlab  = "a", 
-#              ylab = "γ",
-#              col   = "red",
-#              front = "lines",
-#              lwd   = 3,
-#              n     = 40,
-#              box   = FALSE
-#            )
-
+params |>  
+  mutate(
+    Heritability = heritability,
+    Inequality = sd_x2,
+    gamma = factor(gamma)
+  ) |> 
+  arrange(a) |> 
+  ggplot(aes(Inequality, Heritability, color = a, shape = gamma)) + 
+  geom_point(size = 2) + 
+  geom_path() + 
+  facet_wrap(vars(theta), labeller = label_bquote(theta == .(theta)), 
+             scales = "free_x") +
+  scale_color_gradient2(midpoint = 0.5, mid = "grey70", transform = "reverse") +
+  scale_x_continuous(limits = c(1, NA)) +
+  theme_linedraw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_blank()
+  ) +
+  labs(
+    shape = expression(gamma)
+  )
 
 ```
 Third, we consider non-normal distributions of $x_1$ and $x_2$, non-normal

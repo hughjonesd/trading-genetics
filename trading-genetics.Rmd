@@ -424,8 +424,9 @@ genes causes SES, under SGAM causality goes both ways, from genes to SES
 and vice versa. Also, the size of genes-SES gradients depends on
 economic institutions. Under institutions which increase
 intergenerational mobility, like high inheritance tax rates,
-genes-SES gradients become weaker. On the other hand, an increase in
-meritocracy can make them stronger.
+genes-SES gradients become weaker. On the other hand, an increase in meritocracy 
+can make them stronger. SGAM also interacts with economic institutions to 
+determine the level of socioeconomic inequality.
 
 Next, using data on spouse pairs from two large genetically-informed
 surveys in Great Britain and Norway, we test the hypothesis that a
@@ -535,10 +536,11 @@ between spouses is driven by matching either on the measured phenotype, or
 on a shared cultural factor; whereas @torvik2022modeling estimate partner
 correlation between "true" polygenic scores for education of 0.37, and 
 heritability above 50%, in a model where environment is shared between siblings 
-but not across generations.[^okbay] We get round this problem by cleanly
-identifying separate environmental and genetic contributions to assortative 
-mating: environmental contributions using birth order, genetic contributions by
-comparing polygenic scores within siblings.[^tbl-rev]
+but not across generations.[^okbay] In this context, we think it is worth 
+taking a different approach. We cleanly identify separate environmental and 
+genetic contributions to assortative mating: environmental contributions using 
+birth order, genetic contributions by comparing polygenic scores within
+siblings.[^tbl-rev]
 
 [^okbay]: As @okbay2022polygenic put it: "Because the parameters of a general
 biometric model cannot be separately identified from a small number of 
@@ -578,7 +580,7 @@ vis-à-vis SES in marriage markets may increase economic inequality: it makes
 households more unequal in genetics, and these are passed on to their children 
 with high reliability.
 
-[^ineq]: See Figure \@ref(fig:pic-asymptotic-inequality).
+[^ineq]: See Figure \@ref(fig:pic-heritability-inequality).
 
 SGAM can also explain a large body of evidence for cross-sectional
 associations between genetics and social status. For example: from twin
@@ -1859,6 +1861,93 @@ huxreg(mod_bo_subsets_moba,
 
 # Robustness
 
+
+As noted earlier, our results could conceivably be explained by spouses
+*only* mating on SES ($a = 0$ in our model), but with a pre-existing
+correlation between SES and PSEA in the population. That said, existing
+work strongly suggests that own PSEA affects spouse's education
+[@robinson2017genetic; @torvik2022modeling]. To confirm this we use a
+sample of siblings from the MoBa data[^23], and regress spouse's
+university attendance and income z-score on own PSEA, including sibling group fixed
+effects. Again, this uses the lottery of meiosis to guarantee that
+between-sibling differences in PSEA are exogenous to environmental
+characteristics including SES. Table \@ref(tab:tbl-reversed-moba) shows that 
+own PSEA significantly increases the probability of
+spouse university attendance, by about 5% per standard deviation; interestingly,
+its effect on spouse income is insignificant and tightly bounded around
+zero, supporting the hypothesis that income is not an important form of SES in
+Norwegian marriage markets. Overall, these results allow us to rule out $a = 0$. 
+
+[^23]: The UK Biobank sample has too few siblings with spouses for this
+    analysis to be informative.
+    
+
+```{r tbl-reversed-moba}
+
+# "exported" by literally pasting in coefficients for now :-)
+# see Fartein's email of 4 oct
+
+tidy_uni_psea_moba <- tibble(
+  term      = c("eapgsresid"),
+  estimate  = c(0.04768),
+  std.error = c(0.009798),
+  statistic = c(4.86618),
+  p.value   = c(1.1743e-6)
+)
+
+glance_uni_psea_moba <- tibble(
+  adj.r.squared = 0.182223,
+  nobs          = 9729L
+)
+
+tidy_inc_psea_moba <- tibble(
+  term      = c("eapgsresid"),
+  estimate  = c(-0.000734),
+  std.error = c(0.017402),
+  statistic = c(-0.042185),
+  p.value   = c(0.96635)
+)
+
+glance_inc_psea_moba <- tibble(
+  adj.r.squared = 0.083474,
+  nobs          = 9755L
+)
+
+tidy_uni_psea_moba <- convert_moba_for_huxreg(tidy_uni_psea_moba,
+                                              glance_uni_psea_moba)
+tidy_inc_psea_moba <- convert_moba_for_huxreg(tidy_inc_psea_moba,
+                                              glance_inc_psea_moba)
+
+reversed_note <- paste0(
+  "Estimates from within-sibling-group regressions. PSEA is the polygenic score ",
+  "for educational attainment, which is normalized with mean 0 and standard ",
+  "deviation 1. Sibling group dummies are included to ensure exogeneity of ",
+  "PSEA. {stars}. Standard errors in parentheses.")
+
+huxreg(
+  list("University" = tidy_uni_psea_moba, "Income" = tidy_inc_psea_moba),
+  coefs = c("Own PSEA" = "eapgsresid"),
+  statistics = c(N = "nobs", "Adj. $R^2$" = "adj.r.squared"),
+  note      = reversed_note,
+  stars     = my_stars,
+  tidy_args = tidy_args
+  ) %>% 
+  insert_row(after = 3, "Sibling group dummies", "Yes", "Yes") %>% 
+  insert_row(after = 4, "Birth month dummies", "Yes", "Yes") %>% 
+  insert_row(after = 5, "Birth year dummies", "Yes", "Yes") %>% 
+  set_bottom_border(4:5, everywhere, 0) %>% 
+  set_align(4:6, -1, "center") %>% 
+  set_number_format(2:3, -1, 4) %>% 
+  set_escape_contents(everywhere, 1, FALSE) %>%
+  set_width(0.75) %>%
+  set_caption(paste0(
+    "Within-siblings regressions of spouse university attendance ",
+    "and income on own PSEA (Norway)"))
+
+
+```
+
+
 Although all children of the same parents have the same polygenic scores
 in expectation, it might still be possible that genetics correlates with
 birth order within the sample. This could happen in three ways. First,
@@ -2014,25 +2103,6 @@ the Biobank's sampling frame. Results are similar to those in the main
 text. Although this is still not representative of the population as a
 whole, it provides some assurance that our results are not driven by
 volunteering bias.
-
-As noted earlier, our results could conceivably be explained by spouses
-*only* mating on SES ($a = 0$ in our model), but with a pre-existing
-correlation between SES and PSEA in the population. That said, existing
-work strongly suggests that own PSEA affects spouse's education
-[@robinson2017genetic; @torvik2022modeling]. To confirm this we use a
-sample of siblings from the MoBa data[^23], and regress spouse's
-university attendance on own PSEA, including sibling group fixed
-effects. Again, this uses the lottery of meiosis to guarantee that
-between-sibling differences in PSEA are exogenous to environmental
-characteristics including SES. Table \@ref(tab:tbl-reversed-moba) in the
-appendix shows that spouses of higher-PSEA siblings were substantially
-more likely to have attended university, allowing us to rule out
-$a = 0$. Interestingly, they did not have higher income, which again
-suggests that income is not an important form of SES in Norway marriage
-markets.
-
-[^23]: The UK Biobank sample has too few siblings with spouses for this
-    analysis to be informative.
 
 The appendix reports other robustness checks, including replacing
 university attendance with age of leaving full-time education. Overall,
@@ -2255,17 +2325,6 @@ Table \@ref(tab:tbl-bo-psea-no3) reruns Table \@ref(tab:tbl-bo-psea)
 excluding families of size 3. Results are very similar to those in the
 main text.
 
-Table \@ref(tab:tbl-reversed-moba) regresses spouse university
-attendance and income z-score on own PSEA on a subset of siblings within
-the MoBa dataset. This tests the null hypothesis $a = 0$ in our model.
-If $a = 0$, own polygenic score has no effect on spouse matching. To
-ensure that PSEA is exogenously varied, we again rely on the lottery of
-meiosis by including sibling fixed effects. Analogously to our main
-results in MoBa, own PSEA significantly increases the probability of
-spouse university attendance, by about 5% per standard deviation; but
-its effect on spouse income is insignificant and tightly bounded around
-zero. Overall, these results confirm that PSEA affects the set of
-potential spouses.
 
 ```{r calc-oster-2019}
 # Plan:
@@ -2881,76 +2940,15 @@ huxreg(mod_bo_psea_no3,
                    (Great Britain)")
 ```
 
-```{r tbl-reversed-moba}
-
-# "exported" by literally pasting in coefficients for now :-)
-# see Fartein's email of 4 oct
-
-tidy_uni_psea_moba <- tibble(
-  term      = c("eapgsresid"),
-  estimate  = c(0.04768),
-  std.error = c(0.009798),
-  statistic = c(4.86618),
-  p.value   = c(1.1743e-6)
-)
-
-glance_uni_psea_moba <- tibble(
-  adj.r.squared = 0.182223,
-  nobs          = 9729L
-)
-
-tidy_inc_psea_moba <- tibble(
-  term      = c("eapgsresid"),
-  estimate  = c(-0.000734),
-  std.error = c(0.017402),
-  statistic = c(-0.042185),
-  p.value   = c(0.96635)
-)
-
-glance_inc_psea_moba <- tibble(
-  adj.r.squared = 0.083474,
-  nobs          = 9755L
-)
-
-tidy_uni_psea_moba <- convert_moba_for_huxreg(tidy_uni_psea_moba,
-                                              glance_uni_psea_moba)
-tidy_inc_psea_moba <- convert_moba_for_huxreg(tidy_inc_psea_moba,
-                                              glance_inc_psea_moba)
-
-reversed_note <- paste0(
-  "Estimates from within-sibling-group regressions. PSEA is the polygenic score ",
-  "for educational attainment, which is normalized with mean 0 and standard ",
-  "deviation 1. Sibling group dummies are included to ensure exogeneity of ",
-  "PSEA. {stars}. Standard errors in parentheses.")
-
-huxreg(
-  list("University" = tidy_uni_psea_moba, "Income" = tidy_inc_psea_moba),
-  coefs = c("Own PSEA" = "eapgsresid"),
-  statistics = c(N = "nobs", "Adj. $R^2$" = "adj.r.squared"),
-  note      = reversed_note,
-  stars     = my_stars,
-  tidy_args = tidy_args
-  ) %>% 
-  insert_row(after = 3, "Sibling group dummies", "Yes", "Yes") %>% 
-  insert_row(after = 4, "Birth month dummies", "Yes", "Yes") %>% 
-  insert_row(after = 5, "Birth year dummies", "Yes", "Yes") %>% 
-  set_bottom_border(4:5, everywhere, 0) %>% 
-  set_align(4:6, -1, "center") %>% 
-  set_number_format(2:3, -1, 4) %>% 
-  set_escape_contents(everywhere, 1, FALSE) %>%
-  set_width(0.75) %>%
-  set_caption(paste0(
-    "Within-siblings regressions of spouse university attendance ",
-    "and income on own PSEA (Norway)"))
-
-
-```
 
 ```{=tex}
 \FloatBarrier
 \newpage
 ```
+
+
 ### Testing the UK Biobank spouse pair matching
+
 
 ```{r calc-validate-pairs}
 
@@ -2959,6 +2957,7 @@ n_one_has_kid <- prop_shared$one
 n_both_same_kid <- prop_shared$both
 
 ```
+
 
 Some of our spouse pairs in UK Biobank could be false positives, i.e.
 people who are not each others' spouse but simply live in the same
@@ -2993,6 +2992,7 @@ children, attended same assessment center, attended on same day, husband
 reported living with spouse, wife reported living with spouse) the fake
 pairs ticked exactly 5 out of 7 boxes.
 
+
 ```{r calc-fake-pairs}
 
 drake::loadd(mf_pairs_fake)
@@ -3001,6 +3001,7 @@ prop_shared_fake <- calc_prop_shared_children(mf_pairs_fake)
 n_one <- prop_shared_fake$one
 n_both <- prop_shared_fake$both
 ```
+
 
 We again use genetic children to confirm that the fake pairs are "real
 fakes". Out of `r n_one` genetic children of the fake pairs, only

@@ -152,7 +152,7 @@ Fartein Ask Torvik\thanks{Norwegian Institute of Public Health, Oslo.
   Email: f.a.torvik@psykologi.uio.no} \&
 Eivind Ystrøm\thanks{Norwegian Institute of Public Health, Oslo. 
   Email: eivind.ystrom@psykologi.uio.no}}
-\date{2024-06-18}
+\date{2024-06-20}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -241,8 +241,9 @@ genes causes SES, under SGAM causality goes both ways, from genes to SES
 and vice versa. Also, the size of genes-SES gradients depends on
 economic institutions. Under institutions which increase
 intergenerational mobility, like high inheritance tax rates,
-genes-SES gradients become weaker. On the other hand, an increase in
-meritocracy can make them stronger.
+genes-SES gradients become weaker. On the other hand, an increase in meritocracy
+can make them stronger. SGAM also interacts with economic institutions to
+determine the level of socioeconomic inequality.
 
 Next, using data on spouse pairs from two large genetically-informed
 surveys in Great Britain and Norway, we test the hypothesis that a
@@ -348,10 +349,11 @@ but not across generations.\footnote{As Okbay et al. (2022) put it: ``Because th
   biometric model cannot be separately identified from a small number of
   phenotypic correlations among different types of relatives, researchers
   typically have to assume that some of the parameters equal zero in order to
-  estimate other parameters.''} We get round this problem by cleanly
-identifying separate environmental and genetic contributions to assortative
-mating: environmental contributions using birth order, genetic contributions by
-comparing polygenic scores within siblings.\footnote{See Table \ref{tab:tbl-reversed-moba} in the appendix.}
+  estimate other parameters.''} In this context, we think it is worth
+taking a different approach. We cleanly identify separate environmental and
+genetic contributions to assortative mating: environmental contributions using
+birth order, genetic contributions by comparing polygenic scores within
+siblings.\footnote{See Table \ref{tab:tbl-reversed-moba} in the appendix.}
 
 SGAM has consequences for inequality and social mobility. Long-run estimates of
 intergenerational persistence of wealth and status are surprisingly higher than
@@ -373,7 +375,7 @@ self-limiting or even self-undermining.
 
 In terms of cross-sectional inequality, the conventional wisdom is that it is
 increased by assortative mating on SES (Fernández and Rogerson 2001; Breen and Salazar 2011; Greenwood et al. 2014). But that depends what else people
-assort on. As we show below\footnote{See Figure \ref{fig:pic-asymptotic-inequality}.}, if the same genes that are relevant in marriage
+assort on. As we show below\footnote{See Figure \ref{fig:pic-heritability-inequality}.}, if the same genes that are relevant in marriage
 markets also affect economic outcomes, then an increase in the role of genes
 vis-à-vis SES in marriage markets may increase economic inequality: it makes
 households more unequal in genetics, and these are passed on to their children
@@ -794,13 +796,13 @@ $\tau = 1$, the dynamics diverges and $\bar{s}^{2}$ goes to $+\infty$.
 \caption{Long-run correlation between genetics $x_1$ and SES $x_2$, by weight of genetics in spouse matching ($a$) and strength of inheritance of SES ($\theta$). $\tau$ = 0.95.}\label{fig:pic-asymptotic-corr}
 \end{figure}
 
-Figure \ref{fig:pic-asymptotic-corr} plots the asymptotic correlation between
-\(x_1\) and \(x_2\), for \(\tau = 0.95\). It is maximized for intermediate levels of
-\(a\). Note that both \(\bar{S}^{2}\) and \(\bar{\sigma}\), as well as the correlation
-between characteristics and the conditional expectation of genetics given
-wealth, are increasing in \(\theta\), i.e.~decreasing in the tax rate. Higher
-taxation reduces the asymptotic variance of wealth (unsurprisingly), but
-also the correlation between genetics and wealth.
+Figure \ref{fig:pic-asymptotic-corr} plots the asymptotic squared correlation
+between \(x_1\) and \(x_2\). In genetic terms, this is the heritability of SES. It is
+maximized for intermediate levels of \(a\). Note that both \(\bar{S}^{2}\) and
+\(\bar{\sigma}\), as well as the correlation between characteristics and the
+conditional expectation of genetics given wealth, are increasing in \(\theta\).
+Higher transmission of SES increases inequality of SES in equilibrium
+(unsurprisingly), but also the heritability of SES.
 
 \subsection{Extensions}\label{extensions}
 
@@ -849,33 +851,31 @@ long as $\gamma > 0$ and either $0 < a < 1$ or $\sigma > 0$, the coefficient
 of parents' wealth on children's wealth exceeds $\theta$.
 \end{proposition}
 
-Surprisingly, in this case, the children's genes-SES correlation is not always
-increasing in \(\theta\). The reason is that when \(\gamma\) is high, a higher
-\(\theta\) decreases the proportion of \(x^\prime_2\) that comes via \(\gamma\) from
-own genetics, and increases the proportion that comes from parents' SES, which
-may be less strongly correlated with own genetics. However,
-computing the long-run asymptotic correlation along the lines of Proposition
-\ref{prop-asymptotics-SGAM} shows that it is increasing in \(\theta\) for
-all but values of \(\theta\) very close to 1.
-
-Of interest to economists, Figure \ref{fig:pic-asymptotic-inequality} shows
-how meritocracy, wealth transmission and assortative mating interact to
-produce economic inequality as measured by the equilibrium standard deviation
-of SES \(x_2\). In a society with persistent wealth and no
-meritocracy (solid line, \(\theta\) = 0.9, \(\gamma\) = 0), inequality is highest
-for assortative mating on wealth alone (\(a = 0\)). In a society with less
-persistent wealth and more meritocracy (dashed line, \(\theta\) = 0.3, \(\gamma\) =
-0.3), inequality is highest when people assort on genetics (\(a = 1\)).
-Assortative matching on genetics can also change the rankings of the two
-societies with respect to inequality.
+Figure \ref{fig:pic-heritability-inequality} plots computed equilibrium values
+of two interesting outcomes: economic inequality, i.e.~the standard deviation of
+\(x_2\), and heritability of SES, i.e.~the squared correlation between \(x_1\) and \(x_2\).
+Meritocratic mobility \(\gamma\), which opens a pathway from highly transmissible
+genetics to SES, always increases both inequality and heritability
+(cf. Rimfeld et al. 2018). The effect of \(a\) is more complex. At low levels of
+meritocracy, increasing \(a\) decreases inequality by reducing assortative mating
+by SES, and intermediate values of \(a\) increase heritability by assorting
+SES with genetics. As meritocratic mobility increases, it acts as a multiplier
+for the effects of \(a\) on both outcomes, and \(a\) starts to increase both
+heritability and inequality, for almost all values. Again, this is because
+\(a\) increases assortation by highly transmissible genetics which in turn
+affect SES. In particular, consider a broad social ``modernization'', in which
+the direct transmission of SES and the role of SES in matching decrease, while
+meritocratic mobility increases since careers become open to talents. If the
+decrease in \(\theta\) does not outweigh the increase in \(a\) and \(\gamma\), both
+equilibrium heritability and inequality of SES may increase.
 
 \begin{figure}
 
-{\centering \includegraphics{trading-genetics_files/figure-latex/pic-asymptotic-inequality-1} 
+{\centering \includegraphics[width=1\linewidth]{trading-genetics_files/figure-latex/pic-heritability-inequality-1} 
 
 }
 
-\caption{Meritocracy, assortative mating and economic inequality. Curves show equilibrium standard deviation of SES $x_2$ for different parameter combinations, by importance of genetics in spouse matching ($a$). Solid line: persistent wealth ($\theta$ = 0.9, $\gamma$ = 0). Dashed line: meritocracy ($\theta$ = 0.3, $\gamma$ = 0.3).}\label{fig:pic-asymptotic-inequality}
+\caption{Equilibrium inequality (standard deviation of $x_2$) and heritability (squared correlation of $x_1$ and $x_2$) for different values of assortative mating $a$, meritocratic mobility $\gamma$ and transmission of SES $\theta$. $\tau = 0.95$. The x axis is scaled differently between the left and right plots.}\label{fig:pic-heritability-inequality}
 \end{figure}
 
 Third, we consider non-normal distributions of \(x_1\) and \(x_2\), non-normal
@@ -3000,6 +3000,116 @@ countries, and perhaps be endogenous to economic institutions.
 
 \section{Robustness}\label{robustness}
 
+As noted earlier, our results could conceivably be explained by spouses
+\emph{only} mating on SES (\(a = 0\) in our model), but with a pre-existing
+correlation between SES and PSEA in the population. That said, existing
+work strongly suggests that own PSEA affects spouse's education
+(Robinson et al. 2017; Torvik et al. 2022). To confirm this we use a
+sample of siblings from the MoBa data\footnote{The UK Biobank sample has too few siblings with spouses for this
+  analysis to be informative.}, and regress spouse's
+university attendance and income z-score on own PSEA, including sibling group fixed
+effects. Again, this uses the lottery of meiosis to guarantee that
+between-sibling differences in PSEA are exogenous to environmental
+characteristics including SES. Table \ref{tab:tbl-reversed-moba} shows that
+own PSEA significantly increases the probability of
+spouse university attendance, by about 5\% per standard deviation; interestingly,
+its effect on spouse income is insignificant and tightly bounded around
+zero, supporting the hypothesis that income is not an important form of SES in
+Norwegian marriage markets. Overall, these results allow us to rule out \(a = 0\).
+
+ 
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[ht]
+\begin{centerbox}
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{\label{tab:tbl-reversed-moba} Within-siblings regressions of spouse university attendance and income on own PSEA (Norway)}
+ \setlength{\tabcolsep}{0pt}
+\begin{tabularx}{0.75\textwidth}{p{0.25\textwidth} p{0.25\textwidth} p{0.25\textwidth}}
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering \huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering University\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Income\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Own PSEA\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.0477 ***\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.0007\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright \huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft (0.0098)\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft (0.0174)\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Sibling group dummies\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Birth month dummies\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Birth year dummies\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright N\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 9729\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 9755\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Adj. $R^2$\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.182\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.083\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{3}{!{\huxvb{0, 0, 0}{0}}p{0.75\textwidth+4\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.75\textwidth+4\tabcolsep-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Estimates from within-sibling-group regressions. PSEA is the polygenic score for educational attainment, which is normalized with mean 0 and standard deviation 1. Sibling group dummies are included to ensure exogeneity of PSEA.  *** p < 0.001;  ** p < 0.01;  * p < 0.05;  + p < 0.1. Standard errors in parentheses.\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+\end{tabularx}
+\end{threeparttable}\par\end{centerbox}
+
+\end{table}
+ 
+
 Although all children of the same parents have the same polygenic scores
 in expectation, it might still be possible that genetics correlates with
 birth order within the sample. This could happen in three ways. First,
@@ -3100,23 +3210,6 @@ the Biobank's sampling frame. Results are similar to those in the main
 text. Although this is still not representative of the population as a
 whole, it provides some assurance that our results are not driven by
 volunteering bias.
-
-As noted earlier, our results could conceivably be explained by spouses
-\emph{only} mating on SES (\(a = 0\) in our model), but with a pre-existing
-correlation between SES and PSEA in the population. That said, existing
-work strongly suggests that own PSEA affects spouse's education
-(Robinson et al. 2017; Torvik et al. 2022). To confirm this we use a
-sample of siblings from the MoBa data\footnote{The UK Biobank sample has too few siblings with spouses for this
-  analysis to be informative.}, and regress spouse's
-university attendance on own PSEA, including sibling group fixed
-effects. Again, this uses the lottery of meiosis to guarantee that
-between-sibling differences in PSEA are exogenous to environmental
-characteristics including SES. Table \ref{tab:tbl-reversed-moba} in the
-appendix shows that spouses of higher-PSEA siblings were substantially
-more likely to have attended university, allowing us to rule out
-\(a = 0\). Interestingly, they did not have higher income, which again
-suggests that income is not an important form of SES in Norway marriage
-markets.
 
 The appendix reports other robustness checks, including replacing
 university attendance with age of leaving full-time education. Overall,
@@ -4293,18 +4386,6 @@ the effect of birth order substantially.
 Table \ref{tab:tbl-bo-psea-no3} reruns Table \ref{tab:tbl-bo-psea}
 excluding families of size 3. Results are very similar to those in the
 main text.
-
-Table \ref{tab:tbl-reversed-moba} regresses spouse university
-attendance and income z-score on own PSEA on a subset of siblings within
-the MoBa dataset. This tests the null hypothesis \(a = 0\) in our model.
-If \(a = 0\), own polygenic score has no effect on spouse matching. To
-ensure that PSEA is exogenously varied, we again rely on the lottery of
-meiosis by including sibling fixed effects. Analogously to our main
-results in MoBa, own PSEA significantly increases the probability of
-spouse university attendance, by about 5\% per standard deviation; but
-its effect on spouse income is insignificant and tightly bounded around
-zero. Overall, these results confirm that PSEA affects the set of
-potential spouses.
 
 Lastly, we run an Oster (2019) style robustness analysis on
 the effect of education and income on spouse PSEA. This is a
@@ -6884,99 +6965,6 @@ maximum possible \(R^2\) in spouse matching.
 \hhline{}
 \arrayrulecolor{black}
 \end{tabular}
-\end{threeparttable}\par\end{centerbox}
-
-\end{table}
- 
-
- 
-  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
-  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
-  \providecommand{\huxtpad}[1]{\rule{0pt}{#1}}
-  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
-
-\begin{table}[ht]
-\begin{centerbox}
-\begin{threeparttable}
-\captionsetup{justification=centering,singlelinecheck=off}
-\caption{\label{tab:tbl-reversed-moba} Within-siblings regressions of spouse university attendance and income on own PSEA (Norway)}
- \setlength{\tabcolsep}{0pt}
-\begin{tabularx}{0.75\textwidth}{p{0.25\textwidth} p{0.25\textwidth} p{0.25\textwidth}}
-
-
-\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering \huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering University\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Income\huxbpad{6pt}}} \tabularnewline[-0.5pt]
-
-
-\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Own PSEA\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.0477 ***\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.0007\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
-
-
-\hhline{}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright \huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft (0.0098)\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft (0.0174)\huxbpad{6pt}}} \tabularnewline[-0.5pt]
-
-
-\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Sibling group dummies\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} \tabularnewline[-0.5pt]
-
-
-\hhline{}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Birth month dummies\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} \tabularnewline[-0.5pt]
-
-
-\hhline{}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Birth year dummies\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering Yes\huxbpad{6pt}}} \tabularnewline[-0.5pt]
-
-
-\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright N\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 9729\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 9755\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
-
-
-\hhline{}
-\arrayrulecolor{black}
-
-\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Adj. $R^2$\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.182\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
-\multicolumn{1}{p{0.25\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.25\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.083\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
-
-
-\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
-\arrayrulecolor{black}
-
-\multicolumn{3}{!{\huxvb{0, 0, 0}{0}}p{0.75\textwidth+4\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.75\textwidth+4\tabcolsep-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Estimates from within-sibling-group regressions. PSEA is the polygenic score for educational attainment, which is normalized with mean 0 and standard deviation 1. Sibling group dummies are included to ensure exogeneity of PSEA.  *** p < 0.001;  ** p < 0.01;  * p < 0.05;  + p < 0.1. Standard errors in parentheses.\huxbpad{6pt}}} \tabularnewline[-0.5pt]
-
-
-\hhline{}
-\arrayrulecolor{black}
-\end{tabularx}
 \end{threeparttable}\par\end{centerbox}
 
 \end{table}
