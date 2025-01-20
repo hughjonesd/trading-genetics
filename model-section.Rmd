@@ -695,7 +695,7 @@ eqm_sd_x2 <- Vectorize(eqm_sd_x2)
 ```
 
 
-```{r pic-heritability-inequality, fig.align = "center", fig.cap = "Equilibrium inequality (standard deviation of $x_2$) and heritability (squared correlation of $x_1$ and $x_2$) for different values of assortative mating $a$, meritocratic mobility $\\gamma$ and transmission of SES $\\theta$. $\\tau = 0.95$. The x axis is scaled differently between the left and right plots.", out.width = "100%"}
+```{r pic-heritability-inequality, fig.align = "center", fig.cap = "Equilibrium inequality (standard deviation of $x_2$) and heritability (squared correlation of $x_1$ and $x_2$) for different values of assortative mating $a$, meritocratic mobility $\\gamma$ and transmission of SES $\\theta$. $\\tau = 0.95$. The x axis is scaled differently between the left and right plots.",  out.height = "3in", out.width = "100%"}
 
 params <- expand.grid(
   a = 0:20/20, 
@@ -729,7 +729,9 @@ params |>
   theme_linedraw() +
   theme(
     panel.grid.minor = element_blank(),
-    panel.grid.major = element_blank()
+    panel.grid.major = element_blank(),
+    strip.background = element_rect(fill = "white", colour = "transparent"),
+    strip.text = element_text(colour = "black")
   ) +
   labs(
     shape = expression(gamma)

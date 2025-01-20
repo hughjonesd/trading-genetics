@@ -540,15 +540,13 @@ but not across generations.[^okbay] In this context, we think it is worth
 taking a different approach. We cleanly identify separate environmental and 
 genetic contributions to assortative mating: environmental contributions using 
 birth order, genetic contributions by comparing polygenic scores within
-siblings.[^tbl-rev]
+siblings.
 
 [^okbay]: As @okbay2022polygenic put it: "Because the parameters of a general
 biometric model cannot be separately identified from a small number of 
 phenotypic correlations among different types of relatives, researchers
 typically have to assume that some of the parameters equal zero in order to
 estimate other parameters."
-
-[^tbl-rev]: See Table \@ref(tab:tbl-reversed-moba) in the appendix.
 
 SGAM has consequences for inequality and social mobility. Long-run estimates of
 intergenerational persistence of wealth and status are surprisingly higher than
@@ -565,11 +563,9 @@ generations, this increases the long-run association between SES and genetics.
 If so, institutional reforms that increase *intergenerational mobility*, like
 mass education or inheritance taxation, may affect not only economic but genetic
 inequality. Conversely, an increase in *economic meritocracy* increases the
-long-run association between SES and genetics,[^4] posing the problem raised by
+long-run association between SES and genetics, posing the problem raised by
 @young1958rise and more recently @markovits2019meritocracy: meritocracy may be
 self-limiting or even self-undermining.
-
-[^4]: See Proposition \@ref(prop-gamma).
 
 In terms of cross-sectional inequality, the conventional wisdom is that it is 
 increased by assortative mating on SES [@fernandez2001sorting; 
