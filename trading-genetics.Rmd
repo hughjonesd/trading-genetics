@@ -2207,7 +2207,7 @@ from the Norwegian Data Protection Agency and approval from The Regional
 Committees for Medical and Health Research Ethics. The MoBa cohort is
 currently regulated by the Norwegian Health Registry Act. The current
 study was approved by The Regional Committees for Medical and Health
-Research Ethics.
+Research Ethics (project # 2017/2205).
 
 We thank the Norwegian Institute of Public Health (NIPH) for generating
 high-quality genomic data. This research is part of the HARVEST
