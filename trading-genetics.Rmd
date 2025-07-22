@@ -477,8 +477,10 @@ mediators, including university attendance and/or income, the effect of
 birth order shrinks substantially, becoming insignificant in Great
 Britain, while the SES mediators significantly increase the spouse’s
 PSEA. The results are robust to the inclusion of several controls,
-including non-SES mediators, and a rich set of own genetic traits. Thus,
-SES appears to mediate the effect of birth order on spouse genetics. The
+including non-SES mediators, and a rich set of own genetic traits. 
+Moreover, within-siblings estimates in the Norwegian sample show that own PSEA 
+significantly affects spouse’s education net of family environment and SES. 
+Thus, SES appears to mediate the effect of birth order on spouse genetics. The
 effects of individual mediators differ between the two countries. While
 university attendance explains more than a third of the effects of birth
 order in both Britain and Norway, income explains about 10% of the
@@ -512,8 +514,11 @@ and culture is transmitted from parents. Assortative mating, modeled
 simply as a correlation coefficient, leads culture and genetics to
 be associated in offspring. @heath1985resolving, following earlier
 papers [@rao1976resolution; @rao1979path], introduce "social homogamy",
-i.e. assortative mating by social background. @otto1995genetic extend
-assortative mating to include both phenotypic and social homogamy.
+i.e. assortative mating by social background. @otto1995genetic allow
+assortative mating to include both phenotypic and social homogamy. Our model
+below uses assortation on phenotypic homogamy; we extend the literature by providing
+economic microfoundations for mating decisions, and by focusing explicitly 
+on assortation's socio-economic consequences.
 
 More recently, interest in these topics has been revived by empirical
 findings from genomics. "Direct" effects of individual genetic variants, estimated by
@@ -746,7 +751,10 @@ $$ where $x_2$ is social status and $x_1$ is genetic endowment. Consider
 the effect of a change in $x_2$ holding $x_1$ constant. If $a = 1$ then
 this will not change $i(x)$ and therefore will not change the expected
 characteristics of the spouse. So, if we regress spouse's $x_1$ on own
-$x_2$, and reject the null of no effect, we can reject $a = 1$.[^8]
+$x_2$, and reject the null of no effect, we can reject $a = 1$.[^8] In other
+words, we set out to test the central assumption in our model that marriage 
+markets weigh both SES and genetics, by testing its implication, i.e., that 
+individuals with higher SES have spouses with higher genetic scores (PSEA).
 
 [^8]: Conceivably, if $a = 0$ but there is a pre-existing correlation
     between $x_1$ and $x_2$ in the population, then an increase in own
@@ -1013,14 +1021,19 @@ environmental and genetic factors. In particular, birth order naturally
 correlates with family size, i.e. the total number of siblings born,
 because e.g. third-born children must be in a family of at least three
 siblings. It also correlates with parental age, which may affect the
-income and maturity of the parents. To control for family size, we use
+income and maturity of the parents. There are also
+potential genetic effects from parental age, though recent research has rejected
+these in favour of “social” explanations [kristensen2007explaining; @black2011older].
+@cochran2013paternal report that mutational load is approximately linear in 
+father’s age, while it is constant in mother’s age. 
+To control for family size, we use
 dummies for each possible value of family size. In most regressions, we
 use only respondents with between 1 and 5 siblings, i.e. with a family
 size of 2-6: beyond that, estimation would get noisy because of small
 cell sizes. To control for parental age, we use father's and/or mother's
-age at the respondent's birth. This is calculated from the relevant
-parent's current age. In the UK Biobank, this data is only available if
-the respondent's parent was still alive. For other controls we use
+age at the respondent's birth, because we often have data only for one parent.
+We use the mean if we have both parents. In the UK Biobank, this data is only
+available if the respondent's parent was still alive. For other controls we use
 respondent's month of birth, year of birth, and own PSEA. Our claim is
 that controlling for these variables, birth order is independent of
 genetic variation.
@@ -1128,9 +1141,11 @@ E(Y_b' - Y_b) = \tau(b' - b) + \sum_{j \in J_m} \alpha^j E(m^j_{b'} - m^j_b) \\
 \end{equation}
 ```
 We are primarily interested in estimating the effect of SES on spouse
-PSEA, amongst the measured mediators, and furthermore we would like to
-measure the relative importance of SES compared to other factors in
-predicting spouse PSEA.
+PSEA, amongst the measured mediators. If this effect is significantly different 
+from zero, it implies that $(1−a)$ is different from zero in our attractiveness 
+equation, and therefore $a$ is different from 1. Furthermore, we would like to 
+measure the relative importance of SES compared to other factors in predicting 
+spouse PSEA.
 
 We therefore estimate: \begin{equation}
 \label{eq:model-to-estimate}
@@ -1155,7 +1170,10 @@ further controls, such as parental age, year of birth, and own PSEA, to
 reduce unobserved variation in the error term.
 
 By running a least square regression of \@ref(eq:model-to-estimate), we
-can estimate $\tau$ and $\alpha^j$. If assumption (a) holds, the part of
+can estimate $\tau$ and $\alpha^j$. If the assumptions
+above hold and the estimated αj is significantly different from zero, we have
+evidence that the parameter $a$ in the attractiveness equation is different from 1.
+If assumption (a) holds, the part of
 the birth order treatment effect on spouse PSEA that is due to measured
 mediators, including SES, can be constructed using the estimated
 $\alpha^j$ and the effects of birth order on measured mediators. We can
@@ -1253,7 +1271,7 @@ not much changed.
 Column 3 reports results controlling for parents' age at birth. Within a
 family, later children have older parents by definition. Older parents
 have more life experience and may have higher income, which may help
-later children.[^16] @kantarevic2006birth show that mother's age at
+later children. @kantarevic2006birth show that mother's age at
 childbirth indeed mechanically offsets the negative effect of birth
 order. Including parents' age means we can separate the effect of
 parental age from birth order.[^17] This reduces the N by a lot, since
@@ -1263,14 +1281,6 @@ at the 5 per cent level. Meanwhile, parents' age has a positive effect.
 This suggests that estimates in columns 1-2 mixed two opposite-signed
 effects: having older parents versus being later in birth order.
 
-[^16]: We often only have data only for one parent. We use this, or take
-    the mean if we have both. There are also potential genetic effects
-    from parental age, though recent research has rejected these in
-    favour of "social" explanations [@kristensen2007explaining;
-    @black2011older]. @cochran2013paternal report that mutational load
-    is approximately linear in father's age, while it is constant in
-    mother's age. We observe very similar results if we control only for
-    father's age at respondent's birth.
 
 [^17]: A possible critique is that later siblings by definition have
     older parents, so the parental age control is inappropriate. This
@@ -1540,7 +1550,9 @@ deviation of PSEA), but what matters is the effect size of education and
 income. The effect of education in particular is quite large as measured
 here, and since it also appears to mediate the purely environmental
 shock of birth order, it cannot just be due to an unobserved correlation
-with own genetics.
+with own genetics. This significant effect provides support
+for the central assumption in our model that $1 − a$ is non-zero and the marriage
+market significantly weighs SES.
 
 Our next regressions split up the data into subsets. Cultural
 stereotypes often assume that the link between status and genes is not
@@ -1710,7 +1722,8 @@ measures in the two countries are different. Still, it is interesting
 that in Norway, a more egalitarian country than the UK, income seems to
 have a smaller effect on spouse PSEA, while own PSEA, a genetic
 characteristic, seems to have a larger effect. This suggests that
-genetic and SES contributions to attractiveness may vary between
+genetic and SES contributions to attractiveness  (parameter $a$ in our 
+attractiveness equation) may vary between
 countries, and perhaps be endogenous to economic institutions.
 
 ```{r tbl-bo-psea-moba}
@@ -1872,7 +1885,10 @@ own PSEA significantly increases the probability of
 spouse university attendance, by about 5% per standard deviation; interestingly,
 its effect on spouse income is insignificant and tightly bounded around
 zero, supporting the hypothesis that income is not an important form of SES in
-Norwegian marriage markets. Overall, these results allow us to rule out $a = 0$. 
+Norwegian marriage markets. By leveraging random PSEA variation between siblings, 
+these results allow us to reject that $a = 0$ (even if the effect of PSEA on 
+spouse SES could be *mediated* by own SES, cf. the extended model of meritocracy in
+equation \ref{eqn-gamma}).
 
 [^23]: The UK Biobank sample has too few siblings with spouses for this
     analysis to be informative.
@@ -2077,14 +2093,16 @@ reasons. First, our polygenic scores were calculated using per-SNP
 summary statistics estimated on non-UK populations. So they will only
 include noise that correlates with social environment insofar as
 non-causal correlations of SNPs with social status are the same across
-different countries. Second, we have residualized PSEA on 100 principal
-components of the genetic data, a standard technique in genetics to
-avoid confounding causal effects with population stratification. Third,
+different countries. Second,
 true causal effects of individual SNPs are highly correlated (r = 0.74)
 with their "population effects" including noise [@young2022mendelian].
-Lastly, it is hard to imagine an assortative mating process by which
+Third, it is hard to imagine an assortative mating process by which
 people match spouses who have genetic variants that correlate with
-educational attainment, but not genetic variants that cause it.
+educational attainment, but not genetic variants that cause it. Lastly, our
+within-sibling regressions from Norway (Table \@ref(tab:tbl-reversed-moba)) show 
+that own PSEA is truly causal for spouse education; it is unlikely that the set
+of variants underlying this causality does not overlap with the variants causing 
+own education.
 
 Our main specification is linear in birth order. Tables
 \@ref(tab:tbl-bo-psea-dummies) and \@ref(tab:tbl-bo-psea-dummies-moba)
@@ -2099,6 +2117,12 @@ the Biobank's sampling frame. Results are similar to those in the main
 text. Although this is still not representative of the population as a
 whole, it provides some assurance that our results are not driven by
 volunteering bias.
+
+As well as affecting spouse characteristics, birth order and own PSEA might
+affect whether people marry at all. Though this would not invalidate our results
+about married couples, we check for it. In fact, after controlling for parental
+age, there is little evidence that either birth order or PSEA affect one's
+probability of having a partner (Table \@ref(tab:tbl-with-partner) in the appendix).
 
 The appendix reports other robustness checks, including replacing
 university attendance with age of leaving full-time education. Overall,
@@ -2320,6 +2344,12 @@ the effect of birth order substantially.
 Table \@ref(tab:tbl-bo-psea-no3) reruns Table \@ref(tab:tbl-bo-psea)
 excluding families of size 3. Results are very similar to those in the
 main text.
+
+To examine selection into having a partner (at all), 
+Table \@ref(tab:tbl-with-partner) regresses being with a partner against own birth
+order, PSEA and parental age, among individuals with birth order 6 or less in the UK
+Biobank sample. Birth order has a small negative coefficient on being partnered but
+this shrinks and becomes insignificant after parental age is included.
 
 
 ```{r calc-oster-2019}
@@ -2936,6 +2966,30 @@ huxreg(mod_bo_psea_no3,
                    (Great Britain)")
 ```
 
+
+```{r tbl-with-partner}
+fml_with_pnr <- list()
+
+fml_with_pnr[[1]] <- with_partner ~ birth_order + EA3_excl_23andMe_UK +
+  factor(birth_mon) | factor(n_sibs) + factor(age_at_recruitment)
+fml_with_pnr[[2]] <- with_partner ~ birth_order + EA3_excl_23andMe_UK +
+  factor(birth_mon) + par_age_birth | factor(n_sibs) + factor(age_at_recruitment)
+
+fml_with_pnr <- lapply(fml_with_pnr, Formula::as.Formula)
+
+mod_with_pnr <- lapply(fml_with_pnr, fixest::feols, 
+                           data = famhist %>% filter(birth_order <= 6),
+                           notes = FALSE)
+huxtable::huxreg(mod_with_pnr, 
+                 coefs = c("Birth order" = "birth_order", 
+                           "PSEA" = "EA3_excl_23andMe_UK", 
+                           "Parents' age at birth" = "par_age_birth"), 
+                 note = "{stars}. Other controls: dummies for birth month, number of siblings, and own age",
+                 stars = my_stars) %>%
+  set_caption("Regressions of being with a partner vs. single (Great Britain)")
+  
+
+```
 
 ```{=tex}
 \FloatBarrier
