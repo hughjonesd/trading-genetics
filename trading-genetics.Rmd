@@ -2348,7 +2348,7 @@ main text.
 To examine selection into having a partner (at all), 
 Table \@ref(tab:tbl-with-partner) regresses being with a partner against own birth
 order, PSEA and parental age, among individuals with birth order 6 or less in the UK
-Biobank sample. Birth order has a small negative coefficient on being partnered but
+Biobank sample. Birth order has a tiny negative coefficient on being partnered, but
 this shrinks and becomes insignificant after parental age is included.
 
 
@@ -2643,8 +2643,10 @@ fml_bo_psea_dummies <- purrr::map(fml_bo_psea_dummies, update,
                                     factor(birth_order.x))
 
 # use a formula here to preserve the `data` argument
+# We remove the single 1938-born person since this causes instability in the
+# estimates when using YOB dummies
 mod_bo_psea_dummies <- purrr::map(fml_bo_psea_dummies, ~lm(.x, 
-                         data = mf_pairs_reg))
+                         data = mf_pairs_reg %>% filter(YOB.x != 1938)))
 
 mod_restricted <- purrr::map(mod_bo_psea_dummies, 
                                ~update(.x, . ~ . - factor(birth_order.x)))
@@ -2986,6 +2988,7 @@ huxtable::huxreg(mod_with_pnr,
                            "Parents' age at birth" = "par_age_birth"), 
                  note = "{stars}. Other controls: dummies for birth month, number of siblings, and own age",
                  stars = my_stars) %>%
+  set_width(0.8) %>%
   set_caption("Regressions of being with a partner vs. single (Great Britain)")
   
 

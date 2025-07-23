@@ -1609,7 +1609,7 @@
     },
     "robomit": {
       "Package": "robomit",
-      "Version": "1.0.7",
+      "Version": "1.0.6",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1621,7 +1621,7 @@
         "tibble",
         "tidyr"
       ],
-      "Hash": "795a56aba306f7ba400984c42a18fa2c"
+      "Hash": "50b889a4bc89450bec354503748d2d89"
     },
     "rootSolve": {
       "Package": "rootSolve",

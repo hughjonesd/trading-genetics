@@ -22,7 +22,10 @@ editor_options:
 
 ```{r set-echo-off, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-
+options(error = function() {
+  sink()
+  recover()
+})
 #options(rgl.useNULL = TRUE)
 
 invisible(loadNamespace("rootSolve"))
@@ -308,7 +311,7 @@ positive correlation between genetics and SES. The correlation between $x^\prime
 and $x^\prime_2$ is 0 when $a = 0$ or $a = 1$, because then spouses don't trade off
 SES for genes. It is highest for intermediate values of $a$.
 
-```{r pic-intuition, fig.subcap = c("Parents", "Children"), fig.cap = "Theory. The shaded area is the population distribution. Parents (solid circles) match along attractiveness isoquants (dotted lines). Children (hollow circles) are between them. As a result, the children's distribution is squeezed along attractiveness isoquants, and $x_1$ and $x_2$ become associated.", fig.ncol = 2, fig.width = 2.75, fig.height = 2.4, fig.align='center', echo = FALSE}
+```{r pic-intuition, fig.subcap = c("Parents", "Children"), fig.cap = "Theory. The shaded area is the population distribution. Parents (solid circles) match along attractiveness isoquants (dotted lines). Children (hollow circles) are between them. As a result, the children's distribution is squeezed along attractiveness isoquants, and $x_1$ and $x_2$ become associated.", fig.ncol = 2, fig.width = 2.75, fig.height = 2.4, fig.align='center', echo = FALSE, warning = FALSE}
 setup_plot <- function () {
   par(mar = rep(2.1, 4))
   plot.new()
@@ -320,7 +323,7 @@ setup_plot <- function () {
 }
 draw_dist <- function (w) {
   if (! is.matrix(w)) w <- matrix(c(w, 0, 0, 1), nrow = 2)
-  mygrey <- grey(.8, .03)
+  mygrey <- grey(.8, .5)
   for (rad in seq(0.2, 1, 0.1)) {
     v <- car::ellipse(c(0, 0), shape = w, radius = rad, add = TRUE, center.pch = NULL,
                fill = TRUE, col = mygrey, lwd = 0, segments = 241)
@@ -519,7 +522,7 @@ equilibrium_S <- function (theta, a) {
 ```
 
 
-```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between genetics $x_1$ and SES $x_2$, by weight of genetics in spouse matching ($a$) and strength of inheritance of SES ($\\theta$). $\\tau$ = 0.95.", dpi = 300}
+```{r pic-asymptotic-corr, fig.align = "center", fig.cap = "Long-run correlation between genetics $x_1$ and SES $x_2$, by weight of genetics in spouse matching ($a$) and strength of inheritance of SES ($\\theta$). $\\tau$ = 0.95.", dpi = 300, out.width="6in"}
 
 invisible(rgl::open3d(
               userMatrix = rgl::rotate3d(rgl::r3dDefaults$userMatrix, 

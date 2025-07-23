@@ -20,7 +20,7 @@
 \usepackage{lmodern}
 \ifPDFTeX\else
   % xetex/luatex font selection
-  \setmainfont[]{Times}
+    \setmainfont[]{Times}
 \fi
 % Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
@@ -52,15 +52,17 @@
 \makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
 % Set default figure placement to htbp
-\makeatletter
 \def\fps@figure{htbp}
 \makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
@@ -124,9 +126,6 @@
 \usepackage{wrapfig}
 \usepackage{adjustbox}
 \usepackage{hyperref}
-\ifLuaTeX
-  \usepackage{selnolig}  % disable illegal ligatures
-\fi
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same}
@@ -152,7 +151,7 @@ Fartein Ask Torvik\thanks{Norwegian Institute of Public Health, Oslo.
   Email: f.a.torvik@psykologi.uio.no} \&
 Eivind Ystrøm\thanks{Norwegian Institute of Public Health, Oslo. 
   Email: eivind.ystrom@psykologi.uio.no}}
-\date{2024-07-01}
+\date{2025-07-23}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}
@@ -290,8 +289,10 @@ mediators, including university attendance and/or income, the effect of
 birth order shrinks substantially, becoming insignificant in Great
 Britain, while the SES mediators significantly increase the spouse's
 PSEA. The results are robust to the inclusion of several controls,
-including non-SES mediators, and a rich set of own genetic traits. Thus,
-SES appears to mediate the effect of birth order on spouse genetics. The
+including non-SES mediators, and a rich set of own genetic traits.
+Moreover, within-siblings estimates in the Norwegian sample show that own PSEA
+significantly affects spouse's education net of family environment and SES.
+Thus, SES appears to mediate the effect of birth order on spouse genetics. The
 effects of individual mediators differ between the two countries. While
 university attendance explains more than a third of the effects of birth
 order in both Britain and Norway, income explains about 10\% of the
@@ -322,8 +323,11 @@ and culture is transmitted from parents. Assortative mating, modeled
 simply as a correlation coefficient, leads culture and genetics to
 be associated in offspring. Heath and Eaves (1985), following earlier
 papers (Rao, Morton, and Yee 1976; Rao, Morton, and Cloninger 1979), introduce ``social homogamy'',
-i.e.~assortative mating by social background. Otto, Christiansen, and Feldman (1995) extend
-assortative mating to include both phenotypic and social homogamy.
+i.e.~assortative mating by social background. Otto, Christiansen, and Feldman (1995) allow
+assortative mating to include both phenotypic and social homogamy. Our model
+below uses assortation on phenotypic homogamy; we extend the literature by providing
+economic microfoundations for mating decisions, and by focusing explicitly
+on assortation's socio-economic consequences.
 
 More recently, interest in these topics has been revived by empirical
 findings from genomics. ``Direct'' effects of individual genetic variants, estimated by
@@ -493,9 +497,13 @@ marriage markets are highly inegalitarian, such that only SES matters. If \(a =
 1\), marriage markets are economically egalitarian and only genetics matter. We
 expect realistic societies to fall between these extremes, with \(0 < a < 1\).
 Then, both genes and SES matter to attractiveness, and as a result,
-social-genetic assortative mating (SGAM) takes place.\footnote{This model does not assume that people match \emph{directly} on
-  genetics, which most observers agree would be unlikely. Instead we assume that
-  genetics may contribute to an attractive phenotype which is matched on.}
+social-genetic assortative mating (SGAM) takes place. This model does not assume
+that people match \emph{directly} on genetics, which most observers agree would be
+unlikely. Instead, genetics and SES both contribute to an attractiveness phenotype,
+which is matched on. Attractiveness is a deterministic function of genes and SES,
+but both genes and SES have random shocks in each generation (see below). Adding
+a random component to attractiveness itself would likely retain the basic insights
+of our model whilst reducing the effects of SGAM on genes-SES correlation.
 
 Attractiveness \(i\) is
 distributed \(N(0,\sigma_{I}^{2})\), where
@@ -789,7 +797,7 @@ $\tau = 1$, the dynamics diverges and $\bar{s}^{2}$ goes to $+\infty$.
 
 \begin{figure}
 
-{\centering \includegraphics{trading-genetics_files/figure-latex/pic-asymptotic-corr-1-rgl} 
+{\centering \includegraphics[width=6in]{trading-genetics_files/figure-latex/pic-asymptotic-corr-1.-rgl} 
 
 }
 
@@ -975,7 +983,10 @@ characteristics of the spouse. So, if we regress spouse's \(x_1\) on own
   \(a = 0\) by regressing spouse's \(x_2\) on own \(x_1\), holding own \(x_2\)
   constant. Existing work has already linked own genetics to spouse's
   SES, e.g.~education, so we focus on the other direction and treat
-  this direction as a robustness check below.}
+  this direction as a robustness check below.} In other
+words, we set out to test the central assumption in our model that marriage
+markets weigh both SES and genetics, by testing its implication, i.e., that
+individuals with higher SES have spouses with higher genetic scores (PSEA).
 
 We use data from two sources: Great Britain and Norway. This allows us
 to check our basic result in two different societies, and also to make
@@ -1085,7 +1096,7 @@ children will also have higher PSEA.\footnote{Figure \ref{fig:pic-basic-corr-mob
 
 \begin{figure}
 
-{\centering \subfloat[\label{fig:pic-basic-corr-1}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-1} }\subfloat[\label{fig:pic-basic-corr-2}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-2} }\newline\subfloat[\label{fig:pic-basic-corr-3}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-3} }\subfloat[\label{fig:pic-basic-corr-4}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-4} }
+{\centering \subfloat[\label{fig:pic-basic-corr-1}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-1} }\subfloat[\label{fig:pic-basic-corr-2}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-2} }\newline\subfloat[\label{fig:pic-basic-corr-3}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-3} }\subfloat[\label{fig:pic-basic-corr-4}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-4} }\newline
 
 }
 
@@ -1146,14 +1157,19 @@ environmental and genetic factors. In particular, birth order naturally
 correlates with family size, i.e.~the total number of siblings born,
 because e.g.~third-born children must be in a family of at least three
 siblings. It also correlates with parental age, which may affect the
-income and maturity of the parents. To control for family size, we use
+income and maturity of the parents. There are also
+potential genetic effects from parental age, though recent research has rejected
+these in favour of ``social'' explanations {[}kristensen2007explaining; Black, Devereux, and Salvanes (2011){]}.
+Cochran and Harpending (2013) report that mutational load is approximately linear in
+father's age, while it is constant in mother's age.
+To control for family size, we use
 dummies for each possible value of family size. In most regressions, we
 use only respondents with between 1 and 5 siblings, i.e.~with a family
 size of 2-6: beyond that, estimation would get noisy because of small
 cell sizes. To control for parental age, we use father's and/or mother's
-age at the respondent's birth. This is calculated from the relevant
-parent's current age. In the UK Biobank, this data is only available if
-the respondent's parent was still alive. For other controls we use
+age at the respondent's birth, because we often have data only for one parent.
+We use the mean if we have both parents. In the UK Biobank, this data is only
+available if the respondent's parent was still alive. For other controls we use
 respondent's month of birth, year of birth, and own PSEA. Our claim is
 that controlling for these variables, birth order is independent of
 genetic variation.
@@ -1257,9 +1273,11 @@ E(Y_b' - Y_b) = \tau(b' - b) + \sum_{j \in J_m} \alpha^j E(m^j_{b'} - m^j_b) \\
 \end{equation}
 
 We are primarily interested in estimating the effect of SES on spouse
-PSEA, amongst the measured mediators, and furthermore we would like to
-measure the relative importance of SES compared to other factors in
-predicting spouse PSEA.
+PSEA, amongst the measured mediators. If this effect is significantly different
+from zero, it implies that \((1−a)\) is different from zero in our attractiveness
+equation, and therefore \(a\) is different from 1. Furthermore, we would like to
+measure the relative importance of SES compared to other factors in predicting
+spouse PSEA.
 
 We therefore estimate: \begin{equation}
 \label{eq:model-to-estimate}
@@ -1284,7 +1302,10 @@ further controls, such as parental age, year of birth, and own PSEA, to
 reduce unobserved variation in the error term.
 
 By running a least square regression of \eqref{eq:model-to-estimate}, we
-can estimate \(\tau\) and \(\alpha^j\). If assumption (a) holds, the part of
+can estimate \(\tau\) and \(\alpha^j\). If the assumptions
+above hold and the estimated αj is significantly different from zero, we have
+evidence that the parameter \(a\) in the attractiveness equation is different from 1.
+If assumption (a) holds, the part of
 the birth order treatment effect on spouse PSEA that is due to measured
 mediators, including SES, can be constructed using the estimated
 \(\alpha^j\) and the effects of birth order on measured mediators. We can
@@ -1502,13 +1523,7 @@ not much changed.
 Column 3 reports results controlling for parents' age at birth. Within a
 family, later children have older parents by definition. Older parents
 have more life experience and may have higher income, which may help
-later children.\footnote{We often only have data only for one parent. We use this, or take
-  the mean if we have both. There are also potential genetic effects
-  from parental age, though recent research has rejected these in
-  favour of ``social'' explanations (Kristensen and Bjerkedal 2007; Black, Devereux, and Salvanes 2011). Cochran and Harpending (2013) report that mutational load
-  is approximately linear in father's age, while it is constant in
-  mother's age. We observe very similar results if we control only for
-  father's age at respondent's birth.} Kantarevic and Mechoulan (2006) show that mother's age at
+later children. Kantarevic and Mechoulan (2006) show that mother's age at
 childbirth indeed mechanically offsets the negative effect of birth
 order. Including parents' age means we can separate the effect of
 parental age from birth order.\footnote{A possible critique is that later siblings by definition have
@@ -2069,7 +2084,9 @@ deviation of PSEA), but what matters is the effect size of education and
 income. The effect of education in particular is quite large as measured
 here, and since it also appears to mediate the purely environmental
 shock of birth order, it cannot just be due to an unobserved correlation
-with own genetics.
+with own genetics. This significant effect provides support
+for the central assumption in our model that \(1 − a\) is non-zero and the marriage
+market significantly weighs SES.
 
 Our next regressions split up the data into subsets. Cultural
 stereotypes often assume that the link between status and genes is not
@@ -2461,7 +2478,8 @@ measures in the two countries are different. Still, it is interesting
 that in Norway, a more egalitarian country than the UK, income seems to
 have a smaller effect on spouse PSEA, while own PSEA, a genetic
 characteristic, seems to have a larger effect. This suggests that
-genetic and SES contributions to attractiveness may vary between
+genetic and SES contributions to attractiveness (parameter \(a\) in our
+attractiveness equation) may vary between
 countries, and perhaps be endogenous to economic institutions.
 
  
@@ -3015,7 +3033,10 @@ own PSEA significantly increases the probability of
 spouse university attendance, by about 5\% per standard deviation; interestingly,
 its effect on spouse income is insignificant and tightly bounded around
 zero, supporting the hypothesis that income is not an important form of SES in
-Norwegian marriage markets. Overall, these results allow us to rule out \(a = 0\).
+Norwegian marriage markets. By leveraging random PSEA variation between siblings,
+these results allow us to reject that \(a = 0\) (even if the effect of PSEA on
+spouse SES could be \emph{mediated} by own SES, cf.~the extended model of meritocracy in
+equation \ref{eqn-gamma}).
 
  
   \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
@@ -3188,14 +3209,16 @@ reasons. First, our polygenic scores were calculated using per-SNP
 summary statistics estimated on non-UK populations. So they will only
 include noise that correlates with social environment insofar as
 non-causal correlations of SNPs with social status are the same across
-different countries. Second, we have residualized PSEA on 100 principal
-components of the genetic data, a standard technique in genetics to
-avoid confounding causal effects with population stratification. Third,
+different countries. Second,
 true causal effects of individual SNPs are highly correlated (r = 0.74)
 with their ``population effects'' including noise (A. Young et al. 2022).
-Lastly, it is hard to imagine an assortative mating process by which
+Third, it is hard to imagine an assortative mating process by which
 people match spouses who have genetic variants that correlate with
-educational attainment, but not genetic variants that cause it.
+educational attainment, but not genetic variants that cause it. Lastly, our
+within-sibling regressions from Norway (Table \ref{tab:tbl-reversed-moba}) show
+that own PSEA is truly causal for spouse education; it is unlikely that the set
+of variants underlying this causality does not overlap with the variants causing
+own education.
 
 Our main specification is linear in birth order. Tables
 \ref{tab:tbl-bo-psea-dummies} and \ref{tab:tbl-bo-psea-dummies-moba}
@@ -3210,6 +3233,12 @@ the Biobank's sampling frame. Results are similar to those in the main
 text. Although this is still not representative of the population as a
 whole, it provides some assurance that our results are not driven by
 volunteering bias.
+
+As well as affecting spouse characteristics, birth order and own PSEA might
+affect whether people marry at all. Though this would not invalidate our results
+about married couples, we check for it. In fact, after controlling for parental
+age, there is little evidence that either birth order or PSEA affect one's
+probability of having a partner (Table \ref{tab:tbl-with-partner} in the appendix).
 
 The appendix reports other robustness checks, including replacing
 university attendance with age of leaving full-time education. Overall,
@@ -3315,7 +3344,7 @@ from the Norwegian Data Protection Agency and approval from The Regional
 Committees for Medical and Health Research Ethics. The MoBa cohort is
 currently regulated by the Norwegian Health Registry Act. The current
 study was approved by The Regional Committees for Medical and Health
-Research Ethics.
+Research Ethics (project \# 2017/2205).
 
 We thank the Norwegian Institute of Public Health (NIPH) for generating
 high-quality genomic data. This research is part of the HARVEST
@@ -4387,6 +4416,12 @@ Table \ref{tab:tbl-bo-psea-no3} reruns Table \ref{tab:tbl-bo-psea}
 excluding families of size 3. Results are very similar to those in the
 main text.
 
+To examine selection into having a partner (at all),
+Table \ref{tab:tbl-with-partner} regresses being with a partner against own birth
+order, PSEA and parental age, among individuals with birth order 6 or less in the UK
+Biobank sample. Birth order has a tiny negative coefficient on being partnered, but
+this shrinks and becomes insignificant after parental age is included.
+
 Lastly, we run an Oster (2019) style robustness analysis on
 the effect of education and income on spouse PSEA. This is a
 formalization of the informal idea that if a coefficient does not change
@@ -4429,7 +4464,7 @@ maximum possible \(R^2\) in spouse matching.
 
 \begin{figure}
 
-{\centering \subfloat[\label{fig:pic-basic-corr-moba-1}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-moba-1} }\subfloat[\label{fig:pic-basic-corr-moba-2}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-moba-2} }\newline\subfloat[\label{fig:pic-basic-corr-moba-3}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-moba-3} }\subfloat[\label{fig:pic-basic-corr-moba-4}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-moba-4} }
+{\centering \subfloat[\label{fig:pic-basic-corr-moba-1}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-moba-1} }\subfloat[\label{fig:pic-basic-corr-moba-2}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-moba-2} }\newline\subfloat[\label{fig:pic-basic-corr-moba-3}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-moba-3} }\subfloat[\label{fig:pic-basic-corr-moba-4}]{\includegraphics{trading-genetics_files/figure-latex/pic-basic-corr-moba-4} }\newline
 
 }
 
@@ -5020,8 +5055,8 @@ maximum possible \(R^2\) in spouse matching.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth order 2}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0500 *\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0204\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0502 *\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0205\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0460\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0441\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
 
@@ -5040,8 +5075,8 @@ maximum possible \(R^2\) in spouse matching.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth order 3}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0557\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0013\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0562\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0008\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0133\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0045\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
 
@@ -5060,8 +5095,8 @@ maximum possible \(R^2\) in spouse matching.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth order 4}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0736\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0099\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0741\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0095\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0117\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0026\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
 
@@ -5080,8 +5115,8 @@ maximum possible \(R^2\) in spouse matching.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth order 5}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0801\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0022\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.0807\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0016\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.1032\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.1195\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
 
@@ -5100,8 +5135,8 @@ maximum possible \(R^2\) in spouse matching.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Birth order 6}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.2746\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.1997\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.2753\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$0.2004\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.1713\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\cellcolor[RGB]{204, 204, 204}\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.2125\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
 
@@ -5160,7 +5195,7 @@ maximum possible \(R^2\) in spouse matching.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Own PSEA}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0574 ***}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0573 ***}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0263 **\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0213\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0117\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
@@ -5181,7 +5216,7 @@ maximum possible \(R^2\) in spouse matching.
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Parents' age at birth}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0116 ***}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0052 *\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0053 *\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0090 +\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
 \multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.0078\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
 
@@ -5200,10 +5235,10 @@ maximum possible \(R^2\) in spouse matching.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont Wald p-value, birth order}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.2452\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.7917\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.8266\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.7815\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.2407\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.7908\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.8265\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 0.7813\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
 
 
 \hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
@@ -5250,10 +5285,10 @@ maximum possible \(R^2\) in spouse matching.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont N}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 10206\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 10206\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 3407\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 3407\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 10204\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 10204\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 3406\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 3406\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
@@ -5270,20 +5305,20 @@ maximum possible \(R^2\) in spouse matching.
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont logLik}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$14296.681\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$14196.868\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$4809.676\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$4801.539\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$14294.347\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$14194.578\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$4808.764\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont $-$4800.630\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
 
 
 \hhline{}
 \arrayrulecolor{black}
 
 \multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedright {\fontsize{10pt}{12pt}\selectfont AIC}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 28703.362\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 28513.735\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 9739.351\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
-\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 9725.078\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 28696.695\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 28507.157\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 9735.528\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} &
+\multicolumn{1}{p{0.18\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.18\textwidth-6pt-6pt}{\huxtpad{2pt + 1em}\raggedleft {\fontsize{10pt}{12pt}\selectfont 9721.260\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}}\huxbpad{2pt}}} \tabularnewline[-0.5pt]
 
 
 \hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
@@ -6970,6 +7005,123 @@ maximum possible \(R^2\) in spouse matching.
 \end{table}
  
 
+ 
+  \providecommand{\huxb}[2]{\arrayrulecolor[RGB]{#1}\global\arrayrulewidth=#2pt}
+  \providecommand{\huxvb}[2]{\color[RGB]{#1}\vrule width #2pt}
+  \providecommand{\huxtpad}[1]{\rule{0pt}{#1}}
+  \providecommand{\huxbpad}[1]{\rule[-#1]{0pt}{#1}}
+
+\begin{table}[ht]
+\begin{centerbox}
+\begin{threeparttable}
+\captionsetup{justification=centering,singlelinecheck=off}
+\caption{\label{tab:tbl-with-partner} Regressions of being with a partner vs. single (Great Britain)}
+ \setlength{\tabcolsep}{0pt}
+\begin{tabularx}{0.8\textwidth}{p{0.266666666666667\textwidth} p{0.266666666666667\textwidth} p{0.266666666666667\textwidth}}
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering \huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering (1)\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\centering (2)\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Birth order\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.004 *\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.001\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright \huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft (0.002)\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft (0.002)\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright PSEA\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.001 +\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.001\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright \huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft (0.001)\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft (0.001)\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright Parents' age at birth\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$0.002 **\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright \huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft \hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft (0.001)\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{255, 255, 255}{0.4}}->{\huxb{0, 0, 0}{0.4}}->{\huxb{0, 0, 0}{0.4}}-}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright N\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 187787\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 82264\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright R2\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.002\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 0.003\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright logLik\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$110174.233\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft $-$47987.261\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+
+\multicolumn{1}{!{\huxvb{0, 0, 0}{0}}p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright AIC\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 220484.467\hphantom{0}\hphantom{0}\huxbpad{6pt}}} &
+\multicolumn{1}{p{0.266666666666667\textwidth}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.266666666666667\textwidth-6pt-6pt}{\huxtpad{6pt + 1em}\raggedleft 96098.521\hphantom{0}\hphantom{0}\hphantom{0}\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{>{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}->{\huxb{0, 0, 0}{0.8}}-}
+\arrayrulecolor{black}
+
+\multicolumn{3}{!{\huxvb{0, 0, 0}{0}}p{0.8\textwidth+4\tabcolsep}!{\huxvb{0, 0, 0}{0}}}{\hspace{6pt}\parbox[b]{0.8\textwidth+4\tabcolsep-6pt-6pt}{\huxtpad{6pt + 1em}\raggedright  *** p $<$ 0.001;  ** p $<$ 0.01;  * p $<$ 0.05;  + p $<$ 0.1. Other controls: dummies for birth month, number of siblings, and own age\huxbpad{6pt}}} \tabularnewline[-0.5pt]
+
+
+\hhline{}
+\arrayrulecolor{black}
+\end{tabularx}
+\end{threeparttable}\par\end{centerbox}
+
+\end{table}
+ 
+
 \FloatBarrier
 \newpage
 
@@ -7389,9 +7541,6 @@ Kantarevic, Jasmin, and Stéphane Mechoulan. 2006. {``Birth Order, Educational A
 
 \bibitem[\citeproctext]{ref-kong2018nature}
 Kong, Augustine, Gudmar Thorleifsson, Michael L Frigge, Bjarni J Vilhjalmsson, Alexander I Young, Thorgeir E Thorgeirsson, Stefania Benonisdottir, et al. 2018. {``The Nature of Nurture: Effects of Parental Genotypes.''} \emph{Science} 359 (6374): 424--28.
-
-\bibitem[\citeproctext]{ref-kristensen2007explaining}
-Kristensen, Petter, and Tor Bjerkedal. 2007. {``Explaining the Relation Between Birth Order and Intelligence.''} \emph{Science} 316 (5832): 1717--17.
 
 \bibitem[\citeproctext]{ref-lawlor2008mendelian}
 Lawlor, Debbie A, Roger M Harbord, Jonathan AC Sterne, Nic Timpson, and George Davey Smith. 2008. {``Mendelian Randomization: Using Genes as Instruments for Making Causal Inferences in Epidemiology.''} \emph{Statistics in Medicine} 27 (8): 1133--63.
